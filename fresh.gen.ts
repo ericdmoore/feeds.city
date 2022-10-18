@@ -15,13 +15,18 @@ import * as $8 from "./routes/ast/[composition]/[...url].tsx";
 import * as $9 from "./routes/ast/[composition]/index.tsx";
 import * as $10 from "./routes/ast/[url].tsx";
 import * as $11 from "./routes/ast/index.tsx";
-import * as $12 from "./routes/index.tsx";
-import * as $13 from "./routes/login.tsx";
-import * as $14 from "./routes/logout.tsx";
-import * as $15 from "./routes/user/index.ts";
-import * as $16 from "./routes/user/register.tsx";
-import * as $$0 from "./islands/Counter.tsx";
-import * as $$1 from "./islands/TopHat.tsx";
+import * as $12 from "./routes/feeds.tsx";
+import * as $13 from "./routes/home.tsx";
+import * as $14 from "./routes/index.tsx";
+import * as $15 from "./routes/login.tsx";
+import * as $16 from "./routes/logout.tsx";
+import * as $17 from "./routes/profile.tsx";
+import * as $18 from "./routes/settings.tsx";
+import * as $19 from "./routes/team.tsx";
+import * as $20 from "./routes/user/index.ts";
+import * as $21 from "./routes/user/register.tsx";
+import * as $$0 from "./islands/AppShellMenuBar.tsx";
+import * as $$1 from "./islands/Counter.tsx";
 
 const manifest = {
   routes: {
@@ -37,15 +42,20 @@ const manifest = {
     "./routes/ast/[composition]/index.tsx": $9,
     "./routes/ast/[url].tsx": $10,
     "./routes/ast/index.tsx": $11,
-    "./routes/index.tsx": $12,
-    "./routes/login.tsx": $13,
-    "./routes/logout.tsx": $14,
-    "./routes/user/index.ts": $15,
-    "./routes/user/register.tsx": $16,
+    "./routes/feeds.tsx": $12,
+    "./routes/home.tsx": $13,
+    "./routes/index.tsx": $14,
+    "./routes/login.tsx": $15,
+    "./routes/logout.tsx": $16,
+    "./routes/profile.tsx": $17,
+    "./routes/settings.tsx": $18,
+    "./routes/team.tsx": $19,
+    "./routes/user/index.ts": $20,
+    "./routes/user/register.tsx": $21,
   },
   islands: {
-    "./islands/Counter.tsx": $$0,
-    "./islands/TopHat.tsx": $$1,
+    "./islands/AppShellMenuBar.tsx": $$0,
+    "./islands/Counter.tsx": $$1,
   },
   baseUrl: import.meta.url,
   config,
