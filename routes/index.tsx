@@ -2,27 +2,36 @@ import type {Handlers} from '$fresh/server.ts'
 import Counter from "../islands/Counter.tsx";
 
 import { TopHatBlack } from '../components/TopHat.tsx';
-import AppShell from '../components/AppShell.tsx'
+import PublicHero from '../components/public/hero.tsx';
+import PublicFeatures from '../components/public/featureGrid.tsx'
+import Testimonial from '../components/public/testimonial.tsx';
+import Pricing  from '../components/public/pricing.tsx';
+import Stats from '../components/public/stats.tsx';
+import SignUp from '../components/public/signup.tsx';
+import Footer  from '../components/public/footer.tsx'
+
 
 // Evnatually this is a public marketing page
 
 export default function Home() {
   return (
-  <AppShell>
-    <TopHatBlack title='Federa' description='Descrbes federa' icon="/logo.svg" >
-      <meta name="og:title" content="Federa" />
-    </TopHatBlack>
-    <div class="p-4 mx-auto max-w-screen-md">
-      <ul>
-        <li><a href="/ast">ast</a></li>
-        <li><a href="/ast/http://example.com">ast/url</a></li>
-        <li><a href="/ast/composition/http://example.com">ast/composition/url</a></li>
-        <li><a href="/user">user</a></li>
-        <li><a href="/user/register">user/register</a></li>
-        <li><a href="/login">login</a></li>
-        <li><a href="/logout">logout</a></li>
-      </ul>
-    </div>
-  </AppShell>
+    <>
+      <TopHatBlack 
+        title='FeedCity' 
+        description='A citywide set of feeds to be customized' 
+        icon='/feedCity.svg'
+      />
+      <PublicHero nav={ {login:{href:'/login'}, signUp:{href:'/register'}} }/>
+      <PublicFeatures/>
+      <Testimonial 
+        author={{name:"Marie Chilvers",title:'CEO, Workcation'}} 
+        bgImg={{src:"https://tailwindui.com/img/logos/workcation-logo-white.svg", alt:'Workstation Marketing background Image'}} 
+        testimonial={`This app has completely transformed how we interact with customers. We've seen record bookings, higher customer satisfaction, and reduced churn.`}
+      />
+      <Stats line1='Trusted by developers from over 80 planets' line2='Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus repellat laudantium' stats={[]}/>
+      <Pricing/>
+      <SignUp/>
+      <Footer/>
+    </>
   );
 }

@@ -29,11 +29,11 @@ return (
         <div class="flex">          
           {/* Header Logo */}
           <div class="flex flex-shrink-0 items-center">
-            <img class="block h-8 w-auto lg:hidden" src="/logo.svg" alt="Your Company"/>
-            <img class="hidden h-8 w-auto lg:block" src="/logo.svg" alt="Your Company"/>
+            <img class="block h-8 w-auto lg:hidden" src="/feedCity.svg" alt="Your Company"/>
+            <img class="hidden h-8 w-auto lg:block" src="/feedCity.svg" alt="Your Company"/>
           </div>
 
-          <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
+          <div id='amIDesktopMenu' class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
             {/* <!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" --> */}
             <a href="#/home"      class={`${css.nonMobile.common} ${css.nonMobile.active}`} aria-current="page">Dashboard</a>
             <a href="#/team"      class={`${css.nonMobile.common} ${css.nonMobile.inactive}`}>Team</a>

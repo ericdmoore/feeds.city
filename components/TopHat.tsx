@@ -1,12 +1,10 @@
 import { ComponentChildren, createContext } from "preact";
-import { useEffect } from 'preact/hooks'
 import {Head} from '$fresh/runtime.ts'
 
-type Values<Type> = Type[keyof Type];
-type HeadTags = 'title' | 'style' | 'meta' | 'base' | 'link'  | 'script' | 'noscript'
+type LinkImageKeys = 'rel' | 'link' | 'sizes'
 
 interface TopHatProps  {
-    icon: string | Record<string, string>[]
+    icon: string | Record<LinkImageKeys, string>[]
     title: string
     description: string
     keywords: string
@@ -20,28 +18,7 @@ interface TopHatProps  {
     // jsonld: JSONish
 }
 
-const addElementList = (type: HeadTags, data: (string | Record<string, string>)[])=>{
-    data.forEach(d => { addElement(type, d) });
-}
-
-const addElement = (type:HeadTags  , data: Values<Omit<TopHatProps, 'children'>>) =>
-    document.getElementsByTagName('head')[0].appendChild(
-        typeof data ==='string' 
-            ? (()=>{
-                const el = document.createElement(type)
-                el.innerHTML = data
-                return el
-            })()
-            : Object.entries(data)
-                .reduce((elm, [key, val])=>{
-                    elm.setAttribute(key, String(val))
-                    return elm
-                },document.createElement(type))
-    )
-
-export function TopHat(props: Partial<TopHatProps>){
-    return <></>
-}
+const toMetaTag = (key:string, val:string, prefix?:string)=> <meta property={`${prefix}${key}`} content={val} />
 
 export function TopHatBlack(props: Partial<TopHatProps> & {title: string}, children: unknown[]){
     return <Head>
@@ -52,11 +29,9 @@ export function TopHatBlack(props: Partial<TopHatProps> & {title: string}, child
             {props.canonical && <meta name="canonical" content={props.canonical} />}
             {props.icon && typeof props.icon ==='string' && <link rel="icon" href={props.icon} />}
             {props.icon && typeof props.icon !=='string' && props.icon.map(i => <link {...i} />)}
-            { props.og && Object.entries(props.og)
-                    .map(([key, val])=><meta property={`og:${key}`} content={val} /> ) 
-            }
+            {props.og && Object.entries(props.og).map(([key, val])=>toMetaTag(key, val, 'og:') )  }
             {props.children}
         </Head>
 }
 
-export default TopHat
+export default TopHatBlack
