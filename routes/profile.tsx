@@ -9,7 +9,7 @@ import AppShell from '../components/AppShell.tsx'
 export default function Home() {
   return (
   <AppShell>
-    <TopHatBlack title='Federa' description='Descrbes federa' icon="/logo.svg" >
+    <TopHatBlack title='Federa' description='Descrbes federa' icon='/feedCityRingDropsLogo.svg' >
       <meta name="og:title" content="Federa" />
     </TopHatBlack>
     <div class="p-4 mx-auto max-w-screen-md">

@@ -20,7 +20,7 @@ return (
           <div class="flex justify-start lg:w-0 lg:flex-1">
             <a href="#">
               <span class="sr-only">Feed City</span>
-              <img class="h-8 w-auto sm:h-10" src="/feedCity.svg" alt="Feed City Logo"/>
+              <img class="h-8 w-auto sm:h-10" src="/feedCityRingDropsLogo.svg" alt="Feed City Logo"/>
             </a>
           </div>
           

@@ -19,7 +19,7 @@ export default function Home() {
       <TopHatBlack 
         title='Feeds.City' 
         description='A citywide set of feeds to be customized' 
-        icon='/feedCity.svg'
+        icon='/feedCityRingDropsLogo.svg'
       />
       <PublicHero nav={ {login:{href:'/login'}, signUp:{href:'/register'}} }/>
       <PublicFeatures/>
