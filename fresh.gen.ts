@@ -27,6 +27,8 @@ import * as $20 from "./routes/user/index.ts";
 import * as $21 from "./routes/user/register.tsx";
 import * as $$0 from "./islands/AppShellMenuBar.tsx";
 import * as $$1 from "./islands/Counter.tsx";
+import * as $$2 from "./islands/public-hero.tsx";
+import * as $$3 from "./islands/public-signup.tsx";
 
 const manifest = {
   routes: {
@@ -56,6 +58,8 @@ const manifest = {
   islands: {
     "./islands/AppShellMenuBar.tsx": $$0,
     "./islands/Counter.tsx": $$1,
+    "./islands/public-hero.tsx": $$2,
+    "./islands/public-signup.tsx": $$3,
   },
   baseUrl: import.meta.url,
   config,

@@ -2,12 +2,12 @@ import type {Handlers} from '$fresh/server.ts'
 import Counter from "../islands/Counter.tsx";
 
 import { TopHatBlack } from '../components/TopHat.tsx';
-import PublicHero from '../components/public/hero.tsx';
+import PublicHero from '../islands/public-hero.tsx';
 import PublicFeatures from '../components/public/featureGrid.tsx'
 import Testimonial from '../components/public/testimonial.tsx';
 import Pricing  from '../components/public/pricing.tsx';
 import Stats from '../components/public/stats.tsx';
-import SignUp from '../components/public/signup.tsx';
+import SignUp from '../islands/public-signup.tsx';
 import Footer  from '../components/public/footer.tsx'
 
 
@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <>
       <TopHatBlack 
-        title='FeedCity' 
+        title='Feeds.City' 
         description='A citywide set of feeds to be customized' 
         icon='/feedCity.svg'
       />

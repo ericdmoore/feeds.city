@@ -1,6 +1,5 @@
-// import {} from ''
-
-
+ import {useState} from 'preact/hooks'
+ 
 interface HeroProps{
   nav:{
     login: {href: '/login'}
@@ -8,8 +7,10 @@ interface HeroProps{
   }
 }
 
-
 export function PublicHero(props: HeroProps){
+  
+  const [isSolutionsExpanded, setSolutionsExpanded] = useState(false)
+  const [isMoreExpanded, setMoreExpanded] = useState(false)
 
 return (
   <div class="relative bg-gray-50">
@@ -22,8 +23,9 @@ return (
               <img class="h-8 w-auto sm:h-10" src="/feedCity.svg" alt="Feed City Logo"/>
             </a>
           </div>
+          
           <div class="-my-2 -mr-2 md:hidden">
-            <button type="button" class="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-expanded="false">
+            <button type="button" onClick={()=>{setSolutionsExpanded(!isSolutionsExpanded); setMoreExpanded(false)}} class="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-expanded="false">
               <span class="sr-only">Open menu</span>
               {/* <!-- Heroicon name: outline/bars-3 --> */}
               <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -31,10 +33,11 @@ return (
               </svg>
             </button>
           </div>
+          
           <nav class="hidden space-x-10 md:flex">
             <div class="relative">
               {/* <!-- Item active: "text-gray-900", Item inactive: "text-gray-500" --> */}
-              <button type="button" class="text-gray-500 group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" aria-expanded="false">
+              <button type="button" onClick={()=>{setSolutionsExpanded(!isSolutionsExpanded); setMoreExpanded(false)}} class="text-gray-500 group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" aria-expanded="false">
                 <span>Solutions</span>
                 {/* <!-- Heroicon name: mini/chevron-down - Item active: "text-gray-600", Item inactive: "text-gray-400" --> */}
                 <svg class="text-gray-400 ml-2 h-5 w-5 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -52,7 +55,7 @@ return (
                   From: "opacity-100 translate-y-0"
                   To: "opacity-0 translate-y-1"
               --> */}
-              <div class="hidden absolute z-10 -ml-4 mt-3 w-screen max-w-md transform px-2 sm:px-0 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2">
+              <div class={`${isSolutionsExpanded ? '' :'hidden'} absolute z-10 -ml-4 mt-3 w-screen max-w-md transform px-2 sm:px-0 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2`}>
                 <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                   <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                     <a href="#" class="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50">
@@ -140,7 +143,7 @@ return (
   
             <div class="relative">
               {/* <!-- Item active: "text-gray-900", Item inactive: "text-gray-500" --> */}
-              <button type="button" class="text-gray-500 group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" aria-expanded="false">
+              <button type="button" onClick={()=>{setMoreExpanded(!isMoreExpanded); setSolutionsExpanded(false) }} class="text-gray-500 group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" aria-expanded="false">
                 <span>More</span>
                 {/* <!--
                   Heroicon name: mini/chevron-down
@@ -163,7 +166,7 @@ return (
                   To: "opacity-0 translate-y-1"
               --> */}
 
-              <div class="hidden absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 transform px-2 sm:px-0">
+              <div class={`${isMoreExpanded ? '' : 'hidden'} absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 transform px-2 sm:px-0`}>
                 <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                   <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                     <a href="#" class="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50">
@@ -257,7 +260,7 @@ return (
           To: "opacity-0 scale-95"
       --> */}
 
-      <div class="absolute inset-x-0 top-0 z-10 origin-top-right transform p-2 transition md:hidden">
+      <div class={`${isSolutionsExpanded || isMoreExpanded ? '' : 'hidden'} absolute inset-x-0 top-0 z-10 origin-top-right transform p-2 transition md:hidden`}>
         <div class="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
           <div class="px-5 pt-5 pb-6">
             <div class="flex items-center justify-between">
@@ -265,7 +268,9 @@ return (
                 <img class="h-8 w-auto" src="/feedCity.svg" alt="Feed City"/>
               </div>
               <div class="-mr-2">
-                <button type="button" class="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                <button type="button" 
+                onClick={()=>{setMoreExpanded(false); setSolutionsExpanded(false) }}
+                class="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                   <span class="sr-only">Close menu</span>
                   {/* <!-- Heroicon name: outline/x-mark --> */}
                   <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">

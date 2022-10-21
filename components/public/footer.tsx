@@ -27,7 +27,7 @@ export function Footer(){
         <a href="#" class="text-base text-gray-500 hover:text-gray-900">Partners</a>
       </div>
     </nav>
-    <div class="mt-8 flex justify-center space-x-6">
+    <div class="flex mt-8 justify-center space-x-6">
       <a href="#" class="text-gray-400 hover:text-gray-500">
         <span class="sr-only">Facebook</span>
         <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -64,7 +64,14 @@ export function Footer(){
       </a>
     </div>
     <p class="mt-8 text-center text-base text-gray-400">&copy; 2020 Your Company, Inc. All rights reserved.</p>
+    
+    <div class="flex flex-row mt-8 items-center justify-center space-x-6">
+      <a href="https://fresh.deno.dev">
+        <img width="197" height="37" src="https://fresh.deno.dev/fresh-badge.svg" alt="Made with Fresh" />
+      </a>
+    </div>  
   </div>
+
 </footer>)
 }
 
