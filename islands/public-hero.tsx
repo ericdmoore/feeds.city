@@ -1,9 +1,61 @@
- import {useState} from 'preact/hooks'
- 
+import type { Icon } from '../components/types.ts'
+import {useState} from 'preact/hooks'
+
+interface CTA  {
+  text:string
+  href:string
+  class?:string
+}
+
+interface MenuItem {
+  icon: Icon, 
+  text:string
+}
+
 interface HeroProps{
+  logo?: Icon
+  h1?: string
+  h1span?: string
+  p?: string
+  cta?:{
+    left:CTA
+    right:CTA 
+  }
+  img?: {
+    src:string, 
+    alt:string
+  }
   nav:{
-    login: {href: '/login'}
-    signUp: {href: '/register'}
+    menu?: {
+      Solutions: {
+        body:{
+          Analytics: MenuItem
+          Engagement: MenuItem
+          Secuitty: MenuItem
+          Integration: MenuItem
+          Automations: MenuItem
+        }, 
+        footer:{
+          'Watch Demo': MenuItem
+          'Contact Sales': MenuItem
+        }
+      } 
+      Pricing: string
+      Docs: string
+      More: {
+        body:{
+          'Help Center': MenuItem,
+          Guides: MenuItem
+          Events: MenuItem
+          Security: MenuItem
+        }, 
+        footer?: null
+      } 
+    }
+    _: {
+      'Sign Up': {href: '/register'}
+      'Sign In': {href: '/login'}
+    }
   }
 }
 
@@ -12,6 +64,7 @@ export function PublicHero(props: HeroProps){
   const [isSolutionsExpanded, setSolutionsExpanded] = useState(false)
   const [isMoreExpanded, setMoreExpanded] = useState(false)
 
+  // use focus: to close the menu when not in-focus
 return (
   <div class="relative bg-gray-50">
     <div class="relative bg-white shadow">
@@ -243,8 +296,8 @@ return (
           </nav>
 
           <div class="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
-            <a href={props.nav.login.href} class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">Sign in</a>
-            <a href={props.nav.login.href} class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Sign up</a>
+            <a href={props.nav._['Sign In'].href} class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">Sign in</a>
+            <a href={props.nav._['Sign Up'].href} class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Sign up</a>
           </div>
         </div>
       </div>
@@ -333,10 +386,17 @@ return (
               <a href="#" class="text-base font-medium text-gray-900 hover:text-gray-700">Security</a>
             </div>
             <div>
-              <a href="#" class="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Sign up</a>
-              <p class="mt-6 text-center text-base font-medium text-gray-500">
+              <a 
+                href={props.nav._['Sign Up'].href} 
+                class="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
+                  Sign up
+              </a>
+              <p 
+                class="mt-6 text-center text-base font-medium text-gray-500">
                 Existing customer?
-                <a href="#" class="text-indigo-600 hover:text-indigo-500">Sign in</a>
+                <a href={props.nav._['Sign In'].href} class="text-indigo-600 hover:text-indigo-500">
+                  Sign in
+                </a>
               </p>
             </div>
           </div>

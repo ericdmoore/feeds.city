@@ -121,8 +121,8 @@ export function SignUp() {
 
           <div class="rounded-lg bg-indigo-700 px-6 py-6 md:py-12 md:px-12 lg:py-16 lg:px-16 xl:flex xl:items-center">
             <div class="xl:w-0 xl:flex-1">
-              <h2 class="text-2xl font-bold tracking-tight text-white sm:text-3xl">Request an Invitation to use Feeds.City</h2>
-              <p class="mt-3 max-w-3xl text-lg leading-6 text-indigo-200">by Signing up for our newsletter. New invites given daily</p>
+              <h2 class="text-2xl font-bold tracking-tight text-white sm:text-3xl">Request an Invite to Feeds.City</h2>
+              <p class="mt-3 max-w-3xl text-lg leading-6 text-indigo-200">New Invites Given Daily</p>
             </div>
 
             <div class="mt-8 sm:w-full sm:max-w-md xl:mt-0 xl:ml-8">

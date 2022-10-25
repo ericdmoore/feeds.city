@@ -1,3 +1,19 @@
+const SVGOptsions = {
+  name: 'svg content',
+}
+
+interface FeatureItems{
+  text: string
+  i: {src: string} | {svg: string }  | {alias: string}
+}
+
+interface PricingProps{
+  section: string
+  h1: string
+  h2: string
+  plans: Record<string, string>[]
+}
+
 export function Pricing (){
     return (
   <div class="bg-gray-900">
