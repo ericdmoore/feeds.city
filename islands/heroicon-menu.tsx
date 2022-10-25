@@ -22,7 +22,7 @@ export function Menu (){
     // },[captionRef])
         
     return (
-        <div class='container  mx-auto px-20 my-40 max-w-lg'>
+        <div class='container mx-auto px-10 my-40 max-w-lg md:px-20'>
             <div class={`${showOutline? 'text-gray-300' : 'text-gray-800'} flex flex-row justify-center`}
                 onClick={toggleOutlinesAndSolids} >
                 <h1 class='flex mb-10 text-5xl'>Hero Icons</h1>
