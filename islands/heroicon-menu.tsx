@@ -31,15 +31,13 @@ export function Menu (){
                 { outlineEntries.map(([name, outlineComp], i)=>{
                     return (
                         <div key={i} class="flex flex-col flex-auto">
-                            <div 
-                                onMouseOver={showCaption(i)}
+                            <div onMouseOver={showCaption(i)}
                                 onTouchEnd={showCaption(i)}
                                 class={`${showOutline ? '': 'hidden'} h-8 w-8 hover:text-blue-600`}
                                 >
                                 {outlineComp } 
                             </div>
-                            <div onClick={toggleOutlinesAndSolids} 
-                                onMouseOver={showCaption(i)}
+                            <div onMouseOver={showCaption(i)}
                                 onTouchEnd={showCaption(i)}
                                 class={`${showOutline ? 'hidden': ''} h-8 w-8 hover:text-blue-600`}
                                 > 
