@@ -16,11 +16,11 @@ import * as $9 from "./routes/ast/[composition]/index.tsx";
 import * as $10 from "./routes/ast/[url].tsx";
 import * as $11 from "./routes/ast/index.tsx";
 import * as $12 from "./routes/feeds.tsx";
-import * as $13 from "./routes/home.tsx";
-import * as $14 from "./routes/index.tsx";
-import * as $15 from "./routes/login.tsx";
-import * as $16 from "./routes/logout.tsx";
-import * as $17 from "./routes/menu.tsx";
+import * as $13 from "./routes/hero.tsx";
+import * as $14 from "./routes/home.tsx";
+import * as $15 from "./routes/index.tsx";
+import * as $16 from "./routes/login.tsx";
+import * as $17 from "./routes/logout.tsx";
 import * as $18 from "./routes/profile.tsx";
 import * as $19 from "./routes/settings.tsx";
 import * as $20 from "./routes/team.tsx";
@@ -47,11 +47,11 @@ const manifest = {
     "./routes/ast/[url].tsx": $10,
     "./routes/ast/index.tsx": $11,
     "./routes/feeds.tsx": $12,
-    "./routes/home.tsx": $13,
-    "./routes/index.tsx": $14,
-    "./routes/login.tsx": $15,
-    "./routes/logout.tsx": $16,
-    "./routes/menu.tsx": $17,
+    "./routes/hero.tsx": $13,
+    "./routes/home.tsx": $14,
+    "./routes/index.tsx": $15,
+    "./routes/login.tsx": $16,
+    "./routes/logout.tsx": $17,
     "./routes/profile.tsx": $18,
     "./routes/settings.tsx": $19,
     "./routes/team.tsx": $20,

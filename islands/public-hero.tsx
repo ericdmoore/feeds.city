@@ -1,4 +1,13 @@
 import type { Icon } from '../components/types.ts'
+import {
+  Chevron_down, 
+  Cursor_arrow_rays, 
+  Shield_check,
+  Squares_2x2,
+  Arrow_path,
+  Play,
+  Phone
+} from '../components/heroicons/outline.tsx'
 import {useState} from 'preact/hooks'
 
 interface CTA  {
@@ -90,12 +99,10 @@ return (
           <nav class="hidden space-x-10 md:flex">
             <div class="relative">
               {/* <!-- Item active: "text-gray-900", Item inactive: "text-gray-500" --> */}
-              <button type="button" onClick={()=>{setSolutionsExpanded(!isSolutionsExpanded); setMoreExpanded(false)}} class="text-gray-500 group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" aria-expanded="false">
+              <button type="button" onClick={()=>{setSolutionsExpanded(!isSolutionsExpanded); setMoreExpanded(false)}} 
+                class="text-gray-500 group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" aria-expanded="false">
                 <span>Solutions</span>
-                {/* <!-- Heroicon name: mini/chevron-down - Item active: "text-gray-600", Item inactive: "text-gray-400" --> */}
-                <svg class="text-gray-400 ml-2 h-5 w-5 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                </svg>
+                <Chevron_down class='text-gray-400 ml-2 h-5 w-5 group-hover:text-gray-500'/>
               </button>
   
               {/* <!--
@@ -123,10 +130,7 @@ return (
                     </a>
   
                     <a href="#" class="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50">
-                      {/* <!-- Heroicon name: outline/cursor-arrow-rays --> */}
-                      <svg class="h-6 w-6 flex-shrink-0 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243l-1.59-1.59" />
-                      </svg>
+                      <Cursor_arrow_rays class="h-6 w-6 flex-shrink-0 text-indigo-600" />
                       <div class="ml-4">
                         <p class="text-base font-medium text-gray-900">Engagement</p>
                         <p class="mt-1 text-sm text-gray-500">Speak directly to your customers in a more meaningful way.</p>
@@ -134,10 +138,7 @@ return (
                     </a>
   
                     <a href="#" class="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50">
-                      {/* <!-- Heroicon name: outline/shield-check --> */}
-                      <svg class="h-6 w-6 flex-shrink-0 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-                      </svg>
+                      <Shield_check class="h-6 w-6 flex-shrink-0 text-indigo-600"/>
                       <div class="ml-4">
                         <p class="text-base font-medium text-gray-900">Security</p>
                         <p class="mt-1 text-sm text-gray-500">Your customers&#039; data will be safe and secure.</p>
@@ -145,10 +146,7 @@ return (
                     </a>
   
                     <a href="#" class="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50">
-                      {/* <!-- Heroicon name: outline/squares-2x2 --> */}
-                      <svg class="h-6 w-6 flex-shrink-0 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
-                      </svg>
+                      <Squares_2x2 class="h-6 w-6 flex-shrink-0 text-indigo-600"/>
                       <div class="ml-4">
                         <p class="text-base font-medium text-gray-900">Integrations</p>
                         <p class="mt-1 text-sm text-gray-500">Connect with third-party tools that you&#039;re already using.</p>
@@ -156,10 +154,7 @@ return (
                     </a>
   
                     <a href="#" class="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50">
-                      {/* <!-- Heroicon name: outline/arrow-path --> */}
-                      <svg class="h-6 w-6 flex-shrink-0 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12c0-1.232.046-2.453.138-3.662a4.006 4.006 0 013.7-3.7 48.678 48.678 0 017.324 0 4.006 4.006 0 013.7 3.7c.017.22.032.441.046.662M4.5 12l-3-3m3 3l3-3m12 3c0 1.232-.046 2.453-.138 3.662a4.006 4.006 0 01-3.7 3.7 48.657 48.657 0 01-7.324 0 4.006 4.006 0 01-3.7-3.7c-.017-.22-.032-.441-.046-.662M19.5 12l-3 3m3-3l3 3" />
-                      </svg>
+                      <Arrow_path class="h-6 w-6 flex-shrink-0 text-indigo-600"/>
                       <div class="ml-4">
                         <p class="text-base font-medium text-gray-900">Automations</p>
                         <p class="mt-1 text-sm text-gray-500">Build strategic funnels that will drive your customers to convert</p>
@@ -169,20 +164,14 @@ return (
                   <div class="space-y-6 bg-gray-50 px-5 py-5 sm:flex sm:space-y-0 sm:space-x-10 sm:px-8">
                     <div class="flow-root">
                       <a href="#" class="-m-3 flex items-center rounded-md p-3 text-base font-medium text-gray-900 hover:bg-gray-100">
-                        {/* <!-- Heroicon name: outline/play --> */}
-                        <svg class="h-6 w-6 flex-shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
-                        </svg>
+                        <Play class="h-6 w-6 flex-shrink-0 text-gray-400" />
                         <span class="ml-3">Watch Demo</span>
                       </a>
                     </div>
   
                     <div class="flow-root">
                       <a href="#" class="-m-3 flex items-center rounded-md p-3 text-base font-medium text-gray-900 hover:bg-gray-100">
-                        {/* <!-- Heroicon name: outline/phone --> */}
-                        <svg class="h-6 w-6 flex-shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
-                        </svg>
+                        <Phone class="h-6 w-6 flex-shrink-0 text-gray-400"/> 
                         <span class="ml-3">Contact Sales</span>
                       </a>
                     </div>
@@ -378,12 +367,12 @@ return (
           </div>
           <div class="space-y-6 py-6 px-5">
             <div class="grid grid-cols-2 gap-y-4 gap-x-8">
-              <a href="#" class="text-base font-medium text-gray-900 hover:text-gray-700">Pricing</a>
-              <a href="#" class="text-base font-medium text-gray-900 hover:text-gray-700">Docs</a>
-              <a href="#" class="text-base font-medium text-gray-900 hover:text-gray-700">Help Center</a>
-              <a href="#" class="text-base font-medium text-gray-900 hover:text-gray-700">Guides</a>
-              <a href="#" class="text-base font-medium text-gray-900 hover:text-gray-700">Events</a>
-              <a href="#" class="text-base font-medium text-gray-900 hover:text-gray-700">Security</a>
+              <a href="/pricing" class="text-base font-medium text-gray-900 hover:text-gray-700">Pricing</a>
+              <a href="/docs" class="text-base font-medium text-gray-900 hover:text-gray-700">Docs</a>
+              <a href="/help" class="text-base font-medium text-gray-900 hover:text-gray-700">Help Center</a>
+              <a href="/guides" class="text-base font-medium text-gray-900 hover:text-gray-700">Guides</a>
+              <a href="/events" class="text-base font-medium text-gray-900 hover:text-gray-700">Events</a>
+              <a href="/security" class="text-base font-medium text-gray-900 hover:text-gray-700">Security</a>
             </div>
             <div>
               <a 

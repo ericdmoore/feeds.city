@@ -13,6 +13,10 @@ import Footer  from '../components/public/footer.tsx'
 
 // Evnatually this is a public marketing page
 
+interface HomeProps{
+  csrfToken: string
+}
+
 export default function Home() {
   return (
     <>
@@ -49,3 +53,4 @@ export default function Home() {
     </>
   );
 }
+
