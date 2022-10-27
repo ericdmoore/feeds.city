@@ -7,6 +7,8 @@
     "@preact/signals": "https://esm.sh/*@preact/signals@1.0.3",
     "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.0.1",
     "twind": "https://esm.sh/twind@0.16.17",
-    "twind/": "https://esm.sh/twind@0.16.17/"
+    "twind/": "https://esm.sh/twind@0.16.17/",
+    "airtable":"https://esm.sh/airtable@0.11.5",
+    "airtable/":"https://esm.sh/airtable@0.11.5/"
   }
 }

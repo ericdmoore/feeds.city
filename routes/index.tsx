@@ -26,6 +26,7 @@ export default function Home() {
         icon='/feedCityRingDropsLogo.svg'
       />
       <PublicHero nav={ {_: {'Sign In':{href:'/login'}, 'Sign Up':{href:'/register'}}} }/>
+      <SignUp/>
       <PublicFeatures/>
       <Testimonial 
         author={{name:"Marie Chilvers",title:'CEO, Workcation'}} 
@@ -38,7 +39,6 @@ export default function Home() {
         line2='Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus repellat laudantium' 
         stats={{Pepperoni:'100%', Delivery:'24/7', Calories:'100k'}}/>
       <Pricing/>
-      <SignUp/>
       <Footer
         nav={{About:'/about', Blog: '/blog', Jobs:'/jobs', Press:'/press',Market:'/market'} } 
         social={{

@@ -1,36 +1,94 @@
 
-
-Strategy: Get Feedback Now
+Key Initiaitive: Get Feedback Now
 - Signup Form to populate Airtable Waitlist
-- Explains Value Prop
+- Explain Value Prop
 - Provide Messaging about Earlybird Pricing
 - Bring Your OPML to 'the City'
-- Teach Your Feeds a new song and dance - Embrace
+- Live With Issues no longer
+- Teach Your Feeds a new song and dance
+
+Fundamental Assumptions
+- People want to fix their feeds
+- People will pay to fix their feeds 
 
 
+Messaging Ideas:
+
+1. Fix Your Feeds
+2. Speaking the Unspoken Web
+3. Follow People, Topics, and yes good ol Feeds
+4. Decentralized, Focused on Simplicty, User-Empowered
+5. Welcome Back To Oldweb Charm
+6. Functional Approach Inspiration
+7. 
+
+
+Product Principles
+1. Minimize Time to Apply Fixes
+    - Issues Uncovered
+    - Fix Previewed
+    - Fix Applied
+    - Fix Rolledback
+    - Fix Reconfigured + Reapplied
+
+See a Problem, Fix a Problem
+- Find Issue
+- Discvoer Solution
+- Preview a Change from a FeedFn
+- Apply FeedFn
+- Remove FeedFn
+
+2. Web's Subscribe Button
+- Follow Not Just Feeds
+
+3. User Empowerment
+
+---------------------------------------------------------------------------
+
+Functionality
+[x] close menus w/ outside clicks
+[ ] stip nav parsts from Hero panel <Nav/> + <HeroPanel/>
+[ ] 
 
 Pages
+
+[ ] About
+[ ] Product
+[ ] Features
+[ ] Marketplace (Public)
+[ ] - Using FeedFunctions
+[ ] - Making FeedFunctions
+[ ] - Buying FeedFunctions
+[ ] - Selling FeedFunctions
+[ ]     - Pricing Options
+            - One Time/Tiered Prices/Recurring
+            - based on Feed Numbers, based on feed entries, based on invocations
+            - Usage + Embed Price
+        -  Variant/Feature Grid
+[ ] - FunctionFeed List Grid
+[ ] - FunctionFeed Details/Preview
+[ ] - Collection Layout
+[ ] - Category Category Layout
+[ ] Developer Guides
+[ ] Developer Docs
+[ ] Help Center
+[ ] Events
+    - Developer Events
+    - Media Events
+[ ] Security
 [ ] Privacy Policy
 [ ] Cookies
 [ ] Terms
-[ ] Guides
-[ ] Docs
-[ ] Help Center
-[ ] About
+--------
 [ ] Blog
     [ ] feed URL
 [ ] siteindex
 [ ] Upcoming Events
 [ ] Upcoming Events
-[ ] Market
-[ ]   - FeedFunction
-[ ]   - 
 [ ] Pricing?
 [ ] Jobs
 [ ] Press
 
-Functionality
-[ ] close menus w/ outside clicks
 
 Dual Mission: 
     - Feeds from "the City"

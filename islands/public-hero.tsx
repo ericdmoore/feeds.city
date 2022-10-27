@@ -84,7 +84,7 @@ return (
       <div class="mx-auto max-w-7xl px-4 sm:px-6">
         <div class="flex items-center justify-between py-6 md:justify-start md:space-x-10">
           <div class="flex justify-start lg:w-0 lg:flex-1">
-            <a href="#">
+            <a href="/">
               <span class="sr-only">Feed City</span>
               <img class="h-8 w-auto sm:h-10" src="/feedCityRingDropsLogo.svg" alt="Feed City Logo"/>
             </a>
@@ -108,7 +108,9 @@ return (
               <button type="button" 
                 onClick={()=>{setSolutionsExpanded(!isSolutionsExpanded); setMoreExpanded(false)}} 
                 onfocusout={()=>{setMoreExpanded(false); setSolutionsExpanded(false)}}
-                class="text-gray-500 group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" aria-expanded="false">
+                class="text-gray-500 group inline-flex items-center rounded-md bg-white text-base font-medium 
+                  hover:text-gray-900 
+                  focus:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" aria-expanded="false">
                 <span>Solutions</span>
                 <Chevron_down class='text-gray-400 ml-2 h-5 w-5 group-hover:text-gray-500'/>
               </button>

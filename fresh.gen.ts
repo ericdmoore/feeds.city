@@ -10,27 +10,29 @@ import * as $3 from "./routes/[tokType]-[token]/index.tsx";
 import * as $4 from "./routes/_404.tsx";
 import * as $5 from "./routes/_500.tsx";
 import * as $6 from "./routes/_middleware.ts";
-import * as $7 from "./routes/api/joke.ts";
-import * as $8 from "./routes/ast/[composition]/[...url].tsx";
-import * as $9 from "./routes/ast/[composition]/index.tsx";
-import * as $10 from "./routes/ast/[url].tsx";
-import * as $11 from "./routes/ast/index.tsx";
-import * as $12 from "./routes/feeds.tsx";
-import * as $13 from "./routes/hero.tsx";
-import * as $14 from "./routes/home.tsx";
-import * as $15 from "./routes/index.tsx";
-import * as $16 from "./routes/login.tsx";
-import * as $17 from "./routes/logout.tsx";
-import * as $18 from "./routes/profile.tsx";
-import * as $19 from "./routes/settings.tsx";
-import * as $20 from "./routes/team.tsx";
-import * as $21 from "./routes/user/index.ts";
-import * as $22 from "./routes/user/register.tsx";
+import * as $7 from "./routes/about.tsx";
+import * as $8 from "./routes/api/joke.ts";
+import * as $9 from "./routes/ast/[composition]/[...url].tsx";
+import * as $10 from "./routes/ast/[composition]/index.tsx";
+import * as $11 from "./routes/ast/[url].tsx";
+import * as $12 from "./routes/ast/index.tsx";
+import * as $13 from "./routes/feeds.tsx";
+import * as $14 from "./routes/hero.tsx";
+import * as $15 from "./routes/home.tsx";
+import * as $16 from "./routes/index.tsx";
+import * as $17 from "./routes/login.tsx";
+import * as $18 from "./routes/logout.tsx";
+import * as $19 from "./routes/profile.tsx";
+import * as $20 from "./routes/settings.tsx";
+import * as $21 from "./routes/team.tsx";
+import * as $22 from "./routes/user/index.ts";
+import * as $23 from "./routes/user/register.tsx";
 import * as $$0 from "./islands/AppShellMenuBar.tsx";
 import * as $$1 from "./islands/Counter.tsx";
 import * as $$2 from "./islands/heroicon-menu.tsx";
-import * as $$3 from "./islands/public-hero.tsx";
-import * as $$4 from "./islands/public-signup.tsx";
+import * as $$3 from "./islands/public-about-hero.tsx";
+import * as $$4 from "./islands/public-hero.tsx";
+import * as $$5 from "./islands/public-signup.tsx";
 
 const manifest = {
   routes: {
@@ -41,29 +43,31 @@ const manifest = {
     "./routes/_404.tsx": $4,
     "./routes/_500.tsx": $5,
     "./routes/_middleware.ts": $6,
-    "./routes/api/joke.ts": $7,
-    "./routes/ast/[composition]/[...url].tsx": $8,
-    "./routes/ast/[composition]/index.tsx": $9,
-    "./routes/ast/[url].tsx": $10,
-    "./routes/ast/index.tsx": $11,
-    "./routes/feeds.tsx": $12,
-    "./routes/hero.tsx": $13,
-    "./routes/home.tsx": $14,
-    "./routes/index.tsx": $15,
-    "./routes/login.tsx": $16,
-    "./routes/logout.tsx": $17,
-    "./routes/profile.tsx": $18,
-    "./routes/settings.tsx": $19,
-    "./routes/team.tsx": $20,
-    "./routes/user/index.ts": $21,
-    "./routes/user/register.tsx": $22,
+    "./routes/about.tsx": $7,
+    "./routes/api/joke.ts": $8,
+    "./routes/ast/[composition]/[...url].tsx": $9,
+    "./routes/ast/[composition]/index.tsx": $10,
+    "./routes/ast/[url].tsx": $11,
+    "./routes/ast/index.tsx": $12,
+    "./routes/feeds.tsx": $13,
+    "./routes/hero.tsx": $14,
+    "./routes/home.tsx": $15,
+    "./routes/index.tsx": $16,
+    "./routes/login.tsx": $17,
+    "./routes/logout.tsx": $18,
+    "./routes/profile.tsx": $19,
+    "./routes/settings.tsx": $20,
+    "./routes/team.tsx": $21,
+    "./routes/user/index.ts": $22,
+    "./routes/user/register.tsx": $23,
   },
   islands: {
     "./islands/AppShellMenuBar.tsx": $$0,
     "./islands/Counter.tsx": $$1,
     "./islands/heroicon-menu.tsx": $$2,
-    "./islands/public-hero.tsx": $$3,
-    "./islands/public-signup.tsx": $$4,
+    "./islands/public-about-hero.tsx": $$3,
+    "./islands/public-hero.tsx": $$4,
+    "./islands/public-signup.tsx": $$5,
   },
   baseUrl: import.meta.url,
   config,

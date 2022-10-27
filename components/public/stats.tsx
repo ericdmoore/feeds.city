@@ -9,17 +9,12 @@ interface StatsProps{
 const statsBoundariesAndMiddile = (d:Record<string, string>)=>{
   const entries = Object.entries(d)
   assert(entries.length >= 2, 'stats must have at least two entries')  
-  // middle might contain nothing
   return [entries[0], entries.slice(-1)[0], ...entries.slice(1,-1)]
 }
 
-
 export function Stats(props: StatsProps) {
-
   const [first, last, ...middle] = statsBoundariesAndMiddile(props.stats)
-  console.log({ first, last })
-
-    return (
+  return (
       <div class="bg-gray-50 pt-12 sm:pt-16">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div class="mx-auto max-w-4xl text-center">
