@@ -1,4 +1,5 @@
 export function AboutHero(){
+  
     return (
 <div class="bg-gray-50">
   <div class="relative overflow-hidden">
