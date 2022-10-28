@@ -7,10 +7,14 @@ import ShopColelctions from '../components/public/bgWithOverlay.tsx'
 import TieredImage from '../components/headerSection/tieredImage.tsx'
 import BgImgSection from '../components/headerSection/bgImg.tsx'
 import AlternatingFeatures from '../components/headerSection/alternatingFeatureSection.tsx'
+import CtaPanel from '../components/cta-panel.tsx'
+import NavBar from "../islands/public-navbar.tsx"
+
 
 export default function(){
     return (
         <>
+            <NavBar nav={ {_: {'Sign In':{href:'/login'}, 'Sign Up':{href:'/register'}}} }/>
             <AboutHero/>
             <Centered />
             <SectionWithTiles />
@@ -19,6 +23,7 @@ export default function(){
             <AlternatingFeatures />
             <ShopColelctions/>
             <ScollingCards/>
+            <CtaPanel/>
             <Footer
                 nav={{About:'/about', Blog: '/blog', Jobs:'/jobs', Press:'/press',Market:'/market'} } 
                 social={{

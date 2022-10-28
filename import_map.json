@@ -8,6 +8,10 @@
     "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.0.1",
     "twind": "https://esm.sh/twind@0.16.17",
     "twind/": "https://esm.sh/twind@0.16.17/",
+    "@twind/forms" : "https://esm.sh/@twind/forms@0.1.4",
+    "@twind/forms/" : "https://esm.sh/@twind/forms@0.1.4/",
+    "@twind/aspect-ratio": "https://esm.sh/@twind/aspect-ratio@0.1.4",
+    "@twind/aspect-ratio/": "https://esm.sh/@twind/aspect-ratio@0.1.4/",
     "airtable":"https://esm.sh/airtable@0.11.5",
     "airtable/":"https://esm.sh/airtable@0.11.5/"
   }

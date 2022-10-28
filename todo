@@ -48,13 +48,15 @@ See a Problem, Fix a Problem
 Functionality
 [x] close menus w/ outside clicks
 [ ] stip nav parsts from Hero panel <Nav/> + <HeroPanel/>
-[ ] 
+[ ] Parallax home page ? https://keithclark.co.uk/articles/pure-css-parallax-websites/
 
 Pages
 
-[ ] About
+[-] About
 [ ] Product
 [ ] Features
+[ ] Start Page
+    - Right now is a teaser + Request Page
 [ ] Marketplace (Public)
 [ ] - Using FeedFunctions
 [ ] - Making FeedFunctions
