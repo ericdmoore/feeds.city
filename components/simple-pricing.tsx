@@ -1,3 +1,4 @@
+import type { RecursivePartial } from './types.ts'
 import { JSX } from "preact";
 import { Check_circle } from "./heroicons/outline.tsx";
 
@@ -21,40 +22,43 @@ interface SimplePricingProps {
     }
 }
 
-export default function SimplePricing(props: Partial<SimplePricingProps>){
-    const p = {
-        title:{
-            h2: 'Simple no-tricks pricing',
-            p: `If you're not satisfied, contact us within the first 14 days and we'll send you a full refund.`,
-            ...props.title
-        },
-        lBox:{
-            h3: 'Lifetime Membership',
-            p: 'Lorem ipsum dolor sit amet consect etur adipisicing elit. Itaque amet indis perferendis blanditiis repellendus etur quidem assumenda.',
-            dividerText: `What's included`,
-            greenCheckText: ['Private forum access', 'Member resources', 'Entry to annual conference', 'Official member t-shirt'],
-            ...props.lBox
-        },
-        rBox:{
-            top: 'Pay once, own it forever',
-            price:{amt:'$349', unit:'USD'},
-            clarification:{href:'#', text: ()=> 'Learn about our membership policy'},
-            ctaBtn:{href:'#', text: ()=> 'Get Access'},
-            teaser:{href:'#', text: () => <> Get a free sample <span class="font-normal text-gray-500">(20MB)</span> </>},
-        },
-        ...props
-    } as SimplePricingProps
+export default function SimplePricing(props: RecursivePartial<SimplePricingProps>){
+  const p = {
+    title:{
+        h2: 'Simple no-tricks pricing',
+        p: `If you're not satisfied, contact us within the first 14 days and we'll send you a full refund.`,
+        ...props.title
+    },
+    lBox:{
+        h3: 'Lifetime Membership',
+        p: 'Lorem ipsum dolor sit amet consect etur adipisicing elit. Itaque amet indis perferendis blanditiis repellendus etur quidem assumenda.',
+        dividerText: `What's included`,
+        greenCheckText: ['Private forum access', 'Member resources', 'Entry to annual conference', 'Official member t-shirt'],
+        ...props.lBox
+    },
+    rBox:{
+        top: 'Pay once, own it forever',
+        price:{amt:'$349', unit:'USD'},
+        clarification:{href:'#', text: ()=> 'Learn about our membership policy'},
+        ctaBtn:{href:'#', text: ()=> 'Get Access'},
+        teaser:{href:'#', text: () => <> Get a free sample <span class="font-normal text-gray-500">(20MB)</span> </>},
+        ...props.rBox
+    },
+  } as SimplePricingProps
 
-    const GreenCheckText = (greenCheckText:string | JSX.Element) => <li class="flex items-start lg:col-span-1">
-        <div class="flex-shrink-0">
-            <Check_circle class="h-5 w-5 text-green-400"/>
-        </div>
-        <p class="ml-3 text-sm text-gray-700">{greenCheckText}</p>
-    </li>
+  console.log({p})
+
+  const GreenCheckText = (greenCheckText:string | JSX.Element) => <li class="flex items-start lg:col-span-1">
+      <div class="flex-shrink-0">
+          <Check_circle class="h-5 w-5 text-green-400"/>
+      </div>
+      <p class="ml-3 text-sm text-gray-700">{greenCheckText}</p>
+  </li>
 
 
 return (
 <div class="bg-gray-100">
+  {props.title && props.title?.h2 && 
   <div class="pt-12 sm:pt-16 lg:pt-20">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="text-center">
@@ -63,6 +67,7 @@ return (
       </div>
     </div>
   </div>
+  }
   <div class="mt-8 bg-white pb-16 sm:mt-12 sm:pb-20 lg:pb-28">
     <div class="relative">
       <div class="absolute inset-0 h-1/2 bg-gray-100"></div>

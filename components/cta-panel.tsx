@@ -26,7 +26,7 @@ export default function(props: Partial<CTAPanel>){
     ...props
   }
   return(
-  <div class="bg-white">
+  <section class="bg-white">
     <div class="mx-auto max-w-7xl py-16 px-4 sm:px-6 lg:px-8">
       <div class="overflow-hidden rounded-lg bg-indigo-700 shadow-xl lg:grid lg:grid-cols-2 lg:gap-4">
         <div class="px-6 pt-10 pb-12 sm:px-16 sm:pt-16 lg:py-16 lg:pr-0 xl:py-20 xl:px-20">
@@ -49,5 +49,5 @@ export default function(props: Partial<CTAPanel>){
         </div>
       </div>
     </div>
-  </div>)
+  </section>)
 }

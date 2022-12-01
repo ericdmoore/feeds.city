@@ -93,22 +93,33 @@ function FailureNotifucation(props: FailureProps){
     </div>)
 }
 
-export function SignUp() {
+interface SingUpProps{
+  token: string
+}
+
+export function SignUp(props: Partial<SingUpProps>) {
   
   const [email, setEmail] = useState('')
   const [shouldDisplayConfirmBox, setDisplayConfirmBox] = useState(false as (boolean | Error) )
 
   const onClick: JSX.GenericEventHandler<EventTarget>  = async (e) => {  
     e.preventDefault()
-    console.log('clicked', {email})
+    console.log('clicked', {email, token: props.token})
     
     // clear
     setDisplayConfirmBox(true)
     setEmail('')
   }
+
+  /**
+   * Setup a timer based on expiration time of the token
+   * when the token has expired, then disable the submit button, 
+   * and show the failure message with text that will prompt the user to refresh the page
+   * 
+   */
   
   return (
-    <div class="bg-white">
+    <section class="bg-white">
       <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:py-16 lg:px-8">
 
         <FailureNotifucation display={shouldDisplayConfirmBox} msg='Yikes - not sure about...Successfully uploaded' shutClose={()=>{setDisplayConfirmBox(false)}}/>
@@ -127,18 +138,18 @@ export function SignUp() {
                 id="email-address"
                 name="email-address"
                 type="email"
-                autoComplete="email"                  
-                class="w-full rounded-md border-white px-5 py-3 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-700"
+                autoComplete="email"
                 value={email}
+                data-token={props.token}
                 placeholder="Enter your email"
+                class="w-full rounded-md border-white px-5 py-3 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-700"
                 onfocusout={(e:any)=>{ e.preventDefault(); setEmail(String((e.target.value))); }}
               />
               <button
                 type="submit"
                 onClick={onClick}
                 class="mt-3 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-500 px-5 py-3 text-base font-medium text-white shadow hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto sm:flex-shrink-0"
-              >
-                Request
+              > Request 
               </button>
             </form>
             <p class="mt-3 text-sm text-indigo-200">
@@ -147,7 +158,7 @@ export function SignUp() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
     )
   }
   

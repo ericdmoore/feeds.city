@@ -15,7 +15,7 @@ const statsBoundariesAndMiddile = (d:Record<string, string>)=>{
 export function Stats(props: StatsProps) {
   const [first, last, ...middle] = statsBoundariesAndMiddile(props.stats)
   return (
-      <div class="bg-gray-50 pt-12 sm:pt-16">
+      <section class="bg-gray-50 pt-12 sm:pt-16">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div class="mx-auto max-w-4xl text-center">
             <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{props?.line1}</h2>
@@ -50,7 +50,7 @@ export function Stats(props: StatsProps) {
             </div>
           </div>
         </div>
-      </div>
+      </section>
     )
   }
   

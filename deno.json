@@ -1,6 +1,10 @@
 {
   "tasks": {
-    "start": "deno run -A --watch=static/,routes/ dev.ts"
+    "test": "deno test -A",
+    "start": "deno run -A --watch=static/,routes/ dev.ts",
+    "gen": "deno task env && deno task import_map",
+    "import_map": "touch ./import_map.json; deno run --import-map=./utils/importMap/empty_import_map.json utils/importMap/gen.ts > import_map.json",
+    "env": "touch ./env.example; deno run --allow-read --allow-env ./utils/env/genExample.ts > env.example"
   },
   "importMap": "./import_map.json",
   "compilerOptions": {
