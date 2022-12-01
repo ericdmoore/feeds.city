@@ -1,3 +1,3 @@
-import Menu from '../islands/heroicon-menu.tsx'
+import Menu from "../islands/heroicon-menu.tsx";
 
-export default Menu
+export default Menu;

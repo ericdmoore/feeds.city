@@ -1,4 +1,4 @@
-import type { RouteConfig, HandlerContext } from "$fresh/server.ts";
+import type { HandlerContext, RouteConfig } from "$fresh/server.ts";
 
 export const config: RouteConfig = {
   routeOverride: "/ast/:url(http.*)",
@@ -6,6 +6,6 @@ export const config: RouteConfig = {
 
 export const handler = (req: Request, ctx: HandlerContext): Response => {
   return new Response(`AST Explorer
-    - ${JSON.stringify({req, ctx}, null, 2) }
+    - ${JSON.stringify({ req, ctx }, null, 2)}
   `);
 };

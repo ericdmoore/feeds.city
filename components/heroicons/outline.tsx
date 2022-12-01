@@ -1,7 +1,7 @@
 export interface heroProps {
   class: string;
 }
-export const Academic_cap = (props: heroProps = {class:''}) => (
+export const Academic_cap = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -18,7 +18,7 @@ export const Academic_cap = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Adjustments_horizontal = (props: heroProps = {class:''}) => (
+export const Adjustments_horizontal = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -35,7 +35,7 @@ export const Adjustments_horizontal = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Adjustments_vertical = (props: heroProps = {class:''}) => (
+export const Adjustments_vertical = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -52,7 +52,7 @@ export const Adjustments_vertical = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Archive_box_arrow_down = (props: heroProps = {class:''}) => (
+export const Archive_box_arrow_down = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -69,7 +69,7 @@ export const Archive_box_arrow_down = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Archive_box_x_mark = (props: heroProps = {class:''}) => (
+export const Archive_box_x_mark = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -86,7 +86,7 @@ export const Archive_box_x_mark = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Archive_box = (props: heroProps = {class:''}) => (
+export const Archive_box = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -103,7 +103,7 @@ export const Archive_box = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_down_circle = (props: heroProps = {class:''}) => (
+export const Arrow_down_circle = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -120,7 +120,7 @@ export const Arrow_down_circle = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_down_left = (props: heroProps = {class:''}) => (
+export const Arrow_down_left = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -137,7 +137,9 @@ export const Arrow_down_left = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_down_on_square_stack = (props: heroProps = {class:''}) => (
+export const Arrow_down_on_square_stack = (
+  props: heroProps = { class: "" },
+) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -154,7 +156,7 @@ export const Arrow_down_on_square_stack = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_down_on_square = (props: heroProps = {class:''}) => (
+export const Arrow_down_on_square = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -171,7 +173,7 @@ export const Arrow_down_on_square = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_down_right = (props: heroProps = {class:''}) => (
+export const Arrow_down_right = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -188,7 +190,7 @@ export const Arrow_down_right = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_down_tray = (props: heroProps = {class:''}) => (
+export const Arrow_down_tray = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -205,7 +207,7 @@ export const Arrow_down_tray = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_down = (props: heroProps = {class:''}) => (
+export const Arrow_down = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -222,7 +224,7 @@ export const Arrow_down = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_left_circle = (props: heroProps = {class:''}) => (
+export const Arrow_left_circle = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -239,7 +241,7 @@ export const Arrow_left_circle = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_left_on_rectangle = (props: heroProps = {class:''}) => (
+export const Arrow_left_on_rectangle = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -256,7 +258,7 @@ export const Arrow_left_on_rectangle = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_left = (props: heroProps = {class:''}) => (
+export const Arrow_left = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -273,7 +275,7 @@ export const Arrow_left = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_long_down = (props: heroProps = {class:''}) => (
+export const Arrow_long_down = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -290,7 +292,7 @@ export const Arrow_long_down = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_long_left = (props: heroProps = {class:''}) => (
+export const Arrow_long_left = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -307,7 +309,7 @@ export const Arrow_long_left = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_long_right = (props: heroProps = {class:''}) => (
+export const Arrow_long_right = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -324,7 +326,7 @@ export const Arrow_long_right = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_long_up = (props: heroProps = {class:''}) => (
+export const Arrow_long_up = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -341,7 +343,7 @@ export const Arrow_long_up = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_path_rounded_square = (props: heroProps = {class:''}) => (
+export const Arrow_path_rounded_square = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -358,7 +360,7 @@ export const Arrow_path_rounded_square = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_path = (props: heroProps = {class:''}) => (
+export const Arrow_path = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -375,7 +377,7 @@ export const Arrow_path = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_right_circle = (props: heroProps = {class:''}) => (
+export const Arrow_right_circle = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -392,7 +394,7 @@ export const Arrow_right_circle = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_right_on_rectangle = (props: heroProps = {class:''}) => (
+export const Arrow_right_on_rectangle = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -409,7 +411,7 @@ export const Arrow_right_on_rectangle = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_right = (props: heroProps = {class:''}) => (
+export const Arrow_right = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -426,7 +428,7 @@ export const Arrow_right = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_small_down = (props: heroProps = {class:''}) => (
+export const Arrow_small_down = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -443,7 +445,7 @@ export const Arrow_small_down = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_small_left = (props: heroProps = {class:''}) => (
+export const Arrow_small_left = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -460,7 +462,7 @@ export const Arrow_small_left = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_small_right = (props: heroProps = {class:''}) => (
+export const Arrow_small_right = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -477,7 +479,7 @@ export const Arrow_small_right = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_small_up = (props: heroProps = {class:''}) => (
+export const Arrow_small_up = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -494,7 +496,7 @@ export const Arrow_small_up = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_top_right_on_square = (props: heroProps = {class:''}) => (
+export const Arrow_top_right_on_square = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -511,7 +513,7 @@ export const Arrow_top_right_on_square = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_trending_down = (props: heroProps = {class:''}) => (
+export const Arrow_trending_down = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -528,7 +530,7 @@ export const Arrow_trending_down = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_trending_up = (props: heroProps = {class:''}) => (
+export const Arrow_trending_up = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -545,7 +547,7 @@ export const Arrow_trending_up = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_up_circle = (props: heroProps = {class:''}) => (
+export const Arrow_up_circle = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -562,7 +564,7 @@ export const Arrow_up_circle = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_up_left = (props: heroProps = {class:''}) => (
+export const Arrow_up_left = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -579,7 +581,7 @@ export const Arrow_up_left = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_up_on_square_stack = (props: heroProps = {class:''}) => (
+export const Arrow_up_on_square_stack = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -596,7 +598,7 @@ export const Arrow_up_on_square_stack = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_up_on_square = (props: heroProps = {class:''}) => (
+export const Arrow_up_on_square = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -613,7 +615,7 @@ export const Arrow_up_on_square = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_up_right = (props: heroProps = {class:''}) => (
+export const Arrow_up_right = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -630,7 +632,7 @@ export const Arrow_up_right = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_up_tray = (props: heroProps = {class:''}) => (
+export const Arrow_up_tray = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -647,7 +649,7 @@ export const Arrow_up_tray = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_up = (props: heroProps = {class:''}) => (
+export const Arrow_up = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -664,7 +666,7 @@ export const Arrow_up = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_uturn_down = (props: heroProps = {class:''}) => (
+export const Arrow_uturn_down = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -681,7 +683,7 @@ export const Arrow_uturn_down = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_uturn_left = (props: heroProps = {class:''}) => (
+export const Arrow_uturn_left = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -698,7 +700,7 @@ export const Arrow_uturn_left = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_uturn_right = (props: heroProps = {class:''}) => (
+export const Arrow_uturn_right = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -715,7 +717,7 @@ export const Arrow_uturn_right = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrow_uturn_up = (props: heroProps = {class:''}) => (
+export const Arrow_uturn_up = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -732,7 +734,7 @@ export const Arrow_uturn_up = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrows_pointing_in = (props: heroProps = {class:''}) => (
+export const Arrows_pointing_in = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -749,7 +751,7 @@ export const Arrows_pointing_in = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrows_pointing_out = (props: heroProps = {class:''}) => (
+export const Arrows_pointing_out = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -766,7 +768,7 @@ export const Arrows_pointing_out = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrows_right_left = (props: heroProps = {class:''}) => (
+export const Arrows_right_left = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -783,7 +785,7 @@ export const Arrows_right_left = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Arrows_up_down = (props: heroProps = {class:''}) => (
+export const Arrows_up_down = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -800,7 +802,7 @@ export const Arrows_up_down = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const At_symbol = (props: heroProps = {class:''}) => (
+export const At_symbol = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -816,7 +818,7 @@ export const At_symbol = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Backspace = (props: heroProps = {class:''}) => (
+export const Backspace = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -833,7 +835,7 @@ export const Backspace = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Backward = (props: heroProps = {class:''}) => (
+export const Backward = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -850,7 +852,7 @@ export const Backward = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Banknotes = (props: heroProps = {class:''}) => (
+export const Banknotes = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -867,7 +869,7 @@ export const Banknotes = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Bars_2 = (props: heroProps = {class:''}) => (
+export const Bars_2 = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -884,7 +886,7 @@ export const Bars_2 = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Bars_3_bottom_left = (props: heroProps = {class:''}) => (
+export const Bars_3_bottom_left = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -901,7 +903,7 @@ export const Bars_3_bottom_left = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Bars_3_bottom_right = (props: heroProps = {class:''}) => (
+export const Bars_3_bottom_right = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -918,7 +920,7 @@ export const Bars_3_bottom_right = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Bars_3_center_left = (props: heroProps = {class:''}) => (
+export const Bars_3_center_left = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -935,7 +937,7 @@ export const Bars_3_center_left = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Bars_3 = (props: heroProps = {class:''}) => (
+export const Bars_3 = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -952,7 +954,7 @@ export const Bars_3 = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Bars_4 = (props: heroProps = {class:''}) => (
+export const Bars_4 = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -969,7 +971,7 @@ export const Bars_4 = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Bars_arrow_down = (props: heroProps = {class:''}) => (
+export const Bars_arrow_down = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -986,7 +988,7 @@ export const Bars_arrow_down = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Bars_arrow_up = (props: heroProps = {class:''}) => (
+export const Bars_arrow_up = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1003,7 +1005,7 @@ export const Bars_arrow_up = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Battery_0 = (props: heroProps = {class:''}) => (
+export const Battery_0 = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1020,7 +1022,7 @@ export const Battery_0 = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Battery_100 = (props: heroProps = {class:''}) => (
+export const Battery_100 = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1037,7 +1039,7 @@ export const Battery_100 = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Battery_50 = (props: heroProps = {class:''}) => (
+export const Battery_50 = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1054,7 +1056,7 @@ export const Battery_50 = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Beaker = (props: heroProps = {class:''}) => (
+export const Beaker = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1071,7 +1073,7 @@ export const Beaker = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Bell_alert = (props: heroProps = {class:''}) => (
+export const Bell_alert = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1088,7 +1090,7 @@ export const Bell_alert = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Bell_slash = (props: heroProps = {class:''}) => (
+export const Bell_slash = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1105,7 +1107,7 @@ export const Bell_slash = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Bell_snooze = (props: heroProps = {class:''}) => (
+export const Bell_snooze = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1122,7 +1124,7 @@ export const Bell_snooze = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Bell = (props: heroProps = {class:''}) => (
+export const Bell = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1139,7 +1141,7 @@ export const Bell = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Bolt_slash = (props: heroProps = {class:''}) => (
+export const Bolt_slash = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1156,7 +1158,7 @@ export const Bolt_slash = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Bolt = (props: heroProps = {class:''}) => (
+export const Bolt = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1173,7 +1175,7 @@ export const Bolt = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Book_open = (props: heroProps = {class:''}) => (
+export const Book_open = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1190,7 +1192,7 @@ export const Book_open = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Bookmark_slash = (props: heroProps = {class:''}) => (
+export const Bookmark_slash = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1207,7 +1209,7 @@ export const Bookmark_slash = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Bookmark_square = (props: heroProps = {class:''}) => (
+export const Bookmark_square = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1224,7 +1226,7 @@ export const Bookmark_square = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Bookmark = (props: heroProps = {class:''}) => (
+export const Bookmark = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1241,7 +1243,7 @@ export const Bookmark = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Briefcase = (props: heroProps = {class:''}) => (
+export const Briefcase = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1258,7 +1260,7 @@ export const Briefcase = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Bug_ant = (props: heroProps = {class:''}) => (
+export const Bug_ant = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1275,7 +1277,7 @@ export const Bug_ant = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Building_library = (props: heroProps = {class:''}) => (
+export const Building_library = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1292,7 +1294,7 @@ export const Building_library = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Building_office_2 = (props: heroProps = {class:''}) => (
+export const Building_office_2 = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1309,7 +1311,7 @@ export const Building_office_2 = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Building_office = (props: heroProps = {class:''}) => (
+export const Building_office = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1326,7 +1328,7 @@ export const Building_office = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Building_storefront = (props: heroProps = {class:''}) => (
+export const Building_storefront = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1343,7 +1345,7 @@ export const Building_storefront = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Cake = (props: heroProps = {class:''}) => (
+export const Cake = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1360,7 +1362,7 @@ export const Cake = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Calculator = (props: heroProps = {class:''}) => (
+export const Calculator = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1377,7 +1379,7 @@ export const Calculator = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Calendar_days = (props: heroProps = {class:''}) => (
+export const Calendar_days = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1394,7 +1396,7 @@ export const Calendar_days = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Calendar = (props: heroProps = {class:''}) => (
+export const Calendar = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1411,7 +1413,7 @@ export const Calendar = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Camera = (props: heroProps = {class:''}) => (
+export const Camera = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1433,7 +1435,7 @@ export const Camera = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Chart_bar_square = (props: heroProps = {class:''}) => (
+export const Chart_bar_square = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1450,7 +1452,7 @@ export const Chart_bar_square = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Chart_bar = (props: heroProps = {class:''}) => (
+export const Chart_bar = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1467,7 +1469,7 @@ export const Chart_bar = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Chart_pie = (props: heroProps = {class:''}) => (
+export const Chart_pie = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1489,7 +1491,9 @@ export const Chart_pie = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Chat_bubble_bottom_center_text = (props: heroProps = {class:''}) => (
+export const Chat_bubble_bottom_center_text = (
+  props: heroProps = { class: "" },
+) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1506,7 +1510,7 @@ export const Chat_bubble_bottom_center_text = (props: heroProps = {class:''}) =>
     />
   </svg>
 );
-export const Chat_bubble_bottom_center = (props: heroProps = {class:''}) => (
+export const Chat_bubble_bottom_center = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1523,7 +1527,7 @@ export const Chat_bubble_bottom_center = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Chat_bubble_left_ellipsis = (props: heroProps = {class:''}) => (
+export const Chat_bubble_left_ellipsis = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1540,7 +1544,7 @@ export const Chat_bubble_left_ellipsis = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Chat_bubble_left_right = (props: heroProps = {class:''}) => (
+export const Chat_bubble_left_right = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1557,7 +1561,7 @@ export const Chat_bubble_left_right = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Chat_bubble_left = (props: heroProps = {class:''}) => (
+export const Chat_bubble_left = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1574,7 +1578,9 @@ export const Chat_bubble_left = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Chat_bubble_oval_left_ellipsis = (props: heroProps = {class:''}) => (
+export const Chat_bubble_oval_left_ellipsis = (
+  props: heroProps = { class: "" },
+) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1591,7 +1597,7 @@ export const Chat_bubble_oval_left_ellipsis = (props: heroProps = {class:''}) =>
     />
   </svg>
 );
-export const Chat_bubble_oval_left = (props: heroProps = {class:''}) => (
+export const Chat_bubble_oval_left = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1608,7 +1614,7 @@ export const Chat_bubble_oval_left = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Check_badge = (props: heroProps = {class:''}) => (
+export const Check_badge = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1625,7 +1631,7 @@ export const Check_badge = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Check_circle = (props: heroProps = {class:''}) => (
+export const Check_circle = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1642,7 +1648,7 @@ export const Check_circle = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Check = (props: heroProps = {class:''}) => (
+export const Check = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1659,7 +1665,7 @@ export const Check = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Chevron_double_down = (props: heroProps = {class:''}) => (
+export const Chevron_double_down = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1676,7 +1682,7 @@ export const Chevron_double_down = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Chevron_double_left = (props: heroProps = {class:''}) => (
+export const Chevron_double_left = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1693,7 +1699,7 @@ export const Chevron_double_left = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Chevron_double_right = (props: heroProps = {class:''}) => (
+export const Chevron_double_right = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1710,7 +1716,7 @@ export const Chevron_double_right = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Chevron_double_up = (props: heroProps = {class:''}) => (
+export const Chevron_double_up = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1727,7 +1733,7 @@ export const Chevron_double_up = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Chevron_down = (props: heroProps = {class:''}) => (
+export const Chevron_down = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1744,7 +1750,7 @@ export const Chevron_down = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Chevron_left = (props: heroProps = {class:''}) => (
+export const Chevron_left = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1761,7 +1767,7 @@ export const Chevron_left = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Chevron_right = (props: heroProps = {class:''}) => (
+export const Chevron_right = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1778,7 +1784,7 @@ export const Chevron_right = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Chevron_up_down = (props: heroProps = {class:''}) => (
+export const Chevron_up_down = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1795,7 +1801,7 @@ export const Chevron_up_down = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Chevron_up = (props: heroProps = {class:''}) => (
+export const Chevron_up = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1812,7 +1818,7 @@ export const Chevron_up = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Circle_stack = (props: heroProps = {class:''}) => (
+export const Circle_stack = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1829,7 +1835,7 @@ export const Circle_stack = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Clipboard_document_check = (props: heroProps = {class:''}) => (
+export const Clipboard_document_check = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1846,7 +1852,7 @@ export const Clipboard_document_check = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Clipboard_document_list = (props: heroProps = {class:''}) => (
+export const Clipboard_document_list = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1863,7 +1869,7 @@ export const Clipboard_document_list = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Clipboard_document = (props: heroProps = {class:''}) => (
+export const Clipboard_document = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1880,7 +1886,7 @@ export const Clipboard_document = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Clipboard = (props: heroProps = {class:''}) => (
+export const Clipboard = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1897,7 +1903,7 @@ export const Clipboard = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Clock = (props: heroProps = {class:''}) => (
+export const Clock = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1914,7 +1920,7 @@ export const Clock = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Cloud_arrow_down = (props: heroProps = {class:''}) => (
+export const Cloud_arrow_down = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1931,7 +1937,7 @@ export const Cloud_arrow_down = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Cloud_arrow_up = (props: heroProps = {class:''}) => (
+export const Cloud_arrow_up = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1948,7 +1954,7 @@ export const Cloud_arrow_up = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Cloud = (props: heroProps = {class:''}) => (
+export const Cloud = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1965,7 +1971,7 @@ export const Cloud = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Code_bracket_square = (props: heroProps = {class:''}) => (
+export const Code_bracket_square = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1982,7 +1988,7 @@ export const Code_bracket_square = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Code_bracket = (props: heroProps = {class:''}) => (
+export const Code_bracket = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -1999,7 +2005,7 @@ export const Code_bracket = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Cog_6_tooth = (props: heroProps = {class:''}) => (
+export const Cog_6_tooth = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2021,7 +2027,7 @@ export const Cog_6_tooth = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Cog_8_tooth = (props: heroProps = {class:''}) => (
+export const Cog_8_tooth = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2043,7 +2049,7 @@ export const Cog_8_tooth = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Cog = (props: heroProps = {class:''}) => (
+export const Cog = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2060,7 +2066,7 @@ export const Cog = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Command_line = (props: heroProps = {class:''}) => (
+export const Command_line = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2077,7 +2083,7 @@ export const Command_line = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Computer_desktop = (props: heroProps = {class:''}) => (
+export const Computer_desktop = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2094,7 +2100,7 @@ export const Computer_desktop = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Cpu_chip = (props: heroProps = {class:''}) => (
+export const Cpu_chip = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2111,7 +2117,7 @@ export const Cpu_chip = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Credit_card = (props: heroProps = {class:''}) => (
+export const Credit_card = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2128,7 +2134,7 @@ export const Credit_card = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Cube_transparent = (props: heroProps = {class:''}) => (
+export const Cube_transparent = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2145,7 +2151,7 @@ export const Cube_transparent = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Cube = (props: heroProps = {class:''}) => (
+export const Cube = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2162,7 +2168,7 @@ export const Cube = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Currency_bangladeshi = (props: heroProps = {class:''}) => (
+export const Currency_bangladeshi = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2179,7 +2185,7 @@ export const Currency_bangladeshi = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Currency_dollar = (props: heroProps = {class:''}) => (
+export const Currency_dollar = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2196,7 +2202,7 @@ export const Currency_dollar = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Currency_euro = (props: heroProps = {class:''}) => (
+export const Currency_euro = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2213,7 +2219,7 @@ export const Currency_euro = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Currency_pound = (props: heroProps = {class:''}) => (
+export const Currency_pound = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2230,7 +2236,7 @@ export const Currency_pound = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Currency_rupee = (props: heroProps = {class:''}) => (
+export const Currency_rupee = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2247,7 +2253,7 @@ export const Currency_rupee = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Currency_yen = (props: heroProps = {class:''}) => (
+export const Currency_yen = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2264,7 +2270,7 @@ export const Currency_yen = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Cursor_arrow_rays = (props: heroProps = {class:''}) => (
+export const Cursor_arrow_rays = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2281,7 +2287,7 @@ export const Cursor_arrow_rays = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Cursor_arrow_ripple = (props: heroProps = {class:''}) => (
+export const Cursor_arrow_ripple = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2298,7 +2304,7 @@ export const Cursor_arrow_ripple = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Device_phone_mobile = (props: heroProps = {class:''}) => (
+export const Device_phone_mobile = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2315,7 +2321,7 @@ export const Device_phone_mobile = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Device_tablet = (props: heroProps = {class:''}) => (
+export const Device_tablet = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2332,7 +2338,7 @@ export const Device_tablet = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Document_arrow_down = (props: heroProps = {class:''}) => (
+export const Document_arrow_down = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2349,7 +2355,7 @@ export const Document_arrow_down = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Document_arrow_up = (props: heroProps = {class:''}) => (
+export const Document_arrow_up = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2366,7 +2372,7 @@ export const Document_arrow_up = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Document_chart_bar = (props: heroProps = {class:''}) => (
+export const Document_chart_bar = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2383,7 +2389,7 @@ export const Document_chart_bar = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Document_check = (props: heroProps = {class:''}) => (
+export const Document_check = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2400,7 +2406,7 @@ export const Document_check = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Document_duplicate = (props: heroProps = {class:''}) => (
+export const Document_duplicate = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2417,7 +2423,7 @@ export const Document_duplicate = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Document_magnifying_glass = (props: heroProps = {class:''}) => (
+export const Document_magnifying_glass = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2434,7 +2440,7 @@ export const Document_magnifying_glass = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Document_minus = (props: heroProps = {class:''}) => (
+export const Document_minus = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2451,7 +2457,7 @@ export const Document_minus = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Document_plus = (props: heroProps = {class:''}) => (
+export const Document_plus = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2468,7 +2474,7 @@ export const Document_plus = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Document_text = (props: heroProps = {class:''}) => (
+export const Document_text = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2485,7 +2491,7 @@ export const Document_text = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Document = (props: heroProps = {class:''}) => (
+export const Document = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2502,7 +2508,9 @@ export const Document = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Ellipsis_horizontal_circle = (props: heroProps = {class:''}) => (
+export const Ellipsis_horizontal_circle = (
+  props: heroProps = { class: "" },
+) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2519,7 +2527,7 @@ export const Ellipsis_horizontal_circle = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Ellipsis_horizontal = (props: heroProps = {class:''}) => (
+export const Ellipsis_horizontal = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2536,7 +2544,7 @@ export const Ellipsis_horizontal = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Ellipsis_vertical = (props: heroProps = {class:''}) => (
+export const Ellipsis_vertical = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2553,7 +2561,7 @@ export const Ellipsis_vertical = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Envelope_open = (props: heroProps = {class:''}) => (
+export const Envelope_open = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2570,7 +2578,7 @@ export const Envelope_open = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Envelope = (props: heroProps = {class:''}) => (
+export const Envelope = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2587,7 +2595,7 @@ export const Envelope = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Exclamation_circle = (props: heroProps = {class:''}) => (
+export const Exclamation_circle = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2604,7 +2612,7 @@ export const Exclamation_circle = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Exclamation_triangle = (props: heroProps = {class:''}) => (
+export const Exclamation_triangle = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2621,7 +2629,7 @@ export const Exclamation_triangle = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Eye_dropper = (props: heroProps = {class:''}) => (
+export const Eye_dropper = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2638,7 +2646,7 @@ export const Eye_dropper = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Eye_slash = (props: heroProps = {class:''}) => (
+export const Eye_slash = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2655,7 +2663,7 @@ export const Eye_slash = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Eye = (props: heroProps = {class:''}) => (
+export const Eye = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2677,7 +2685,7 @@ export const Eye = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Face_frown = (props: heroProps = {class:''}) => (
+export const Face_frown = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2694,7 +2702,7 @@ export const Face_frown = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Face_smile = (props: heroProps = {class:''}) => (
+export const Face_smile = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2711,7 +2719,7 @@ export const Face_smile = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Film = (props: heroProps = {class:''}) => (
+export const Film = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2728,7 +2736,7 @@ export const Film = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Finger_print = (props: heroProps = {class:''}) => (
+export const Finger_print = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2745,7 +2753,7 @@ export const Finger_print = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Fire = (props: heroProps = {class:''}) => (
+export const Fire = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2767,7 +2775,7 @@ export const Fire = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Flag = (props: heroProps = {class:''}) => (
+export const Flag = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2784,7 +2792,7 @@ export const Flag = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Folder_arrow_down = (props: heroProps = {class:''}) => (
+export const Folder_arrow_down = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2801,7 +2809,7 @@ export const Folder_arrow_down = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Folder_minus = (props: heroProps = {class:''}) => (
+export const Folder_minus = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2818,7 +2826,7 @@ export const Folder_minus = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Folder_open = (props: heroProps = {class:''}) => (
+export const Folder_open = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2835,7 +2843,7 @@ export const Folder_open = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Folder_plus = (props: heroProps = {class:''}) => (
+export const Folder_plus = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2852,7 +2860,7 @@ export const Folder_plus = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Folder = (props: heroProps = {class:''}) => (
+export const Folder = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2869,7 +2877,7 @@ export const Folder = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Forward = (props: heroProps = {class:''}) => (
+export const Forward = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2886,7 +2894,7 @@ export const Forward = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Funnel = (props: heroProps = {class:''}) => (
+export const Funnel = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2903,7 +2911,7 @@ export const Funnel = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Gif = (props: heroProps = {class:''}) => (
+export const Gif = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2920,7 +2928,7 @@ export const Gif = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Gift_top = (props: heroProps = {class:''}) => (
+export const Gift_top = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2937,7 +2945,7 @@ export const Gift_top = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Gift = (props: heroProps = {class:''}) => (
+export const Gift = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2954,7 +2962,7 @@ export const Gift = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Globe_alt = (props: heroProps = {class:''}) => (
+export const Globe_alt = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2971,7 +2979,7 @@ export const Globe_alt = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Globe_americas = (props: heroProps = {class:''}) => (
+export const Globe_americas = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -2988,7 +2996,7 @@ export const Globe_americas = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Globe_asia_australia = (props: heroProps = {class:''}) => (
+export const Globe_asia_australia = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3005,7 +3013,7 @@ export const Globe_asia_australia = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Globe_europe_africa = (props: heroProps = {class:''}) => (
+export const Globe_europe_africa = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3022,7 +3030,7 @@ export const Globe_europe_africa = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Hand_raised = (props: heroProps = {class:''}) => (
+export const Hand_raised = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3039,7 +3047,7 @@ export const Hand_raised = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Hand_thumb_down = (props: heroProps = {class:''}) => (
+export const Hand_thumb_down = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3056,7 +3064,7 @@ export const Hand_thumb_down = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Hand_thumb_up = (props: heroProps = {class:''}) => (
+export const Hand_thumb_up = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3073,7 +3081,7 @@ export const Hand_thumb_up = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Hashtag = (props: heroProps = {class:''}) => (
+export const Hashtag = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3090,7 +3098,7 @@ export const Hashtag = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Heart = (props: heroProps = {class:''}) => (
+export const Heart = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3107,7 +3115,7 @@ export const Heart = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Home_modern = (props: heroProps = {class:''}) => (
+export const Home_modern = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3124,7 +3132,7 @@ export const Home_modern = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Home = (props: heroProps = {class:''}) => (
+export const Home = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3141,7 +3149,7 @@ export const Home = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Identification = (props: heroProps = {class:''}) => (
+export const Identification = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3158,7 +3166,7 @@ export const Identification = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Inbox_arrow_down = (props: heroProps = {class:''}) => (
+export const Inbox_arrow_down = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3175,7 +3183,7 @@ export const Inbox_arrow_down = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Inbox_stack = (props: heroProps = {class:''}) => (
+export const Inbox_stack = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3192,7 +3200,7 @@ export const Inbox_stack = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Inbox = (props: heroProps = {class:''}) => (
+export const Inbox = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3209,7 +3217,7 @@ export const Inbox = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Information_circle = (props: heroProps = {class:''}) => (
+export const Information_circle = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3226,7 +3234,7 @@ export const Information_circle = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Key = (props: heroProps = {class:''}) => (
+export const Key = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3243,7 +3251,7 @@ export const Key = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Language = (props: heroProps = {class:''}) => (
+export const Language = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3260,7 +3268,7 @@ export const Language = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Lifebuoy = (props: heroProps = {class:''}) => (
+export const Lifebuoy = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3277,7 +3285,7 @@ export const Lifebuoy = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Light_bulb = (props: heroProps = {class:''}) => (
+export const Light_bulb = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3294,7 +3302,7 @@ export const Light_bulb = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Link = (props: heroProps = {class:''}) => (
+export const Link = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3311,7 +3319,7 @@ export const Link = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const List_bullet = (props: heroProps = {class:''}) => (
+export const List_bullet = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3328,7 +3336,7 @@ export const List_bullet = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Lock_closed = (props: heroProps = {class:''}) => (
+export const Lock_closed = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3345,7 +3353,7 @@ export const Lock_closed = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Lock_open = (props: heroProps = {class:''}) => (
+export const Lock_open = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3362,7 +3370,7 @@ export const Lock_open = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Magnifying_glass_circle = (props: heroProps = {class:''}) => (
+export const Magnifying_glass_circle = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3379,7 +3387,7 @@ export const Magnifying_glass_circle = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Magnifying_glass_minus = (props: heroProps = {class:''}) => (
+export const Magnifying_glass_minus = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3396,7 +3404,7 @@ export const Magnifying_glass_minus = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Magnifying_glass_plus = (props: heroProps = {class:''}) => (
+export const Magnifying_glass_plus = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3413,7 +3421,7 @@ export const Magnifying_glass_plus = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Magnifying_glass = (props: heroProps = {class:''}) => (
+export const Magnifying_glass = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3430,7 +3438,7 @@ export const Magnifying_glass = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Map_pin = (props: heroProps = {class:''}) => (
+export const Map_pin = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3452,7 +3460,7 @@ export const Map_pin = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Map = (props: heroProps = {class:''}) => (
+export const Map = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3469,7 +3477,7 @@ export const Map = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Megaphone = (props: heroProps = {class:''}) => (
+export const Megaphone = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3486,7 +3494,7 @@ export const Megaphone = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Microphone = (props: heroProps = {class:''}) => (
+export const Microphone = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3503,7 +3511,7 @@ export const Microphone = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Minus_circle = (props: heroProps = {class:''}) => (
+export const Minus_circle = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3520,7 +3528,7 @@ export const Minus_circle = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Minus_small = (props: heroProps = {class:''}) => (
+export const Minus_small = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3533,7 +3541,7 @@ export const Minus_small = (props: heroProps = {class:''}) => (
     <path stroke-linecap="round" stroke-linejoin="round" d="M18 12H6" />
   </svg>
 );
-export const Minus = (props: heroProps = {class:''}) => (
+export const Minus = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3546,7 +3554,7 @@ export const Minus = (props: heroProps = {class:''}) => (
     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
   </svg>
 );
-export const Moon = (props: heroProps = {class:''}) => (
+export const Moon = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3563,7 +3571,7 @@ export const Moon = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Musical_note = (props: heroProps = {class:''}) => (
+export const Musical_note = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3580,7 +3588,7 @@ export const Musical_note = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Newspaper = (props: heroProps = {class:''}) => (
+export const Newspaper = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3597,7 +3605,7 @@ export const Newspaper = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const No_symbol = (props: heroProps = {class:''}) => (
+export const No_symbol = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3615,7 +3623,7 @@ export const No_symbol = (props: heroProps = {class:''}) => (
   </svg>
 );
 
-export const Paint_brush = (props: heroProps = {class:''}) => (
+export const Paint_brush = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3632,7 +3640,7 @@ export const Paint_brush = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Paper_airplane = (props: heroProps = {class:''}) => (
+export const Paper_airplane = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3649,7 +3657,7 @@ export const Paper_airplane = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Paper_clip = (props: heroProps = {class:''}) => (
+export const Paper_clip = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3666,7 +3674,7 @@ export const Paper_clip = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Pause_circle = (props: heroProps = {class:''}) => (
+export const Pause_circle = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3683,7 +3691,7 @@ export const Pause_circle = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Pause = (props: heroProps = {class:''}) => (
+export const Pause = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3700,7 +3708,7 @@ export const Pause = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Pencil_square = (props: heroProps = {class:''}) => (
+export const Pencil_square = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3717,7 +3725,7 @@ export const Pencil_square = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Pencil = (props: heroProps = {class:''}) => (
+export const Pencil = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3734,7 +3742,7 @@ export const Pencil = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Phone_arrow_down_left = (props: heroProps = {class:''}) => (
+export const Phone_arrow_down_left = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3751,7 +3759,7 @@ export const Phone_arrow_down_left = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Phone_arrow_up_right = (props: heroProps = {class:''}) => (
+export const Phone_arrow_up_right = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3768,7 +3776,7 @@ export const Phone_arrow_up_right = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Phone_x_mark = (props: heroProps = {class:''}) => (
+export const Phone_x_mark = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3785,7 +3793,7 @@ export const Phone_x_mark = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Phone = (props: heroProps = {class:''}) => (
+export const Phone = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3802,7 +3810,7 @@ export const Phone = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Photo = (props: heroProps = {class:''}) => (
+export const Photo = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3819,7 +3827,7 @@ export const Photo = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Play_circle = (props: heroProps = {class:''}) => (
+export const Play_circle = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3841,7 +3849,7 @@ export const Play_circle = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Play_pause = (props: heroProps = {class:''}) => (
+export const Play_pause = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3858,7 +3866,7 @@ export const Play_pause = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Play = (props: heroProps = {class:''}) => (
+export const Play = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3875,7 +3883,7 @@ export const Play = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Plus_circle = (props: heroProps = {class:''}) => (
+export const Plus_circle = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3892,7 +3900,7 @@ export const Plus_circle = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Plus_small = (props: heroProps = {class:''}) => (
+export const Plus_small = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3905,7 +3913,7 @@ export const Plus_small = (props: heroProps = {class:''}) => (
     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
   </svg>
 );
-export const Plus = (props: heroProps = {class:''}) => (
+export const Plus = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3922,7 +3930,7 @@ export const Plus = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Power = (props: heroProps = {class:''}) => (
+export const Power = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3939,7 +3947,7 @@ export const Power = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Presentation_chart_bar = (props: heroProps = {class:''}) => (
+export const Presentation_chart_bar = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3956,7 +3964,7 @@ export const Presentation_chart_bar = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Presentation_chart_line = (props: heroProps = {class:''}) => (
+export const Presentation_chart_line = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3973,7 +3981,7 @@ export const Presentation_chart_line = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Printer = (props: heroProps = {class:''}) => (
+export const Printer = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -3990,7 +3998,7 @@ export const Printer = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Puzzle_piece = (props: heroProps = {class:''}) => (
+export const Puzzle_piece = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4007,7 +4015,7 @@ export const Puzzle_piece = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Qr_code = (props: heroProps = {class:''}) => (
+export const Qr_code = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4029,7 +4037,7 @@ export const Qr_code = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Question_mark_circle = (props: heroProps = {class:''}) => (
+export const Question_mark_circle = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4046,7 +4054,7 @@ export const Question_mark_circle = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Queue_list = (props: heroProps = {class:''}) => (
+export const Queue_list = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4063,7 +4071,7 @@ export const Queue_list = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Radio = (props: heroProps = {class:''}) => (
+export const Radio = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4080,7 +4088,7 @@ export const Radio = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Receipt_percent = (props: heroProps = {class:''}) => (
+export const Receipt_percent = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4097,7 +4105,7 @@ export const Receipt_percent = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Receipt_refund = (props: heroProps = {class:''}) => (
+export const Receipt_refund = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4114,7 +4122,7 @@ export const Receipt_refund = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Rectangle_group = (props: heroProps = {class:''}) => (
+export const Rectangle_group = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4131,7 +4139,7 @@ export const Rectangle_group = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Rectangle_stack = (props: heroProps = {class:''}) => (
+export const Rectangle_stack = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4148,7 +4156,7 @@ export const Rectangle_stack = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Rocket_launch = (props: heroProps = {class:''}) => (
+export const Rocket_launch = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4165,7 +4173,7 @@ export const Rocket_launch = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Rss = (props: heroProps = {class:''}) => (
+export const Rss = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4182,7 +4190,7 @@ export const Rss = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Scale = (props: heroProps = {class:''}) => (
+export const Scale = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4199,7 +4207,7 @@ export const Scale = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Scissors = (props: heroProps = {class:''}) => (
+export const Scissors = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4216,7 +4224,7 @@ export const Scissors = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Server_stack = (props: heroProps = {class:''}) => (
+export const Server_stack = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4233,7 +4241,7 @@ export const Server_stack = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Server = (props: heroProps = {class:''}) => (
+export const Server = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4250,7 +4258,7 @@ export const Server = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Share = (props: heroProps = {class:''}) => (
+export const Share = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4267,7 +4275,7 @@ export const Share = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Shield_check = (props: heroProps = {class:''}) => (
+export const Shield_check = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4284,7 +4292,7 @@ export const Shield_check = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Shield_exclamation = (props: heroProps = {class:''}) => (
+export const Shield_exclamation = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4301,7 +4309,7 @@ export const Shield_exclamation = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Shopping_bag = (props: heroProps = {class:''}) => (
+export const Shopping_bag = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4318,7 +4326,7 @@ export const Shopping_bag = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Shopping_cart = (props: heroProps = {class:''}) => (
+export const Shopping_cart = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4335,7 +4343,7 @@ export const Shopping_cart = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Signal_slash = (props: heroProps = {class:''}) => (
+export const Signal_slash = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4352,7 +4360,7 @@ export const Signal_slash = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Signal = (props: heroProps = {class:''}) => (
+export const Signal = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4369,7 +4377,7 @@ export const Signal = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Sparkles = (props: heroProps = {class:''}) => (
+export const Sparkles = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4386,7 +4394,7 @@ export const Sparkles = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Speaker_wave = (props: heroProps = {class:''}) => (
+export const Speaker_wave = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4403,7 +4411,7 @@ export const Speaker_wave = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Speaker_x_mark = (props: heroProps = {class:''}) => (
+export const Speaker_x_mark = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4420,7 +4428,7 @@ export const Speaker_x_mark = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Square_2_stack = (props: heroProps = {class:''}) => (
+export const Square_2_stack = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4437,7 +4445,7 @@ export const Square_2_stack = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Square_3_stack_3d = (props: heroProps = {class:''}) => (
+export const Square_3_stack_3d = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4454,7 +4462,7 @@ export const Square_3_stack_3d = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Squares_2x2 = (props: heroProps = {class:''}) => (
+export const Squares_2x2 = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4471,7 +4479,7 @@ export const Squares_2x2 = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Squares_plus = (props: heroProps = {class:''}) => (
+export const Squares_plus = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4488,7 +4496,7 @@ export const Squares_plus = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Star = (props: heroProps = {class:''}) => (
+export const Star = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4505,7 +4513,7 @@ export const Star = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Stop_circle = (props: heroProps = {class:''}) => (
+export const Stop_circle = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4527,7 +4535,7 @@ export const Stop_circle = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Stop = (props: heroProps = {class:''}) => (
+export const Stop = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4544,7 +4552,7 @@ export const Stop = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Sun = (props: heroProps = {class:''}) => (
+export const Sun = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4561,7 +4569,7 @@ export const Sun = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Swatch = (props: heroProps = {class:''}) => (
+export const Swatch = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4578,7 +4586,7 @@ export const Swatch = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Table_cells = (props: heroProps = {class:''}) => (
+export const Table_cells = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4595,7 +4603,7 @@ export const Table_cells = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Tag = (props: heroProps = {class:''}) => (
+export const Tag = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4617,7 +4625,7 @@ export const Tag = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Ticket = (props: heroProps = {class:''}) => (
+export const Ticket = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4634,7 +4642,7 @@ export const Ticket = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Trash = (props: heroProps = {class:''}) => (
+export const Trash = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4651,7 +4659,7 @@ export const Trash = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Trophy = (props: heroProps = {class:''}) => (
+export const Trophy = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4668,7 +4676,7 @@ export const Trophy = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Truck = (props: heroProps = {class:''}) => (
+export const Truck = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4685,7 +4693,7 @@ export const Truck = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Tv = (props: heroProps = {class:''}) => (
+export const Tv = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4702,7 +4710,7 @@ export const Tv = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const User_circle = (props: heroProps = {class:''}) => (
+export const User_circle = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4719,7 +4727,7 @@ export const User_circle = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const User_group = (props: heroProps = {class:''}) => (
+export const User_group = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4736,7 +4744,7 @@ export const User_group = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const User_minus = (props: heroProps = {class:''}) => (
+export const User_minus = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4753,7 +4761,7 @@ export const User_minus = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const User_plus = (props: heroProps = {class:''}) => (
+export const User_plus = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4770,7 +4778,7 @@ export const User_plus = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const User = (props: heroProps = {class:''}) => (
+export const User = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4787,7 +4795,7 @@ export const User = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Users = (props: heroProps = {class:''}) => (
+export const Users = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4804,7 +4812,7 @@ export const Users = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Variable = (props: heroProps = {class:''}) => (
+export const Variable = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4821,7 +4829,7 @@ export const Variable = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Video_camera_slash = (props: heroProps = {class:''}) => (
+export const Video_camera_slash = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4838,7 +4846,7 @@ export const Video_camera_slash = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Video_camera = (props: heroProps = {class:''}) => (
+export const Video_camera = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4854,7 +4862,7 @@ export const Video_camera = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const View_columns = (props: heroProps = {class:''}) => (
+export const View_columns = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4871,7 +4879,7 @@ export const View_columns = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Viewfinder_circle = (props: heroProps = {class:''}) => (
+export const Viewfinder_circle = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4888,7 +4896,7 @@ export const Viewfinder_circle = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Wallet = (props: heroProps = {class:''}) => (
+export const Wallet = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4905,7 +4913,7 @@ export const Wallet = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Wifi = (props: heroProps = {class:''}) => (
+export const Wifi = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4922,7 +4930,7 @@ export const Wifi = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Window = (props: heroProps = {class:''}) => (
+export const Window = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4939,7 +4947,7 @@ export const Window = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Wrench_screwdriver = (props: heroProps = {class:''}) => (
+export const Wrench_screwdriver = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4956,7 +4964,7 @@ export const Wrench_screwdriver = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const Wrench = (props: heroProps = {class:''}) => (
+export const Wrench = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4978,7 +4986,7 @@ export const Wrench = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const X_circle = (props: heroProps = {class:''}) => (
+export const X_circle = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -4995,7 +5003,7 @@ export const X_circle = (props: heroProps = {class:''}) => (
     />
   </svg>
 );
-export const X_mark = (props: heroProps = {class:''}) => (
+export const X_mark = (props: heroProps = { class: "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}
