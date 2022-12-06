@@ -1,9 +1,11 @@
 // deno-lint-ignore-file require-await
 import type {
-  AbstractTokenFactory,
+  v1AbstractTokenFactory,
   LocalValidatorFns,
   VersionedPayload,
+  IValidationData
 } from "./tokenType.ts";
+
 import {
   create,
   decode,
@@ -15,18 +17,39 @@ import {
 
 const ISSUER = "https://feeds.city";
 
-export const isV1Token =
-  (async (payload: VersionedPayload) => payload?.v === 1) as LocalValidatorFns;
-export const isFromFeedCity =
-  (async (payload: VersionedPayload) =>
-    payload?.iss === ISSUER) as LocalValidatorFns;
+export const isV1Token: LocalValidatorFns = async (data: {headers:Header, payload:VersionedPayload, signature: Uint8Array}) => {
+  // console.log('isV1Token',data)
+  return data.headers?.ver === 1
+}
 
-export const v1: AbstractTokenFactory = (
+export const isFromMe:  LocalValidatorFns =  async (data: {headers:Header, payload:VersionedPayload, signature: Uint8Array}) => {
+  // console.log('isFromMe', data)
+  return data.headers?.iss === ISSUER
+}
+
+export const notTooSoon: LocalValidatorFns = async (data: {headers:Header, payload:VersionedPayload, signature: Uint8Array}) => 
+  'nbf' in data.headers && data.headers.nbf
+    ? Math.floor(Date.now() / 1000) > (data.headers.nbf as number)
+    : true
+
+export const validIssuanceDate:  LocalValidatorFns =  async (data: {headers:Header, payload:VersionedPayload, signature: Uint8Array}) => {
+  return data.headers?.iss === ISSUER
+}
+
+export const v1Validators = [isV1Token, isFromMe, notTooSoon, validIssuanceDate]
+
+export const v1: v1AbstractTokenFactory = (
   pair,
   kid: string,
-  localValsFns = [isV1Token, isFromFeedCity],
+  localValsFns = v1Validators
 ) => {
-  const v1Headers = { kid, typ: "JWT", alg: "ES384", iss: ISSUER } as Header;
+  const v1Headers = { 
+    kid, 
+    ver: 1,
+    typ: "JWT", 
+    alg: "ES384", 
+    iss: ISSUER,
+  } as Header;
 
   const _decode = async (jwtStr: string) => {
     try {
@@ -47,33 +70,39 @@ export const v1: AbstractTokenFactory = (
       signature: ret.signature,
       headers: ret.headers,
       payload: ret.payload as VersionedPayload,
-    };
+    } as IValidationData;
   };
 
-  const mint = async (d: Payload, h = v1Headers as Header) => {
-    return create({ ...h, ...v1Headers }, { ...d, v: 1 }, pair.privateKey);
+  const mint = async (p: Payload = {}, h = v1Headers as Header) => {
+    const iat = Math.floor(Date.now() / 1000);
+    const nbf = iat + 1 // `not before` set as 1 sec in future
+    return create({ iat, nbf, ...h, ...v1Headers }, { ...p }, pair.privateKey);
   };
 
-  const validate = async (jwtStr: string) => {
+  const validate = async (jwtStr: string, ...userValFns: LocalValidatorFns[]) => {
     const { headers, payload, signature } = await parse(jwtStr);
+    let coreValidations = false as boolean
+    let erroredUserVals = [] as {fName: string, val:boolean}[]
+
     try {
-      const coreValidations = !!djwtValidate([headers, payload, signature]);
-      const erroredUserVals = await Promise.all(
-        localValsFns
+      coreValidations = !!djwtValidate([headers, payload, signature]);
+      erroredUserVals = [...await Promise.all(
+        [...localValsFns, ...userValFns]
           .map(async (fn) => ({
             fName: fn.name,
             val: await fn({ headers, payload, signature }),
           }))
-          .filter(async (nameVal) => !(await nameVal).val),
-      );
+      )].filter(nameVal => !nameVal.val);
 
       if (erroredUserVals.length > 0) {
+        console.error({ erroredUserVals });
         Promise.reject(
           new Error(erroredUserVals.map(({ fName }) => fName).join(", ")),
         );
       }
       return coreValidations && erroredUserVals.length === 0;
     } catch (e) {
+      console.error({ coreValidations, erroredUserVals });
       return Promise.reject(new Error(e));
     }
   };
@@ -91,9 +120,13 @@ export const v1: AbstractTokenFactory = (
     parse,
     validate,
     verify,
-    v1Headers,
-    v1Validators: [isV1Token, isFromFeedCity],
+    defaultValues:{
+      headers: v1Headers,
+      validators: v1Validators
+    }
   };
 };
 
 export default v1;
+
+

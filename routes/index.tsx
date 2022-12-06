@@ -123,6 +123,9 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
   );
 }
 
+
+
+
 /**
  * Handler spin up a UUID for the session, Set it as a cookie, and return the UUID to the client
  * - the UUID will then be use to validate any subsequent requests from the client
@@ -130,14 +133,19 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
  */
 export const handler: Handlers = {
   GET: async (req, ctx) => {
-    const pair = await jwKeyPair();
-    const { headers, jwt } = await refreshCookieToken(
-      pair,
-      Deno.env.get("KEY_ID")!,
-    )(new Headers(req.headers), "sessionID");
-    const res = await ctx.render({ req, jwt } as HomeProps);
-    return new Response(res.body, { headers, status: 200, statusText: "OK" });
+    const v1 = v1token(await jwKeyPair(), Deno.env.get("KEY_ID")!)
+    const { respHeaders, jwt } = await refreshCookieToken(v1, 60 * 10 /* 10 min */ )(
+      new Headers(req.headers), 
+      "sessionID"
+    );
+
+    // console.log('index.tsx > ', "jwt:", jwt);
+    // console.log('index.tsx > ', "headers:", respHeaders);
+
+    const rendered = await ctx.render({ req, jwt } as HomeProps);
+    return new Response(rendered.body, { headers: respHeaders, status: 200, statusText: "OK" });
   },
+  
   POST: async (req) => {
     await config({ export: true, safe: true })
       .catch(() => console.error("errored while processsing .env file"));
@@ -149,8 +157,13 @@ export const handler: Handlers = {
     const v1tok = v1token(await jwKeyPair(), Deno.env.get("KEY_ID")!);
 
     if (token && email) {
+      // console.log({ token, email })
+
       const { payload } = await v1tok.parse(token);
+
       if (await v1tok.validate(token) && await v1tok.verify(token)) {
+        // console.log({ payload })
+
         const [apiKey, baseId, tableName] = await Promise.all([
           Deno.env.get("AIRTABLE_KEY"),
           Deno.env.get("AIRTABLE_BASE"),
@@ -166,7 +179,7 @@ export const handler: Handlers = {
         // @todo? - check if email is already in the table - duplicates?
         const { id } = await airtable.create({ email, Status: "Waiting" });
         return sendJson(
-          { id, jwt: await v1tok.mint({ ...payload, email }) },
+          { id, email, jwt: await v1tok.mint({ ...payload, email }) },
           200,
           "OK",
         );

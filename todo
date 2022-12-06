@@ -44,6 +44,8 @@ See a Problem, Fix a Problem
 
 ---------------------------------------------------------------------------
 
+[ ] Proper Validation of token for waitlist requests
+
 Functionality
 [x] close menus w/ outside clicks
 [ ] stip nav parsts from Hero panel <Nav/> + <HeroPanel/>
