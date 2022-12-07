@@ -37,6 +37,7 @@ export const validIssuanceDate:  LocalValidatorFns =  async (data: {headers:Head
 }
 
 export const v1Validators = [isV1Token, isFromMe, notTooSoon, validIssuanceDate]
+export const expirationIntervalSecs =  3660 * 4 // 4hr
 
 export const v1: v1AbstractTokenFactory = (
   pair,
@@ -122,7 +123,8 @@ export const v1: v1AbstractTokenFactory = (
     verify,
     defaultValues:{
       headers: v1Headers,
-      validators: v1Validators
+      validators: v1Validators,
+      expirationIntervalSecs
     }
   };
 };

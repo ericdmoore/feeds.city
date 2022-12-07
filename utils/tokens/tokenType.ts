@@ -22,6 +22,7 @@ export interface v1AbstractToken {
   defaultValues:{
     validators: LocalValidatorFns[]
     headers: djwtHeaders
+    expirationIntervalSecs: number
   }
 }
 

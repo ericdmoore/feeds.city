@@ -17,23 +17,28 @@ export function stripHeaders(
  * If so, delete that cookie, and spin up a new refreshed cookie value
  */
 export const refreshCookieToken = (v1Baker: v1AbstractToken, extendBySeconds: number) =>
-  async ( headers: Headers | HeadersInit, findJwt: string ): Promise<{ respHeaders: Headers; jwt: string }> => {
+  async ( headers: Headers | HeadersInit, findJwt: string ) => {
   
     const localHeadersCopy = new Headers(headers);
     const cookies = getCookies(localHeadersCopy);
   
+    // nothing to refresh so start us off
     if (!(findJwt in cookies) || !cookies?.[findJwt]) {
       const jwt = await v1Baker.mint()
+
+      const { payload, headers } = await v1Baker.parse(jwt)
       setCookie(localHeadersCopy, {
         name: findJwt,
         sameSite: "Strict",
         secure: true,
-        maxAge: 60 * 60 * 2,
+        maxAge: extendBySeconds,
         value: jwt,
       });
-      return { respHeaders: localHeadersCopy, jwt };
+      return { respHeaders: localHeadersCopy, jwt , jwtData: {payload, headers}};
 
-    } else {
+    } 
+    // bump the exp & nbf
+    else {
       let er: unknown
       const jwtStr = cookies[findJwt]
       const [verified, validated] = await Promise.all([
@@ -45,9 +50,14 @@ export const refreshCookieToken = (v1Baker: v1AbstractToken, extendBySeconds: nu
         ? await Promise.resolve((await v1Baker.parse(jwtStr)))
         : await Promise.reject(new Error(`Token failed validation /verificiation: ${er}`))
 
-      const expires = new Date(Date.now() + extendBySeconds *1000)
-      const exp =  Math.round(expires.getTime()/1000) 
-      const jwt = await v1Baker.mint( stripHeaders(payload) as UnversionedPayload, { ...v1Baker.defaultValues.headers, ...headers, exp} ) 
+      const now = Math.round(Date.now()/1000)
+      const nbf = now + 1
+      const expires = new Date(Date.now() + extendBySeconds*1000)
+      const exp =  Math.round(expires.getTime()/1000)
+      const jwt = await v1Baker.mint( 
+        stripHeaders(payload) as UnversionedPayload, 
+        { ...v1Baker.defaultValues.headers, ...headers, nbf, exp} 
+      ) 
       
       setCookie(localHeadersCopy, {
         name: findJwt,
@@ -57,6 +67,6 @@ export const refreshCookieToken = (v1Baker: v1AbstractToken, extendBySeconds: nu
         expires,
       });
   
-      return { respHeaders: localHeadersCopy, jwt};
+      return { respHeaders: localHeadersCopy, jwt, jwtData: {payload, headers}};
     }
   }
