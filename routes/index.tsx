@@ -139,7 +139,7 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
 export const handler: Handlers = {
   GET: async (req, ctx) => {
     const v1 = v1token(await jwKeyPair(), Deno.env.get("KEY_ID")!)
-    const { respHeaders, jwt, jwtData } = await refreshCookieToken(v1, 60 * 10 /* 10 min */ )(
+    const { respHeaders, jwt, jwtData } = await refreshCookieToken(v1, 60 * 15 /* 10 min */ )(
       new Headers(req.headers), 
       "sessionID"
     );

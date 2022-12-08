@@ -37,7 +37,7 @@ export const validIssuanceDate:  LocalValidatorFns =  async (data: {headers:Head
 }
 
 export const v1Validators = [isV1Token, isFromMe, notTooSoon, validIssuanceDate]
-export const expirationIntervalSecs =  3660 * 4 // 4hr
+export const expirationIntervalSecs =  3600 * 4 // 4hr
 
 export const v1: v1AbstractTokenFactory = (
   pair,
@@ -77,7 +77,8 @@ export const v1: v1AbstractTokenFactory = (
   const mint = async (p: Payload = {}, h = v1Headers as Header) => {
     const iat = Math.floor(Date.now() / 1000);
     const nbf = iat + 1 // `not before` set as 1 sec in future
-    return create({ iat, nbf, ...h, ...v1Headers }, { ...p }, pair.privateKey);
+    const exp = iat + expirationIntervalSecs
+    return create({ iat, nbf, exp, ...h, ...v1Headers }, { ...p }, pair.privateKey);
   };
 
   const validate = async (jwtStr: string, ...userValFns: LocalValidatorFns[]) => {
