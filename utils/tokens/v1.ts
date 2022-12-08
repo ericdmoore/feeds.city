@@ -1,9 +1,9 @@
 // deno-lint-ignore-file require-await
 import type {
-  v1AbstractTokenFactory,
+  IValidationData,
   LocalValidatorFns,
+  v1AbstractTokenFactory,
   VersionedPayload,
-  IValidationData
 } from "./tokenType.ts";
 
 import {
@@ -17,38 +17,51 @@ import {
 
 const ISSUER = "https://feeds.city";
 
-export const isV1Token: LocalValidatorFns = async (data: {headers:Header, payload:VersionedPayload, signature: Uint8Array}) => {
+export const isV1Token: LocalValidatorFns = async (
+  data: { headers: Header; payload: VersionedPayload; signature: Uint8Array },
+) => {
   // console.log('isV1Token',data)
-  return data.headers?.ver === 1
-}
+  return data.headers?.ver === 1;
+};
 
-export const isFromMe:  LocalValidatorFns =  async (data: {headers:Header, payload:VersionedPayload, signature: Uint8Array}) => {
+export const isFromMe: LocalValidatorFns = async (
+  data: { headers: Header; payload: VersionedPayload; signature: Uint8Array },
+) => {
   // console.log('isFromMe', data)
-  return data.headers?.iss === ISSUER
-}
+  return data.headers?.iss === ISSUER;
+};
 
-export const notTooSoon: LocalValidatorFns = async (data: {headers:Header, payload:VersionedPayload, signature: Uint8Array}) => 
-  'nbf' in data.headers && data.headers.nbf
+export const notTooSoon: LocalValidatorFns = async (
+  data: { headers: Header; payload: VersionedPayload; signature: Uint8Array },
+) =>
+  "nbf" in data.headers && data.headers.nbf
     ? Math.floor(Date.now() / 1000) > (data.headers.nbf as number)
-    : true
+    : true;
 
-export const validIssuanceDate:  LocalValidatorFns =  async (data: {headers:Header, payload:VersionedPayload, signature: Uint8Array}) => {
-  return data.headers?.iss === ISSUER
-}
+export const validIssuanceDate: LocalValidatorFns = async (
+  data: { headers: Header; payload: VersionedPayload; signature: Uint8Array },
+) => {
+  return data.headers?.iss === ISSUER;
+};
 
-export const v1Validators = [isV1Token, isFromMe, notTooSoon, validIssuanceDate]
-export const expirationIntervalSecs =  3600 * 4 // 4hr
+export const v1Validators = [
+  isV1Token,
+  isFromMe,
+  notTooSoon,
+  validIssuanceDate,
+];
+export const expirationIntervalSecs = 3600 * 4; // 4hr
 
 export const v1: v1AbstractTokenFactory = (
   pair,
   kid: string,
-  localValsFns = v1Validators
+  localValsFns = v1Validators,
 ) => {
-  const v1Headers = { 
-    kid, 
+  const v1Headers = {
+    kid,
     ver: 1,
-    typ: "JWT", 
-    alg: "ES384", 
+    typ: "JWT",
+    alg: "ES384",
     iss: ISSUER,
   } as Header;
 
@@ -76,25 +89,34 @@ export const v1: v1AbstractTokenFactory = (
 
   const mint = async (p: Payload = {}, h = v1Headers as Header) => {
     const iat = Math.floor(Date.now() / 1000);
-    const nbf = iat + 1 // `not before` set as 1 sec in future
-    const exp = iat + expirationIntervalSecs
-    return create({ iat, nbf, exp, ...h, ...v1Headers }, { ...p }, pair.privateKey);
+    const nbf = iat + 1; // `not before` set as 1 sec in future
+    const exp = iat + expirationIntervalSecs;
+    return create(
+      { iat, nbf, exp, ...h, ...v1Headers },
+      { ...p },
+      pair.privateKey,
+    );
   };
 
-  const validate = async (jwtStr: string, ...userValFns: LocalValidatorFns[]) => {
+  const validate = async (
+    jwtStr: string,
+    ...userValFns: LocalValidatorFns[]
+  ) => {
     const { headers, payload, signature } = await parse(jwtStr);
-    let coreValidations = false as boolean
-    let erroredUserVals = [] as {fName: string, val:boolean}[]
+    let coreValidations = false as boolean;
+    let erroredUserVals = [] as { fName: string; val: boolean }[];
 
     try {
       coreValidations = !!djwtValidate([headers, payload, signature]);
-      erroredUserVals = [...await Promise.all(
-        [...localValsFns, ...userValFns]
-          .map(async (fn) => ({
-            fName: fn.name,
-            val: await fn({ headers, payload, signature }),
-          }))
-      )].filter(nameVal => !nameVal.val);
+      erroredUserVals = [
+        ...await Promise.all(
+          [...localValsFns, ...userValFns]
+            .map(async (fn) => ({
+              fName: fn.name,
+              val: await fn({ headers, payload, signature }),
+            })),
+        ),
+      ].filter((nameVal) => !nameVal.val);
 
       if (erroredUserVals.length > 0) {
         console.error({ erroredUserVals });
@@ -122,14 +144,12 @@ export const v1: v1AbstractTokenFactory = (
     parse,
     validate,
     verify,
-    defaultValues:{
+    defaultValues: {
       headers: v1Headers,
       validators: v1Validators,
-      expirationIntervalSecs
-    }
+      expirationIntervalSecs,
+    },
   };
 };
 
 export default v1;
-
-

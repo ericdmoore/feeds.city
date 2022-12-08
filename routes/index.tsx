@@ -6,7 +6,7 @@ import { Airtable } from "airtable";
 import sendJson from "../lib/responder/sendjson.ts";
 
 import { refreshCookieToken } from "../utils/cookies/refresh.ts";
-import {getCookies} from '$std/http/cookie.ts'
+import { getCookies } from "$std/http/cookie.ts";
 import { jwKeyPair } from "../utils/ECkeys/grab.ts";
 
 import { TopHatBlack } from "../components/TopHat.tsx";
@@ -36,7 +36,7 @@ import {
 interface HomeProps {
   req: Request;
   jwt: string;
-  exp: number
+  exp: number;
 }
 
 export default function Home(props: PageProps<Partial<HomeProps>>) {
@@ -56,7 +56,7 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
         }}
       />
       <PublicHero />
-      <SignUp 
+      <SignUp
         token={props.data.jwt ?? "missing"}
         exp={props.data.exp ?? -1}
       />
@@ -128,9 +128,6 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
   );
 }
 
-
-
-
 /**
  * Handler spin up a UUID for the session, Set it as a cookie, and return the UUID to the client
  * - the UUID will then be use to validate any subsequent requests from the client
@@ -138,22 +135,31 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
  */
 export const handler: Handlers = {
   GET: async (req, ctx) => {
-    const v1 = v1token(await jwKeyPair(), Deno.env.get("KEY_ID")!)
-    const { respHeaders, jwt, jwtData } = await refreshCookieToken(v1, 60 * 15 /* 10 min */ )(
-      new Headers(req.headers), 
-      "sessionID"
+    const v1 = v1token(await jwKeyPair(), Deno.env.get("KEY_ID")!);
+    const { respHeaders, jwt, jwtData } = await refreshCookieToken(
+      v1,
+      60 * 15, /* 10 min */
+    )(
+      new Headers(req.headers),
+      "sessionID",
     );
 
-    const rendered = await ctx.render({ 
-      req, 
-      jwt, 
-      exp: jwtData.headers?.exp as number 
+    const rendered = await ctx.render({
+      req,
+      jwt,
+      exp: jwtData.headers?.exp as number,
     } as HomeProps);
-    return new Response(rendered.body, { headers: respHeaders, status: 200, statusText: "OK" });
+    return new Response(rendered.body, {
+      headers: respHeaders,
+      status: 200,
+      statusText: "OK",
+    });
   },
-  
+
   POST: async (req) => {
-    await config({ export: true, safe: true }).catch(() => console.error("errored while processsing .env file"));
+    await config({ export: true, safe: true }).catch(() =>
+      console.error("errored while processsing .env file")
+    );
 
     const _email = new URL(req.url).searchParams.get("email");
     const email = _email ? decodeURIComponent(_email) : null;
@@ -161,19 +167,19 @@ export const handler: Handlers = {
     const _keyID = new URL(req.url).searchParams.get("keyID");
     const keyID = _keyID ? decodeURIComponent(_keyID) : null;
 
-    const status = new URL(req.url).searchParams.get("status")
-    const Status = status === 'test' && keyID === Deno.env.get('KEY_D_PRIVATE')
-      ? 'test' 
-      : 'WaitingToVerifyAddress';
+    const status = new URL(req.url).searchParams.get("status");
+    const Status = status === "test" && keyID === Deno.env.get("KEY_D_PRIVATE")
+      ? "test"
+      : "WaitingToVerifyAddress";
 
-    const token = new URL(req.url).searchParams.get("token") || getCookies(req.headers)?.sessionID || null as string | null
+    const token = new URL(req.url).searchParams.get("token") ||
+      getCookies(req.headers)?.sessionID || null as string | null;
     const v1tok = v1token(await jwKeyPair(), Deno.env.get("KEY_ID")!);
 
-    if (token && email) {    
+    if (token && email) {
       const { payload } = await v1tok.parse(token);
 
       if (await v1tok.validate(token) && await v1tok.verify(token)) {
-
         const [apiKey, baseId, tableName] = await Promise.all([
           Deno.env.get("AIRTABLE_KEY"),
           Deno.env.get("AIRTABLE_BASE"),
@@ -186,31 +192,32 @@ export const handler: Handlers = {
           tableName,
         });
 
-        const doesAlreadyExist = await airtable.select({ 
+        const doesAlreadyExist = await airtable.select({
           maxRecords: 1,
-          pageSize:1,
-          fields:['Email','Status'], 
-          filterByFormula: `{Email}="${email}"`
-        }).catch( er =>{ 
-          console.error('>>>', er); 
-          return { er, records:[] as {id:string, [key:string]:string}[] }
-        })
+          pageSize: 1,
+          fields: ["Email", "Status"],
+          filterByFormula: `{Email}="${email}"`,
+        }).catch((er) => {
+          console.error(">>>", er);
+          return { er, records: [] as { id: string; [key: string]: string }[] };
+        });
 
-        const id  = !('er' in doesAlreadyExist) && doesAlreadyExist?.records.length === 0 
-          ? (await airtable.create({ Email:email, Status })).id
-          : doesAlreadyExist?.records[0].id ?? 'id_FOUND_ERROR_INSTEAD'
-        
+        const id =
+          !("er" in doesAlreadyExist) && doesAlreadyExist?.records.length === 0
+            ? (await airtable.create({ Email: email, Status })).id
+            : doesAlreadyExist?.records[0].id ?? "id_FOUND_ERROR_INSTEAD";
+
         return sendJson(
-          { id,  email, jwt: await v1tok.mint({ ...payload, email }) 
-          }, 200, "OK" );
-
+          { id, email, jwt: await v1tok.mint({ ...payload, email }) },
+          200,
+          "OK",
+        );
       } else {
-        
         return sendJson(
           { jwt: await v1tok.mint({ ...payload, email }) },
-          401, "INVALID_TOKEN",
+          401,
+          "INVALID_TOKEN",
         );
-
       }
     } else {
       const errorCoode = 401;
