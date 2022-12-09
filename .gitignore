@@ -24,6 +24,7 @@ jwk.*
 lib-cov
 
 # Coverage directory used by tools like istanbul
+.cov/
 coverage
 *.lcov
 

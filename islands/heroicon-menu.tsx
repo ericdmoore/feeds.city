@@ -1,3 +1,5 @@
+/** Secret PAGE that shows all heroicons  */
+
 import { JSX } from "preact";
 import { useEffect, useId, useRef, useState } from "preact/hooks";
 import outlineHeroIncons, {
