@@ -61,7 +61,7 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
         h1span=" With feeds.city "
         p={ () => 
           <span>In a world of corporate algorithms that rule your information, 
-            <span class="text-indigo-600">feeds.city</span> 
+            <span class="text-indigo-600"> feeds.city </span> 
             is a vibrant ecosystem of feeds to read, write, & remix
           </span>
         }
