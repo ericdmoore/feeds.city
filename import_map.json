@@ -9,7 +9,6 @@
     "@twind/aspect-ratio": "https://esm.sh/@twind/aspect-ratio@0.1.4",
     "@twind/aspect-ratio/": "https://esm.sh/@twind/aspect-ratio@0.1.4/",
     "@twind/forms": "https://esm.sh/@twind/forms@0.1.4",
-    "@twind/forms/": "https://esm.sh/@twind/forms@0.1.4/",
     "airtable": "https://deno.land/x/airtable@v1.1.1/mod.ts",
     "airtable/": "https://deno.land/x/airtable@v1.1.1/",
     "djwt": "https://deno.land/x/djwt@v2.7/mod.ts",

@@ -25,14 +25,15 @@ export type Color =
   | "purple"
   | "fuchsia"
   | "pink"
-  | "rose";
+  | "rose"
+  | "white";
 
-interface IconSrc {
+export interface ImgSrc {
   src: string;
   alt: string;
 }
 
-export type Icon = IconSrc | (() => JSX.Element);
+export type Icon = ImgSrc | (() => JSX.Element);
 
 export interface IconText {
   i: Icon;

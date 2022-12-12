@@ -44,7 +44,7 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
     <>
       <TopHatBlack
         title="Feeds.City"
-        description="A citywide set of feeds to be customized"
+        description="A citywide ecosystem of feeds to discover and ways to remix them"
         icon="/feedCityRingDropsLogo.svg"
       />
       <NavBar
@@ -55,7 +55,25 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
           },
         }}
       />
-      <PublicHero />
+      <PublicHero 
+        logo = {{src:"/feedCityRingDropsLogo.svg", alt:"Feeds.City"}}
+        h1="Subscribe On Your Terms"
+        h1span=" With feeds.city "
+        p={ () => 
+          <span>In a world of corporate algorithms that rule your information, 
+            <span class="text-indigo-600">feeds.city</span> 
+            is a vibrant ecosystem of feeds to read, write, & remix
+          </span>
+        }
+        cta={{
+          left: {text: "Get Started", href: "#", color:{bg:'indigo', text:'white'}}, 
+          right: {text: "Live Demo", href: "#", color:{bg:'white', text:'indigo', hover: 'hover:bg-gray-50'}}
+        }}
+        heroImg={{
+            src: "https://images.unsplash.com/photo-1520333789090-1afc82db536a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2102&q=80",
+            alt: "Feeds.City"
+        }}
+      />
       <SignUp
         token={props.data.jwt ?? "missing"}
         exp={props.data.exp ?? -1}
