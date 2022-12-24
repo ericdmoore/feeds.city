@@ -1,4 +1,4 @@
-import { Options } from "$fresh/plugins/twind.ts";
+import type { Options } from "$fresh/plugins/twind.ts";
 // import { forms } from "@twind/forms";
 // import { aspectRatio } from "@twind/aspect-ratio";
 
