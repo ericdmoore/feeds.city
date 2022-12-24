@@ -1,4 +1,3 @@
-
 const keypair = await crypto.subtle.generateKey(
   { name: "ECDSA", namedCurve: "P-384" },
   true,
@@ -7,7 +6,7 @@ const keypair = await crypto.subtle.generateKey(
 
 console.log(
   "\n\n Private key:",
-  {kid: Date.now()},
+  { kid: Date.now() },
   JSON.stringify(
     await crypto.subtle.exportKey("jwk", keypair.privateKey),
     null,
@@ -16,7 +15,7 @@ console.log(
 );
 console.log(
   "\n\n Public key:",
-  {kid: Date.now()},
+  { kid: Date.now() },
   JSON.stringify(
     await crypto.subtle.exportKey("jwk", keypair.publicKey),
     null,
