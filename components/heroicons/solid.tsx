@@ -1,5 +1,5 @@
 export interface heroProps {
-  class: string;
+  class?: string;
 }
 export const Academic_cap = (props: heroProps = { class: "" }) => (
   <svg

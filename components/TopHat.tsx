@@ -1,10 +1,10 @@
 import { ComponentChildren, createContext } from "preact";
 import { Head } from "$fresh/runtime.ts";
 
-type LinkImageKeys = "rel" | "link" | "sizes";
+type LinkImageKeys = "rel" | "href" | "sizes" | "type";
 
 interface TopHatProps {
-  icon: string | Record<LinkImageKeys, string>[];
+  icon: { [Key in LinkImageKeys]?: string }[];
   title: string;
   description: string;
   keywords: string;

@@ -19,15 +19,20 @@ import Stats from "../components/public/stats.tsx";
 import SignUp from "../islands/public-signup.tsx";
 import Footer from "../components/public/footer.tsx";
 import CtaPanel from "../components/cta-panel.tsx";
-
+import { Color } from "../types.ts";
 import v1token from "../utils/tokens/v1.ts";
 
 import {
-  Bolt,
-  Chat_bubble_bottom_center_text,
-  Globe_alt,
-  Scale,
+  Adjustments_horizontal,
+  Bookmark,
 } from "../components/heroicons/outline.tsx";
+
+import {
+  Building_storefront,
+  Magnifying_glass,
+  Scissors,
+  User_group,
+} from "../components/heroicons/solid.tsx";
 
 // import { DynamoDBClient, PutItemCommand , type AttributeValue} from "@aws-sdk/client-dynamodb";
 // import { string, number } from '../utils/dyn/mod.ts'
@@ -44,10 +49,14 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
     <>
       <TopHatBlack
         title="Feeds.City"
-        description="A citywide ecosystem of feeds to discover and ways to remix them"
-        icon="/feedCityRingDropsLogo.svg"
+        description="An ecosystem of feeds to discover and ways to remix them"
+        icon={[
+          { rel: "icon", href: "/feedcitylogo@1x.png", type: "image/png" },
+          { rel: "icon", href: "/feedcitylogo.svg", type: "image/svg+xml" },
+        ]}
       />
       <NavBar
+        logo={{ src: "/feedcitylogo.svg", alt: "Feed City Logo" }}
         nav={{
           _: {
             "Sign In": { href: "/login" },
@@ -56,21 +65,24 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
         }}
       />
       <PublicHero
-        logo={{ src: "/feedCityRingDropsLogo.svg", alt: "Feeds.City" }}
-        h1="Subscribe On Your Terms"
-        h1span=" With feeds.city "
+        logo={{ src: "/feedcitylogo.svg", alt: "Feeds.City" }}
+        h1="Know Your Scroll"
+        h1span=" with feeds.city "
         p={() => (
-          <span>
-            In a world of corporate algorithms that rule your information,
+          <>
             <span class="text-indigo-600">feeds.city</span>
-            is a vibrant ecosystem of feeds to read, write, & remix
-          </span>
+            offers the world's 1<sup>st</sup>{" "}
+            <a class="font-bold" href="#">subscription proxy</a>
+            that transforms your content on the fly. Enabled by an open
+            marketplace, backed by a collective of developers, inspired by the
+            quirky indie web.
+          </>
         )}
         cta={{
           left: {
-            text: "Get Started",
+            text: "Subscription Proxy Wha?",
             href: "#",
-            color: { bg: "indigo", text: "white" },
+            color: { bg: "indigo" as const, text: "white" as const },
           },
           right: {
             text: "Live Demo",
@@ -89,33 +101,45 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
         exp={props.data.exp ?? -1}
       />
       <PublicFeatures
-        h2="Transactions"
-        tagline="A Better Way To Send Money"
-        supportingTagline="Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate veritatis in accusamus quisquam."
+        h2="Take Back Your Feed"
+        tagline="A Better Way To Scroll Your Feed"
+        supportingTagline="It matters how your feed is optimized. Is your feed actually yours? Now it really can be with feeds.city"
         featureList={[
           {
-            title: "Competitive exchange rates",
+            title: "Distraction Free Reading",
             subtitle:
-              "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
-            icon: () => <Globe_alt class="h-6 w-6" />,
+              "Reading requires focus. Focus requires concentration. Concentration is in constant battle by other interests. Clean up your reading, and it will clean up your mind.",
+            icon: () => <Magnifying_glass class="h-6 w-6" />,
           },
           {
-            title: "No hidden fees",
+            title: "On The Fly Transforms",
             subtitle:
               "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
-            icon: () => <Scale class="h-6 w-6" />,
+            icon: () => <Adjustments_horizontal class="h-6 w-6" />,
           },
           {
-            title: "Transfers are instant",
+            title: "Emerging Marketplace",
             subtitle:
-              "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
-            icon: () => <Bolt class="h-6 w-6" />,
+              "Get in on the ground level withj a new developer marketplace. There are developers who want to hear what you are looking for, and their are FeedFunctions (like an app) that improves your feed quality.",
+            icon: () => <Building_storefront class="h-6 w-6" />,
           },
           {
-            title: "Mobile notifications",
+            title: "Listening for Everything",
             subtitle:
-              "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
-            icon: () => <Chat_bubble_bottom_center_text class="h-6 w-6" />,
+              "The web is full of vibrant text. But some of us are auditory learners. Some people like to listen to everything. Now anything is listenable",
+            icon: () => <Scissors class="h-6 w-6" />,
+          },
+          {
+            title: "Longform Reading Discovery",
+            subtitle:
+              "Not all information is created equal. Skip out on bloated 'news' about things that won't matter in 10 minutes let alone 10 days. Start digging into longform ideas that make you are more interesting person",
+            icon: () => <Bookmark class="h-6 w-6" />,
+          },
+          {
+            title: "Integrated Social Signal",
+            subtitle:
+              "Just because you dont want to be advertised to all the time, You should understand the goal of what is shown to you. Is it to make an advertiser happy, or is it to engage your own brain.  how what you are being Read things for you that are lighly influenced by the things you follow",
+            icon: () => <User_group class="h-6 w-6" />,
           },
         ]}
       />
@@ -129,11 +153,15 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
       />
       {/* Sausage:'99.999%' */}
       <Stats
-        line1="Trusted by developers from over 80 planets"
+        line1="Trusted by developers from over 80 counties"
         line2="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus repellat laudantium"
-        stats={{ Pepperoni: "100%", Delivery: "24/7", Calories: "100k" }}
+        stats={{
+          "Feed Functions": "29",
+          "On-The-Fly": "100%",
+          ActivityPub: "24/7",
+        }}
       />
-      <Pricing />
+      {/* <Pricing /> */}
       <CtaPanel />
       <Footer
         nav={{
@@ -157,16 +185,17 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
 }
 
 /**
- * Handler spin up a UUID for the session, Set it as a cookie, and return the UUID to the client
+ * Handler spins up a UUID and wraps it in a JWT, which gets set as a cookie
+ * - the JWT returns to autghorize the waitlist request
  * - the UUID will then be use to validate any subsequent requests from the client
- * - the request to jin the waitlist will include the UUID
+ * - the request to join the waitlist should include the UUID
  */
 export const handler: Handlers = {
   GET: async (req, ctx) => {
     const v1 = v1token(await jwKeyPair(), Deno.env.get("KEY_ID")!);
     const { respHeaders, jwt, jwtData } = await refreshCookieToken(
       v1,
-      60 * 15, /* 10 min */
+      60 * 15, /* 15 min */
     )(
       new Headers(req.headers),
       "sessionID",

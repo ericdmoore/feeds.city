@@ -11,8 +11,8 @@ interface CTAprops_Color {
   text: string;
   href: string;
   color: {
-    bg: Color;
-    text: Color;
+    bg: keyof typeof Color;
+    text: keyof typeof Color;
     hover?: string;
   };
 }

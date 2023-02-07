@@ -1,3 +1,14 @@
+interface FooterProps {
+  nav: Record<string, string>;
+  social: Record<
+    string,
+    { href: string; svg: string } | { href: string; src: string } | {
+      href: string;
+      alias: keyof typeof SocilaSvgs;
+    }
+  >;
+}
+
 const SocilaSvgs = {
   facebook: (
     <svg
@@ -170,17 +181,6 @@ const SocilaSvgs = {
   ),
 } as const;
 
-interface FooterProps {
-  nav: Record<string, string>;
-  social: Record<
-    string,
-    { href: string; svg: string } | { href: string; src: string } | {
-      href: string;
-      alias: keyof typeof SocilaSvgs;
-    }
-  >;
-}
-
 export function Footer(props: FooterProps) {
   return (
     <footer class="bg-white">
@@ -247,7 +247,7 @@ export function Footer(props: FooterProps) {
             <img
               width="197"
               height="37"
-              src="https://fresh.deno.dev/fresh-badge.svg"
+              src="/fresh/fresh-badge.svg"
               alt="Made with Fresh"
             />
           </a>

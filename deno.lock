@@ -149,5 +149,26 @@
     "https://esm.sh/v99/twind@0.16.17/deno/twind.js": "8fec4504ce1bb9a4876b4420826e6c3c49e68493f2723483aad09ea240aa0850",
     "https://esm.sh/v99/twind@0.16.17/sheets/sheets.d.ts": "795aa19124fe8a61cf0f3833aac4d30c63273ca049bd91f010565c9e1c9225a3",
     "https://esm.sh/v99/twind@0.16.17/twind.d.ts": "168e8aeafcf13cfa02fbdd6fd2c1cc374784af6ddbf3c0e07db0b4199c4bf5f6"
+  },
+  "npm": {
+    "specifiers": { "@heroicons/react": "@heroicons/react@2.0.13" },
+    "packages": {
+      "@heroicons/react@2.0.13": {
+        "integrity": "sha512-iSN5XwmagrnirWlYEWNPdCDj9aRYVD/lnK3JlsC9/+fqGF80k8C7rl+1HCvBX0dBoagKqOFBs6fMhJJ1hOg1EQ==",
+        "dependencies": { "react": "react@18.2.0" }
+      },
+      "js-tokens@4.0.0": {
+        "integrity": "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==",
+        "dependencies": {}
+      },
+      "loose-envify@1.4.0": {
+        "integrity": "sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==",
+        "dependencies": { "js-tokens": "js-tokens@4.0.0" }
+      },
+      "react@18.2.0": {
+        "integrity": "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==",
+        "dependencies": { "loose-envify": "loose-envify@1.4.0" }
+      }
+    }
   }
 }

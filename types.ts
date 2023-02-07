@@ -3,37 +3,38 @@
 
 import type { JSX } from "preact";
 
-export type Color =
-  | "slate"
-  | "gray"
-  | "zinc"
-  | "neutral"
-  | "stone"
-  | "red"
-  | "orange"
-  | "amber"
-  | "yellow"
-  | "lime"
-  | "green"
-  | "emerald"
-  | "yeal"
-  | "cyan"
-  | "sky"
-  | "blue"
-  | "indigo"
-  | "violet"
-  | "purple"
-  | "fuchsia"
-  | "pink"
-  | "rose"
-  | "white";
+export const Color = {
+  "slate": "slate",
+  "gray": "gray",
+  "zinc": "zinc",
+  "neutral": "neutral",
+  "stone": "stone",
+  "red": "red",
+  "orange": "orange",
+  "amber": "amber",
+  "yellow": "yellow",
+  "lime": "lime",
+  "green": "green",
+  "emerald": "emerald",
+  "yeal": "yeal",
+  "cyan": "cyan",
+  "sky": "sky",
+  "blue": "blue",
+  "indigo": "indigo",
+  "violet": "violet",
+  "purple": "purple",
+  "fuchsia": "fuchsia",
+  "pink": "pink",
+  "rose": "rose",
+  "white": "white",
+} as const;
 
 export interface ImgSrc {
   src: string;
   alt: string;
 }
 
-export type Icon = ImgSrc | (() => JSX.Element);
+export type Icon = ImgSrc | ((class_?: string) => JSX.Element);
 
 export interface IconText {
   i: Icon;

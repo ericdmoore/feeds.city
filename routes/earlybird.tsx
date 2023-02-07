@@ -7,6 +7,7 @@ export default function () {
   return (
     <>
       <NavBar
+        logo={{ src: "/feedcitylogo.svg", alt: "Feed City Logo" }}
         nav={{
           _: {
             "Sign In": { href: "/login" },
