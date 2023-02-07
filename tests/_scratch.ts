@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 /**
  * Optimal solar spacing for solar furnace on the the blue play house
  *

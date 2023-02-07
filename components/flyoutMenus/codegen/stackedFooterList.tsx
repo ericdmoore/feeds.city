@@ -1,12 +1,12 @@
 import { Fragment } from "preact";
 import { Popover, Transition } from "npm:@headlessui/react";
-import { Chevron_down } from "../heroicons/solid.tsx";
+import { Chevron_down } from "../../heroicons/solid.tsx";
 import {
   Bookmark_square,
   Calendar,
   Lifebuoy,
   Shield_check,
-} from "../heroicons/outline.tsx";
+} from "../../heroicons/outline.tsx";
 
 const resources = [
   {
