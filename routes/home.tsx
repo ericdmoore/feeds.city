@@ -12,7 +12,7 @@ export default function Home() {
       <TopHatBlack
         title="Federa"
         description="Descrbes federa"
-        icon="/feedCityRingDropsLogo.svg"
+        icon={[{ href: "/feedCityRingDropsLogo.svg", type: "image/svg+xml" } ] }
       >
         <meta name="og:title" content="Federa" />
       </TopHatBlack>
@@ -46,3 +46,5 @@ export default function Home() {
     </AppShell>
   );
 }
+
+// Redirect to login if not logged in

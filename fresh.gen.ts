@@ -24,11 +24,12 @@ import * as $17 from "./routes/index.tsx";
 import * as $18 from "./routes/login.tsx";
 import * as $19 from "./routes/logout.tsx";
 import * as $20 from "./routes/profile.tsx";
-import * as $21 from "./routes/settings.tsx";
-import * as $22 from "./routes/team.tsx";
-import * as $23 from "./routes/testing.tsx";
-import * as $24 from "./routes/user/index.ts";
-import * as $25 from "./routes/user/register.tsx";
+import * as $21 from "./routes/read.tsx";
+import * as $22 from "./routes/settings.tsx";
+import * as $23 from "./routes/team.tsx";
+import * as $24 from "./routes/testing.tsx";
+import * as $25 from "./routes/user/index.ts";
+import * as $26 from "./routes/user/register.tsx";
 import * as $$0 from "./islands/AppShellMenuBar.tsx";
 import * as $$1 from "./islands/Counter.tsx";
 import * as $$2 from "./islands/heroicon-menu.tsx";
@@ -60,11 +61,12 @@ const manifest = {
     "./routes/login.tsx": $18,
     "./routes/logout.tsx": $19,
     "./routes/profile.tsx": $20,
-    "./routes/settings.tsx": $21,
-    "./routes/team.tsx": $22,
-    "./routes/testing.tsx": $23,
-    "./routes/user/index.ts": $24,
-    "./routes/user/register.tsx": $25,
+    "./routes/read.tsx": $21,
+    "./routes/settings.tsx": $22,
+    "./routes/team.tsx": $23,
+    "./routes/testing.tsx": $24,
+    "./routes/user/index.ts": $25,
+    "./routes/user/register.tsx": $26,
   },
   islands: {
     "./islands/AppShellMenuBar.tsx": $$0,

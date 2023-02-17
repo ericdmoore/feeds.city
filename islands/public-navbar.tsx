@@ -21,6 +21,19 @@ import { useState } from "preact/hooks";
 //#region interfaces
 type MenuStringOpts = null | "mobile-menu" | "solution-menu" | "more-menu";
 
+interface BlogRollContainerPropsWithChildren{
+  header: string
+  footer: {href: string, text: string}
+  children: JSX.Element[]
+}
+
+interface BlogRollContainerPropsWithTitles{
+  header: string
+  footer: {href: string, text: string}
+  titles: string[]
+}
+
+
 interface CTA {
   text: string;
   href: string;
@@ -34,49 +47,9 @@ interface MenuItem {
 
 interface NavBarProps {
   logo: Icon;
-  h1?: string;
-  h1span?: string;
-  p?: string;
-  cta?: {
-    left: CTA;
-    right: CTA;
-  };
-  img?: {
-    src: string;
-    alt: string;
-  };
-  nav: {
-    menu?: {
-      Solutions: {
-        body: {
-          Analytics: MenuItem;
-          Engagement: MenuItem;
-          Secuitty: MenuItem;
-          Integration: MenuItem;
-          Automations: MenuItem;
-        };
-        footer: {
-          "Watch Demo": MenuItem;
-          "Contact Sales": MenuItem;
-        };
-      };
-      Pricing: string;
-      Docs: string;
-      More: {
-        body: {
-          "Help Center": MenuItem;
-          Guides: MenuItem;
-          Events: MenuItem;
-          Security: MenuItem;
-        };
-        footer?: null;
-      };
-    };
-    _: {
-      "Sign Up": { href: "/register" };
-      "Sign In": { href: "/login" };
-    };
-  };
+  login: {register: { href: string }; auth: { href: string }};
+  nav: Record<string, Array<Record<string, MenuItem>>>;
+  // MenuName: [{SubheaderName1: string, SubheaderName1: string},{SubFooterName1: string}]
 }
 
 interface MenuItemProps {
@@ -96,7 +69,7 @@ interface FlyOutMenuProps {
 
 interface MobileMenuTreeItemProps {
   name: string;
-  Icon: () => JSX.Element;
+  children: JSX.Element;
   href?: string;
 }
 
@@ -117,9 +90,9 @@ interface AnchorProps {
 }
 
 interface FooterMenuItemProps {
-  Icon: () => JSX.Element;
   name: string;
   href?: string;
+  children: JSX.Element;
 }
 
 interface BlogRollProps {
@@ -133,11 +106,12 @@ interface LargeMenuProps {
   activeMenuName: string | null;
   singnUpHref: string;
   singnInHref: string;
-  menu: Record<string, (() => JSX.Element) | { href?: string }>;
+  children: JSX.Element;
 }
 
 //#endregion interfaces
 
+//#region helper-components
 function Icon(props: { icon: Icon; class: string }){
   return typeof props.icon === "function" ? props.icon(props.class) : (
     <img
@@ -150,10 +124,7 @@ function Icon(props: { icon: Icon; class: string }){
 
 function MenuTreeItem(props: MenuItemProps){
   return (
-  <a
-    href={props.href ?? "#"}
-    class="-m-3 flex p-3 hover:bg-gray-50 rounded-lg items-start"
-  >
+  <a href={props.href ?? "#"} class="-m-3 flex p-3 hover:bg-gray-50 rounded-lg items-start" >
     {props.children}
     <div class="ml-4">
       <p class="text-base font-medium text-gray-900">
@@ -171,7 +142,7 @@ function MobileMenuTreeItem(props: MobileMenuTreeItemProps){
     href={props.href ?? "#"}
     class="-m-3 flex items-center rounded-md p-3 hover:bg-gray-50"
   >
-    <props.Icon />
+    {props.children}
     <span class="ml-3 text-base font-medium text-gray-900">
       {props.name}
     </span>
@@ -184,7 +155,7 @@ function FooterMenuItem(props: FooterMenuItemProps){
     href={props.href ?? "#"}
     class="-m-3 flex items-center rounded-md p-3 text-base font-medium text-gray-900 hover:bg-gray-100"
   >
-    <props.Icon />
+    {props.children}
     <span class="ml-3">{props.name}</span>
   </a>)
 }
@@ -213,18 +184,6 @@ function SideBySideFooterConainer(props: { children: JSX.Element[] }) {
       {props.children}
     </div>
   );
-}
-
-interface BlogRollContainerPropsWithChildren{
-  header: string
-  footer: {href: string, text: string}
-  children: JSX.Element[]
-}
-
-interface BlogRollContainerPropsWithTitles{
-  header: string
-  footer: {href: string, text: string}
-  titles: string[]
 }
 
 function BlogRollContainer(props:BlogRollContainerPropsWithChildren | BlogRollContainerPropsWithTitles){
@@ -278,7 +237,6 @@ function BlogRollContainer(props:BlogRollContainerPropsWithChildren | BlogRollCo
     );
   }
 }
-
 
 function FlyOutMenu(props: FlyOutMenuProps) {
   /* <!--
@@ -339,15 +297,19 @@ function FlyOutMenu(props: FlyOutMenuProps) {
   );
 }
 
-const Anchor = (props: AnchorProps) => (
-  <a
-    href={props.href ?? "#"}
-    class={props.class ??
-      "text-base font-medium text-gray-900 hover:text-gray-700"}
-  >
-    {props.text}
+function Anchor(props: AnchorProps){
+  return (
+    <a
+      href={props.href ?? "#"}
+      class={props.class ??
+        "text-base font-medium text-gray-900 hover:text-gray-700"}
+    >
+      {props.text}
   </a>
-);
+  )
+}
+
+//#endregion helper-components
 
 /* Mobile Menu
 <!-- Mobile menu, show/hide based on mobile menu state.
@@ -460,10 +422,47 @@ const LargeMenu = (props: LargeMenuProps) => {
         </div>
 
         <nav class="hidden space-x-10 md:flex">
+          {props.children}
+        </nav>
 
+        <div class="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
+          <a
+            href={props.singnInHref}
+            class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
+          >
+            Sign in
+          </a>
+          <a
+            href={props.singnUpHref}
+            class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+          >
+            Sign up
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export function NavBar(props: NavBarProps) {
+  const [activeMenu, setActiveMenuGroup] = useState(null as string | null);
+  const signUpHref = "/register"
+  const signInHref = "/signin"
+
+  return (
+    <div class="relative bg-gray-50">
+      <div class="relative bg-white shadow">
+        <LargeMenu
+          logo={props.logo}
+          setMenuName={setActiveMenuGroup}
+          activeMenuName={activeMenu}
+          singnUpHref={signUpHref}
+          singnInHref={signInHref}
+        >
+          <>
           <FlyOutMenu
-            setMenuName={props.setMenuName}
-            activeMenuName={props.activeMenuName}
+            setMenuName={setActiveMenuGroup}
+            activeMenuName={activeMenu}
             menuStateName="solution-menu"
             ButtonText={() => (
               <>
@@ -512,20 +511,14 @@ const LargeMenu = (props: LargeMenuProps) => {
             </FlyoutTopLinkConainer>
             <SideBySideFooterConainer>
               <div class="flow-root">
-                <FooterMenuItem
-                  Icon={() => (
-                    <Play class="h-6 w-6 flex-shrink-0 text-gray-400" />
-                  )}
-                  name="Watch Demo"
-                />
+                <FooterMenuItem name="Watch Demo">
+                 <Play class="h-6 w-6 flex-shrink-0 text-gray-400" /> 
+                </FooterMenuItem>
               </div>
               <div class="flow-root">
-                <FooterMenuItem
-                  Icon={() => (
-                    <Phone class="h-6 w-6 flex-shrink-0 text-gray-400" />
-                  )}
-                  name="Contact Sales"
-                />
+                <FooterMenuItem name="Contact Sales">
+                  <Phone class="h-6 w-6 flex-shrink-0 text-gray-400" />
+                </FooterMenuItem>
               </div>
             </SideBySideFooterConainer>
             </>
@@ -551,8 +544,8 @@ const LargeMenu = (props: LargeMenuProps) => {
               <Chevron_down class="text-gray-400 ml-2 h-5 w-5 group-hover:text-gray-500 focus:text-gray-600" />
             </>}
             menuStateName="more-menu"
-            setMenuName={props.setMenuName}
-            activeMenuName={props.activeMenuName}
+            setMenuName={setActiveMenuGroup}
+            activeMenuName={activeMenu}
           >
             <>
             <FlyoutTopLinkConainer>
@@ -602,91 +595,14 @@ const LargeMenu = (props: LargeMenuProps) => {
             </BlogRollContainer>
             </>
           </FlyOutMenu>       
-
-        </nav>
-
-        <div class="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
-          <a
-            href={props.singnInHref}
-            class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
-          >
-            Sign in
-          </a>
-          <a
-            href={props.singnUpHref}
-            class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-          >
-            Sign up
-          </a>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export function NavBar(props: NavBarProps) {
-
-  const [activeMenu, setActiveMenuGroup] = useState(null as string | null);
-
-  return (
-    <div class="relative bg-gray-50">
-      <div class="relative bg-white shadow">
-        <LargeMenu
-          logo={props.logo}
-          setMenuName={setActiveMenuGroup}
-          activeMenuName={activeMenu}
-          singnUpHref="/register"
-          singnInHref="/signin"
-          menu={{
-            Solutions: () => (
-              <>
-                <MenuTreeItem
-                  name="Analytics"
-                  descr="Get a better understanding of where your traffic is coming from."
-                > 
-                  <Chart_bar class="h-6 w-6 flex-shrink-0 text-indigo-600" />
-                </MenuTreeItem>
-
-                <MenuTreeItem
-                  name="Engagement"
-                  descr="Speak directly to your customers in a more meaningful way."
-                >
-                  <Cursor_arrow_rays class="h-6 w-6 flex-shrink-0 text-indigo-600" />
-                </MenuTreeItem>
-
-                <MenuTreeItem
-                  name="Security"
-                  descr=" Your customers&#039; data will be safe and secure."
-                > 
-                  <Shield_check class="h-6 w-6 flex-shrink-0 text-indigo-600" />
-                </MenuTreeItem>
-
-                <MenuTreeItem
-                  name="Integrations"
-                  descr="Connect with third-party tools that you&#039;re already using."
-                > 
-                  <Squares_2x2 class="h-6 w-6 flex-shrink-0 text-indigo-600" />
-                </MenuTreeItem>
-
-                <MenuTreeItem
-                  name="Automations"
-                  descr="Build strategic funnels that will drive your customers to convert"
-                >
-                  <Arrow_path class="h-6 w-6 flex-shrink-0 text-indigo-600" />
-                </MenuTreeItem>
-              </>
-            ),
-            Pricing: { href: "/pricing" },
-            Docs: { href: "/docs" },
-            More: () => <></>,
-          }}
-        />
+            </>
+          </LargeMenu>
         <MobileMenu
           logo={props.logo}
           setMenuName={setActiveMenuGroup}
           activeMenuName={activeMenu}
-          singnUpHref="/register"
-          singnInHref="/signin"
+          singnUpHref={signUpHref}
+          singnInHref={signInHref}
           FooterLinks={() => (
             <>
               <Anchor text="Pricing" href="/pricing" />
@@ -701,163 +617,36 @@ export function NavBar(props: NavBarProps) {
             <>
               <MobileMenuTreeItem
                 name="Analytics"
-                Icon={() => (
+                >
                   <Chart_bar class="h-6 w-6 flex-shrink-0 text-indigo-600" />
-                )}
-              />
+              </MobileMenuTreeItem>
 
               <MobileMenuTreeItem
                 name="Engagement"
-                Icon={() => (
+                >
                   <Cursor_arrow_rays class="h-6 w-6 flex-shrink-0 text-indigo-600" />
-                )}
-              />
-
+                </MobileMenuTreeItem>
+            
               <MobileMenuTreeItem
                 name="Security"
-                Icon={() => (
-                  <Shield_check class="h-6 w-6 flex-shrink-0 text-indigo-600" />
-                )}
-              />
+              >
+                <Shield_check class="h-6 w-6 flex-shrink-0 text-indigo-600" />
+              </MobileMenuTreeItem>
 
               <MobileMenuTreeItem
                 name="Integrations"
-                Icon={() => (
-                  <Squares_2x2 class="h-6 w-6 flex-shrink-0 text-indigo-600" />
-                )}
-              />
+              >
+                <Squares_2x2 class="h-6 w-6 flex-shrink-0 text-indigo-600" />
+              </MobileMenuTreeItem>
 
               <MobileMenuTreeItem
                 name="Automations"
-                Icon={() => (
-                  <Arrow_path class="h-6 w-6 flex-shrink-0 text-indigo-600" />
-                )}
-              />
+              >
+                <Arrow_path class="h-6 w-6 flex-shrink-0 text-indigo-600" />
+              </MobileMenuTreeItem>
             </>
           )}
         />
-
-        {
-          /* <div
-          class={`${
-            isSolutionsExpanded || isMoreExpanded ? "" : "hidden"
-          } absolute inset-x-0 top-0 z-10 origin-top-right transform p-2 transition md:hidden`}
-        >
-          <div class="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
-            <div class="px-5 pt-5 pb-6">
-              <div class="flex items-center justify-between">
-                <div>
-                  <Icon class="h-8 w-auto" icon={props.logo}/>
-                </div>
-                <div class="-mr-2">
-                  <button
-                    type="button"
-                    onFocus={() => {
-                      setMoreExpanded(false);
-                      setSolutionsExpanded(false);
-                    }}
-                    onBlur={() => {
-                      setMoreExpanded(false);
-                      setSolutionsExpanded(false);
-                    }}
-                    class="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-                  >
-                    <span class="sr-only">Close menu</span>
-                    <X_mark class="h-6 w-6" />
-                  </button>
-                </div>
-              </div>
-              <div class="mt-6">
-                <nav class="grid gap-y-8">
-
-                  <MobileMenuTreeItem
-                    name='Analytics'
-                    Icon={()=><Chart_bar class="h-6 w-6 flex-shrink-0 text-indigo-600" />}
-                  />
-
-                  <MobileMenuTreeItem
-                    name='Engagement'
-                    Icon={()=> <Cursor_arrow_rays class="h-6 w-6 flex-shrink-0 text-indigo-600" />}
-                  />
-
-                  <MobileMenuTreeItem
-                    name='Security'
-                    Icon={() => <Shield_check class="h-6 w-6 flex-shrink-0 text-indigo-600" />}
-                  />
-
-                  <MobileMenuTreeItem
-                    name='Integrations'
-                    Icon={() => <Squares_2x2 class="h-6 w-6 flex-shrink-0 text-indigo-600" />}
-                  />
-
-                  <MobileMenuTreeItem
-                    name="Automations"
-                    Icon={()=><Arrow_path class="h-6 w-6 flex-shrink-0 text-indigo-600" /> }
-                  />
-
-                </nav>
-              </div>
-            </div>
-            <div class="space-y-6 py-6 px-5">
-              <div class="grid grid-cols-2 gap-y-4 gap-x-8">
-                <a
-                  href="/pricing"
-                  class="text-base font-medium text-gray-900 hover:text-gray-700"
-                >
-                  Pricing
-                </a>
-                <a
-                  href="/docs"
-                  class="text-base font-medium text-gray-900 hover:text-gray-700"
-                >
-                  Docs
-                </a>
-                <a
-                  href="/help"
-                  class="text-base font-medium text-gray-900 hover:text-gray-700"
-                >
-                  Help Center
-                </a>
-                <a
-                  href="/guides"
-                  class="text-base font-medium text-gray-900 hover:text-gray-700"
-                >
-                  Guides
-                </a>
-                <a
-                  href="/events"
-                  class="text-base font-medium text-gray-900 hover:text-gray-700"
-                >
-                  Events
-                </a>
-                <a
-                  href="/security"
-                  class="text-base font-medium text-gray-900 hover:text-gray-700"
-                >
-                  Security
-                </a>
-              </div>
-              <div>
-                <a
-                  href={props.nav._["Sign Up"].href}
-                  class="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-                >
-                  Sign up
-                </a>
-                <p class="mt-6 text-center text-base font-medium text-gray-500">
-                  Existing customer?
-                  <a
-                    href={props.nav._["Sign In"].href}
-                    class="text-indigo-600 hover:text-indigo-500"
-                  >
-                    Sign in
-                  </a>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div> */
-        }
       </div>
     </div>
   );

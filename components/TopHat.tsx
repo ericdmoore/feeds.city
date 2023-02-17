@@ -1,4 +1,4 @@
-import { ComponentChildren, createContext } from "preact";
+import type {JSX} from 'preact'
 import { Head } from "$fresh/runtime.ts";
 
 type LinkImageKeys = "rel" | "href" | "sizes" | "type";
@@ -14,7 +14,7 @@ interface TopHatProps {
   twitter: Record<string, string>;
   styles: string[];
   scripts: string[];
-  children: ComponentChildren;
+  children: JSX.Element
   // jsonld: JSONish
 }
 
@@ -24,7 +24,6 @@ const toMetaTag = (key: string, val: string, prefix?: string) => (
 
 export function TopHatBlack(
   props: Partial<TopHatProps> & { title: string },
-  children: unknown[],
 ) {
   return (
     <Head>
