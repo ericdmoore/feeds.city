@@ -1,7 +1,7 @@
-import { config } from "$std/dotenv/mod.ts";
+import * as dotenv from "$std/dotenv/mod.ts";
 
 export const jwKeyPair = async (): Promise<CryptoKeyPair> => {
-  await config({ export: true, safe: true }).catch(() =>
+  await dotenv.load({ export: true }).catch(() =>
     console.error("errored while processsing .env file")
   );
   const privateKey = await crypto.subtle.importKey(

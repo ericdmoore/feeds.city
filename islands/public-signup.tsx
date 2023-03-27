@@ -26,7 +26,7 @@ import {
 
 interface NotificaitonProps {
   display: boolean | HiddenPendingHappyError;
-  color: Color;
+  color: keyof typeof Color;
   msg: string;
   closeable: boolean;
   shutClose: () => void;

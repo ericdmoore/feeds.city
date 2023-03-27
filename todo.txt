@@ -1,5 +1,6 @@
 
 Key Initiaitive: Get Feedback Now
+
 [x] Signup Form to populate Airtable Waitlist
 [ ] Explain Value Prop
 [ ] Provide Messaging about Earlybird Pricing
@@ -17,11 +18,12 @@ Fundamental Assumptions
 2. Speaking the Unspoken Web
 3. Follow People, Topics, and yes good ol Feeds
 4. Decentralized, Focused on Simplicty, User-Empowered
-5. Welcome Back To Oldweb Charm
+5. Welcome Back To Oldeweb Charm
 6. Functional Approach Inspiration
-7. 
+
 
 ## Product Principles
+
 1. Minimize Time to Apply Fixes
     - Issues Uncovered
     - Fix Previewed

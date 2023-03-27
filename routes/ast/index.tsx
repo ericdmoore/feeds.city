@@ -1,7 +1,6 @@
-import { HandlerContext } from "$fresh/server.ts";
+// import { HandlerContext } from "$fresh/server.ts";
 
-export const handler = (req: Request, ctx: HandlerContext): Response => {
-  return new Response(`ast directory: 
-    - ${JSON.stringify({ req, ctx }, null, 2)}
-  `);
-};
+import { handler as h } from "./[url].tsx";
+export const handler = h;
+
+// show http://localhost:8000/ast/http://example.markdown

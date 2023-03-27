@@ -1,4 +1,4 @@
-import type {JSX} from 'preact'
+import type { JSX } from "preact";
 import { Head } from "$fresh/runtime.ts";
 
 type LinkImageKeys = "rel" | "href" | "sizes" | "type";
@@ -14,7 +14,7 @@ interface TopHatProps {
   twitter: Record<string, string>;
   styles: string[];
   scripts: string[];
-  children: JSX.Element
+  children: JSX.Element;
   // jsonld: JSONish
 }
 

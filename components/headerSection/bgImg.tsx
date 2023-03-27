@@ -1,7 +1,7 @@
 import type { Color } from "../../types.ts";
 
 interface BgImgProps {
-  color: Color;
+  color: keyof typeof Color;
   img: {
     src: string;
     alt: string;

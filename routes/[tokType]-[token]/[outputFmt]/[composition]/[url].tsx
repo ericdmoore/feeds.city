@@ -1,8 +1,11 @@
-import type { HandlerContext, RouteConfig } from "$fresh/server.ts";
-import { config as cfg, handler as h } from "../../../ast/[url].tsx";
+import type { Handler, RouteConfig } from "$fresh/server.ts";
 
 export const config: RouteConfig = {
   routeOverride:
     "/:tokType(u|t)-:token/:outputFmt(ast|json|html)/:composition/:url(http.*)",
 };
-export const handler = h;
+
+export const handler: Handler = (req, ctx) => {
+  return new Response(`Show Composition with URL: 
+    - ${JSON.stringify({ req, ctx }, null, 2)}`);
+};

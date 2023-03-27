@@ -1,0 +1,12 @@
+export * as calcMultiHash from "./calcMultihash.ts";
+export * as compare from "./compare2docs.ts";
+export * as convertHTMLtoMD from "./convertHTMLtoMD.ts";
+export * as convertHTMLtoTEXT from "./convertHTMLtoTEXT.ts";
+export * as determineCategory from "./determineCategory.ts";
+export * as determinSubscribables from "./determineExternalSubscribables.ts";
+export * as determineImages from "./determineImages.ts";
+export * as determineKeywords from "./determineKeywords.ts";
+export * as determineTags from "./determineTags.ts";
+export * as discoverFeedLocale from "./discoverFeedLocale.ts";
+export * as removeAds from "./removeAds.ts";
+export * as lookUpTwitterAuthor from "./twitterLookUpAuthors.ts";

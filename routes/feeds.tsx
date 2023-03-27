@@ -12,7 +12,7 @@ export default function Home() {
       <TopHatBlack
         title="Federa"
         description="Descrbes federa"
-        icon={[{ href: "/feedCityRingDropsLogo.svg", type: "image/svg+xml" } ] }
+        icon={[{ href: "/feedCityRingDropsLogo.svg", type: "image/svg+xml" }]}
       >
         <meta name="og:title" content="Federa" />
       </TopHatBlack>

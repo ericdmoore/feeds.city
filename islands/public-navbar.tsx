@@ -16,23 +16,22 @@ import {
   X_mark,
 } from "../components/heroicons/outline.tsx";
 
-import { useState } from "preact/hooks"; 
+import { useState } from "preact/hooks";
 
 //#region interfaces
 type MenuStringOpts = null | "mobile-menu" | "solution-menu" | "more-menu";
 
-interface BlogRollContainerPropsWithChildren{
-  header: string
-  footer: {href: string, text: string}
-  children: JSX.Element[]
+interface BlogRollContainerPropsWithChildren {
+  header: string;
+  footer: { href: string; text: string };
+  children: JSX.Element[];
 }
 
-interface BlogRollContainerPropsWithTitles{
-  header: string
-  footer: {href: string, text: string}
-  titles: string[]
+interface BlogRollContainerPropsWithTitles {
+  header: string;
+  footer: { href: string; text: string };
+  titles: string[];
 }
-
 
 interface CTA {
   text: string;
@@ -47,9 +46,9 @@ interface MenuItem {
 
 interface NavBarProps {
   logo: Icon;
-  login: {register: { href: string }; auth: { href: string }};
-  nav: Record<string, Array<Record<string, MenuItem>>>;
-  // MenuName: [{SubheaderName1: string, SubheaderName1: string},{SubFooterName1: string}]
+  login: { register: { href: string }; auth: { href: string } };
+  nav: Record<string, Record<string, CTA>>;
+  // MenuGrpName: {SubheaderName1: string, SubheaderName1: string, SubFooterName1: string}
 }
 
 interface MenuItemProps {
@@ -112,55 +111,62 @@ interface LargeMenuProps {
 //#endregion interfaces
 
 //#region helper-components
-function Icon(props: { icon: Icon; class: string }){
+function Icon(props: { icon: Icon; class: string }) {
   return typeof props.icon === "function" ? props.icon(props.class) : (
     <img
       class={props.class}
       src={props.icon.src}
       alt={props.icon.alt}
     />
-  )
+  );
 }
 
-function MenuTreeItem(props: MenuItemProps){
+function MenuTreeItem(props: MenuItemProps) {
   return (
-  <a href={props.href ?? "#"} class="-m-3 flex p-3 hover:bg-gray-50 rounded-lg items-start" >
-    {props.children}
-    <div class="ml-4">
-      <p class="text-base font-medium text-gray-900">
+    <a
+      href={props.href ?? "#"}
+      class="-m-3 flex p-3 hover:bg-gray-50 rounded-lg items-start"
+    >
+      {props.children}
+      <div class="ml-4">
+        <p class="text-base font-medium text-gray-900">
+          {props.name}
+        </p>
+        <p class="mt-1 text-sm text-gray-500">
+          {props.descr}
+        </p>
+      </div>
+    </a>
+  );
+}
+
+function MobileMenuTreeItem(props: MobileMenuTreeItemProps) {
+  return (
+    <a
+      href={props.href ?? "#"}
+      class="-m-3 flex items-center rounded-md p-3 hover:bg-gray-50"
+    >
+      {props.children}
+      <span class="ml-3 text-base font-medium text-gray-900">
         {props.name}
-      </p>
-      <p class="mt-1 text-sm text-gray-500">
-        {props.descr}
-      </p>
-    </div>
-  </a>)
+      </span>
+    </a>
+  );
 }
 
-function MobileMenuTreeItem(props: MobileMenuTreeItemProps){
-  return (<a
-    href={props.href ?? "#"}
-    class="-m-3 flex items-center rounded-md p-3 hover:bg-gray-50"
-  >
-    {props.children}
-    <span class="ml-3 text-base font-medium text-gray-900">
-      {props.name}
-    </span>
-  </a>)
-}
-
-function FooterMenuItem(props: FooterMenuItemProps){
+function FooterMenuItem(props: FooterMenuItemProps) {
   return (
-  <a
-    href={props.href ?? "#"}
-    class="-m-3 flex items-center rounded-md p-3 text-base font-medium text-gray-900 hover:bg-gray-100"
-  >
-    {props.children}
-    <span class="ml-3">{props.name}</span>
-  </a>)
+    <a
+      href={props.href ?? "#"}
+      class="-m-3 flex items-center rounded-md p-3 text-base font-medium text-gray-900 hover:bg-gray-100"
+    >
+      {props.children}
+      <span class="ml-3">{props.name}</span>
+    </a>
+  );
 }
 
-function BlogRollPreview(props: BlogRollProps){
+function BlogRollPreview(props: BlogRollProps) {
   return (
     <a
       href={props.href ?? "#"}
@@ -168,14 +174,15 @@ function BlogRollPreview(props: BlogRollProps){
     >
       {props.name}
     </a>
-  )
+  );
 }
 
-function FlyoutTopLinkConainer(props: { children: JSX.Element[] }){
+function FlyoutTopLinkConainer(props: { children: JSX.Element[] }) {
   return (
-  <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-    {props.children}
-  </div>)
+    <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
+      {props.children}
+    </div>
+  );
 }
 
 function SideBySideFooterConainer(props: { children: JSX.Element[] }) {
@@ -186,8 +193,10 @@ function SideBySideFooterConainer(props: { children: JSX.Element[] }) {
   );
 }
 
-function BlogRollContainer(props:BlogRollContainerPropsWithChildren | BlogRollContainerPropsWithTitles){
-  if('titles'in props){
+function BlogRollContainer(
+  props: BlogRollContainerPropsWithChildren | BlogRollContainerPropsWithTitles,
+) {
+  if ("titles" in props) {
     return (
       <div class="bg-gray-50 px-5 py-5 sm:px-8 sm:py-8">
         <div>
@@ -195,12 +204,11 @@ function BlogRollContainer(props:BlogRollContainerPropsWithChildren | BlogRollCo
             {props.header}
           </h3>
           <ul role="list" class="mt-4 space-y-4">
-            {
-              props.titles.map( name =>
+            {props.titles.map((name) => (
               <li class="truncate text-base">
                 <BlogRollPreview name={name} />
               </li>
-            )}
+            ))}
           </ul>
         </div>
         <div class="mt-5 text-sm">
@@ -213,8 +221,8 @@ function BlogRollContainer(props:BlogRollContainerPropsWithChildren | BlogRollCo
           </a>
         </div>
       </div>
-    )
-  }else{
+    );
+  } else {
     return (
       <div class="bg-gray-50 px-5 py-5 sm:px-8 sm:py-8">
         <div>
@@ -284,9 +292,7 @@ function FlyOutMenu(props: FlyOutMenuProps) {
       </button>
       <div
         class={`${
-          props.activeMenuName === props.menuStateName
-            ? ""
-            : "hidden"
+          props.activeMenuName === props.menuStateName ? "" : "hidden"
         } absolute z-10 -ml-4 mt-3 w-screen max-w-md transform px-2 sm:px-0 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2`}
       >
         <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
@@ -297,7 +303,7 @@ function FlyOutMenu(props: FlyOutMenuProps) {
   );
 }
 
-function Anchor(props: AnchorProps){
+function Anchor(props: AnchorProps) {
   return (
     <a
       href={props.href ?? "#"}
@@ -305,8 +311,8 @@ function Anchor(props: AnchorProps){
         "text-base font-medium text-gray-900 hover:text-gray-700"}
     >
       {props.text}
-  </a>
-  )
+    </a>
+  );
 }
 
 //#endregion helper-components
@@ -446,8 +452,8 @@ const LargeMenu = (props: LargeMenuProps) => {
 
 export function NavBar(props: NavBarProps) {
   const [activeMenu, setActiveMenuGroup] = useState(null as string | null);
-  const signUpHref = "/register"
-  const signInHref = "/signin"
+  const signUpHref = "/register";
+  const signInHref = "/signin";
 
   return (
     <div class="relative bg-gray-50">
@@ -460,143 +466,143 @@ export function NavBar(props: NavBarProps) {
           singnInHref={signInHref}
         >
           <>
-          <FlyOutMenu
-            setMenuName={setActiveMenuGroup}
-            activeMenuName={activeMenu}
-            menuStateName="solution-menu"
-            ButtonText={() => (
-              <>
-                <span>Solutions</span>
-                <Chevron_down class="text-gray-400 ml-2 h-5 w-5 group-hover:text-gray-500" />
-              </>
-            )}
-          >
-            <>
-            <FlyoutTopLinkConainer>
-              <MenuTreeItem
-                name="Analytics"
-                descr="Get a better understanding of where your traffic is coming from."
-              > 
-                <Chart_bar class="h-6 w-6 flex-shrink-0 text-indigo-600" />
-              </MenuTreeItem>
-
-              <MenuTreeItem
-                name="Engagement"
-                descr="Speak directly to your customers in a more meaningful way."
-              >
-              <Cursor_arrow_rays class="h-6 w-6 flex-shrink-0 text-indigo-600" />
-              </MenuTreeItem>
-
-              <MenuTreeItem
-                name="Security"
-                descr=" Your customers&#039; data will be safe and secure."
-              >
-                <Shield_check class="h-6 w-6 flex-shrink-0 text-indigo-600" />
-              </MenuTreeItem>
-
-              <MenuTreeItem
-                name="Integrations"
-                descr="Connect with third-party tools that you&#039;re already using."
-              > 
-                <Squares_2x2 class="h-6 w-6 flex-shrink-0 text-indigo-600" />
-              </MenuTreeItem>
-
-              <MenuTreeItem
-                name="Automations"
-                descr="Build strategic funnels that will drive your customers to convert"
-              >
-                <Arrow_path class="h-6 w-6 flex-shrink-0 text-indigo-600" />
-              </MenuTreeItem>
-
-            </FlyoutTopLinkConainer>
-            <SideBySideFooterConainer>
-              <div class="flow-root">
-                <FooterMenuItem name="Watch Demo">
-                 <Play class="h-6 w-6 flex-shrink-0 text-gray-400" /> 
-                </FooterMenuItem>
-              </div>
-              <div class="flow-root">
-                <FooterMenuItem name="Contact Sales">
-                  <Phone class="h-6 w-6 flex-shrink-0 text-gray-400" />
-                </FooterMenuItem>
-              </div>
-            </SideBySideFooterConainer>
-            </>
-          </FlyOutMenu>
-
-          <a
-            href="#"
-            class="text-base font-medium text-gray-500 hover:text-gray-900"
-          >
-            Pricing
-          </a>
-          <a
-            href="#"
-            class="text-base font-medium text-gray-500 hover:text-gray-900"
-          >
-            Docs
-          </a>
-
-
-          <FlyOutMenu
-            ButtonText={() => <>
-              <span>More</span>
-              <Chevron_down class="text-gray-400 ml-2 h-5 w-5 group-hover:text-gray-500 focus:text-gray-600" />
-            </>}
-            menuStateName="more-menu"
-            setMenuName={setActiveMenuGroup}
-            activeMenuName={activeMenu}
-          >
-            <>
-            <FlyoutTopLinkConainer>
-             <MenuTreeItem
-                name="Help Center"
-                descr="Get all of your questions answered in our forums or contact support."
-              >
-                <Lifebuoy class="h-6 w-6 flex-shrink-0 text-indigo-600" />
-              </MenuTreeItem>
-
-              <MenuTreeItem
-                name="Guides"
-                descr="Learn how to maximize our platform to get the most out of it."
-              >
-                <Bookmark_square class="h-6 w-6 flex-shrink-0 text-indigo-600" />
-              </MenuTreeItem>
-
-              <MenuTreeItem
-                name="Events"
-                descr="See what meet-ups and other events we might be planning near you."
-              > 
-                <Calendar class="h-6 w-6 flex-shrink-0 text-indigo-600" />
-              </MenuTreeItem>
-
-              <MenuTreeItem
-                name="Security"
-                descr="Understand how we take your privacy seriously."
-              > 
-                <Shield_check class="h-6 w-6 flex-shrink-0 text-indigo-600" />
-              </MenuTreeItem>
-            </FlyoutTopLinkConainer>
-            <BlogRollContainer
-              header="Recent Posts"
-              footer={{text:'See More Posts', href:'#'}}
+            <FlyOutMenu
+              setMenuName={setActiveMenuGroup}
+              activeMenuName={activeMenu}
+              menuStateName="solution-menu"
+              ButtonText={() => (
+                <>
+                  <span>Solutions</span>
+                  <Chevron_down class="text-gray-400 ml-2 h-5 w-5 group-hover:text-gray-500" />
+                </>
+              )}
             >
-              <li class="truncate text-base">
-                <BlogRollPreview name="Boost your conversion rate" />
-              </li>
+              <>
+                <FlyoutTopLinkConainer>
+                  <MenuTreeItem
+                    name="Analytics"
+                    descr="Get a better understanding of where your traffic is coming from."
+                  >
+                    <Chart_bar class="h-6 w-6 flex-shrink-0 text-indigo-600" />
+                  </MenuTreeItem>
 
-              <li class="truncate text-base">
-                <BlogRollPreview name="How to use search engine optimization to drive traffic to your site" />
-              </li>
+                  <MenuTreeItem
+                    name="Engagement"
+                    descr="Speak directly to your customers in a more meaningful way."
+                  >
+                    <Cursor_arrow_rays class="h-6 w-6 flex-shrink-0 text-indigo-600" />
+                  </MenuTreeItem>
 
-              <li class="truncate text-base">
-                <BlogRollPreview name="Improve your customer experience" />
-              </li>
-            </BlogRollContainer>
-            </>
-          </FlyOutMenu>       
-            </>
-          </LargeMenu>
+                  <MenuTreeItem
+                    name="Security"
+                    descr=" Your customers&#039; data will be safe and secure."
+                  >
+                    <Shield_check class="h-6 w-6 flex-shrink-0 text-indigo-600" />
+                  </MenuTreeItem>
+
+                  <MenuTreeItem
+                    name="Integrations"
+                    descr="Connect with third-party tools that you&#039;re already using."
+                  >
+                    <Squares_2x2 class="h-6 w-6 flex-shrink-0 text-indigo-600" />
+                  </MenuTreeItem>
+
+                  <MenuTreeItem
+                    name="Automations"
+                    descr="Build strategic funnels that will drive your customers to convert"
+                  >
+                    <Arrow_path class="h-6 w-6 flex-shrink-0 text-indigo-600" />
+                  </MenuTreeItem>
+                </FlyoutTopLinkConainer>
+                <SideBySideFooterConainer>
+                  <div class="flow-root">
+                    <FooterMenuItem name="Watch Demo">
+                      <Play class="h-6 w-6 flex-shrink-0 text-gray-400" />
+                    </FooterMenuItem>
+                  </div>
+                  <div class="flow-root">
+                    <FooterMenuItem name="Contact Sales">
+                      <Phone class="h-6 w-6 flex-shrink-0 text-gray-400" />
+                    </FooterMenuItem>
+                  </div>
+                </SideBySideFooterConainer>
+              </>
+            </FlyOutMenu>
+
+            <a
+              href="#"
+              class="text-base font-medium text-gray-500 hover:text-gray-900"
+            >
+              Pricing
+            </a>
+            <a
+              href="#"
+              class="text-base font-medium text-gray-500 hover:text-gray-900"
+            >
+              Docs
+            </a>
+
+            <FlyOutMenu
+              ButtonText={() => (
+                <>
+                  <span>More</span>
+                  <Chevron_down class="text-gray-400 ml-2 h-5 w-5 group-hover:text-gray-500 focus:text-gray-600" />
+                </>
+              )}
+              menuStateName="more-menu"
+              setMenuName={setActiveMenuGroup}
+              activeMenuName={activeMenu}
+            >
+              <>
+                <FlyoutTopLinkConainer>
+                  <MenuTreeItem
+                    name="Help Center"
+                    descr="Get all of your questions answered in our forums or contact support."
+                  >
+                    <Lifebuoy class="h-6 w-6 flex-shrink-0 text-indigo-600" />
+                  </MenuTreeItem>
+
+                  <MenuTreeItem
+                    name="Guides"
+                    descr="Learn how to maximize our platform to get the most out of it."
+                  >
+                    <Bookmark_square class="h-6 w-6 flex-shrink-0 text-indigo-600" />
+                  </MenuTreeItem>
+
+                  <MenuTreeItem
+                    name="Events"
+                    descr="See what meet-ups and other events we might be planning near you."
+                  >
+                    <Calendar class="h-6 w-6 flex-shrink-0 text-indigo-600" />
+                  </MenuTreeItem>
+
+                  <MenuTreeItem
+                    name="Security"
+                    descr="Understand how we take your privacy seriously."
+                  >
+                    <Shield_check class="h-6 w-6 flex-shrink-0 text-indigo-600" />
+                  </MenuTreeItem>
+                </FlyoutTopLinkConainer>
+                <BlogRollContainer
+                  header="Recent Posts"
+                  footer={{ text: "See More Posts", href: "#" }}
+                >
+                  <li class="truncate text-base">
+                    <BlogRollPreview name="Boost your conversion rate" />
+                  </li>
+
+                  <li class="truncate text-base">
+                    <BlogRollPreview name="How to use search engine optimization to drive traffic to your site" />
+                  </li>
+
+                  <li class="truncate text-base">
+                    <BlogRollPreview name="Improve your customer experience" />
+                  </li>
+                </BlogRollContainer>
+              </>
+            </FlyOutMenu>
+          </>
+        </LargeMenu>
         <MobileMenu
           logo={props.logo}
           setMenuName={setActiveMenuGroup}
@@ -615,33 +621,23 @@ export function NavBar(props: NavBarProps) {
           )}
           TopLinks={() => (
             <>
-              <MobileMenuTreeItem
-                name="Analytics"
-                >
-                  <Chart_bar class="h-6 w-6 flex-shrink-0 text-indigo-600" />
+              <MobileMenuTreeItem name="Analytics">
+                <Chart_bar class="h-6 w-6 flex-shrink-0 text-indigo-600" />
               </MobileMenuTreeItem>
 
-              <MobileMenuTreeItem
-                name="Engagement"
-                >
-                  <Cursor_arrow_rays class="h-6 w-6 flex-shrink-0 text-indigo-600" />
-                </MobileMenuTreeItem>
-            
-              <MobileMenuTreeItem
-                name="Security"
-              >
+              <MobileMenuTreeItem name="Engagement">
+                <Cursor_arrow_rays class="h-6 w-6 flex-shrink-0 text-indigo-600" />
+              </MobileMenuTreeItem>
+
+              <MobileMenuTreeItem name="Security">
                 <Shield_check class="h-6 w-6 flex-shrink-0 text-indigo-600" />
               </MobileMenuTreeItem>
 
-              <MobileMenuTreeItem
-                name="Integrations"
-              >
+              <MobileMenuTreeItem name="Integrations">
                 <Squares_2x2 class="h-6 w-6 flex-shrink-0 text-indigo-600" />
               </MobileMenuTreeItem>
 
-              <MobileMenuTreeItem
-                name="Automations"
-              >
+              <MobileMenuTreeItem name="Automations">
                 <Arrow_path class="h-6 w-6 flex-shrink-0 text-indigo-600" />
               </MobileMenuTreeItem>
             </>

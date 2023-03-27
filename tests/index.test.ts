@@ -1,7 +1,7 @@
 import { assert, assertEquals } from "$std/testing/asserts.ts";
 import { getSetCookies } from "$std/http/cookie.ts";
 
-import { config } from "$std/dotenv/mod.ts";
+import { load } from "$std/dotenv/mod.ts";
 
 const host = "http://localhost";
 const port = 8000;
@@ -11,7 +11,8 @@ const u = `${host}:${port}${path}`;
 console.info("\n\n ... be sure to start a dev server from another session\n\n");
 const sleep = (ms: number): Promise<number> =>
   new Promise((resolve) => setTimeout(() => resolve(ms), ms));
-await config({ export: true, safe: true }).catch(() =>
+
+await load({ export: true }).catch(() =>
   console.error("errored while processsing .env file")
 );
 

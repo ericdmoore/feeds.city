@@ -1,7 +1,7 @@
 // deno-lint-ignore-file require-await ban-unused-ignore
 import type { Handlers, PageProps } from "$fresh/server.ts";
 
-import { config } from "$std/dotenv/mod.ts";
+import { load } from "$std/dotenv/mod.ts";
 import { Airtable } from "airtable";
 import sendJson from "../lib/responder/sendjson.ts";
 
@@ -14,12 +14,12 @@ import NavBar from "../islands/public-navbar.tsx";
 import PublicHero from "../components/public-hero.tsx";
 import PublicFeatures from "../components/public/featureGrid.tsx";
 import Testimonial from "../components/public/testimonial.tsx";
-import Pricing from "../components/public/pricing.tsx";
+// import Pricing from "../components/public/pricing.tsx";
 import Stats from "../components/public/stats.tsx";
 import SignUp from "../islands/public-signup.tsx";
 import Footer from "../components/public/footer.tsx";
 import CtaPanel from "../components/cta-panel.tsx";
-import { Color } from "../types.ts";
+// import { Color } from "../types.ts";
 import v1token from "../utils/tokens/v1.ts";
 
 import {
@@ -57,10 +57,11 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
       />
       <NavBar
         logo={{ src: "/feedcitylogo.svg", alt: "Feed City Logo" }}
+        login={{ register: {href:'/register'}, auth:{href:'/login'}}}
         nav={{
           _: {
-            "Sign In": { href: "/login" },
-            "Sign Up": { href: "/register" },
+            "Sign In": {text:'Log In', href: '/login'}, 
+            "Sign Up": { text:'Sign Up', href: "/register" },
           },
         }}
       />
@@ -71,7 +72,7 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
         p={() => (
           <>
             <span class="text-indigo-600">feeds.city</span>
-            offers the world's 1<sup>st</sup>{" "}
+            offers the world's 1<sup>st</sup> {" "}
             <a class="font-bold" href="#">subscription proxy</a>
             that transforms your content on the fly. Enabled by an open
             marketplace, backed by a collective of developers, inspired by the
@@ -214,7 +215,7 @@ export const handler: Handlers = {
   },
 
   POST: async (req) => {
-    await config({ export: true, safe: true }).catch(() =>
+    await load({ export: true }).catch(() =>
       console.error("errored while processsing .env file")
     );
 
