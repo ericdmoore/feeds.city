@@ -1,6 +1,6 @@
 {
     "imports": {
-      "$fresh/": "https://deno.land/x/fresh@1.1.1/",
+      "$fresh/": "https://deno.land/x/fresh@1.1.4/",
       "$std/": "https://deno.land/std@0.181.0/",
       "@aws-sdk/client-dynamodb": "https://esm.sh/@aws-sdk/client-dynamodb@3.200.0?deno-std=0.161.0?dts",
       "@aws-sdk/client-dynamodb/": "https://esm.sh/@aws-sdk/client-dynamodb@3.200.0?deno-std=0.161.0/",
@@ -27,8 +27,8 @@
       "mustache": "https://deno.land/x/mustache@v0.3.0/mod.ts",
       "nodeBuffer": "https://deno.land/std@0.153.0/node/buffer.ts",
       "preact": "https://esm.sh/preact@10.11.0",
-      "preact-render-to-string": "https://esm.sh/preact-render-to-string@5.2.4?dts",
       "preact/": "https://esm.sh/preact@10.11.0/",
+      "preact-render-to-string": "https://esm.sh/preact-render-to-string@5.2.4",
       "rehypeParse": "https://denopkg.com/ericdmoore/rehype@main/packages/rehype-parse/mod.ts",
       "rehypeRemark": "https://denopkg.com/ericdmoore/rehype-remark@main/mod.ts",
       "rehypeStringify": "https://denopkg.com/ericdmoore/rehype@main/packages/rehype-stringify/mod.ts",

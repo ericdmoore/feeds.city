@@ -9,7 +9,7 @@ import { refreshCookieToken } from "../utils/cookies/refresh.ts";
 import { getCookies } from "$std/http/cookie.ts";
 import { jwKeyPair } from "../utils/ECkeys/grab.ts";
 
-import { TopHatBlack } from "../components/TopHat.tsx";
+// import { TopHatBlack } from "../components/TopHat.tsx";
 import NavBar from "../islands/public-navbar.tsx";
 import PublicHero from "../components/public-hero.tsx";
 import PublicFeatures from "../components/public/featureGrid.tsx";
@@ -47,15 +47,15 @@ interface HomeProps {
 export default function Home(props: PageProps<Partial<HomeProps>>) {
   return (
     <>
-      <TopHatBlack
+      {/* <TopHatBlack
         title="Feeds.City"
         description="An ecosystem of feeds to discover and ways to remix them"
         icon={[
           { rel: "icon", href: "/feedcitylogo@1x.png", type: "image/png" },
           { rel: "icon", href: "/feedcitylogo.svg", type: "image/svg+xml" },
         ]}
-      />
-      <NavBar
+      /> */}
+      {/* <NavBar
         logo={{ src: "/feedcitylogo.svg", alt: "Feed City Logo" }}
         login={{ register: {href:'/register'}, auth:{href:'/login'}}}
         nav={{
@@ -64,7 +64,7 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
             "Sign Up": { text:'Sign Up', href: "/register" },
           },
         }}
-      />
+      /> */}
       <PublicHero
         logo={{ src: "/feedcitylogo.svg", alt: "Feeds.City" }}
         h1="Know Your Scroll"
@@ -97,10 +97,10 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
           alt: "Feeds.City",
         }}
       />
-      <SignUp
+      {/* <SignUp
         token={props.data.jwt ?? "missing"}
         exp={props.data.exp ?? -1}
-      />
+      /> */}
       <PublicFeatures
         h2="Take Back Your Feed"
         tagline="A Better Way To Scroll Your Feed"

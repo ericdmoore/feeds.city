@@ -1,5 +1,8 @@
-import type { JSX } from "preact";
 import type { Icon } from "../types.ts";
+import type { JSX } from "preact";
+
+import { useState } from "preact/hooks?dev";
+
 import {
   Arrow_path,
   Bars_3,
@@ -15,8 +18,6 @@ import {
   Squares_2x2,
   X_mark,
 } from "../components/heroicons/outline.tsx";
-
-import { useState } from "preact/hooks";
 
 //#region interfaces
 type MenuStringOpts = null | "mobile-menu" | "solution-menu" | "more-menu";
