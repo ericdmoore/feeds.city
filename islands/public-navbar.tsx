@@ -1,7 +1,7 @@
 import type { Icon } from "../types.ts";
 import type { JSX } from "preact";
 
-import { useState } from "preact/hooks?dev";
+import { useState } from "preact/hooks";
 
 import {
   Arrow_path,
