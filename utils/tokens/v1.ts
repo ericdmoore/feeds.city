@@ -44,6 +44,12 @@ export const validIssuanceDate: LocalValidatorFns = async (
   return data.headers?.iss === ISSUER;
 };
 
+export const validatiorsAvailable = {
+  isV1Token,
+  isFromMe,
+  validIssuanceDate,
+  notTooSoon,
+};
 export const v1Validators = [
   isV1Token,
   isFromMe,

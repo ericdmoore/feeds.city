@@ -14,12 +14,12 @@ export default function () {
   return (
     <>
       <NavBar
-        login={{register:{href:'/register'}, auth: {href:'/login'} }}
-        logo={{alt:"Feed City Logo", src:"/feedcitylogo.svg"}}
+        login={{ register: { href: "/register" }, auth: { href: "/login" } }}
+        logo={{ alt: "Feed City Logo", src: "/feedcitylogo.svg" }}
         nav={{
           _: {
-            "Sign In": { text:'', href: "/login" },
-            "Sign Up": { text:'', href: "/register" },
+            "Sign In": { text: "", href: "/login" },
+            "Sign Up": { text: "", href: "/register" },
           },
         }}
       />

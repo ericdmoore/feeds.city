@@ -20,7 +20,9 @@ import SignUp from "../islands/public-signup.tsx";
 import Footer from "../components/public/footer.tsx";
 import CtaPanel from "../components/cta-panel.tsx";
 // import { Color } from "../types.ts";
-import v1token from "../utils/tokens/v1.ts";
+import v1token, {
+  validatiorsAvailable as availVals,
+} from "../utils/tokens/v1.ts";
 
 import {
   Adjustments_horizontal,
@@ -57,11 +59,11 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
       />
       <NavBar
         logo={{ src: "/feedcitylogo.svg", alt: "Feed City Logo" }}
-        login={{ register: {href:'/register'}, auth:{href:'/login'}}}
+        login={{ register: { href: "/register" }, auth: { href: "/login" } }}
         nav={{
           _: {
-            "Sign In": {text:'Log In', href: '/login'}, 
-            "Sign Up": { text:'Sign Up', href: "/register" },
+            "Sign In": { text: "Log In", href: "/login" },
+            "Sign Up": { text: "Sign Up", href: "/register" },
           },
         }}
       />
@@ -72,7 +74,7 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
         p={() => (
           <>
             <span class="text-indigo-600">feeds.city</span>
-            offers the world's 1<sup>st</sup> {" "}
+            offers the world's 1<sup>st</sup>{"  "}
             <a class="font-bold" href="#">subscription proxy</a>
             that transforms your content on the fly. Enabled by an open
             marketplace, backed by a collective of developers, inspired by the
@@ -193,7 +195,11 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
  */
 export const handler: Handlers = {
   GET: async (req, ctx) => {
-    const v1 = v1token(await jwKeyPair(), Deno.env.get("KEY_ID")!);
+    const v1 = v1token(await jwKeyPair(), Deno.env.get("KEY_ID")!, [
+      availVals.isFromMe,
+      availVals.isV1Token,
+      availVals.validIssuanceDate,
+    ]);
     const { respHeaders, jwt, jwtData } = await refreshCookieToken(
       v1,
       60 * 15, /* 15 min */
@@ -232,6 +238,7 @@ export const handler: Handlers = {
 
     const token = new URL(req.url).searchParams.get("token") ||
       getCookies(req.headers)?.sessionID || null as string | null;
+
     const v1tok = v1token(await jwKeyPair(), Deno.env.get("KEY_ID")!);
 
     if (token && email) {

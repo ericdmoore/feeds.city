@@ -24,10 +24,10 @@ import existing from "../../import_map.json" assert { type: "json" };
 // };
 
 const sortedImportData = Object.fromEntries(
-  [ 
-    // 
-    // ...Object.entries(imports), 
-    ...Object.entries(existing.imports)
+  [
+    //
+    // ...Object.entries(imports),
+    ...Object.entries(existing.imports),
   ].sort((
     a,
     z,
@@ -45,10 +45,9 @@ console.log(
   ),
 );
 
-
 /** Backup value
- * 
- * 
+ *
+ *
 {
   "imports": {
     "$fresh/": "https://deno.land/x/fresh@1.1.1/",
@@ -105,6 +104,6 @@ console.log(
   }
 }
 
- * 
- * 
+ *
+ *
  */

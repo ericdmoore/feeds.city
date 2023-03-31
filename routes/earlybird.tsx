@@ -8,11 +8,11 @@ export default function () {
     <>
       <NavBar
         logo={{ src: "/feedcitylogo.svg", alt: "Feed City Logo" }}
-        login={{register:{href:'/register'}, auth:{href:'/login'}}}
+        login={{ register: { href: "/register" }, auth: { href: "/login" } }}
         nav={{
           _: {
-            "Sign In": { text:'Login', href: "/login" },
-            "Sign Up": { text:'Logout', href: "/register" },
+            "Sign In": { text: "Login", href: "/login" },
+            "Sign Up": { text: "Logout", href: "/register" },
           },
         }}
       />
