@@ -1,4 +1,5 @@
-import { superstruct } from "../../../deps.ts";
+import * as superstruct from "superstruct";
+
 export const maybe = <T>(type: superstruct.Struct<T>) =>
   superstruct.optional(type);
 

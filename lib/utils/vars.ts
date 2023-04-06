@@ -1,12 +1,15 @@
-import { dotenv, path } from "../../deps.ts";
+import { resolve } from "$std/path/mod.ts";
+import { load } from "$std/dotenv/mod.ts"
+
 type Dict<T> = { [key: string]: T };
 
 export const envVar =
   (defaultVal: string) => async (key: string): Promise<string> => {
-    const p = path.resolve(import.meta.url, "../.env").split(":")[1]; // crazy `file:` prefix after import.meta.url
-    const configState = await dotenv.config({
-      path: p,
-      safe: true,
+    const p = resolve(import.meta.url, "../.env").split(":")[1]; // crazy `file:` prefix after import.meta.url
+    
+    const configState = await load({
+      envPath: p,
+      // safe: true,
       allowEmptyValues: false,
       export: true,
     }) as Dict<string>;

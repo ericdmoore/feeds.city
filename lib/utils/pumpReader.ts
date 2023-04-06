@@ -1,10 +1,11 @@
 import {
-  Buffer,
   copy,
   readableStreamFromReader,
   readerFromStreamReader,
-  StringReader,
-} from "../../deps.ts";
+} from "$std/streams/mod.ts";
+
+import {StringReader} from '$std/io/mod.ts'
+
 
 const dec = new TextDecoder();
 
@@ -63,9 +64,16 @@ export const stringToStream = (input: string): ReadableStream<Uint8Array> =>
 export const drainStream = async (
   input: ReadableStream<Uint8Array>,
 ): Promise<Uint8Array> => {
-  const buf = new Buffer();
-  await copy(readerFromStreamReader(input.getReader()), buf);
-  return buf.bytes();
+  let init = new Uint8Array();
+  
+  const w = {
+    write: (p: Uint8Array): Promise<number> => {
+      init = new Uint8Array([...init, ...p]);
+      return Promise.resolve(init.byteLength)
+    }
+  }
+  await copy(readerFromStreamReader(input.getReader()), w);
+  return init;
 };
 
 export default readToString;

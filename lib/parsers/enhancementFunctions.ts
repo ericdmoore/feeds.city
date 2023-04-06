@@ -17,15 +17,17 @@ BSON,B64::{{btoa value here}} - ba::
 */
 import { type PromiseOr } from "../types.ts";
 import * as bson from "bson_deno";
-// import nodeBuffer from 'nodeBuffer'
+import * as base64url from '$std/encoding/base64url.ts'
+
 import {
   compress as zstdCompress,
   decompress as zstdDecompress,
 } from "zstd_wasm";
 import { gzipDecode, gzipEncode } from "gzip_wasm";
-import { compress as brCompress, decompress as brDecompress } from "brotli";
-
-// const {Buffer} = nodeBuffer
+import { 
+  compress as brCompress, 
+  decompress as brDecompress 
+} from "brotli";
 
 type Dict<T> = { [key: string]: T };
 
@@ -224,7 +226,10 @@ const intersection = <T>(A: T[], B: T[]) => A.filter((e) => B.includes(e));
 
 export const functionsStruct = (() => {
   const strEnc = async (text: string) => enc.encode(text);
-  const jsonEnc = async (obj: unknown) => enc.encode(JSON.stringify(obj));
+  const jsonEnc = async (obj: unknown) => 
+    enc.encode(JSON.stringify(await obj));
+    // new Uint8Array(await nodeBuffer.Buffer.from(JSON.stringify(obj), "utf8").buffer);
+  
   const bsonEnc = async (obj: unknown) =>
     new Uint8Array(await bson.serialize(obj as bson.Document));
 
@@ -298,12 +303,10 @@ export const jwkRSAtoCryptoKey = async (
 };
 
 export const functionsEncodings = (() => {
-  const B64toURL = async (data: PromiseOr<Uint8Array>) =>
-    btoa(dec.decode(await data).replaceAll("/", "_"));
-
-  const B64fromURL = async (URLstring: string) =>
-    enc.encode(atob(URLstring.replaceAll("_", "/")));
-
+  const B64toURL = async (data: PromiseOr<Uint8Array>):Promise<string> =>
+    base64url.encode(await data)
+  const B64fromURL = async (URLstring: string):Promise<Uint8Array> =>
+    base64url.decode(await URLstring)
   const JWEtoURL = (pubKey: JsonWebKey) => async (data: Uint8Array) => {
     const cryptoPubKey = await jwkRSAtoCryptoKey(pubKey, [
       CryptoKeyUsages.encrypt,

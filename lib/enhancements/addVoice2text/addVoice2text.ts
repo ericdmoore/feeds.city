@@ -9,7 +9,7 @@
 	- which would greatly enhance the listening pleasure for every page
 */
 
-import { type PromiseOr } from "../../../types.ts";
+import { type PromiseOr } from "../../types.ts";
 import {
   type ASTcomputable,
   type ASTFeedItemJsonTYPE,
@@ -17,7 +17,7 @@ import {
   computableToJson,
   rezVal,
 } from "../../parsers/ast.ts";
-import { superstruct as s } from "../../../deps.ts";
+import * as s from "superstruct";
 import { streamToString } from "../../utils/pumpReader.ts";
 
 import {
@@ -44,7 +44,7 @@ import {
 
 import { S3Bucket } from "https://denopkg.com/ericdmoore/s3_deno@main/mod.ts";
 import { hmac } from "https://deno.land/x/hmac@v2.0.1/mod.ts";
-import { extname } from "https://deno.land/std@0.151.0/path/mod.ts";
+import { extname } from "$std/path/mod.ts";
 import { getSignedUrl } from "https://deno.land/x/aws_s3_presign@1.3.0/mod.ts";
 
 // #region types
