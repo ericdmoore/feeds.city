@@ -5,20 +5,30 @@ import { assert, assertEquals } from '$std/testing/asserts.ts'
 import envFn from "$lib/utils/vars.ts";
 const envs = envFn("MISSING-KEY-VALUE");
 
+let vars = null as null  | { AWS_KEY:string, AWS_REGION:string, AWS_SECRET:string, POLLY:{BUCKET:string, PREFIX:string}}
 const findVars = async () => {
-  const [AWS_KEY, AWS_SECRET, AWS_REGION] = await Promise.all([
-    envs("AWS_KEY"),
-    envs("AWS_SECRET"),
-    envs("REGION"),
-  ]);
-
-  const POLLY = {
-    BUCKET: await envs("POLLYBUCKET"),
-    PREFIX: await envs("POLLYPREFIX"),
-  };
-  return Object.freeze({ AWS_KEY, AWS_REGION, AWS_SECRET, POLLY });
+  if(vars){
+    return vars
+  }else{
+    const [AWS_KEY, AWS_SECRET, AWS_REGION, BUCKET, PREFIX] = await Promise.all([
+      envs("AWS_KEY"),
+      envs("AWS_SECRET"),
+      envs("REGION"),
+      envs("POLLYBUCKET"),
+      envs("POLLYPREFIX"),
+    ]);
+    
+    const POLLY = { BUCKET, PREFIX };
+    const ret = Object.freeze({ AWS_KEY, AWS_REGION, AWS_SECRET, POLLY })
+    // set for memoization
+    vars = ret
+    return ret;
+  }
 };
 
+
+
+// NEEDS NET, ENV VARS, and READ permissions
 // priority actions
 Deno.test("DescribeVoices", async () => {
   const envs = await findVars();

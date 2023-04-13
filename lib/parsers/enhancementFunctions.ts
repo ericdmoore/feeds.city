@@ -291,16 +291,13 @@ export const functionsTransforms = (() => {
 export const jwkRSAtoCryptoKey = async (
   key: PromiseOr<JsonWebKey>,
   usages: KeyUsage[] = [CryptoKeyUsages.encrypt],
-) => {
-  // console.log({ key, usages })
-  return crypto.subtle.importKey(
-    "jwk",
-    await key,
-    { name: JWE_ALG["RSA-OAEP"], hash: "SHA-512" },
-    true,
-    usages,
-  );
-};
+) =>  crypto.subtle.importKey(
+  "jwk",
+  await key,
+  { name: JWE_ALG["RSA-OAEP"], hash: {name: "SHA-256" }},
+  true,
+  usages,
+);
 
 export const functionsEncodings = (() => {
   const B64toURL = async (data: PromiseOr<Uint8Array>):Promise<string> =>
@@ -315,7 +312,8 @@ export const functionsEncodings = (() => {
       { name: JWE_ALG["RSA-OAEP"] },
       cryptoPubKey,
       data,
-    );
+    )
+    console.log('line 319::',data, encBuffer.byteLength, new Uint8Array(encBuffer.slice(0,30)));
     return B64toURL(new Uint8Array(encBuffer));
   };
 
@@ -630,7 +628,6 @@ export const paramElement = (() => {
       } else {
         const flist = funcs.right;
         if (isBareParam(obj)) {
-          // console.log('bare param')
           return Right(`${obj}`);
         } else {
           // console.log('stringifying the encoded object param',{obj})
@@ -789,7 +786,7 @@ export const params = (() => {
         return Left(left);
       }
 
-      const resolvedEithers = await Promise.all(
+      const resolvedEithers =  await Promise.all(
         Object.entries(param)
           .map(async ([paramName, paramVal]) => {
             if (isBareParam(paramVal)) {

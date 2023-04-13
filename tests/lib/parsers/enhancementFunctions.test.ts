@@ -1,6 +1,6 @@
 import hipsteripsum from "./helpers/hipsteripsum.ts";
 import { SAblurb, SBAblurb } from "./helpers/encTextBlurb.ts";
-import { examplePrivate, examplePublic } from "./helpers/jwKeys.example.ts";
+import exampleKeys from "./helpers/jwKeys.example.ts";
 import { assert, assertObjectMatch, assertEquals } from "$std/testing/asserts.ts";
 
 import {
@@ -14,6 +14,8 @@ import {
   params,
   TypeNames,
 } from "$lib/parsers/enhancementFunctions.ts";
+
+// import * as base64url from '$std/encoding/base64url.ts'
 
 Deno.test("basic parse Legend", () => {
   const sba = legends.parse()("sba");
@@ -314,12 +316,12 @@ Deno.test("function.stringify + parse is bijective", async () => {
   assertEquals(pf.right, finterface);
 });
 
-Deno.test("Encrypted params", async () => {
+Deno.test("Pass In Encrypted params", async () => {
   const config = {
     ...defaultedOptions,
     encryptionKeys: {
-      privateJWK: examplePrivate,
-      publicJWK: examplePublic,
+      privateJWK: exampleKeys.rsa.open,
+      publicJWK: exampleKeys.rsa.seal,
     },
     legendOpts: {
       hurdle: 512,
@@ -332,30 +334,34 @@ Deno.test("Encrypted params", async () => {
     },
   } as FunctionParsingOptions;
 
+
+  const nonce = crypto.randomUUID() 
   const data = {
     f1name: {
       param1: true,
-      secretObj: { hello: "world", mySecret: "AWS_KEY_0987654321234567890" },
+      secretObj: { 
+        nonce,
+        hello: "world", 
+        mySecret: "AWS_PRETEND_KEY_0987654321234567890",
+      }
     },
   };
 
   const fStr = await functions.stringify(config)(data);
-  // console.log('fStr: ',fStr.right)
-  assert(fStr.right);
+  assert(fStr.right && !fStr.left);
+  fStr.left && console.log('fStr: ',fStr)
 });
 
 Deno.test("Encrypted Serialization is bijective", async () => {
-
-  const encryptionKeys = {
-    publicJWK: examplePublic,
-    privateJWK: examplePrivate,
-  };
-
   const config = {
     ...defaultedOptions,
-    encryptionKeys,
+    encryptionKeys: {
+      privateJWK: exampleKeys.rsa.open,
+      publicJWK: exampleKeys.rsa.seal,
+    },
     legendOpts: {
       ...defaultedOptions.legendOpts,
+      hurdle: 512,
       strategy: {
         ...defaultedOptions.legendOpts.strategy,
         keys: {
@@ -365,21 +371,22 @@ Deno.test("Encrypted Serialization is bijective", async () => {
     },
   } as FunctionParsingOptions;
 
-  const data = {
-    param1: true,
-    param2: { a: 1, b: 2, c: 3 },
-    secretObj: {
-      AWS_KEY: "SOME_EXAMPLE_KEY",
-      AWS_SEC: "SOME_EXAMPLE_SEC_THAT_SHOULD_NEVER_BE_IN_CODE",
-    },
+  const data = { 
+    p1: true,
+    secretObj: { 
+      nonce: crypto.randomUUID(),
+      AWS_KEY: "SOME_EXAMPLE_KEY", 
+      AWS_SECRET: "AWS_SECRET_NEVER_ACTUALLY_STORED_IN_CODE",
+    }
   };
 
-  const s = await params.stringify(config)(data);
-  // console.log(s.right)
-  assert(s.right && !s.left);
-  assert(typeof s.right === "string");
+  const paramStr = await params.stringify(config)(data);
+  assert(paramStr.right && !paramStr.left);
+  assert(typeof paramStr.right === "string");
+  paramStr.left && console.log('params: ',paramStr)
 
-  const d = await params.parse(config)(s.right);
-  assert(d.right && !d.left);
-  assertEquals(d.right, data);
+  const d = await params.parse(config)(paramStr.right);
+  console.log('d: ',d)
+  assert(d.right);
+  assertEquals(d.right, data); // input to ENCRYPTED LAND and back again, and it's the same
 });
