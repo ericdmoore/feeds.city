@@ -11,8 +11,8 @@ const pubCryhptoKey = await window.crypto.subtle.importKey(
      ['encrypt']
  )
 
-// const message = JSON.stringify(payload)
-const message = base64url.encode(crypto.getRandomValues(new Uint8Array(334)))
+// 334 is the max length of a message that can be encrypted with the public key - using base64url encoding
+const message = base64url.encode(crypto.getRandomValues(new Uint8Array(334))) // 446 after encoding, 447 = bad
 console.log('message.length :>', message.length)
 console.log('message :>', message)
 

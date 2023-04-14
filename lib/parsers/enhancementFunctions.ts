@@ -17,17 +17,14 @@ BSON,B64::{{btoa value here}} - ba::
 */
 import { type PromiseOr } from "../types.ts";
 import * as bson from "bson_deno";
-import * as base64url from '$std/encoding/base64url.ts'
+import * as base64url from "$std/encoding/base64url.ts";
 
 import {
   compress as zstdCompress,
   decompress as zstdDecompress,
 } from "zstd_wasm";
 import { gzipDecode, gzipEncode } from "gzip_wasm";
-import { 
-  compress as brCompress, 
-  decompress as brDecompress 
-} from "brotli";
+import { compress as brCompress, decompress as brDecompress } from "brotli";
 
 type Dict<T> = { [key: string]: T };
 
@@ -226,10 +223,9 @@ const intersection = <T>(A: T[], B: T[]) => A.filter((e) => B.includes(e));
 
 export const functionsStruct = (() => {
   const strEnc = async (text: string) => enc.encode(text);
-  const jsonEnc = async (obj: unknown) => 
-    enc.encode(JSON.stringify(await obj));
-    // new Uint8Array(await nodeBuffer.Buffer.from(JSON.stringify(obj), "utf8").buffer);
-  
+  const jsonEnc = async (obj: unknown) => enc.encode(JSON.stringify(await obj));
+  // new Uint8Array(await nodeBuffer.Buffer.from(JSON.stringify(obj), "utf8").buffer);
+
   const bsonEnc = async (obj: unknown) =>
     new Uint8Array(await bson.serialize(obj as bson.Document));
 
@@ -291,19 +287,20 @@ export const functionsTransforms = (() => {
 export const jwkRSAtoCryptoKey = async (
   key: PromiseOr<JsonWebKey>,
   usages: KeyUsage[] = [CryptoKeyUsages.encrypt],
-) =>  crypto.subtle.importKey(
-  "jwk",
-  await key,
-  { name: JWE_ALG["RSA-OAEP"], hash: {name: "SHA-256" }},
-  true,
-  usages,
-);
+) =>
+  crypto.subtle.importKey(
+    "jwk",
+    await key,
+    { name: JWE_ALG["RSA-OAEP"], hash: { name: "SHA-256" } },
+    true,
+    usages,
+  );
 
 export const functionsEncodings = (() => {
-  const B64toURL = async (data: PromiseOr<Uint8Array>):Promise<string> =>
-    base64url.encode(await data)
-  const B64fromURL = async (URLstring: string):Promise<Uint8Array> =>
-    base64url.decode(await URLstring)
+  const B64toURL = async (data: PromiseOr<Uint8Array>): Promise<string> =>
+    base64url.encode(await data);
+  const B64fromURL = async (URLstring: string): Promise<Uint8Array> =>
+    base64url.decode(await URLstring);
   const JWEtoURL = (pubKey: JsonWebKey) => async (data: Uint8Array) => {
     const cryptoPubKey = await jwkRSAtoCryptoKey(pubKey, [
       CryptoKeyUsages.encrypt,
@@ -312,8 +309,7 @@ export const functionsEncodings = (() => {
       { name: JWE_ALG["RSA-OAEP"] },
       cryptoPubKey,
       data,
-    )
-    console.log('line 319::',data, encBuffer.byteLength, new Uint8Array(encBuffer.slice(0,30)));
+    );
     return B64toURL(new Uint8Array(encBuffer));
   };
 
@@ -786,7 +782,7 @@ export const params = (() => {
         return Left(left);
       }
 
-      const resolvedEithers =  await Promise.all(
+      const resolvedEithers = await Promise.all(
         Object.entries(param)
           .map(async ([paramName, paramVal]) => {
             if (isBareParam(paramVal)) {

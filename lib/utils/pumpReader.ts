@@ -4,8 +4,7 @@ import {
   readerFromStreamReader,
 } from "$std/streams/mod.ts";
 
-import {StringReader} from '$std/io/mod.ts'
-
+import { StringReader } from "$std/io/mod.ts";
 
 const dec = new TextDecoder();
 
@@ -65,13 +64,13 @@ export const drainStream = async (
   input: ReadableStream<Uint8Array>,
 ): Promise<Uint8Array> => {
   let init = new Uint8Array();
-  
+
   const w = {
     write: (p: Uint8Array): Promise<number> => {
       init = new Uint8Array([...init, ...p]);
-      return Promise.resolve(init.byteLength)
-    }
-  }
+      return Promise.resolve(init.byteLength);
+    },
+  };
   await copy(readerFromStreamReader(input.getReader()), w);
   return init;
 };

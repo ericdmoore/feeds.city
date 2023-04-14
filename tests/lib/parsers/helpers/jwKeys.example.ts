@@ -34,16 +34,14 @@ export const aesGcmJWK =  {
   ext: true
 }
 
-
 export const publicRSA =  {
   kty: "RSA",
   alg: "RSA-OAEP-256",
   n: "v80HJ3EKDcprrC-TZxZev3cRwEZs2VOL5A0QL7o0MpcVQs9PY8j4RJsmghrhTr7EpUtOZbg6gVkkB41PUbjCCOdNoS_E47GnAFaZlZcSim04yNkoyX72iiJQHrKsLPDl8NRF69mK7ngRlZ-Im9kom9iArMTdDSMeSgcDUXU7eksCg-iVtkSoGfjJRiYv6dletY19aOcD7keS1xuEvQqPETZt5LuoM5ziNn91G9lR6NaHcQii2_ZHn98c3uv27DvCMU15_OZWFTvz_cFQBYWesrH-e9VXWH1iUZ_5Y10vgAqsTjTx267lBbp3XrCq0-nHM_Y424vWaE8tt9F_0XTpmbQPa6gpEyMKgDMcNYr5AcLoLfBLfYAGXrUZKBOFKU6TTQZ83gV5FCwgJT-reIxcpr1JSPuxnxPxrSxSJwxyFXNHh4S_DJRVfbqkccJTjpylgK-EVMQUbu25YQSPGOH4xjFpZ-PaiUwNfB8g8w_xgxjbYpQW8fjkEtRsbDSbrHLIDMPfZV55dtv7KJJMlGdwg0gCTPqbmQpBnImnOGUiRi54iqqZ-gtOIwiW9yi9CcnooZpNvOACxIWgwTLepktSN7o_Fan2pwn619AXr4ayNvTKvKKlo17M3AA_ZnfbtHpv7cqsEK5pi1smSC4SoY6h2r0EIDe-0li9RtvGdf4sD-c",
   e: "AQAB",
-  key_ops: ["encrypt",],
+  key_ops: ["encrypt"],
   ext: true
 }
-
 
 export const privateRSA =  {
   kty: "RSA",

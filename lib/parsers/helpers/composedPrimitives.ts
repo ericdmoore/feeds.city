@@ -1,4 +1,4 @@
-import * as superstruct from 'superstruct';
+import * as superstruct from "superstruct";
 
 const { partial, type, optional, object, string, union, literal, define, is } =
   superstruct;

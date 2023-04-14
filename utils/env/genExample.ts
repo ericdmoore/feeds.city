@@ -10,7 +10,7 @@ const ENVS = parse(text);
 
 Object.entries(ENVS)
   .forEach(([k, _], i) => {
-    console.log(`${k}=EXAMPLE_VALUE-${i + 1}`);
+    console.log(`${k}=EXAMPLE_VALUE__${i + 1}`);
   });
 
 Deno.close(file.rid);

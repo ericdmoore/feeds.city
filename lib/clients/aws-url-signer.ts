@@ -5,17 +5,17 @@
  */
 
 // import * as nodeBuffer from "nodeBuffer";
-import {encode as hexEnc} from "$std/encoding/hex.ts";
+import { encode as hexEnc } from "$std/encoding/hex.ts";
 
 // const decoder = new TextDecoder()
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
-export const hex = (input: string | Uint8Array): string =>{
-  return typeof input === "string" 
+export const hex = (input: string | Uint8Array): string => {
+  return typeof input === "string"
     ? decoder.decode(hexEnc(encoder.encode(input)))
-    : decoder.decode(hexEnc(input))
-}
+    : decoder.decode(hexEnc(input));
+};
 
 export async function sha256(input: string | Uint8Array): Promise<string> {
   return hex(
