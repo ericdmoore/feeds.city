@@ -1,4 +1,8 @@
-import { type fluentSchema as flusch, S } from "../../src/deps.ts";
+import S from "fluentSchema";
+import type * as Stypes from "fluentSchema";
+// import type { fluentSchema as flusch}  from "fluentSchema";
+
+// import { , S } from "fluentSchema";
 
 const ROLES = {
   ADMIN: "ADMIN",
@@ -27,9 +31,9 @@ export const simpleUser = S.object()
   .definition("address", Address.id("#address"));
 
 const _extending = (
-  base: flusch.ObjectSchema,
-  _extensionItem: flusch.ObjectSchema,
-): flusch.ObjectSchema => {
+  base: Stypes.ObjectSchema,
+  _extensionItem: Stypes.ObjectSchema,
+): Stypes.ObjectSchema => {
   // console.log(base, extensionItem);
   const baseSchema = base.valueOf();
 

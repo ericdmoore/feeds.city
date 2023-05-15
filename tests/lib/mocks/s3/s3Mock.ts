@@ -1,6 +1,11 @@
-// import { nodeBuffer as Buffer } from "../../../src/deps.ts";
 // mod.ts audit: OK
+//
 import { hmac } from "https://deno.land/x/hmac@v2.0.1/mod.ts";
+import {
+  GetObjectCommand,
+  HeadObjectCommand,
+  PutObjectCommand,
+} from "https://esm.sh/@aws-sdk/client-s3@3.329.0?deno-std=0.172.0&dts";
 
 const encoder = new TextEncoder();
 
@@ -49,5 +54,25 @@ export const s3Mock = (
     return data
       ? { body: new Response(data).body! }
       : Promise.reject({ err: "Object Not Found", code: 404 });
+  },
+  send: (command: PutObjectCommand | HeadObjectCommand | GetObjectCommand) => {
+    if (command instanceof PutObjectCommand) {
+      console.log(command);
+    } else if (command instanceof HeadObjectCommand) {
+      console.log(command);
+    } else {
+      console.log(command);
+    }
+
+    switch (command.constructor) {
+      case PutObjectCommand:
+        return Promise.resolve(null);
+      case HeadObjectCommand:
+        return Promise.resolve(null);
+      case GetObjectCommand:
+        return Promise.resolve(null);
+      default:
+        return null as never;
+    }
   },
 });

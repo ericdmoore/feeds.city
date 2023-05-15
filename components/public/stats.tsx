@@ -1,4 +1,4 @@
-import { assert } from "https://deno.land/std@0.150.0/_util/assert.ts";
+import { assert } from "$std/testing/asserts.ts";
 import { Color } from "../../types.ts";
 
 interface StatsProps {

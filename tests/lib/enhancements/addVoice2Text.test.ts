@@ -1,4 +1,5 @@
-import { skip } from "../helpers.ts";
+// import { skip, only } from "../helpers.ts";
+
 import {
   assert,
   assertEquals,
@@ -43,9 +44,7 @@ import {
 } from "../mocks/jsonFeed/daringFireball.elon.ts";
 
 import mkEnvVar from "$lib/utils/vars.ts";
-
-// mod.ts audit: OK
-import { S3Bucket } from "https://denopkg.com/ericdmoore/s3_deno@main/mod.ts";
+import { S3Client } from "https://esm.sh/@aws-sdk/client-s3@3.329.0?deno-std=0.172.0&dts";
 
 type AST = ASTjson | ASTcomputable;
 type ASTItem = typeof ASTFeedItemJson.TYPE;
@@ -57,20 +56,22 @@ console.warn("WARNING: This Test Runs Against Production Resources");
 const _encoder = new TextEncoder();
 const _s3stateGlobal = new Map<string, Uint8Array>();
 
-const envs = mkEnvVar("MISSING-KEY-VALUE");
-const cfg = async () => ({
-  aws: {
-    key: await envs("AWS_KEY"),
-    secret: await envs("AWS_SECRET"),
-    region: await envs("REGION"),
-  },
-  config: {
-    s3: {
-      bucket: await envs("POLLYBUCKET"),
-      prefix: await envs("POLLYPREFIX"),
+const cfg = async () => {
+  const envs = await mkEnvVar("MISSING-KEY-VALUE");
+  return {
+    aws: {
+      key: envs("AWS_KEY"),
+      secret: envs("AWS_SECRET"),
+      region: envs("REGION"),
     },
-  },
-});
+    config: {
+      s3: {
+        bucket: envs("POLLYBUCKET"),
+        prefix: envs("POLLYPREFIX"),
+      },
+    },
+  };
+};
 
 const runAssertions =
   (...ASTassertionFns: ASTAllAssertion[]) =>
@@ -142,7 +143,6 @@ Deno.test("streamToString", async () => {
   const dataStr = JSON.stringify(data);
   const strR = new StringReader(dataStr);
   const rs0 = readableStreamFromReader(strR);
-
   const s0 = await streamToString(rs0);
   const o0 = JSON.parse(s0);
   assertEquals(o0, data);
@@ -156,15 +156,15 @@ Deno.test("readToString", async () => {
 });
 
 Deno.test({
-  name: "Valid Attachment For Each Entry ",
   // only: true,
+  name: "Valid Attachment For Each Entry ",
   fn: async () => {
     const addTextFn = textToVoice(await cfg());
     const ast = await computableToJson(
       urlToAST({ url: jsonFeedUrl, txt: jsonFeed }),
     );
     const astWithAttachment = await computableToJson(addTextFn(ast));
-    runAssertions() /* All AST assertions */(testItemsHaveValidAttachments)(
+    runAssertions()(testItemsHaveValidAttachments)( // All AST assertions
       astWithAttachment,
     );
   },
@@ -257,7 +257,7 @@ Deno.test("S3 Mock Unit Test", async () => {
 });
 
 Deno.test("haveEverStarted is based on breadcrumbs", async () => {
-  const s3m = s3Mock() as unknown as S3Bucket;
+  const s3cm = s3Mock() as unknown as S3Client;
   const key = "abcd";
   const url = `https://example.com/${key}`;
   const item = {
@@ -300,20 +300,21 @@ Deno.test("haveEverStarted is based on breadcrumbs", async () => {
     RequestCharacters: 42,
   } as SynthesisTaskIdentifiers;
 
+  const s3stuff = { s3c: s3cm, Bucket: "MOCK", Prefix: "MOCKED_PREFIX" };
   await cacheOurBreadcrumbs(
     item,
     key,
     pollyconfig,
     IDs,
-    s3m,
+    s3stuff,
   );
-  const hasStarted = await haveEverStarted(key, s3m);
+  const hasStarted = await haveEverStarted(key, s3stuff);
   // console.log({hasStarted})
   assertEquals(hasStarted && true, true);
 });
 
 Deno.test("isMediaFinished is based on bread crumbs", async () => {
-  const s3m = s3Mock() as unknown as S3Bucket;
+  const s3m = s3Mock() as unknown as S3Client;
 
   const itemNum = 1234;
   const url = `https://example.com/${itemNum}`;
@@ -363,14 +364,15 @@ Deno.test("isMediaFinished is based on bread crumbs", async () => {
 
   const key = await makeKey(item, item.content.text);
   const { taskIDs, ...tcfg } = splitSynthTaskResponse(synthTask.SynthesisTask);
+  const s3Stuff = { s3c: s3m, Bucket: "MOCK", Prefix: "MOCKED_PREFIX" };
   const breadCrumbs = await cacheOurBreadcrumbs(
     item,
     key,
     tcfg.config,
     taskIDs,
-    s3m,
+    s3Stuff,
   );
-  const hasStarted = await haveEverStarted(key, s3m);
+  const hasStarted = await haveEverStarted(key, s3Stuff);
 
   assertEquals("sk" in breadCrumbs, true);
   assertEquals("pk" in breadCrumbs, true);
@@ -385,7 +387,7 @@ Deno.test("isMediaFinished is based on bread crumbs", async () => {
 });
 
 Deno.test("isMediaFinished is now complete", async () => {
-  const s3m = s3Mock() as unknown as S3Bucket;
+  const s3m = s3Mock() as unknown as S3Client;
 
   const itemNum = 1234;
   const url = `https://example.com/${itemNum}`;
@@ -436,14 +438,15 @@ Deno.test("isMediaFinished is now complete", async () => {
   const key = await makeKey(item, item.content.text);
 
   const { taskIDs, ...tcfg } = splitSynthTaskResponse(synthTask.SynthesisTask);
+  const s3stuff = { s3c: s3m, Bucket: "MOCK", Prefix: "MOCKED_PREFIX" };
   const breadCrumbs = await cacheOurBreadcrumbs(
     item,
     key,
     tcfg.config,
     taskIDs,
-    s3m,
+    s3stuff,
   );
-  const hasStarted = await haveEverStarted(key, s3m);
+  const hasStarted = await haveEverStarted(key, s3stuff);
 
   assertEquals("sk" in breadCrumbs, true);
   assertEquals("pk" in breadCrumbs, true);
@@ -458,6 +461,6 @@ Deno.test("isMediaFinished is now complete", async () => {
   }
 });
 
-Deno.test(skip("example", async () => {}));
+// Deno.test(skip("example", async () => {}));
 
 // WAIT FOR the s3 resources to show ... then delete

@@ -3,11 +3,7 @@ import { assertEquals } from "$std/testing/asserts.ts";
 // import { skip } from '../helpers.ts';
 import { getPath, type JsonValue } from "$lib/utils/propertyPath.ts";
 import { parseAndValidate } from "$lib/start.ts";
-import {
-  ASTAuthor,
-  type ASTjson,
-  computableToJson,
-} from "$lib/parsers/ast.ts";
+import { ASTAuthor, type ASTjson, computableToJson } from "$lib/parsers/ast.ts";
 import {
   JsonFeed,
   JsonFeedAuthor,
@@ -175,7 +171,7 @@ Deno.test("DFB Feed Items - but no content", async () => {
 
 Deno.test("FMeat header Values", async () => {
   const fakeUrl = "https://daringfireball.net/feeds/json";
-  const c1 = (await parseAndValidate({ url: fakeUrl, txt: fmJS }));
+  const c1 = await parseAndValidate({ url: fakeUrl, txt: fmJS });
   const jsData = c1.data as RespStruct;
   const ast = await computableToJson(
     JsonFeed<RespStruct>(c1.data, fakeUrl).toAST(),
@@ -196,7 +192,7 @@ Deno.test("HyperCritical Feed Headers", async () => {
     txt: hyperCrit,
     url: "https://hypercritical.co/feeds/main.json",
   };
-  const c1 = (await parseAndValidate({ url, txt }));
+  const c1 = await parseAndValidate({ url, txt });
   const jsData = c1.data as RespStruct;
   const ast = await computableToJson(
     JsonFeed<RespStruct>(c1.data, url).toAST(),
@@ -209,7 +205,7 @@ Deno.test("HyperCritical Feed Items", async () => {
     txt: hyperCrit,
     url: "https://hypercritical.co/feeds/main.json",
   };
-  const c1 = (await parseAndValidate({ url, txt }));
+  const c1 = await parseAndValidate({ url, txt });
   const jsData = c1.data as RespStruct;
   const ast = await computableToJson(
     JsonFeed<RespStruct>(c1.data, url).toAST(),
@@ -222,7 +218,7 @@ Deno.test("MaybePizza Feed Headers", async () => {
     txt: maybePizza,
     url: "http://maybepizza.com/feed.json",
   };
-  const c1 = (await parseAndValidate({ url, txt }));
+  const c1 = await parseAndValidate({ url, txt });
   const jsData = c1.data as RespStruct;
   const ast = await computableToJson(
     JsonFeed<RespStruct>(c1.data, url).toAST(),
@@ -237,7 +233,7 @@ Deno.test(
       txt: maybePizza,
       url: "http://maybepizza.com/feed.json",
     };
-    const c1 = (await parseAndValidate({ url, txt }));
+    const c1 = await parseAndValidate({ url, txt });
     const jsData = c1.data as RespStruct;
     const ast = await computableToJson(
       JsonFeed<RespStruct>(c1.data, url).toAST(),
@@ -248,7 +244,7 @@ Deno.test(
 
 Deno.test("ShapeOf Feed Headers", async () => {
   const { url, txt } = { txt: shapeOf, url: "http://shapeof.com/feed.json" };
-  const c1 = (await parseAndValidate({ url, txt }));
+  const c1 = await parseAndValidate({ url, txt });
   const jsData = c1.data as RespStruct;
   const ast = await computableToJson(
     JsonFeed<RespStruct>(c1.data, url).toAST(),
@@ -258,7 +254,7 @@ Deno.test("ShapeOf Feed Headers", async () => {
 
 Deno.test("ShapeOf Feed Items", async () => {
   const { url, txt } = { txt: shapeOf, url: "http://shapeof.com/feed.json" };
-  const c1 = (await parseAndValidate({ url, txt }));
+  const c1 = await parseAndValidate({ url, txt });
   const jsData = c1.data as RespStruct;
   const ast = await computableToJson(
     JsonFeed<RespStruct>(c1.data, url).toAST(),

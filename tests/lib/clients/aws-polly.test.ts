@@ -1,32 +1,36 @@
 import { skip } from "../helpers.ts";
 import { pollyClient, type Status } from "$lib/clients/aws-polly.ts";
-import { assert, assertEquals } from '$std/testing/asserts.ts'
+import { assert, assertEquals } from "$std/testing/asserts.ts";
 
 import envFn from "$lib/utils/vars.ts";
-const envs = envFn("MISSING-KEY-VALUE");
 
-let vars = null as null  | { AWS_KEY:string, AWS_REGION:string, AWS_SECRET:string, POLLY:{BUCKET:string, PREFIX:string}}
+let vars = null as null | {
+  AWS_KEY: string;
+  AWS_REGION: string;
+  AWS_SECRET: string;
+  POLLY: { BUCKET: string; PREFIX: string };
+};
+
 const findVars = async () => {
-  if(vars){
-    return vars
-  }else{
-    const [AWS_KEY, AWS_SECRET, AWS_REGION, BUCKET, PREFIX] = await Promise.all([
+  const envs = await envFn("MISSING-KEY-VALUE");
+  if (vars) {
+    return vars;
+  } else {
+    const [AWS_KEY, AWS_SECRET, AWS_REGION, BUCKET, PREFIX] = [
       envs("AWS_KEY"),
       envs("AWS_SECRET"),
       envs("REGION"),
       envs("POLLYBUCKET"),
       envs("POLLYPREFIX"),
-    ]);
-    
+    ];
+
     const POLLY = { BUCKET, PREFIX };
-    const ret = Object.freeze({ AWS_KEY, AWS_REGION, AWS_SECRET, POLLY })
-    // set for memoization
-    vars = ret
+    const ret = Object.freeze({ AWS_KEY, AWS_REGION, AWS_SECRET, POLLY });
+    // set global var / memoization
+    vars = ret;
     return ret;
   }
 };
-
-
 
 // NEEDS NET, ENV VARS, and READ permissions
 // priority actions

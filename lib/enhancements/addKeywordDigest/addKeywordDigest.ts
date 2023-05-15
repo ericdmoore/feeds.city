@@ -1,10 +1,11 @@
-import type { ASTComputable } from "../../../types.ts";
+import type { ASTComputable } from "../../types.ts";
 import type { ASTChainFunc } from "../index.ts";
 
-import { jsonSchema } from "../../../deps.ts";
+import * as jSchema from "jsonSchema";
+
 import { rezVal } from "../../parsers/ast.ts";
 
-export const paramSchema = { type: jsonSchema.TypeName.Object };
+export const paramSchema = { type: jSchema.TypeName.Object };
 
 export const addKeywordDigest =
   (() => async (input: PromiseLike<ASTComputable>): Promise<ASTComputable> => {

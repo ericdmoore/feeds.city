@@ -5,7 +5,7 @@
 */
 
 import { type ASTChainFunc } from "../index.ts";
-import { jsonSchema } from "../../../deps.ts";
+import * as jsonSchema from "jsonSchema";
 
 export const scoreAsDupplicate: ASTChainFunc = (_i: unknown) => async (ast) =>
   ast;

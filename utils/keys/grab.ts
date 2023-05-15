@@ -14,7 +14,7 @@ export const jwKeyPair = async (): Promise<CryptoKeyPair> => {
       "y": Deno.env.get("JWT_KEY_Y"),
       "d": Deno.env.get("JWT_KEY_D_PRIVATE"),
       "key_ops": ["sign"],
-      "ext": true
+      "ext": true,
     },
     { name: "ECDSA", namedCurve: "P-384" },
     true,
@@ -30,7 +30,7 @@ export const jwKeyPair = async (): Promise<CryptoKeyPair> => {
       "x": Deno.env.get("JWT_KEY_X"),
       "y": Deno.env.get("JWT_KEY_Y"),
       "key_ops": ["verify"],
-      "ext": true
+      "ext": true,
     },
     { name: "ECDSA", namedCurve: "P-384" },
     true,

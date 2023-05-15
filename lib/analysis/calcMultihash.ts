@@ -1,4 +1,4 @@
-import * as multi from "multiformat";
+import * as multi from "multiformats";
 
 const textEncoder = new TextEncoder();
 const textDecoder = new TextDecoder();

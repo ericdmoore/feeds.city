@@ -4,14 +4,14 @@ const keypair = await crypto.subtle.generateKey(
   ["sign", "verify"],
 ) as CryptoKeyPair;
 
-const kid = Date.now()
+const kid = Date.now();
 
 console.log(
   "export const privateECDSA = ",
   JSON.stringify(
-    { 
+    {
       kid,
-      ... await crypto.subtle.exportKey("jwk", keypair.privateKey),
+      ...await crypto.subtle.exportKey("jwk", keypair.privateKey),
     },
     null,
     2,
@@ -21,9 +21,9 @@ console.log(
 console.log(
   "export const publicECDSA = ",
   JSON.stringify(
-    { 
+    {
       kid,
-      ...await crypto.subtle.exportKey("jwk", keypair.publicKey)  
+      ...await crypto.subtle.exportKey("jwk", keypair.publicKey),
     },
     null,
     2,

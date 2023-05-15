@@ -6,7 +6,7 @@
  */
 
 import { ASTChainFunc } from "../index.ts";
-import { jsonSchema } from "../../../deps.ts";
+import * as jsonSchema from "jsonSchema";
 
 export const addTextToVoice = ((_targetKeywords: string[]) => async (ast) => {
   return ast;

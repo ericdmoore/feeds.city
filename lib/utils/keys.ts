@@ -3,7 +3,7 @@
 // using ENV data
 
 import { envVar } from "./vars.ts";
-const env = await envVar(">>MISSING<<");
+const env = await envVar(">> MISSING <<");
 
 const jwkRsaPub = {
   kty: "RSA",
@@ -111,7 +111,5 @@ export const allKeys = {
     aesGcm: { secret: aesGcmKey },
   },
 };
-
-console.log({ allKeys });
 
 export default allKeys;

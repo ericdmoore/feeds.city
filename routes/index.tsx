@@ -7,7 +7,7 @@ import sendJson from "../lib/responder/sendjson.ts";
 
 import { refreshCookieToken } from "../utils/cookies/refresh.ts";
 import { getCookies } from "$std/http/cookie.ts";
-import { jwKeyPair } from "../utils/ECkeys/grab.ts";
+import keys from "../lib/utils/keys.ts";
 
 import { TopHatBlack } from "../components/TopHat.tsx";
 import NavBar from "../islands/public-navbar.tsx";
@@ -195,11 +195,18 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
  */
 export const handler: Handlers = {
   GET: async (req, ctx) => {
-    const v1 = v1token(await jwKeyPair(), Deno.env.get("KEY_ID")!, [
-      availVals.isFromMe,
-      availVals.isV1Token,
-      availVals.validIssuanceDate,
-    ]);
+    const v1 = v1token(
+      {
+        privateKey: keys.key.ecdsa.sign,
+        publicKey: keys.key.ecdsa.verify,
+      },
+      Deno.env.get("KEY_ID")!,
+      [
+        availVals.isFromMe,
+        availVals.isV1Token,
+        availVals.validIssuanceDate,
+      ],
+    );
     const { respHeaders, jwt, jwtData } = await refreshCookieToken(
       v1,
       60 * 15, /* 15 min */
@@ -239,7 +246,10 @@ export const handler: Handlers = {
     const token = new URL(req.url).searchParams.get("token") ||
       getCookies(req.headers)?.sessionID || null as string | null;
 
-    const v1tok = v1token(await jwKeyPair(), Deno.env.get("KEY_ID")!);
+    const v1tok = v1token({
+      privateKey: keys.key.ecdsa.sign,
+      publicKey: keys.key.ecdsa.verify,
+    }, Deno.env.get("KEY_ID")!);
 
     if (token && email) {
       const { payload } = await v1tok.parse(token);

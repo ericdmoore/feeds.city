@@ -3,79 +3,89 @@
 // This file is automatically updated during development when running `dev.ts`.
 
 import config from "./deno.json" assert { type: "json" };
-import * as $0 from "./routes/[tokType]-[token]/[outputFmt]/[composition]/[url].tsx";
-import * as $1 from "./routes/[tokType]-[token]/[outputFmt]/[composition]/index.tsx";
-import * as $2 from "./routes/[tokType]-[token]/[outputFmt]/index.ts";
-import * as $3 from "./routes/[tokType]-[token]/index.tsx";
-import * as $4 from "./routes/_404.tsx";
-import * as $5 from "./routes/_500.tsx";
-import * as $6 from "./routes/_middleware.ts";
-import * as $7 from "./routes/about.tsx";
-import * as $8 from "./routes/api/joke.ts";
-import * as $9 from "./routes/ast/[composition]/[...url].tsx";
-import * as $10 from "./routes/ast/[composition]/index.tsx";
-import * as $11 from "./routes/ast/[url].tsx";
-import * as $12 from "./routes/ast/index.tsx";
-import * as $13 from "./routes/earlybird.tsx";
-import * as $14 from "./routes/feeds.tsx";
-import * as $15 from "./routes/hero.tsx";
-import * as $16 from "./routes/home.tsx";
-import * as $17 from "./routes/index.tsx";
-import * as $18 from "./routes/login.tsx";
-import * as $19 from "./routes/logout.tsx";
-import * as $20 from "./routes/profile.tsx";
-import * as $21 from "./routes/read.tsx";
-import * as $22 from "./routes/settings.tsx";
-import * as $23 from "./routes/team.tsx";
-import * as $24 from "./routes/testing.tsx";
-import * as $25 from "./routes/user/index.ts";
-import * as $26 from "./routes/user/register.tsx";
+import * as $0 from "./routes/_404.tsx";
+import * as $1 from "./routes/_500.tsx";
+import * as $2 from "./routes/_middleware.ts";
+import * as $3 from "./routes/about.tsx";
+import * as $4 from "./routes/api/[tokType]-[token]/[outputFmt]/[composition]/[url].tsx";
+import * as $5 from "./routes/api/[tokType]-[token]/[outputFmt]/[composition]/index.tsx";
+import * as $6 from "./routes/api/[tokType]-[token]/[outputFmt]/[composition]/preview/[url].tsx";
+import * as $7 from "./routes/api/[tokType]-[token]/[outputFmt]/[composition]/preview/index.tsx";
+import * as $8 from "./routes/api/[tokType]-[token]/[outputFmt]/index.tsx";
+import * as $9 from "./routes/api/[tokType]-[token]/index.tsx";
+import * as $10 from "./routes/api/index.tsx";
+import * as $11 from "./routes/ast/[composition]/[...url].tsx";
+import * as $12 from "./routes/ast/[composition]/index.tsx";
+import * as $13 from "./routes/ast/[url].tsx";
+import * as $14 from "./routes/ast/index.tsx";
+import * as $15 from "./routes/earlybird.tsx";
+import * as $16 from "./routes/feeds.tsx";
+import * as $17 from "./routes/hero.tsx";
+import * as $18 from "./routes/home.tsx";
+import * as $19 from "./routes/index.tsx";
+import * as $20 from "./routes/login.tsx";
+import * as $21 from "./routes/logout.tsx";
+import * as $22 from "./routes/profile.tsx";
+import * as $23 from "./routes/read.tsx";
+import * as $24 from "./routes/settings.tsx";
+import * as $25 from "./routes/team.tsx";
+import * as $26 from "./routes/testing.tsx";
+import * as $27 from "./routes/user/index.ts";
+import * as $28 from "./routes/user/register.tsx";
 import * as $$0 from "./islands/AppShellMenuBar.tsx";
 import * as $$1 from "./islands/Counter.tsx";
-import * as $$2 from "./islands/heroicon-menu.tsx";
-import * as $$3 from "./islands/navbar.tsx";
-import * as $$4 from "./islands/public-about-hero.tsx";
-import * as $$5 from "./islands/public-navbar.tsx";
-import * as $$6 from "./islands/public-signup.tsx";
+import * as $$2 from "./islands/compositionForm.tsx";
+import * as $$3 from "./islands/heroicon-menu.tsx";
+import * as $$4 from "./islands/navbar.tsx";
+import * as $$5 from "./islands/public-about-hero.tsx";
+import * as $$6 from "./islands/public-navbar.tsx";
+import * as $$7 from "./islands/public-signup.tsx";
+import * as $$8 from "./islands/textArea-previewable.tsx";
 
 const manifest = {
   routes: {
-    "./routes/[tokType]-[token]/[outputFmt]/[composition]/[url].tsx": $0,
-    "./routes/[tokType]-[token]/[outputFmt]/[composition]/index.tsx": $1,
-    "./routes/[tokType]-[token]/[outputFmt]/index.ts": $2,
-    "./routes/[tokType]-[token]/index.tsx": $3,
-    "./routes/_404.tsx": $4,
-    "./routes/_500.tsx": $5,
-    "./routes/_middleware.ts": $6,
-    "./routes/about.tsx": $7,
-    "./routes/api/joke.ts": $8,
-    "./routes/ast/[composition]/[...url].tsx": $9,
-    "./routes/ast/[composition]/index.tsx": $10,
-    "./routes/ast/[url].tsx": $11,
-    "./routes/ast/index.tsx": $12,
-    "./routes/earlybird.tsx": $13,
-    "./routes/feeds.tsx": $14,
-    "./routes/hero.tsx": $15,
-    "./routes/home.tsx": $16,
-    "./routes/index.tsx": $17,
-    "./routes/login.tsx": $18,
-    "./routes/logout.tsx": $19,
-    "./routes/profile.tsx": $20,
-    "./routes/read.tsx": $21,
-    "./routes/settings.tsx": $22,
-    "./routes/team.tsx": $23,
-    "./routes/testing.tsx": $24,
-    "./routes/user/index.ts": $25,
-    "./routes/user/register.tsx": $26,
+    "./routes/_404.tsx": $0,
+    "./routes/_500.tsx": $1,
+    "./routes/_middleware.ts": $2,
+    "./routes/about.tsx": $3,
+    "./routes/api/[tokType]-[token]/[outputFmt]/[composition]/[url].tsx": $4,
+    "./routes/api/[tokType]-[token]/[outputFmt]/[composition]/index.tsx": $5,
+    "./routes/api/[tokType]-[token]/[outputFmt]/[composition]/preview/[url].tsx":
+      $6,
+    "./routes/api/[tokType]-[token]/[outputFmt]/[composition]/preview/index.tsx":
+      $7,
+    "./routes/api/[tokType]-[token]/[outputFmt]/index.tsx": $8,
+    "./routes/api/[tokType]-[token]/index.tsx": $9,
+    "./routes/api/index.tsx": $10,
+    "./routes/ast/[composition]/[...url].tsx": $11,
+    "./routes/ast/[composition]/index.tsx": $12,
+    "./routes/ast/[url].tsx": $13,
+    "./routes/ast/index.tsx": $14,
+    "./routes/earlybird.tsx": $15,
+    "./routes/feeds.tsx": $16,
+    "./routes/hero.tsx": $17,
+    "./routes/home.tsx": $18,
+    "./routes/index.tsx": $19,
+    "./routes/login.tsx": $20,
+    "./routes/logout.tsx": $21,
+    "./routes/profile.tsx": $22,
+    "./routes/read.tsx": $23,
+    "./routes/settings.tsx": $24,
+    "./routes/team.tsx": $25,
+    "./routes/testing.tsx": $26,
+    "./routes/user/index.ts": $27,
+    "./routes/user/register.tsx": $28,
   },
   islands: {
     "./islands/AppShellMenuBar.tsx": $$0,
     "./islands/Counter.tsx": $$1,
-    "./islands/heroicon-menu.tsx": $$2,
-    "./islands/navbar.tsx": $$3,
-    "./islands/public-about-hero.tsx": $$4,
-    "./islands/public-navbar.tsx": $$5,
-    "./islands/public-signup.tsx": $$6,
+    "./islands/compositionForm.tsx": $$2,
+    "./islands/heroicon-menu.tsx": $$3,
+    "./islands/navbar.tsx": $$4,
+    "./islands/public-about-hero.tsx": $$5,
+    "./islands/public-navbar.tsx": $$6,
+    "./islands/public-signup.tsx": $$7,
+    "./islands/textArea-previewable.tsx": $$8,
   },
   baseUrl: import.meta.url,
   config,

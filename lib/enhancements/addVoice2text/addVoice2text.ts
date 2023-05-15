@@ -1,15 +1,19 @@
-// Assumes Same Key/Secret for ALL aws needs
+// Assumes single  Key/Secret for ALL aws needs
 // Polly, S3, Dynamo, Cloudfront
 // Assumes Table Exists
 
 /*
-@HELP Plugin would benefit greatly from:
+@HELP This Plugin would benefit greatly (enhancing the listening pleasure for every page) by using a :
 - a text sanitizer removing semantic HTML tags from the corpus.
-- a text sanitizer to parenthetically call out visual aids - think of a image to caption API
-	- which would greatly enhance the listening pleasure for every page
+- a text sanitizer to parenthetically call out visual aids
+  + like an image describer API
+  + a fallback mechanism to make sense of alt tags / caption
+
 */
 
-import { type PromiseOr } from "../../types.ts";
+import * as s from "superstruct";
+
+import type { PromiseOr } from "../../types.ts";
 import {
   type ASTcomputable,
   type ASTFeedItemJsonTYPE,
@@ -17,8 +21,6 @@ import {
   computableToJson,
   rezVal,
 } from "../../parsers/ast.ts";
-import * as s from "superstruct";
-import { streamToString } from "../../utils/pumpReader.ts";
 
 import {
   type OutputFormat,
@@ -37,13 +39,26 @@ import {
 import { identicon } from "../../clients/svg-avatars.ts";
 
 // mod.ts audit: OK
-import {
-  createClient,
-  DynamoDBClient,
-} from "https://denopkg.com/ericdmoore/dynamodb-deno@v1.1.0/mod.ts";
+// import {
+//   createClient,
+//   DynamoDBClient,
+// } from "https://denopkg.com/ericdmoore/dynamodb-deno@v1.1.0/mod.ts";
 
-import { S3Bucket } from "https://denopkg.com/ericdmoore/s3_deno@main/mod.ts";
-import { hmac } from "https://deno.land/x/hmac@v2.0.1/mod.ts";
+import {
+  DynamoDBClient,
+  GetItemCommand,
+  PutItemCommand,
+} from "https://esm.sh/@aws-sdk/client-dynamodb@3.329.0?deno-std=0.172.0&dts";
+import { marshall } from "https://esm.sh/@aws-sdk/util-dynamodb@3.329.0?deno-std=0.172.0&dts";
+
+import {
+  GetObjectCommand,
+  HeadObjectCommand,
+  PutObjectCommand,
+  S3Client,
+} from "https://esm.sh/@aws-sdk/client-s3@3.329.0?deno-std=0.172.0&dts";
+
+import { hmac } from "../../utils/hmac.ts";
 import { extname } from "$std/path/mod.ts";
 import { getSignedUrl } from "https://deno.land/x/aws_s3_presign@1.3.0/mod.ts";
 
@@ -81,7 +96,7 @@ interface pollyConfig {
 
 // #endregion types
 
-const encoder = new TextEncoder();
+const enc = new TextEncoder();
 
 export const text2VoiceParams = s.object({
   aws: s.object({
@@ -195,8 +210,8 @@ export const splitBucketItemURL = (bucket: string, s3uri: string) => {
 export const textToVoice = (
   userParams: s.Infer<typeof text2VoiceParams>,
   pc?: PollyClientInterface,
-  s3c?: S3Bucket,
-  dynC?: DynamoDBClient,
+  s3?: { s3c: S3Client },
+  // dynC?: DynamoDBClient,
 ) =>
 async (_ast: PromiseOr<AST>): Promise<ASTjson> => {
   // check key,secret permissions
@@ -235,24 +250,29 @@ async (_ast: PromiseOr<AST>): Promise<ASTjson> => {
       defCfg.aws.secret,
       defCfg.aws.region,
     ),
-    s3c ?? new S3Bucket({
-      bucket: defCfg.s3.bucket,
-      region: defCfg.aws.region,
-      accessKeyID: defCfg.aws.key,
-      secretKey: defCfg.aws.secret,
-    }),
-    dynC
-      ? {
-        table: userParams.config.dynamo?.table ?? ">> MISSING TABLE",
-        c: createClient({
-          region: defCfg.aws.region,
-          credentials: {
-            accessKeyId: defCfg.aws.key,
-            secretAccessKey: defCfg.aws.secret,
-          },
-        }),
-      }
-      : dynC,
+    {
+      Bucket: defCfg.s3.bucket,
+      Prefix: defCfg.s3.prefix,
+      s3c: s3?.s3c ?? new S3Client({
+        region: defCfg.aws.region,
+        credentials: {
+          accessKeyId: defCfg.aws.key,
+          secretAccessKey: defCfg.aws.secret,
+        },
+      }),
+    },
+    // dynC
+    //   ? {
+    //     table: userParams.config.dynamo?.table ?? ">> MISSING TABLE",
+    //     c: createClient({
+    //       region: defCfg.aws.region,
+    //       credentials: {
+    //         accessKeyId: defCfg.aws.key,
+    //         secretAccessKey: defCfg.aws.secret,
+    //       },
+    //     }),
+    //   }
+    //   : dynC,
   );
 
   return {
@@ -285,38 +305,47 @@ const placeholderURL = (status: Status) =>
     : scheduledPlaceholderURL("Scheduled");
 
 export const makeKey = async (config: unknown, itemText: string) => {
-  const sig = (msg: string, key = "key") =>
-    hmac("sha256", key, msg, undefined, "hex") as string;
-  const configHMAC = sig(
-    typeof config === "string" ? config : JSON.stringify(config),
-  );
-  const dataHMAC = sig(itemText);
+  const dec = new TextDecoder();
+  const sig = (msg: string, key?: string) =>
+    hmac("SHA-256", enc.encode(key ?? msg), enc.encode(msg), "hex");
+
+  const configHMAC = dec.decode(
+    await sig(
+      typeof config === "string" ? config : JSON.stringify(config),
+    ),
+  ) as string;
+  const dataHMAC = dec.decode(await sig(itemText)) as string;
+
   return `k01://${await sig(dataHMAC, configHMAC)}`;
 };
 
 export const haveEverStarted = async (
   itemKey: string,
-  s3c: S3Bucket,
-  dyn?: { c: DynamoDBClient; table: string },
+  s3: { s3c: S3Client; Bucket: string; Prefix: string },
+  dyn?: { dyc: DynamoDBClient; Table: string },
 ): Promise<BreadcrumbCache | null> => {
   if (dyn) {
     console.log("using dynamo - not s3");
-
-    const dynoResp = await dyn.c.getItem({
-      TableName: dyn.table,
-      Key: { pk: itemKey, sk: itemKey },
-    }).catch(() => null) as BreadcrumbCache | null;
-
+    const GetItemCmd = new GetItemCommand({
+      TableName: dyn.Table,
+      Key: marshall({ pk: itemKey, sk: itemKey }),
+    });
+    const dynoResp = await dyn.dyc.send(GetItemCmd).catch(() => null) as
+      | BreadcrumbCache
+      | null;
     return dynoResp;
   } else {
-    // https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-keys.html
-    const s3CacheCrumb = await s3c.getObject(
-      itemKey.replace("://", ".!!") + ".json",
+    const s3CacheCrumb = await s3.s3c.send(
+      new GetObjectCommand({
+        Bucket: s3.Bucket,
+        // https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-keys.html
+        Key: itemKey.replace("://", ".!!") + ".json",
+      }),
     );
 
     if (s3CacheCrumb) {
-      const s3Str = await streamToString(s3CacheCrumb?.body);
-      return JSON.parse(s3Str) as BreadcrumbCache;
+      const str = await s3CacheCrumb.Body?.transformToString()!;
+      return JSON.parse(str) as BreadcrumbCache;
     } else {
       return null;
     }
@@ -331,8 +360,8 @@ export const cacheOurBreadcrumbs = async (
   itemKey: string,
   taskConfig: SynthesisTaskConfig,
   taskIDs: SynthesisTaskIdentifiers,
-  s3c: S3Bucket,
-  dyn?: { c: DynamoDBClient; table: string },
+  s3: { s3c: S3Client; Bucket: string; Prefix: string },
+  dyn?: { dyc: DynamoDBClient; Table: string },
   meta?: BreadCrumbCacheMeta,
 ): Promise<BreadcrumbCache & { taskIDs: SynthesisTaskIdentifiers }> => {
   const icon = identicon(itemKey);
@@ -357,12 +386,23 @@ export const cacheOurBreadcrumbs = async (
 
   // console.log({ saved, icon });
 
-  if (dyn) await dyn.c.putItem({ TableName: dyn.table, Item: saved });
+  if (dyn) {
+    await dyn.dyc.send(
+      new PutItemCommand({
+        TableName: dyn.Table,
+        Item: marshall(saved),
+      }),
+    );
+  }
 
   const s3keyName = itemKey.replace("://", ".!!");
-  await s3c.putObject(
-    s3keyName + ".json",
-    encoder.encode(JSON.stringify(saved, null, 2)),
+
+  await s3.s3c.send(
+    new PutObjectCommand({
+      Key: s3keyName + ".json",
+      Bucket: s3.Bucket,
+      Body: enc.encode(JSON.stringify(saved, null, 2)),
+    }),
   );
 
   return { ...saved, taskIDs } as BreadcrumbCache & {
@@ -373,8 +413,8 @@ export const cacheOurBreadcrumbs = async (
 export const makeItemHandler = (
   config: s.Infer<typeof defCfgType>,
   pc: PollyClientInterface,
-  s3c: S3Bucket,
-  dyn?: { c: DynamoDBClient; table: string },
+  s3: { s3c: S3Client; Prefix: string; Bucket: string },
+  dyn?: { dyc: DynamoDBClient; Table: string },
 ) =>
 async (
   item: ASTFeedItemJsonTYPE,
@@ -449,7 +489,11 @@ async (
     };
   };
 
-  const cacheItem = await haveEverStarted(k, s3c, dyn);
+  const cacheItem = await haveEverStarted(
+    k,
+    s3,
+    dyn,
+  );
 
   if (cacheItem) {
     if (isMediaFinished(cacheItem)) {
@@ -461,16 +505,21 @@ async (
           config.s3.bucket,
           cacheItem.taskIDs.OutputUri,
         );
-        const s3r = await s3c.headObject(s3parts.key).catch(() => null);
+
+        const headCmd = new HeadObjectCommand({
+          Bucket: s3.Bucket,
+          Key: `${s3.Prefix}${s3parts.key}`,
+        });
+        const s3r = await s3.s3c.send(headCmd).catch(() => null);
         // console.log({ s3r });
 
         const meta = {
-          ETag: s3r?.etag ?? "etag:missing",
-          "Content-Length": s3r?.contentLength ?? "contentLength:missing",
-          "Content-Type": s3r?.contentType ?? "contentType:missing",
-          "Last-Modified": s3r?.lastModified ?? "lastModified:missing",
-          "Cache-Control": s3r?.cacheControl,
-          "Content-Encoding": s3r?.contentEncoding,
+          ETag: s3r?.ETag ?? "etag:missing",
+          "Content-Length": s3r?.ContentLength ?? "contentLength:missing",
+          "Content-Type": s3r?.ContentType ?? "contentType:missing",
+          "Last-Modified": s3r?.LastModified ?? "lastModified:missing",
+          "Cache-Control": s3r?.CacheControl,
+          "Content-Encoding": s3r?.ContentEncoding,
         } as BreadCrumbCacheMeta;
 
         const breadcrumbs = await cacheOurBreadcrumbs(
@@ -478,7 +527,7 @@ async (
           k,
           cacheItem.task,
           cacheItem.taskIDs,
-          s3c,
+          s3,
           dyn,
           meta,
         );
@@ -509,7 +558,7 @@ async (
         k,
         tcfg.config,
         taskIDs,
-        s3c,
+        s3,
         dyn,
       );
       // console.log({ breadcrumbs });
@@ -554,7 +603,7 @@ async (
       k,
       tcfg.config,
       taskIDs,
-      s3c,
+      s3,
       dyn,
     );
     // console.log({ breadcrumbs });

@@ -1,4 +1,4 @@
-import * as path from "https://deno.land/std@0.161.0/path/mod.ts";
+import * as path from "$std/path/mod.ts";
 
 export default async (fromHere: string, toRelativeFilePath: string) => {
   const dec = new TextDecoder();

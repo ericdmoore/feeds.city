@@ -1,6 +1,6 @@
 // deno-lint-ignore-file
 // deno-lint-ignore-file require-await
-import type { ASTComputable, ASTJson, PromiseOr } from "../../types.ts";
+import type { ASTComputable, ASTJson, PromiseOr } from "../types.ts";
 export type Dict<T> = { [key: string]: T };
 export type AST = ASTComputable | ASTJson;
 export type ASTChainFunc = (
@@ -50,6 +50,13 @@ export interface EnhancementModuleInput {
     cloud: Partial<EnhancementModuleCloudParamSchemas>;
   };
 }
+
+export const composeASTChains =
+  (chain: ASTChainFunc[] = [], params: unknown[] = []) =>
+  async (ast: PromiseOr<AST>) =>
+    chain.reduce(async (ast: Promise<AST>, fn: ASTChainFunc, i) => {
+      return fn(params[i])(await ast);
+    }, Promise.resolve(ast));
 
 export const EnhancementModule = (
   opts: EnhancementModuleInput,

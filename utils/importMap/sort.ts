@@ -1,28 +1,5 @@
 import existing from "../../import_map.json" assert { type: "json" };
 
-// const imports = {
-//   "$fresh/": "https://deno.land/x/fresh@1.1.1/",
-//   "preact": "https://esm.sh/preact@10.11.0",
-//   "preact/": "https://esm.sh/preact@10.11.0/",
-//   "preact-render-to-string": "https://esm.sh/*preact-render-to-string@5.2.4",
-//   "@preact/signals": "https://esm.sh/*@preact/signals@1.0.3",
-//   "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.0.1",
-//   "twind": "https://esm.sh/twind@0.16.17",
-//   "twind/": "https://esm.sh/twind@0.16.17/",
-//   "@twind/forms": "https://esm.sh/@twind/forms@0.1.4",
-//   "@twind/forms/": "https://esm.sh/@twind/forms@0.1.4/",
-//   "@twind/aspect-ratio": "https://esm.sh/@twind/aspect-ratio@0.1.4",
-//   "@twind/aspect-ratio/": "https://esm.sh/@twind/aspect-ratio@0.1.4/",
-//   "airtable": "https://deno.land/x/airtable@v1.1.1/mod.ts",
-//   "airtable/": "https://deno.land/x/airtable@v1.1.1/",
-//   "@aws-sdk/client-dynamodb":
-//     "https://esm.sh/@aws-sdk/client-dynamodb@3.200.0?deno-std=0.161.0",
-//   "@aws-sdk/client-dynamodb/":
-//     "https://esm.sh/@aws-sdk/client-dynamodb@3.200.0?deno-std=0.161.0/",
-//   "$std/": "https://deno.land/std@0.161.0/",
-//   "djwt": "https://deno.land/x/djwt@v2.7/mod.ts",
-// };
-
 const sortedImportData = Object.fromEntries(
   [
     //
@@ -34,10 +11,36 @@ const sortedImportData = Object.fromEntries(
   ) => a[0] < z[0] ? -1 : 1),
 );
 
+const stdVersionID = new URL(sortedImportData["$std/"]).pathname.split("@")[1]
+  .slice(0, -1);
+
+const sortedVersioned = Object.fromEntries(
+  Object.entries(sortedImportData)
+    .map(([specifier, importURL]) => {
+      if (specifier.endsWith("/") || specifier.startsWith("./")) {
+        return [specifier, importURL];
+      } else {
+        const u = new URL(importURL);
+        if (u.host === "esm.sh") {
+          if (!u.searchParams.has("deno-std")) {
+            u.searchParams.set("deno-std", stdVersionID);
+          }
+
+          if (!u.searchParams.has("no-dts")) {
+            u.searchParams.set("dts", "1");
+          }
+          return [specifier, u.href];
+        } else {
+          return [specifier, u.href];
+        }
+      }
+    }),
+);
+
 console.log(
   JSON.stringify(
     {
-      imports: sortedImportData,
+      imports: sortedVersioned,
       scopes: existing.scopes,
     },
     null,

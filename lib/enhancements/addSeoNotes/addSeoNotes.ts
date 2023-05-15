@@ -8,7 +8,7 @@
 
 // deno-lint-ignore-file require-await
 import { ASTChainFunc } from "../index.ts";
-import { jsonSchema } from "../../../deps.ts";
+import * as jsonSchema from "jsonSchema";
 export const addSeoNotes = ((_targetKeywords: string[]) => async (ast) => {
   return ast;
 }) as ASTChainFunc;

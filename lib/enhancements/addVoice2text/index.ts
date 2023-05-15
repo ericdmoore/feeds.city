@@ -1,4 +1,6 @@
-import { jsonSchema as jSchema, superstruct as s } from "../../../deps.ts";
+import * as jSchema from "jsonSchema";
+import * as s from "superstruct";
+
 import {
   addVoice2text as voiceSchema,
   aws,

@@ -1,10 +1,6 @@
 // import skip from '../helpers.ts';
 import { assertEquals } from "$std/testing/asserts.ts";
-import {
-  type JsonValue,
-  getPath,
-  setPath,
-} from "$lib/utils/propertyPath.ts";
+import { getPath, type JsonValue, setPath } from "$lib/utils/propertyPath.ts";
 
 Deno.test("getPath - Basic Object", () => {
   const actual = getPath("a.b.c.d", { a: { b: { c: { d: true } } } });

@@ -26,6 +26,24 @@ import {
 import { gzipDecode, gzipEncode } from "gzip_wasm";
 import { compress as brCompress, decompress as brDecompress } from "brotli";
 
+import type {
+  // Just as JUST,
+  // Nothing as NOTHING,
+  // Maybe as MAYBE,
+  // Left as LEFT,
+  // Right as RIGHT,
+  Either as EITHER,
+} from "$lib/types.ts";
+
+import {
+  // TypeNames,
+  // Just,
+  // Nothing,
+  // Maybe,
+  Left,
+  Right,
+} from "$lib/types.ts";
+
 type Dict<T> = { [key: string]: T };
 
 export enum CryptoKeyUsages {
@@ -64,75 +82,86 @@ export enum JWE_ALG {
   "A256KW" = "A256KW",
 }
 
-export enum TypeNames {
-  Just = "maybe-type__just",
-  Nothing = "maybe-type__nothing",
-  Left = "either-type__left",
-  Right = "either-type__right",
-}
+// export enum TypeNames {
+//   Just = "maybe-type__just",
+//   Nothing = "maybe-type__nothing",
+//   Left = "either-type__left",
+//   Right = "either-type__right",
+// }
 
-export interface Just<T> {
-  type: typeof TypeNames.Just;
-  val: T;
-}
-export interface Nothing {
-  type: typeof TypeNames.Nothing;
-}
+// export interface Just<T> {
+//   type: typeof TypeNames.Just;
+//   val: T;
+// }
 
-export interface Left<L> {
-  type: TypeNames.Left;
-  left: L;
-  right: never;
-}
-export interface Right<R> {
-  type: TypeNames.Right;
-  right: R;
-  left: never;
-}
+// export interface Nothing {
+//   type: typeof TypeNames.Nothing;
+// }
+
+// export interface Left<L> {
+//   type: TypeNames.Left;
+//   left: L;
+//   right: never;
+// }
+// export interface Right<R> {
+//   type: TypeNames.Right;
+//   right: R;
+//   left: never;
+// }
 
 export type EncryptableEncoderFn = (
   key: JsonWebKey,
 ) => (data: Uint8Array) => Promise<string>;
+
 export type DecryptableEncoderFn = (
   key: JsonWebKey,
 ) => (str: string) => Promise<Uint8Array>;
 
-export type Maybe<J> = Just<J> | Nothing;
-export type Either<R, L = Error> = NonNullable<Right<R> | Left<L>>;
-export const Nothing = (): Nothing => ({ type: TypeNames.Nothing });
-export const Just = <J>(val: J): Just<J> => ({ type: TypeNames.Just, val });
-export const Left = <L>(left: L): Left<L> =>
-  ({ type: TypeNames.Left, left }) as Left<L>;
-export const Right = <R>(right: R): Right<R> =>
-  ({ type: TypeNames.Right, right }) as Right<R>;
-export const Ither = <R, L>(leftOrRight: Right<R> | Left<L>): Either<R, L> =>
-  leftOrRight.type === TypeNames.Left
-    ? Left(leftOrRight.left)
-    : Right(leftOrRight.right);
-export const ItherAdd = <R, L>(
-  A: Either<Partial<R>, L>,
-  B: Either<Partial<R>, L>,
-): Either<R, L> =>
-  A.left || B.left
-    ? Left(A.left ?? B.left)
-    : Right({ ...A.right, ...B.right } as R);
+// export type Maybe<J> = Just<J> | Nothing;
+// export type Either<R, L = Error> = NonNullable<Right<R> | Left<L>>;
+
+// export const Nothing = (): Nothing => ({ type: TypeNames.Nothing });
+// export const Just = <J>(val: J): Just<J> => ({ type: TypeNames.Just, val });
+// export const Left = <L>(left: L): Left<L> =>
+//   ({ type: TypeNames.Left, left }) as Left<L>;
+// export const Right = <R>(right: R): Right<R> =>
+//   ({ type: TypeNames.Right, right }) as Right<R>;
+// export const Ither = <R, L>(leftOrRight: Right<R> | Left<L>): Either<R, L> =>
+//   leftOrRight.type === TypeNames.Left
+//     ? Left(leftOrRight.left)
+//     : Right(leftOrRight.right);
+// export const ItherAdd = <R, L>(
+//   A: Either<Partial<R>, L>,
+//   B: Either<Partial<R>, L>,
+// ): Either<R, L> =>
+//   A.left || B.left
+//     ? Left(A.left ?? B.left)
+//     : Right({ ...A.right, ...B.right } as R);
 
 export type BareParams = number | boolean | null;
 export type EncodedParams =
   | string
   | FunctionBuilderParamInputs
   | EncodedParams[];
+
 export interface FunctionBuilderParamInputs {
   [paramName: string]: BareParams | EncodedParams;
 }
+
 export interface FunctionPathBuilderInputDict {
   [fName: string]: FunctionBuilderParamInputs;
 }
-export type FuncInterface = {
+
+export type FuncInterface = FuncInterface_Param | FuncInterface_Error;
+
+export type FuncInterface_Error = {
   fname: string;
-  params?: Dict<string>;
-  errors?: string[];
-  messages?: string[];
+  errors: string[];
+};
+
+export type FuncInterface_Param = {
+  fname: string;
+  params: FunctionBuilderParamInputs;
 };
 
 export interface DiscoveryStruct {
@@ -367,7 +396,7 @@ export const sortValidFuncs = (
     );
 };
 
-const tryJSONparse = (s: string): Either<unknown> => {
+const tryJSONparse = (s: string): EITHER<unknown> => {
   try {
     return Right(JSON.parse(s));
   } catch (_er) {
@@ -403,7 +432,7 @@ export const legends = (() => {
 
   const parse =
     (opts: FunctionParsingOptions = defaultedOptions) =>
-    (legend: string): Either<string[]> => {
+    (legend: string): EITHER<string[]> => {
       const val = legend.includes(opts.legendDelim)
         ? legend.split(opts.legendDelim)
         : legend.split("");
@@ -432,7 +461,7 @@ export const legends = (() => {
    */
   const discover =
     (opts: FunctionParsingOptions = defaultedOptions) =>
-    (maybeLegend?: string): Either<DiscoveryStruct> => {
+    (maybeLegend?: string): EITHER<DiscoveryStruct> => {
       // console.log({maybeLegend})
       if (maybeLegend && maybeLegend.includes(opts.legendSeperator)) {
         const parsedLeg = parse(opts)(
@@ -488,20 +517,20 @@ export const paramElement = (() => {
   const stringifyValidate = (
     _data: BareParams | EncodedParams,
     opts: FunctionParsingOptions,
-  ): Either<boolean> => {
+  ): EITHER<boolean> => {
     return Right(!!opts);
   };
   const parseValidate = (
     _str: string,
     opts: FunctionParsingOptions,
-  ): Either<boolean> => {
+  ): EITHER<boolean> => {
     return Right(!!opts);
   };
   const validate = (
     opts: FunctionParsingOptions,
-    legend: Either<DiscoveryStruct>,
+    legend: EITHER<DiscoveryStruct>,
     param: ValidationMode,
-  ): Either<boolean> => {
+  ): EITHER<boolean> => {
     // console.info('...validating', {line: 432})
     if (legend.left) {
       console.warn("legend discovery failed");
@@ -532,7 +561,7 @@ export const paramElement = (() => {
   };
   const parse =
     (opts: FunctionParsingOptions = defaultedOptions) =>
-    async (paramValueString: string): Promise<Either<unknown>> => {
+    async (paramValueString: string): Promise<EITHER<unknown>> => {
       // console.log('parsing...', {paramValueString})
       const legend = legends.discover(opts)(paramValueString);
       const isValid = validate(opts, legend, {
@@ -609,11 +638,11 @@ export const paramElement = (() => {
 
   const stringify =
     (legend: string, opts: FunctionParsingOptions = defaultedOptions) =>
-    async (obj: BareParams | EncodedParams): Promise<Either<string>> => {
+    async (obj: BareParams | EncodedParams): Promise<EITHER<string>> => {
       // console.log('stringing...', {obj, legend})
 
       const funcs = legends.parse(opts)(legend);
-      const disc = Right({ funcs: funcs.right, str: "" }) as Either<
+      const disc = Right({ funcs: funcs.right, str: "" }) as EITHER<
         DiscoveryStruct
       >;
       const isValid = validate(opts, disc, { mode: "stringify", input: obj });
@@ -685,7 +714,7 @@ export const paramElement = (() => {
 export const params = (() => {
   const validOptions = (
     opts: FunctionParsingOptions = defaultedOptions,
-  ): Either<boolean> => {
+  ): EITHER<boolean> => {
     const errMsg: string[] = [];
     const allHaveLen2 = [
       opts.legendOpts.strategy.object,
@@ -720,7 +749,7 @@ export const params = (() => {
   const parse = (opts: FunctionParsingOptions = defaultedOptions) =>
   async (
     multiParamStr: string,
-  ): Promise<Either<FunctionBuilderParamInputs>> => {
+  ): Promise<EITHER<FunctionBuilderParamInputs>> => {
     const isValid = validOptions(opts);
     if (isValid.left) return Left(isValid.left);
 
@@ -738,7 +767,7 @@ export const params = (() => {
             return pp.left ? Left(pp.left) : Right({ [name]: pp.right });
           }
         }),
-    ) as Either<FunctionBuilderParamInputs>[];
+    ) as EITHER<FunctionBuilderParamInputs>[];
 
     const errs = mapped.filter((item) => item.left);
     return errs.length > 0
@@ -776,7 +805,7 @@ export const params = (() => {
 
   const stringify =
     (opts: FunctionParsingOptions = defaultedOptions) =>
-    async (param: FunctionBuilderParamInputs): Promise<Either<string>> => {
+    async (param: FunctionBuilderParamInputs): Promise<EITHER<string>> => {
       const { left } = validOptions(opts);
       if (left) {
         return Left(left);
@@ -809,7 +838,7 @@ export const params = (() => {
                 );
             }
           }),
-      ) as Either<string>[];
+      ) as EITHER<string>[];
 
       const errs = resolvedEithers.filter((ei) => ei.left);
       // console.log(errs)
@@ -826,13 +855,14 @@ export const params = (() => {
   return { parse, stringify };
 })();
 
+// output of parse should be input of stringify
 export const functions = {
   encoders: functionsEncodings,
   transforms: functionsTransforms,
   structs: functionsStruct,
   parse:
     (opts: FunctionParsingOptions = defaultedOptions) =>
-    async (compositionStr: string): Promise<Either<FuncInterface[]>> => {
+    async (compositionStr: string): Promise<EITHER<FuncInterface_Param[]>> => {
       const parsedFunctions = await Promise.all(
         compositionStr
           .split(opts.functionDelim)
@@ -856,12 +886,12 @@ export const functions = {
         : Right(parsedFunctions.map((pf) => ({
           fname: pf.fname,
           params: pf.params,
-        } as FuncInterface)));
+        })));
     },
   stringify: (opts: FunctionParsingOptions = defaultedOptions) =>
   async (
     ...funcList: FunctionPathBuilderInputDict[]
-  ): Promise<Either<string>> => {
+  ): Promise<EITHER<string>> => {
     const mapped = await Promise.all(
       funcList
         .filter((fObj) => Object.keys(fObj).length === 1)
@@ -872,7 +902,7 @@ export const functions = {
             `${fName}${opts.paramStart}${paramBodyStr.right}${opts.paramEnd}`,
           );
         }),
-    ) as Either<string>[];
+    ) as EITHER<string>[];
 
     const errList = mapped.filter((item) => item.left);
     return errList.length > 0
@@ -882,3 +912,54 @@ export const functions = {
 };
 
 export default { params, functions, legends };
+
+export type ParamTree =
+  | { [key: string]: string | ParamTree | ParamTree[] }
+  | ParamTree[];
+
+export const flattenParamTree = (
+  nestedTree: ParamTree,
+  prefix = [] as string[],
+): Dict<string> => {
+  const flattened: Dict<string> = Object.entries(nestedTree)
+    .reduce((acc, [key, val]) => {
+      if (typeof val === "string") {
+        return { ...acc, [[...prefix, key].join(".")]: val };
+      } else {
+        return { ...acc, ...flattenParamTree(val, [...prefix, key]) };
+      }
+    }, {});
+  return flattened;
+};
+
+export const paramListToDict = (
+  named: FuncInterface_Param[],
+): FunctionPathBuilderInputDict[] =>
+  named.map((
+    { fname, params },
+  ) => ({ [fname]: params } as FunctionPathBuilderInputDict));
+
+export const paramDictToList = (
+  regular: FunctionPathBuilderInputDict[],
+): FuncInterface_Param[] =>
+  regular.reduce((acc, elem) => [
+    ...acc,
+    ...Object.entries(elem)
+      .map(([fname, params]) => ({ fname, params }) as FuncInterface_Param),
+  ], [] as FuncInterface_Param[]);
+
+// not needed yet
+// export const nestDottedTree = (dottedTree: {[key: string]:string}, startingObj = {} as ParamTree): ParamTree=>{
+//   const nested = Object.entries(dottedTree)
+//     .reduce((acc, [key, val])=>{
+//       const keys = key.split('.')
+
+//       const lastKey = keys.pop()
+//       const lastObj = keys.reduce((acc, key)=>{
+//         return acc[key] = acc[key] || {}
+//       }, acc)
+//       lastObj[lastKey] = val
+//       return acc
+//     }, {})
+//   return nested
+// }

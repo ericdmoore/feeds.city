@@ -1,8 +1,9 @@
 // whatabout pupeteer?
 // https://deno.land/x/puppeteer@14.1.1
-import { ASTComputable, PromiseOr } from "../../../types.ts";
+import { ASTComputable, PromiseOr } from "../../types.ts";
 import { rezVal } from "../../parsers/ast.ts";
-import { DenoDom } from "../../../deps.ts";
+import * as DenoDom from "dom_deno";
+
 const { DOMParser } = DenoDom;
 
 const loadPage = async (url: string) => (await fetch(url)).text();

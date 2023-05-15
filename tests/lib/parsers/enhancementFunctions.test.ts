@@ -1,10 +1,15 @@
 import hipsteripsum from "./helpers/hipsteripsum.ts";
 import { SAblurb, SBAblurb } from "./helpers/encTextBlurb.ts";
 import exampleKeys from "./helpers/jwKeys.example.ts";
-import { assert, assertObjectMatch, assertEquals } from "$std/testing/asserts.ts";
+import {
+  assert,
+  assertEquals,
+  assertObjectMatch,
+} from "$std/testing/asserts.ts";
 
 import {
   defaultedOptions,
+  flattenParamTree,
   type FuncInterface,
   type FunctionParsingOptions,
   type FunctionPathBuilderInputDict,
@@ -12,10 +17,10 @@ import {
   legends,
   paramElement,
   params,
+  type ParamTree,
   TypeNames,
+  // nestDottedTree
 } from "$lib/parsers/enhancementFunctions.ts";
-
-// import * as base64url from '$std/encoding/base64url.ts'
 
 Deno.test("basic parse Legend", () => {
   const sba = legends.parse()("sba");
@@ -334,22 +339,21 @@ Deno.test("Pass In Encrypted params", async () => {
     },
   } as FunctionParsingOptions;
 
-
-  const nonce = crypto.randomUUID() 
+  const nonce = crypto.randomUUID();
   const data = {
     f1name: {
       param1: true,
-      secretObj: { 
+      secretObj: {
         nonce,
-        hello: "world", 
+        hello: "world",
         mySecret: "AWS_PRETEND_KEY_0987654321234567890",
-      }
+      },
     },
   };
 
   const fStr = await functions.stringify(config)(data);
   assert(fStr.right && !fStr.left);
-  fStr.left && console.log('fStr: ',fStr)
+  fStr.left && console.log("fStr: ", fStr);
 });
 
 Deno.test("Encrypted Serialization is bijective", async () => {
@@ -371,22 +375,69 @@ Deno.test("Encrypted Serialization is bijective", async () => {
     },
   } as FunctionParsingOptions;
 
-  const data = { 
+  const data = {
     p1: true,
-    secretObj: { 
+    secretObj: {
       nonce: crypto.randomUUID(),
-      AWS_KEY: "SOME_EXAMPLE_KEY", 
+      AWS_KEY: "SOME_EXAMPLE_KEY",
       AWS_SECRET: "AWS_SECRET_NEVER_ACTUALLY_STORED_IN_CODE",
-    }
+    },
   };
 
   const paramStr = await params.stringify(config)(data);
   assert(paramStr.right && !paramStr.left);
   assert(typeof paramStr.right === "string");
-  paramStr.left && console.log('params: ',paramStr)
+  paramStr.left && console.log("params: ", paramStr);
 
   const d = await params.parse(config)(paramStr.right);
-  console.log('d: ',d)
+  console.log("d: ", d);
   assert(d.right);
   assertEquals(d.right, data); // input to ENCRYPTED LAND and back again, and it's the same
+});
+
+Deno.test("Simple flatten Param Tree", () => {
+  const input = {
+    a: {
+      b: {
+        c: "deepBlueC",
+        d: "deepBlueD",
+      },
+      e: "bluey",
+    },
+  } as ParamTree;
+  const expectedOutput = {
+    "a.b.c": "deepBlueC",
+    "a.b.d": "deepBlueD",
+    "a.e": "bluey",
+  };
+
+  assertEquals(
+    flattenParamTree(input),
+    expectedOutput,
+  );
+});
+
+Deno.test("With Arrays flatten Param Tree", () => {
+  const input = {
+    a: {
+      b: [
+        { on: "Abs ON", off: "Abs OFF" },
+        { left: "Abs LEFT", right: "Abs RIGHT" },
+      ],
+      e: "bluey",
+    },
+  } as ParamTree;
+
+  const expectedOutput = {
+    "a.b.0.on": "Abs ON",
+    "a.b.0.off": "Abs OFF",
+    "a.b.1.left": "Abs LEFT",
+    "a.b.1.right": "Abs RIGHT",
+    "a.e": "bluey",
+  };
+
+  assertEquals(
+    flattenParamTree(input),
+    expectedOutput,
+  );
 });

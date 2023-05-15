@@ -1,8 +1,9 @@
 import type { ASTChainFunc } from "../index.ts";
+import { ASTComputable, PromiseOr } from "../../types.ts";
+import { rezVal } from "$lib/parsers/ast.ts";
+import * as DenoDom from "dom_deno";
+import * as path from "$std/path/mod.ts";
 
-import { ASTComputable, PromiseOr } from "../../../types.ts";
-import { rezVal } from "../../parsers/ast.ts";
-import { DenoDom, path } from "../../../deps.ts";
 const { DOMParser } = DenoDom;
 type Node = DenoDom.Node;
 

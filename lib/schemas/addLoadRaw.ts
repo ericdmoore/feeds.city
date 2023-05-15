@@ -1,4 +1,4 @@
-import { jsonSchema as jSchema } from "../../deps.ts";
+import * as jSchema from "jsonSchema";
 
 export const pollySchema = {
   $schema: jSchema.$schema,
@@ -14,6 +14,6 @@ export const pollySchema = {
     dynamoTable: jSchema.TypeName.String,
     useCDN: jSchema.TypeName.Boolean,
   },
-} as jSchema.JSONSchema;
+};
 
 export default JSON.stringify(pollySchema);

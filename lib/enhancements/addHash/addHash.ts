@@ -3,8 +3,8 @@
 // import type { EnhancementModule } from "../index.ts";
 import * as jSchema from "jsonSchema";
 import type { ASTComputable, PromiseOr } from "../../types.ts";
-import { rezVal } from "../../parsers/ast.ts";
-import { cidStr } from "../../analysis/calcMultihash.ts";
+import { rezVal } from "$lib/parsers/ast.ts";
+import { cidStr } from "$lib/analysis/calcMultihash.ts";
 
 export const addHash =
   (_i?: unknown) =>

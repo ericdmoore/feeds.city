@@ -3,8 +3,6 @@
  *  Ref: https://docs.aws.amazon.com/general/latest/gr/signing_aws_api_requests.html
  *  Ref: https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
  */
-
-// import * as nodeBuffer from "nodeBuffer";
 import { encode as hexEnc } from "$std/encoding/hex.ts";
 
 // const decoder = new TextDecoder()

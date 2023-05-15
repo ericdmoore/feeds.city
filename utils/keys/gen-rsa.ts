@@ -7,13 +7,19 @@ async function generateRSAKeyPair() {
       hash: { name: "SHA-256" },
     } as RsaHashedImportParams,
     true,
-    ["encrypt", "decrypt"]
+    ["encrypt", "decrypt"],
   ) as CryptoKeyPair;
 }
 
 const keyPair = await generateRSAKeyPair();
-export const publicRSA = await crypto.subtle.exportKey('jwk', keyPair.publicKey);
-export const privateRSA = await crypto.subtle.exportKey('jwk', keyPair.privateKey);
+export const publicRSA = await crypto.subtle.exportKey(
+  "jwk",
+  keyPair.publicKey,
+);
+export const privateRSA = await crypto.subtle.exportKey(
+  "jwk",
+  keyPair.privateKey,
+);
 
-console.log('const publicRSA = ', JSON.stringify(publicRSA, null, 2))
-console.log('const privateRSA = ', JSON.stringify(privateRSA, null, 2))
+console.log("const publicRSA = ", JSON.stringify(publicRSA, null, 2));
+console.log("const privateRSA = ", JSON.stringify(privateRSA, null, 2));

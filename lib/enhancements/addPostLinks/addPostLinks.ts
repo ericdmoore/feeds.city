@@ -1,6 +1,9 @@
-import { ASTComputable, PromiseOr } from "../../../types.ts";
-import { rezVal } from "../../parsers/ast.ts";
-import { DenoDom, path, S } from "../../../deps.ts";
+import { ASTComputable, PromiseOr } from "../../types.ts";
+import { rezVal } from "$lib/parsers/ast.ts";
+import * as path from "$std/path/mod.ts";
+import * as DenoDom from "dom_deno";
+import * as S from "superstruct";
+
 const { DOMParser } = DenoDom;
 type Node = DenoDom.Node;
 
@@ -70,8 +73,7 @@ export const addPostLinks =
   };
 
 export const paramSchema = S
-  .object()
-  .prop("nextPost", S.string().contentEncoding("basė4"))
-  .prop("prevPost", S.string().contentEncoding("basė4"))
-  .required(["nextPost", "prevPost"])
-  .additionalProperties(false).valueOf();
+  .object({
+    nextPost: S.string(),
+    prevPost: S.string(),
+  });

@@ -1,5 +1,5 @@
 import { create, verify } from "djwt";
-import jwkeypair from "../ECkeys/grab.ts";
+import jwkeypair from "../keys/grab.ts";
 
 // deno-lint-ignore require-await
 const _jwkeys = async () => {
