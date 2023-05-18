@@ -1,4 +1,4 @@
-import type { Icon } from "../../types.ts";
+import type { Icon } from "../../lib/types.ts";
 
 interface FeatureItem {
   title: string;

@@ -2,12 +2,15 @@
 
 // import type { EnhancementModule } from "../index.ts";
 import * as jSchema from "jsonSchema";
+
 import type { ASTComputable, PromiseOr } from "../../types.ts";
+import type { ASTChainFunc } from "../index.ts";
+
 import { rezVal } from "$lib/parsers/ast.ts";
 import { cidStr } from "$lib/analysis/calcMultihash.ts";
 
 export const addHash =
-  (_i?: unknown) =>
+  ((_i?: unknown) =>
   async (ast: PromiseOr<ASTComputable>): Promise<ASTComputable> => {
     ast = await ast as ASTComputable;
     const _meta = await rezVal(ast._meta);
@@ -16,7 +19,13 @@ export const addHash =
     const itemHashes = await Promise.all(list.map(async (i) => {
       const { html, text, markdown } = await rezVal(i.content);
       const content = text ?? markdown ?? html;
-      const type = text ? "text" : html ? "html" : markdown ? "markdown" : null;
+      const type = new Boolean(text)
+        ? "text"
+        : new Boolean(html)
+        ? "html"
+        : new Boolean(markdown)
+        ? "markdown"
+        : null;
       return { type, hash: content ? await cidStr(content) : undefined };
     }));
 
@@ -53,7 +62,7 @@ export const addHash =
         })),
       },
     } as ASTComputable;
-  };
+  }) as ASTChainFunc;
 
 export const paramSchema = {
   nullable: true,

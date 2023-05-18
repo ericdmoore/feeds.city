@@ -108,19 +108,19 @@ export const EnhancementModule = (
   };
 };
 
-import * as addHash from "./addHash/index.ts";
-import * as addKeywordComparison from "./addKeywordComparison/index.ts";
-import * as addKeywordDigest from "./addKeywordDigest/index.ts";
-import * as addLoadRaw from "./addHash/index.ts";
-import * as addLighthouseReport from "./addLighthouseReport/index.ts";
-import * as addPostLinks from "./addPostLinks/index.ts";
-import * as addSeoNotes from "./addSeoNotes/index.ts";
-import * as addSubscribbables from "./addSubscribables/index.ts";
-import * as addVoiceTotext from "./addVoice2text/index.ts";
-import * as addTranslation from "./addTranslation/index.ts";
-import * as removeAds from "./removeAds/index.ts";
-import * as setPath from "./setPath/index.ts";
-import * as filterBy from "./filterBy/index.ts";
+// import * as addHash from "./addHash/index.ts";
+// import * as addKeywordComparison from "./addKeywordComparison/index.ts";
+// import * as addKeywordDigest from "./addKeywordDigest/index.ts";
+// import * as addLoadRaw from "./addHash/index.ts";
+// import * as addLighthouseReport from "./addLighthouseReport/index.ts";
+// import * as addPostLinks from "./addPostLinks/index.ts";
+// import * as addSeoNotes from "./addSeoNotes/index.ts";
+// import * as addSubscribbables from "./addSubscribables/index.ts";
+// import * as addVoiceTotext from "./addVoice2text/index.ts";
+// import * as addTranslation from "./addTranslation/index.ts";
+// import * as removeAds from "./removeAds/index.ts";
+// import * as setPath from "./setPath/index.ts";
+// import * as filterBy from "./filterBy/index.ts";
 
 // import * as addText2voice from './addText2voice.ts'
 // import * as filterByTags from './filterByTags.ts'
@@ -131,49 +131,48 @@ import * as filterBy from "./filterBy/index.ts";
 // import * as scoreAsDuplicate from './scoreAsDuplicate/index.ts'
 // import * as manageTags from './manageTags.ts'
 
-export const moduleMap = {
-  // URL string - {f: func, param: JSON Schema String}
-  hash: addHash.enhancementModule,
-  h: addHash.enhancementModule,
-  compareKeywords: addKeywordComparison.enhancementModule,
-  digestKeywords: addKeywordDigest.enhancementModule,
-  keywordReport: addKeywordDigest.enhancementModule,
-  page: addLoadRaw.enhancementModule,
-  article: addLoadRaw.enhancementModule,
-  a: addLoadRaw.enhancementModule,
-  addLinks: addPostLinks.enhancementModule,
-  l: addPostLinks.enhancementModule,
-  set: setPath.enhancementModule,
-  lighthouse: addLighthouseReport.enhancementModule,
-  //
-  // addPostLinks: addPostLinks,
-  // addSeoTodos: addSeoTodos,
-  // addSubscribbables: addSubscribbables,
-  addFollowable: addSubscribbables.enhancementModule,
-  addSubable: addSubscribbables.enhancementModule,
-  polly: addVoiceTotext.enhancementModule,
-  addVoice: addVoiceTotext.enhancementModule,
-  addVoiceTotext: addVoiceTotext.enhancementModule,
-  addTransaltions: addTranslation.enhancementModule,
-  translate: addTranslation.enhancementModule,
-  removeAds: removeAds.enhancementModule,
-  r: removeAds.enhancementModule,
-  filterBy: filterBy.enhancementModule,
-  addSeo: addSeoNotes.enhancementModule,
-  seo: addSeoNotes.enhancementModule,
-  // annotateWIthBackLinks: annotateWIthBackLinks,
-  // filterByCategory: filterByCategory,
-  // filterByTags: filterByTags,
-  // filterOlderThanLastRead: filterOlderThanLastRead,
-  // findBrokenLinks: findBrokenLinks,
-  // index: index,
-  // manageTags: manageTags,
-  // preview: preview,
-  // removeAds: removeAds,
-  // scoreAsDuplicate: scoreAsDuplicate,
-  // setPath: setPath,
-} as Dict<EnhancementModule>;
-export default moduleMap;
+// export const moduleMap = {
+//   // URL string - {f: func, param: JSON Schema String}
+//   hash: addHash.enhancementModule,
+//   h: addHash.enhancementModule,
+//   compareKeywords: addKeywordComparison.enhancementModule,
+//   digestKeywords: addKeywordDigest.enhancementModule,
+//   keywordReport: addKeywordDigest.enhancementModule,
+//   page: addLoadRaw.enhancementModule,
+//   article: addLoadRaw.enhancementModule,
+//   a: addLoadRaw.enhancementModule,
+//   addLinks: addPostLinks.enhancementModule,
+//   l: addPostLinks.enhancementModule,
+//   set: setPath.enhancementModule,
+//   lighthouse: addLighthouseReport.enhancementModule,
+//   addPostLinks: addPostLinks,
+//   addSeoTodos: addSeoTodos,
+//   addSubscribbables: addSubscribbables,
+//   addFollowable: addSubscribbables.enhancementModule,
+//   addSubable: addSubscribbables.enhancementModule,
+//   polly: addVoiceTotext.enhancementModule,
+//   addVoice: addVoiceTotext.enhancementModule,
+//   addVoiceTotext: addVoiceTotext.enhancementModule,
+//   addTransaltions: addTranslation.enhancementModule,
+//   translate: addTranslation.enhancementModule,
+//   removeAds: removeAds.enhancementModule,
+//   r: removeAds.enhancementModule,
+//   filterBy: filterBy.enhancementModule,
+//   addSeo: addSeoNotes.enhancementModule,
+//   seo: addSeoNotes.enhancementModule,
+//   annotateWIthBackLinks: annotateWIthBackLinks,
+//   filterByCategory: filterByCategory,
+//   filterByTags: filterByTags,
+//   filterOlderThanLastRead: filterOlderThanLastRead,
+//   findBrokenLinks: findBrokenLinks,
+//   index: index,
+//   manageTags: manageTags,
+//   preview: preview,
+//   removeAds: removeAds,
+//   scoreAsDuplicate: scoreAsDuplicate,
+//   setPath: setPath,
+// } as Dict<EnhancementModule>;
+// export default moduleMap;
 
 export * as addHash from "./addHash/index.ts";
 export * as addKeywordComparison from "./addKeywordComparison/index.ts";

@@ -6,9 +6,11 @@ import type {
   ASTjson,
 } from "./parsers/ast.ts";
 
-export type PaginationResp<T> = Promise<
-  { val: T; canPrev: boolean; canNext: boolean }
->;
+export type PaginationResp<T> = Promise<{
+  val: T;
+  canPrev: boolean;
+  canNext: boolean;
+}>;
 
 export interface IValidate<T> {
   _: T;
@@ -29,12 +31,12 @@ export type PromiseOr<T> = T | Promise<T>;
 export interface ASTShell {
   ast: _AST;
   pos: {
-    pageBy: number;
-    total: number;
     cur: number;
     remaining: number;
+    total: number; // cur + remaining = total
+    pageSize: number;
   };
-  changeState: {
+  page: {
     next: () => Promise<ASTShell>;
     prev: () => Promise<ASTShell>;
   };

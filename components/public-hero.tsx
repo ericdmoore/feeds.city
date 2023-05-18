@@ -1,5 +1,5 @@
 import type { JSX } from "preact";
-import type { Color, Icon, ImgSrc } from "../types.ts";
+import type { Color, Icon, ImgSrc } from "../lib/types.ts";
 
 interface CTAprops_CSS {
   text: string;

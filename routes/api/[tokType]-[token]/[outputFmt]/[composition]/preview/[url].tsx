@@ -6,7 +6,6 @@ import { urlToAST } from "$lib/start.ts";
 import {
   composeASTChains,
   EnhancementModule,
-  moduleMap,
 } from "$lib/enhancements/index.ts";
 import {
   defaultedOptions,
@@ -114,6 +113,8 @@ export const ExploreGivenURL = (props: PageProps<ExploreGivenURL>) => (
 
 type ListOfEnhancementModules = EnhancementModule[];
 
+const moduleMap = {} as {[fname: string] : ListOfEnhancementModules}
+
 export const handler: Handlers = {
   GET: async (req, ctx) => {
     const { tokType, token, outputFmt, composition, url } = ctx.params;
@@ -129,6 +130,8 @@ export const handler: Handlers = {
     } else {
       const { txt } = await startFromURL(url);
       const ast = await jsonToComputable(urlToAST({ url, txt }));
+
+      console.log(135, 'ModuleMap is no longer imported', {moduleMap})
 
       const { found, errs } = parsedComps.right.reduce(
         ({ found, errs }, { fname }) => {

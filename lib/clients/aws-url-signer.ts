@@ -97,34 +97,38 @@ export const awsV4Sig = (
 
     searchParams.sort();
     const canonicalQuerystring = searchParams.toString();
+    const headers = {} as Record<string, string>; //  Object.fromEntries(request.headers.entries()) as Record<string, string>
 
-    const headers = new Headers(request.headers);
-    headers.set("x-amz-date", amzdate);
-    headers.set("host", host);
     if (cfg.sessionToken) {
-      headers.set("x-amz-security-token", cfg.sessionToken);
+      headers["x-amz-security-token"] = cfg.sessionToken;
     }
+    headers["x-amz-date"] = amzdate;
+    headers["host"] = host;
 
-    let canonicalHeaders = "";
-    let signedHeaders = "";
+    const { canonicalArr, signedArr } = Object.entries(headers)
+      .sort((a, z) => a[0].localeCompare(z[0]))
+      .reduce((p, [key, value]) => ({
+        canonicalArr: [...p.canonicalArr, `${key.toLowerCase()}:${value}`],
+        signedArr: [...p.signedArr, `${key.toLowerCase()}`],
+      }), { canonicalArr: [] as string[], signedArr: [] as string[] });
 
-    for (const key of [...headers.keys()].sort()) {
-      canonicalHeaders += `${key.toLowerCase()}:${headers.get(key)}\n`;
-      signedHeaders += `${key.toLowerCase()};`;
-    }
-    signedHeaders = signedHeaders.substring(0, signedHeaders.length - 1);
+    const canonicalHeaders = canonicalArr.join("\n");
+    const signedHeaders = signedArr.join(";");
 
     const body = request.body
       ? new Uint8Array(await request.arrayBuffer())
       : null;
+
     const payloadHash = await sha256(body ?? new Uint8Array(0));
 
     const canonicalRequest =
       `${request.method}\n${pathname}\n${canonicalQuerystring}\n${canonicalHeaders}\n${signedHeaders}\n${payloadHash}`;
+
     const canonicalRequestDigest = await sha256(canonicalRequest);
 
     const credentialScope =
       `${datestamp}/${cfg.region}/${cfg.service}/aws4_request`;
+
     const stringToSign =
       `${ALGO}\n${amzdate}\n${credentialScope}\n${canonicalRequestDigest}`;
 
@@ -136,10 +140,8 @@ export const awsV4Sig = (
     );
 
     const signature = await signAwsV4(signingKey, stringToSign);
-    headers.set(
-      "Authorization",
-      `${ALGO} Credential=${awsAccessKeyId}/${credentialScope}, SignedHeaders=${signedHeaders}, Signature=${signature}`,
-    );
+    headers["Authorization"] =
+      `${ALGO} Credential=${awsAccessKeyId}/${credentialScope}, SignedHeaders=${signedHeaders}, Signature=${signature}`;
 
     return new Request(request.url, {
       headers,

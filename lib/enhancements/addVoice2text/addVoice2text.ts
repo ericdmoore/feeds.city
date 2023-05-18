@@ -14,6 +14,7 @@
 import * as s from "superstruct";
 
 import type { PromiseOr } from "../../types.ts";
+
 import {
   type ASTcomputable,
   type ASTFeedItemJsonTYPE,
@@ -36,19 +37,16 @@ import {
   type VoiceId,
 } from "../../clients/aws-polly.ts";
 
-import { identicon } from "../../clients/svg-avatars.ts";
+// import {} from "@aws-sdk/client-polly"
 
-// mod.ts audit: OK
-// import {
-//   createClient,
-//   DynamoDBClient,
-// } from "https://denopkg.com/ericdmoore/dynamodb-deno@v1.1.0/mod.ts";
+import { identicon } from "../../clients/svg-avatars.ts";
 
 import {
   DynamoDBClient,
   GetItemCommand,
   PutItemCommand,
 } from "https://esm.sh/@aws-sdk/client-dynamodb@3.329.0?deno-std=0.172.0&dts";
+
 import { marshall } from "https://esm.sh/@aws-sdk/util-dynamodb@3.329.0?deno-std=0.172.0&dts";
 
 import {

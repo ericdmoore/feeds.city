@@ -29,18 +29,21 @@ Deno.test("AWS V4 Sig", async () => {
     signedReq.headers.has("x-amz-date"),
     "Request should have the AMZ Date",
   );
+
   assert(signedReq.headers.has("host"), "Request should have the AMZ Date");
   assert(signedReq.headers.get("x-amz-date") === amz, "AMZ Date is incorrect");
   assert(
     signedReq.headers.has("authorization"),
     "Request should have the Authorization header",
   );
+
   assert(
     signedReq.headers.get("authorization")?.startsWith(
       "AWS4-HMAC-SHA256 Credential=",
     ),
     "Request should start with the Authorization header",
   );
+
   signedReq.headers.get("authorization")?.split(", ").forEach((tokenPair) => {
     const [key, value] = tokenPair.split("=");
     if (key === "SignedHeaders") {

@@ -1,6 +1,9 @@
+import { TypeNames } from "$lib/types.ts";
+
 import hipsteripsum from "./helpers/hipsteripsum.ts";
 import { SAblurb, SBAblurb } from "./helpers/encTextBlurb.ts";
 import exampleKeys from "./helpers/jwKeys.example.ts";
+
 import {
   assert,
   assertEquals,
@@ -18,7 +21,6 @@ import {
   paramElement,
   params,
   type ParamTree,
-  TypeNames,
   // nestDottedTree
 } from "$lib/parsers/enhancementFunctions.ts";
 

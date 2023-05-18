@@ -1,5 +1,5 @@
-import type { RecursivePartial } from "../types.ts";
-import { JSX } from "preact";
+import type { RecursivePartial } from "../lib/types.ts";
+import type { JSX } from "preact";
 import { Check_circle } from "./heroicons/outline.tsx";
 
 interface SimplePricingProps {

@@ -48,15 +48,15 @@ export const astShell = async (
   parser: IValidate<ISupportedTypes>,
   url: string,
   ast?: ASTcomputable,
-  pos: { pageBy: number; cur: number } = { pageBy: 50, cur: 0 },
+  pos: { cur: number; pageSize: number } = { cur: 0, pageSize: 50 },
 ): Promise<ASTShell> => {
   return {
     ast: ast ?? await parser.toAST(),
     parserData: parser._,
     pos: {
-      pageBy: 50,
-      total: 234,
       cur: 2,
+      pageSize: 50,
+      total: 234,
       remaining: 234 - 2,
     },
     items: {
@@ -77,7 +77,7 @@ export const astShell = async (
         return Promise.resolve([] as typeof ASTFeedItemJson.TYPE[]);
       },
     },
-    changeState: {
+    page: {
       next: async () => {
         const { val } = await parser.next();
         ast = await parser.clone(val, url).toAST();

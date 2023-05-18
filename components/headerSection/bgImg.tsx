@@ -1,4 +1,4 @@
-import type { Color } from "../../types.ts";
+import type { Color } from "../../lib/types.ts";
 
 interface BgImgProps {
   color: keyof typeof Color;

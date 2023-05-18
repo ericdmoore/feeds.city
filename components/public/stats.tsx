@@ -1,5 +1,5 @@
 import { assert } from "$std/testing/asserts.ts";
-import { Color } from "../../types.ts";
+import { Color } from "../../lib/types.ts";
 
 interface StatsProps {
   line1: string;

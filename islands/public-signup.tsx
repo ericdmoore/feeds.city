@@ -1,4 +1,4 @@
-import type { Color } from "../types.ts";
+import type { Color } from "../lib/types.ts";
 import type { JSX } from "preact";
 import { useEffect, useState } from "preact/hooks";
 import {
