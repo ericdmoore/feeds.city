@@ -1,8 +1,5 @@
-// deno-lint-ignore-file
-
 /**
  * @Author: Eric Moore
- * @
  */
 
 import { startFromURL, urlToAST } from "$lib/start.ts";
@@ -26,12 +23,12 @@ export * as rss from "./rss.ts";
 export * as jsonfeed from "./jsonFeed.ts";
 export * as sitemap from "./sitemap.ts";
 
-import merge from "lodash.merge";
+// import groupBy from "lodash.groupby";
 import { type ASTChainFunc } from "../enhancements/index.ts";
 
 //#region Types
 
-interface ISCIPAB {
+export interface ISCIPAB {
   from: string; // FeedFunc
   loc: string; // DataLocation
   msgType: "warning" | "error";
@@ -41,11 +38,9 @@ interface ISCIPAB {
   action: string; // (what we did to help you)
   benefit: string; // (hopefully you like it - because)
 }
-type ReturnedMessages = {
-  [userDataLocation: string]: {
+export type ReturnedMessages = {
     warnings: ISCIPAB[];
     errors: ISCIPAB[];
-  };
 };
 
 export type ResolvedEnhacementFn = (
@@ -69,8 +64,8 @@ type IFeedLoaderFn = (
 type IFeedExportingFn = (
   a: AST,
   params?: unknown,
-  data?: JsonObject,
   config?: JsonObject,
+  msgs?: ReturnedMessages
 ) => Promise<EITHER<EnhanceFeed, ReturnedMessages>>;
 
 type IModuleLoader = (
@@ -103,17 +98,14 @@ interface PipelineState {
   };
 }
 
-interface JsonObject {
-  [property: string]: JsonType;
-}
-interface JsonArray extends Array<JsonType> {}
+type JsonArray = Array<JsonType>
+type JsonObject = {[property: string]: JsonType}
 type JsonType = string | number | boolean | null | JsonArray | JsonObject;
 
 type EnhanceFeed = {
   string: string;
   ast: ASTjson;
   messages: ReturnedMessages;
-  warnings: ReturnedMessages;
 };
 
 interface IExporters {
@@ -150,34 +142,29 @@ interface ILoaders {
 
 //#endregion Types
 
-const addWarning = (
+export const addWarning = (
   msg: Omit<ISCIPAB, "msgType">,
-  existingMsgs: ReturnedMessages = {},
-) => {
-  return {
-    ...existingMsgs,
-    [msg.loc]: {
-      ...existingMsgs[msg.loc].errors,
-      warnings: [...existingMsgs[msg.loc].warnings, {
-        ...msg,
-        msgType: "warning",
-      }],
-    },
-  } as ReturnedMessages;
-};
+  existingMsgs: ReturnedMessages = {errors:[], warnings:[]},
+) => ({
+  errors: existingMsgs.errors,
+  warnings: [...existingMsgs.warnings, {...msg, msgType: "warning"}],
+}) as ReturnedMessages
 
-const addError = (
+export const addError = (
   msg: Omit<ISCIPAB, "msgType">,
-  existingMsgs: ReturnedMessages = {},
-) => {
-  return {
-    ...existingMsgs,
-    [msg.loc]: {
-      ...existingMsgs[msg.loc].warnings,
-      errors: [...existingMsgs[msg.loc].errors, { msg, msgType: "error" }],
-    },
-  } as ReturnedMessages;
-};
+  existingMsgs: ReturnedMessages = {errors:[], warnings:[]},
+) => ({
+  warnings: existingMsgs.warnings,
+  errors: [...existingMsgs.errors, {...msg, msgType: "error"}],
+}) as ReturnedMessages
+
+export const mergeMessages = (
+  a: ReturnedMessages,
+  b: ReturnedMessages = {errors:[], warnings:[]},
+): ReturnedMessages => ({
+    errors: [...a.errors, ...b.errors],
+    warnings: [...a.warnings, ...b.warnings],
+})
 
 export const enhancementAdapter = (astChainFn: ASTChainFunc) => {
   return ((i: unknown) =>
@@ -203,11 +190,6 @@ export const enhancementAdapter = (astChainFn: ASTChainFunc) => {
       );
   }) as ResolvedEnhacementFn;
 };
-
-const mergeMessages = (
-  a: ReturnedMessages,
-  b: ReturnedMessages = {},
-): ReturnedMessages => merge(a, b);
 
 //#region ActionLoop
 const load = async (
@@ -238,11 +220,11 @@ const exporting = async (
   exporterFn: IFeedExportingFn,
   ast: AST,
   params?: unknown,
-  data?: JsonObject,
   config?: JsonObject,
+  anyMessages?: ReturnedMessages,
 ): Promise<EITHER<EnhanceFeed, ReturnedMessages>> => {
   // what about rejection
-  const result = await exporterFn(ast, params, data, config);
+  const result = await exporterFn(ast, params, config, anyMessages);
   console.log(244, "exporting: ", { result });
   return result;
 };
@@ -258,7 +240,7 @@ const resolveEnhancement = async (
       Left(
         addError({
           from: "loading an enhancement module",
-          loc: er.message,
+          loc: er.toString(),
           situation: "",
           action: "",
           benefit: "",
@@ -266,7 +248,7 @@ const resolveEnhancement = async (
           implication: "",
         }),
       )
-    ) as EITHER<any, ReturnedMessages>;
+    ) as EITHER<{[key:string]: unknown}, ReturnedMessages>;
 
   console.log(266, "resolveEnhancement: ", { enhancementModules });
 
@@ -283,8 +265,8 @@ const resolveEnhancement = async (
       }, enhancementModules.left),
     )
     : Right(
-      enhancementModules.right.enhancement ??
-        enhancementModules.right.fn as ResolvedEnhacementFn,
+        (enhancementModules.right?.enhancement ??
+         enhancementModules.right?.fn) as ResolvedEnhacementFn ,
     );
 };
 
@@ -311,11 +293,10 @@ const resolveAllEnhancements = async (
   return allEnhancements;
 };
 
-const runAllenhancements = async (
+const runAllenhancements = (
   enhancementArr: ParameterizedFn<ResolvedEnhacementFn>[],
   ast: AST,
   data?: JsonObject,
-  config?: JsonObject,
 ) => {
   const result = enhancementArr.reduce(
     async (acc, { fn, params }) => {
@@ -359,7 +340,12 @@ const runEverything = async (
 
   const errMessages = eitherModuleOrMessgage
     .filter(isLeft)
-    .reduce((acc, msg) => mergeMessages(msg.left, acc), {});
+    .reduce((acc, msg) => 
+      mergeMessages(msg.left, acc), 
+      { errors:[], 
+        warnings:[]
+      } as ReturnedMessages
+    );
 
   console.log(362, "runEverything: ", {
     eitherModuleOrMessgage,
@@ -378,7 +364,6 @@ const runEverything = async (
       state.enhancements.resolved,
       ast.right,
       state?.data,
-      state?.config,
     );
 
     if (finishedAST.right) {
@@ -387,7 +372,6 @@ const runEverything = async (
         state.exporting.fn,
         finishedAST.right,
         state.exporting.params,
-        state?.data,
         state?.config,
       );
     } else {
@@ -396,7 +380,17 @@ const runEverything = async (
     }
   } else {
     console.log(396, "AST left || errMessages", ast, errMessages);
-    return Left(mergeMessages(ast.left, errMessages));
+    if(isLeft(ast)){
+      return Left(mergeMessages(ast.left, errMessages));
+    }else{
+      return exporting(
+        state.exporting.fn,
+        ast.right,
+        state.exporting.params,
+        state?.config,
+        errMessages
+      );
+    }
   }
 };
 
@@ -529,9 +523,9 @@ const config = (state: PipelineState) =>
 
 const toJsonFeed =
   (state: PipelineState) =>
-  async (exportingParams: unknown = undefined): Promise<EnhanceFeed> => {
+   (exportingParams: unknown = undefined): Promise<EnhanceFeed> => {
     state.exporting.params = exportingParams;
-    state.exporting.fn = (async (ast, param, data, config) => {
+    state.exporting.fn = (async (ast, _param, _config, messages) => {
       console.log(528, "to JSON feed");
 
       const resp = await jsonfeed.JsonFeed<jsonfeed.RespStruct>(
@@ -540,7 +534,15 @@ const toJsonFeed =
       )
         .fromAST(ast)
         .then((resp) => Right(resp))
-        .catch((err) => Left(mergeMessages({ err })));
+        .catch((err) => Left(addError({
+          from:'',
+          loc: err.toString(),
+          situation:'',
+          implication:'', 
+          complication:'', 
+          action:'',
+          benefit:''
+        },messages)));
 
       console.log(538, { resp });
 
@@ -550,9 +552,8 @@ const toJsonFeed =
 
         return Right({
           ast: await computableToJson(ast),
-          string,
-          messages: {},
-          warnings: {},
+          messages,
+          string
         });
       } else {
         return Left(
@@ -581,27 +582,36 @@ const toJsonFeed =
   };
 
 const toAtom =
-  (state: PipelineState) =>
-  async (exportingParams: unknown = undefined): Promise<EnhanceFeed> => {
+  (state: PipelineState) => (exportingParams: unknown = undefined): Promise<EnhanceFeed> => {
     state.exporting.params = exportingParams;
-    state.exporting.fn = (async (ast, param, data, config) => {
+    state.exporting.fn = (async (ast, _param, _config, messages) => {
       const resp = await atom.Atom<atom.RespStruct>({}, "").fromAST(ast)
         .then((resp) => Right(resp))
-        .catch((err) => Left(mergeMessages({ err })));
+        .catch((err) => Left(addError({
+          from: "exporting Atom",
+          loc: `${err}`,
+          situation:
+            "Error occured during the export of the ast to Atom Feed",
+          complication: "Not sure how to show the ast",
+          implication: "You will not have anything to see",
+          action: ">>  Try another export?",
+          benefit: "so that you can see something?",
+        }, messages)))
 
       if (isRight(resp)) {
         const string = atom.Atom(
           resp.right,
-          typeof Array.isArray(resp.right.feed.link)
+          Array.isArray(resp.right.feed.link)
+            // deno-lint-ignore no-explicit-any
             ? (resp.right.feed.link as any[])[0]._attributes.href
+            // deno-lint-ignore no-explicit-any
             : (resp.right.feed.link as any)._attributes.href ?? "",
         ).toString();
 
         return Right({
           ast: await computableToJson(ast),
           string,
-          messages: {},
-          warnings: {},
+          messages
         });
       } else {
         return Left(
@@ -630,14 +640,23 @@ const toAtom =
   };
 
 const toRSS =
-  (state: PipelineState) =>
-  async (exportingParams: unknown = undefined): Promise<EnhanceFeed> => {
+  (state: PipelineState) => (exportingParams: unknown = undefined): Promise<EnhanceFeed> => {
     state.exporting.params = exportingParams;
-    state.exporting.fn = (async (ast, param, data, config) => {
+    state.exporting.fn = (async (ast, _param, _config, messages) => {
       const resp = await rss.Rss<rss.RespStruct>({}, "")
         .fromAST(ast)
         .then((d) => Right(d))
-        .catch((er) => Left(mergeMessages({ er })));
+        .catch((er) => Left(
+          addError({
+            from: "exporting RSS",
+            loc: `${er}`,
+            situation: "Error occured during the export of the ast to RSS Feed",
+            complication: "Not sure how to show the ast",
+            implication: "You will not have anything to see, and not enough information to make a good guess at intent",
+            action: "No inferred action can be taken",
+            benefit: "No guessing will be required of the user",
+          })
+        ));
       if (isRight(resp)) {
         const string = rss.Rss(
           resp.right,
@@ -649,8 +668,7 @@ const toRSS =
         return Right({
           ast: await computableToJson(ast),
           string,
-          messages: {},
-          warnings: {},
+          messages
         } as EnhanceFeed);
       } else {
         return Left(resp.left);
@@ -665,16 +683,25 @@ const toRSS =
   };
 
 const toCity =
-  (state: PipelineState) =>
-  async (exportingParams: unknown = undefined): Promise<EnhanceFeed> => {
+  (state: PipelineState) =>  (exportingParams: unknown = undefined): Promise<EnhanceFeed> => {
     state.exporting.params = exportingParams;
-    state.exporting.fn = (async (ast, param, data, config) => {
+    state.exporting.fn = (async (ast, _param, _config, messages) => {
       const resp = await jsonfeed.JsonFeed<jsonfeed.RespStruct>(
         {},
         state?.sourceURL ?? "",
       ).fromAST(ast)
-        .then(async (d) => Right(d))
-        .catch((er) => Left(mergeMessages({ er })));
+        .then((d) => Right(d))
+        .catch((er) => Left(
+          addError({
+            from: "exporting City Feed",
+            loc: `${er}`,
+            situation: "Error occured during the export of the ast to City Feed",
+            complication: "Not sure how to show the ast",
+            implication: "You will not have anything to see, and not enough information to make a good guess at intent",
+            action: "No inferred action can be taken",
+            benefit: "No guessing will be required of the user",
+          })
+        ));
 
       if (isRight(resp)) {
         const string = JSON.stringify(resp.right);
@@ -682,8 +709,7 @@ const toCity =
         return Right({
           ast: await computableToJson(ast),
           string,
-          messages: {},
-          warnings: {},
+          messages,
         } as EnhanceFeed);
       } else {
         return Left(resp.left);
@@ -698,30 +724,27 @@ const toCity =
   };
 
 const toCustomExport =
-  (state: PipelineState) =>
-  async (exportFn: IFeedExportingFn, params: unknown): Promise<EnhanceFeed> => {
+  (state: PipelineState) => (exportFn: IFeedExportingFn, params: unknown): Promise<EnhanceFeed> => {
     state.exporting = { fn: exportFn, params };
-
-    return runEverything(state).then((final) => {
-      return isRight(final)
+    return runEverything(state)
+      .then((final) => isRight(final)
         ? Promise.resolve(final.right)
-        : Promise.reject(final.left);
-    });
+        : Promise.reject(final.left)
+      );
   };
 
 const defaultState = () =>
   ({
     loading: {
-      fn: ((params?: unknown, data?: JsonObject, config?: JsonObject) =>
+      fn: ((_params?: unknown, _data?: JsonObject, _config?: JsonObject) =>
         Promise.reject("No Loader has been set")) as IFeedLoaderFn,
       params: undefined,
     },
     exporting: {
-      fn: (async (
-        a: AST,
-        params?: unknown,
-        data?: JsonObject,
-        config?: JsonObject,
+      fn: ((
+        _a: AST,
+        _params?: unknown,
+        _config?: JsonObject,
       ) => Promise.reject("No Exporter has been set")) as IFeedExportingFn,
       params: undefined,
     },
@@ -797,10 +820,19 @@ export const loadFeed = (initalState = defaultState()): ILoaders => {
         ...initalState,
         sourceURL: url,
         loading: {
-          fn: async () =>
+          fn: () =>
             urlToAST({ url, txt: str })
               .then((d) => Right(d))
-              .catch((er) => Left({ er })),
+              .catch((er) => Left(
+                addError({
+                  from: "from String",
+                  loc: `${er}`,
+                  situation: "Error occured while bootstrapping the AST from a string",
+                  complication: "Not sure how to get an ast",
+                  implication: "You will not have anything to see, and not enough information to make a good guess at intent",
+                  action: "No inferred action can be taken",
+                  benefit: "No guessing will be required of the user",
+              }))),
           params: undefined,
         },
       };
@@ -835,7 +867,17 @@ export const loadFeed = (initalState = defaultState()): ILoaders => {
           fn: async () =>
             urlToAST(await startFromURL(urlString))
               .then((d) => Right(d))
-              .catch((er) => Left({ er })),
+              .catch((er) => Left(
+                addError({
+                  from: "importing from URL",
+                  loc: `${er}`,
+                  situation: "Error occured during the import of an ast from a feed URL",
+                  complication: "Not sure how to show the ast",
+                  implication: "You will not have anything to see, and not enough information to make a good guess at intent",
+                  action: "No inferred action can be taken",
+                  benefit: "No guessing will be required of the user",
+                })
+              )),
           params: undefined,
         },
       };

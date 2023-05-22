@@ -37,6 +37,7 @@
     "lodash.get": "https://esm.sh/lodash.get@4.4.2?deno-std=0.181.0?dts",
     "lodash.merge": "https://esm.sh/lodash.merge@4.6.2?deno-std=0.181.0?dts",
     "lodash.set": "https://esm.sh/lodash.set@4.3.2?deno-std=0.181.0?dts",
+    "lodash.groupby":"https://esm.sh/lodash.groupby@4.6.0?deno-std=0.181.0?dts",
     "minhash": "https://esm.sh/minhash@0.0.9?deno-std=0.181.0&dts",
     "mu-forms/": "https://esm.sh/mu-forms@1.0.7/",
     "multiformats": "https://esm.sh/multiformats@9.6.4?deno-std=0.181.0&dts",

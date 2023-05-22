@@ -1,5 +1,13 @@
 import { assert, assertEquals, assertRejects } from "$std/testing/asserts.ts";
-import { enhancementAdapter, loadFeed } from "$lib/parsers/index.ts";
+import {
+  addError,
+  addWarning,
+  enhancementAdapter,
+  loadFeed,
+  mergeMessages,
+  type ReturnedMessages,
+} from "$lib/parsers/index.ts";
+
 import { jsonFeed as dfjsf } from "../mocks/jsonFeed/daringFireball.ts";
 import { addHash } from "$lib/enhancements/addHash/addHash.ts";
 
@@ -19,8 +27,118 @@ Deno.test("Bad URL gets Rejected", () => {
   );
 });
 
+Deno.test("Add Error", () => {
+  const r = { errors: [], warnings: [] } as ReturnedMessages;
+  const actual = addError({
+    situation: "situation",
+    complication: "complication",
+    implication: "implication",
+    action: "action",
+    benefit: "benefit",
+    from: "from",
+    loc: "loc",
+  }, r);
+
+  const expected = {
+    errors: [{
+      situation: "situation",
+      complication: "complication",
+      implication: "implication",
+      action: "action",
+      benefit: "benefit",
+      from: "from",
+      loc: "loc",
+      msgType: "error",
+    }],
+    warnings: [],
+  } as ReturnedMessages;
+  assertEquals(actual, expected);
+});
+
+Deno.test("Add Warning", () => {});
+
+Deno.test("Merge Messages", () => {
+  const retMsg1 = addError({
+    situation: "1",
+    complication: "1",
+    implication: "1",
+    action: "1",
+    benefit: "1",
+    from: "1",
+    loc: "A",
+  });
+  console.log("retMsg1", retMsg1);
+
+  const retMsg2 = addError({
+    situation: "2",
+    complication: "2",
+    implication: "2",
+    action: "2",
+    benefit: "2",
+    from: "2",
+    loc: "A",
+  });
+  console.log("retMsg2", retMsg2);
+
+  const retMsg3 = addWarning({
+    situation: "3",
+    complication: "3",
+    implication: "3",
+    action: "3",
+    benefit: "3",
+    from: "3",
+    loc: "A",
+  });
+  console.log("retMsg3", retMsg3);
+
+  const mergedAllActual = mergeMessages(
+    mergeMessages(retMsg1, retMsg2),
+    retMsg3,
+  );
+
+  const expected = {
+    errors: [
+      {
+        msgType: "error",
+        loc: "A",
+        from: "1",
+        situation: "1",
+        complication: "1",
+        implication: "1",
+        action: "1",
+        benefit: "1",
+      },
+      {
+        msgType: "error",
+        loc: "A",
+        from: "2",
+        situation: "2",
+        complication: "2",
+        implication: "2",
+        action: "2",
+        benefit: "2",
+        
+      },
+    ],
+    warnings: [
+      {
+        msgType: "warning",
+        loc: "A",
+        from: "3",
+        situation: "3",
+        complication: "3",
+        implication: "3",
+        action: "3",
+        benefit: "3",
+      },
+    ],
+  } as ReturnedMessages;
+
+  console.log({mergedAllActual, expected});
+  assertEquals(mergedAllActual, expected);
+});
+
 Deno.test("Load Enhancement from URL", async () => {
-  
   const resp = await loadFeed()
     .fromString(daringFireball.txt, daringFireball.url)
     .use(
@@ -30,7 +148,6 @@ Deno.test("Load Enhancement from URL", async () => {
 
   assert(resp.string, "string version of the AST must be in the response");
   assert(resp.messages, "Error Messages MUST be in the response");
-  assert(resp.warnings, "Warning Messagae MUST be in the response");
 
   assert(resp.ast, "AST must be in the response");
   assert(resp.ast.title);
@@ -45,8 +162,7 @@ Deno.test("Load Enhancement from URL", async () => {
   assert(resp.ast.items);
 });
 
-Deno.test("Load Enhancement from URL", async () => {
-  
+Deno.test("Second Enhancement fails to laod from URL", async () => {
   const resp = await loadFeed()
     .fromString(daringFireball.txt, daringFireball.url)
     .use(
@@ -58,9 +174,7 @@ Deno.test("Load Enhancement from URL", async () => {
     .toJsonFeed({ exportingParam: null });
 
   assert(resp.string, "string version of the AST must be in the response");
-  assert(resp.messages, "Error Messages MUST be in the response");
-  assert(resp.warnings, "Warning Messagae MUST be in the response");
-
+  assert(resp.messages.errors.length >0, "Error Messages MUST be in the response");
   assert(resp.ast, "AST must be in the response");
   assert(resp.ast.title);
   assert(resp.ast.description);
@@ -74,7 +188,6 @@ Deno.test("Load Enhancement from URL", async () => {
   assert(resp.ast.items);
 });
 
-
 Deno.test("Fetch the original jsonfeed using inline string", async () => {
   const resp = await loadFeed()
     .fromString(daringFireball.txt, daringFireball.url)
@@ -82,7 +195,6 @@ Deno.test("Fetch the original jsonfeed using inline string", async () => {
 
   assert(resp.string, "string version of the AST must be in the response");
   assert(resp.messages, "Error Messages MUST be in the response");
-  assert(resp.warnings, "Warning Messagae MUST be in the response");
 
   assert(resp.ast, "AST must be in the response");
   assert(resp.ast.title);
