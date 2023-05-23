@@ -5,8 +5,8 @@ Would prefer a method to load an AST as follows
 ```ts
 import loadFeed from "AST_THING";
 const JSONFEED = loadFeed
-  .fromURL("https://www.reddit.com/r/programming/.rss")
-  .toJSON();
+	.fromURL("https://www.reddit.com/r/programming/.rss")
+	.toJSON();
 ```
 
 ## Parse -> From

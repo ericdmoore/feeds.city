@@ -4,10 +4,10 @@ import { forms } from "@twind/forms";
 // import {lineClamp} from "@twind/line-clamp@0.1.1"
 
 export default {
-  selfURL: import.meta.url,
-  plugins: {
-    // lineClamp
-    forms,
-    // aspectRatio,
-  },
+	selfURL: import.meta.url,
+	plugins: {
+		// lineClamp
+		forms,
+		// aspectRatio,
+	},
 } as Options;

@@ -19,18 +19,15 @@ Use Cases:
 
 Group Actions:
 
-Commentary & Critique -- inline comments Summary & Perspective -- margin writing
-on top Analysis -- embed analysis and backlink the embedded analysis Synthesis &
-Implications -- write up "so what"
+Commentary & Critique -- inline comments Summary & Perspective -- margin writing on top Analysis --
+embed analysis and backlink the embedded analysis Synthesis & Implications -- write up "so what"
 
-Did we just reinvent `track changes`? How is this different from
-`track changes`?
+Did we just reinvent `track changes`? How is this different from `track changes`?
 
-- Track changes is a tool for collaboration on MS Word docs - this is a tool for
-  collaboration on web reading
+- Track changes is a tool for collaboration on MS Word docs - this is a tool for collaboration on
+  web reading
 - Types of changes: propose, accept, and reject changes
 
 Prior Art:
 
-- Artifact - share-links seem to nudge prople to discuss IRL something read in
-  common
+- Artifact - share-links seem to nudge prople to discuss IRL something read in common

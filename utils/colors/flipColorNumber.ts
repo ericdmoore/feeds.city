@@ -5,5 +5,5 @@
  * @returns number
  */
 export default function (n: number) {
-  return n === 50 ? 900 : n === 900 ? 50 : 450 + -1 * (n - 450);
+	return n === 50 ? 900 : n === 900 ? 50 : 450 + -1 * (n - 450);
 }

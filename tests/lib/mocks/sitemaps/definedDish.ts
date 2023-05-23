@@ -15184,7 +15184,7 @@ export const sitemap_posts = ` <?xml version="1.0" encoding="UTF-8"?>
 </urlset>`;
 
 export const sitemap_index =
-  `<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="//thedefineddish.com/wp-content/plugins/wordpress-seo/css/main-sitemap.xsl"?>
+	`<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="//thedefineddish.com/wp-content/plugins/wordpress-seo/css/main-sitemap.xsl"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<sitemap>
 		<loc>https://thedefineddish.com/post-sitemap.xml</loc>

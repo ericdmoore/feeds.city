@@ -18,143 +18,143 @@ import { computed, effect, signal } from "@preact/signals";
 // import {useFormInput} from '../compositeHooks/useFormInput.tsx'
 
 export interface CompositionFormProps {
-  parentGetsStateOnSubmit: (state: string) => void;
+	parentGetsStateOnSubmit: (state: string) => void;
 }
 
 function connectSignal(s: Signal<string>) {
-  return {
-    onChange: (e: Event) => {
-      s.value = (e.target as HTMLInputElement).value;
-    },
-  };
+	return {
+		onChange: (e: Event) => {
+			s.value = (e.target as HTMLInputElement).value;
+		},
+	};
 }
 
 // const SignaledInputCheckbox = (props: {signal: Signal<string>, attrs: HTMLInputElement})=>{
 //   return <input {...{...props.attrs, ...connectSignal(props.signal),type:'checkbox'}}   />
 // }
 const SignaledInputColor = (
-  props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
+	props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
 ) => {
-  return <input type="color" />;
+	return <input type="color" />;
 };
 
 const SignaledInputFile = (
-  props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
+	props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
 ) => {
-  return <input type="file" />;
+	return <input type="file" />;
 };
 const SignaledInputHidden = (
-  props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
+	props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
 ) => {
-  return <input type="hidden" />;
+	return <input type="hidden" />;
 };
 const SignaledInputImage = (
-  props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
+	props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
 ) => {
-  return <input type="image" />;
+	return <input type="image" />;
 };
 const SignaledInputMonth = (
-  props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
+	props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
 ) => {
-  return <input type="month" />;
+	return <input type="month" />;
 };
 const SignaledInputPassword = (
-  props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
+	props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
 ) => {
-  return <input type="password" />;
+	return <input type="password" />;
 };
 const SignaledInputRange = (
-  props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
+	props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
 ) => {
-  return <input type="range" />;
+	return <input type="range" />;
 };
 const SignaledInputReset = (
-  props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
+	props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
 ) => {
-  return <input type="reset" />;
+	return <input type="reset" />;
 };
 const SignaledInputSearch = (
-  props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
+	props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
 ) => {
-  return <input type="search" />;
+	return <input type="search" />;
 };
 const SignaledInputSubmit = (
-  props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
+	props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
 ) => {
-  return <input type="submit" />;
+	return <input type="submit" />;
 };
 const SignaledInputTel = (
-  props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
+	props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
 ) => {
-  return <input type="tel" />;
+	return <input type="tel" />;
 };
 
 const SignaledInputDate = (
-  props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
+	props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
 ) => {
-  return <input type="date" />;
+	return <input type="date" />;
 };
 const SignaledInputDatetime = (
-  props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
+	props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
 ) => {
-  return <input type="datetime" />;
+	return <input type="datetime" />;
 };
 const SignaledInputEmail = (
-  props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
+	props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
 ) => {
-  return <input type="email" />;
+	return <input type="email" />;
 };
 const SignaledInputNumber = (
-  props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
+	props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
 ) => {
-  return (
-    <input
-      {...props}
-      {...connectSignal(props.signal)}
-      value={props.signal.value}
-      type="number"
-    />
-  );
+	return (
+		<input
+			{...props}
+			{...connectSignal(props.signal)}
+			value={props.signal.value}
+			type="number"
+		/>
+	);
 };
 const SignaledInputRadio = (
-  props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
+	props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
 ) => {
-  return (
-    <input
-      {...props}
-      {...connectSignal(props.signal)}
-      value={props.signal.value}
-      type="radio"
-    />
-  );
+	return (
+		<input
+			{...props}
+			{...connectSignal(props.signal)}
+			value={props.signal.value}
+			type="radio"
+		/>
+	);
 };
 const SignaledInputText = (
-  props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
+	props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
 ) => {
-  return (
-    <input
-      {...props}
-      {...connectSignal(props.signal)}
-      value={props.signal.value}
-      type="text"
-    />
-  );
+	return (
+		<input
+			{...props}
+			{...connectSignal(props.signal)}
+			value={props.signal.value}
+			type="text"
+		/>
+	);
 };
 
 const SignaledInputTime = (
-  props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
+	props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
 ) => {
-  return <input type="time" />;
+	return <input type="time" />;
 };
 const SignaledInputUrl = (
-  props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
+	props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
 ) => {
-  return <input type="url" />;
+	return <input type="url" />;
 };
 const SignaledInputWeek = (
-  props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
+	props: JSX.HTMLAttributes<HTMLInputElement> & { signal: Signal<string> },
 ) => {
-  return <input type="week" />;
+	return <input type="week" />;
 };
 
 /**
@@ -192,23 +192,23 @@ const SignaledInputWeek = (
  */
 
 export function CompositionForm(props: Partial<CompositionFormProps>) {
-  // const {register, handleSubmit, formState: { errors }} = useForm();
-  // const onValidSubmit = (data: unknown) => console.log(data);
-  // const onInvalidSubmit = (data: unknown) => console.error(data);
+	// const {register, handleSubmit, formState: { errors }} = useForm();
+	// const onValidSubmit = (data: unknown) => console.log(data);
+	// const onInvalidSubmit = (data: unknown) => console.error(data);
 
-  const onSubmit = ((e) => {
-    props.parentGetsStateOnSubmit && props.parentGetsStateOnSubmit("state");
-    console.log("onSubmit", { e });
-  }) as JSX.GenericEventHandler<HTMLFormElement>;
+	const onSubmit = ((e) => {
+		props.parentGetsStateOnSubmit && props.parentGetsStateOnSubmit("state");
+		console.log("onSubmit", { e });
+	}) as JSX.GenericEventHandler<HTMLFormElement>;
 
-  return (
-    <form onSubmit={onSubmit}>
-      <SignaledInputText signal={signal("")} />
-      {/* <input {...useFormInput('firstName', 'onChange')} /> */}
-      {/* <input {...useFormInput('lastName', 'onChange')} /> */}
-      <button type="submit" />
-    </form>
-  );
+	return (
+		<form onSubmit={onSubmit}>
+			<SignaledInputText signal={signal("")} />
+			{/* <input {...useFormInput('firstName', 'onChange')} /> */}
+			{/* <input {...useFormInput('lastName', 'onChange')} /> */}
+			<button type="submit" />
+		</form>
+	);
 }
 
 export default CompositionForm;

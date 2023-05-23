@@ -4,108 +4,107 @@ import type { ASTComputable, ASTJson, PromiseOr } from "../types.ts";
 export type Dict<T> = { [key: string]: T };
 export type AST = ASTComputable | ASTJson;
 export type ASTChainFunc = (
-  i: unknown,
+	i: unknown,
 ) => (ast: PromiseOr<AST>) => Promise<AST>;
 export type CloudChangeFunction = (...inputs: unknown[]) => Promise<string>;
 export interface ProviderFunctions {
-  install: CloudChangeFunction;
-  remove: CloudChangeFunction;
+	install: CloudChangeFunction;
+	remove: CloudChangeFunction;
 }
 
 export interface ProviderParamSchemas {
-  install: string;
-  remove: string;
+	install: string;
+	remove: string;
 }
 
 export interface EnhancementModuleInputChangeSetInstallFunctions {
-  install: CloudChangeFunction;
-  remove: CloudChangeFunction;
-  aws: ProviderFunctions;
-  azure: ProviderFunctions;
-  gcloud: ProviderFunctions;
+	install: CloudChangeFunction;
+	remove: CloudChangeFunction;
+	aws: ProviderFunctions;
+	azure: ProviderFunctions;
+	gcloud: ProviderFunctions;
 }
 
 export interface EnhancementModuleCloudParamSchemas {
-  install: string;
-  remove: string;
-  aws: ProviderParamSchemas;
-  gcloud: ProviderParamSchemas;
-  azure: ProviderParamSchemas;
+	install: string;
+	remove: string;
+	aws: ProviderParamSchemas;
+	gcloud: ProviderParamSchemas;
+	azure: ProviderParamSchemas;
 }
 
 export interface EnhancementModule {
-  run: ASTChainFunc;
-  cloud?: EnhancementModuleInputChangeSetInstallFunctions;
-  paramsSchema: {
-    run: string;
-    cloud?: EnhancementModuleCloudParamSchemas;
-  };
+	run: ASTChainFunc;
+	cloud?: EnhancementModuleInputChangeSetInstallFunctions;
+	paramsSchema: {
+		run: string;
+		cloud?: EnhancementModuleCloudParamSchemas;
+	};
 }
 
 export interface EnhancementModuleInput {
-  run: ASTChainFunc;
-  cloud: Partial<EnhancementModuleInputChangeSetInstallFunctions>;
-  paramSchema: {
-    run: string;
-    cloud: Partial<EnhancementModuleCloudParamSchemas>;
-  };
+	run: ASTChainFunc;
+	cloud: Partial<EnhancementModuleInputChangeSetInstallFunctions>;
+	paramSchema: {
+		run: string;
+		cloud: Partial<EnhancementModuleCloudParamSchemas>;
+	};
 }
 
 export const composeASTChains =
-  (chain: ASTChainFunc[] = [], params: unknown[] = []) =>
-  async (ast: PromiseOr<AST>) =>
-    chain.reduce(async (ast: Promise<AST>, fn: ASTChainFunc, i) => {
-      return fn(params[i])(await ast);
-    }, Promise.resolve(ast));
+	(chain: ASTChainFunc[] = [], params: unknown[] = []) => async (ast: PromiseOr<AST>) =>
+		chain.reduce(async (ast: Promise<AST>, fn: ASTChainFunc, i) => {
+			return fn(params[i])(await ast);
+		}, Promise.resolve(ast));
 
 export const EnhancementModule = (
-  opts: EnhancementModuleInput,
+	opts: EnhancementModuleInput,
 ): EnhancementModule => {
-  const run = opts.run ?? ((_i: unknown) => async (ast) => ast) as ASTChainFunc;
+	const run = opts.run ?? ((_i: unknown) => async (ast) => ast) as ASTChainFunc;
 
-  const cloud = (
-    input: Partial<EnhancementModuleInputChangeSetInstallFunctions>,
-  ): EnhancementModuleInputChangeSetInstallFunctions => {
-    const aws = input.aws ??
-      { install: async () => "", remove: async () => "" };
-    const azure = input.azure ??
-      { install: async () => "", remove: async () => "" };
-    const gcloud = input.gcloud ??
-      { install: async () => "", remove: async () => "" };
-    const install: CloudChangeFunction = input.install ||
-      (async () => "") as CloudChangeFunction;
-    const remove: CloudChangeFunction = input.remove ||
-      (async () => "") as CloudChangeFunction;
+	const cloud = (
+		input: Partial<EnhancementModuleInputChangeSetInstallFunctions>,
+	): EnhancementModuleInputChangeSetInstallFunctions => {
+		const aws = input.aws ??
+			{ install: async () => "", remove: async () => "" };
+		const azure = input.azure ??
+			{ install: async () => "", remove: async () => "" };
+		const gcloud = input.gcloud ??
+			{ install: async () => "", remove: async () => "" };
+		const install: CloudChangeFunction = input.install ||
+			(async () => "") as CloudChangeFunction;
+		const remove: CloudChangeFunction = input.remove ||
+			(async () => "") as CloudChangeFunction;
 
-    return {
-      aws,
-      azure,
-      gcloud,
-      install,
-      remove,
-    } as EnhancementModuleInputChangeSetInstallFunctions;
-  };
+		return {
+			aws,
+			azure,
+			gcloud,
+			install,
+			remove,
+		} as EnhancementModuleInputChangeSetInstallFunctions;
+	};
 
-  const paramSchema = (
-    input: { run: string; cloud: Partial<EnhancementModuleCloudParamSchemas> },
-  ): { run: string; cloud: EnhancementModuleCloudParamSchemas } => {
-    return {
-      run: input.run ?? "",
-      cloud: {
-        install: input?.cloud?.install ?? "",
-        remove: input?.cloud?.remove ?? "",
-        aws: input?.cloud?.aws ?? { install: "", remove: "" },
-        azure: input?.cloud?.azure ?? { install: "", remove: "" },
-        gcloud: input?.cloud?.gcloud ?? { install: "", remove: "" },
-      },
-    };
-  };
+	const paramSchema = (
+		input: { run: string; cloud: Partial<EnhancementModuleCloudParamSchemas> },
+	): { run: string; cloud: EnhancementModuleCloudParamSchemas } => {
+		return {
+			run: input.run ?? "",
+			cloud: {
+				install: input?.cloud?.install ?? "",
+				remove: input?.cloud?.remove ?? "",
+				aws: input?.cloud?.aws ?? { install: "", remove: "" },
+				azure: input?.cloud?.azure ?? { install: "", remove: "" },
+				gcloud: input?.cloud?.gcloud ?? { install: "", remove: "" },
+			},
+		};
+	};
 
-  return {
-    run,
-    cloud: cloud(opts.cloud),
-    paramsSchema: paramSchema(opts.paramSchema),
-  };
+	return {
+		run,
+		cloud: cloud(opts.cloud),
+		paramsSchema: paramSchema(opts.paramSchema),
+	};
 };
 
 // import * as addHash from "./addHash/index.ts";

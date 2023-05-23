@@ -1,13 +1,17 @@
 {
-  "tasks": {
-    "bundle": "deno bundle main.ts",
-    "test": "deno test tests/ --allow-net --allow-env --allow-read --coverage=.cov/",
-    "cov": "deno coverage --lcov --output=cov.lcov .cov/ ; genhtml -o cov_html cov.lcov",
-    "start": "deno run -A --watch=static/,routes/ dev.ts"
-  },
-  "importMap": "./import_map.json",
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "jsxImportSource": "preact"
-  }
+	"tasks": {
+		"bundle": "deno bundle main.ts",
+		"test": "deno test tests/ --allow-net --allow-env --allow-read --coverage=.cov/",
+		"cov": "deno coverage --lcov --output=cov.lcov .cov/ ; genhtml -o cov_html cov.lcov",
+		"start": "deno run -A --watch=static/,routes/ dev.ts"
+	},
+	"importMap": "./import_map.json",
+	"compilerOptions": {
+		"jsx": "react-jsx",
+		"jsxImportSource": "preact"
+	},
+	"fmt": {
+		"useTabs": true,
+		"lineWidth": 100
+	}
 }

@@ -1,13 +1,13 @@
 {
-  "rehypeParse": "https://denopkg.com/ericdmoore/rehype@main/packages/rehype-parse/mod.ts",
-  "rehypeRemark": "https://denopkg.com/ericdmoore/rehype-remark@main/mod.ts",
-  "rehypeStringify": "https://denopkg.com/ericdmoore/rehype@main/packages/rehype-stringify/mod.ts",
-  "remarkParse": "https://denopkg.com/ericdmoore/remark@main/packages/remark-parse/mod.ts",
-  "remarkRehype": "https://denopkg.com/ericdmoore/remark-rehype@main/mod.ts",
-  "remarkRetext": "https://esm.sh/remark-retext?dts",
-  "remarkStringify": "https://denopkg.com/ericdmoore/remark@main/packages/remark-stringify/mod.ts",
-  "retextEnglish": "https://esm.sh/retext-english@4?dts",
-  "retextParse": "https://esm.sh/retext-english?dts",
-  "retextStringify": "https://esm.sh/retext-stringify@3.1.0?dts",
-  "unified": "https://denopkg.com/ericdmoore/unified@main/mod.ts"
+	"rehypeParse": "https://denopkg.com/ericdmoore/rehype@main/packages/rehype-parse/mod.ts",
+	"rehypeRemark": "https://denopkg.com/ericdmoore/rehype-remark@main/mod.ts",
+	"rehypeStringify": "https://denopkg.com/ericdmoore/rehype@main/packages/rehype-stringify/mod.ts",
+	"remarkParse": "https://denopkg.com/ericdmoore/remark@main/packages/remark-parse/mod.ts",
+	"remarkRehype": "https://denopkg.com/ericdmoore/remark-rehype@main/mod.ts",
+	"remarkRetext": "https://esm.sh/remark-retext?dts",
+	"remarkStringify": "https://denopkg.com/ericdmoore/remark@main/packages/remark-stringify/mod.ts",
+	"retextEnglish": "https://esm.sh/retext-english@4?dts",
+	"retextParse": "https://esm.sh/retext-english?dts",
+	"retextStringify": "https://esm.sh/retext-stringify@3.1.0?dts",
+	"unified": "https://denopkg.com/ericdmoore/unified@main/mod.ts"
 }

@@ -11,44 +11,44 @@ import CtaPanel from "../components/cta-panel.tsx";
 import NavBar from "../islands/public-navbar.tsx";
 
 export default function () {
-  return (
-    <>
-      <NavBar
-        login={{ register: { href: "/register" }, auth: { href: "/login" } }}
-        logo={{ alt: "Feed City Logo", src: "/feedcitylogo.svg" }}
-        nav={{
-          _: {
-            "Sign In": { text: "", href: "/login" },
-            "Sign Up": { text: "", href: "/register" },
-          },
-        }}
-      />
-      <AboutHero />
-      <Centered />
-      <SectionWithTiles />
-      <TieredImage />
-      <BgImgSection />
-      <AlternatingFeatures />
-      <ShopColelctions />
-      <ScollingCards />
-      <CtaPanel />
-      <Footer
-        nav={{
-          About: "/about",
-          Blog: "/blog",
-          Jobs: "/jobs",
-          Press: "/press",
-          Market: "/market",
-        }}
-        social={{
-          Twitter: { alias: "twitter", href: "https://twitter.com" },
-          Discord: { alias: "discord", href: "https://discord.com" },
-          YouTube: { alias: "youtube", href: "https://youtube.com" },
-          Twitch: { alias: "twitch", href: "https://twitch.com" },
-          Reddit: { alias: "reddit", href: "https://reddit.com" },
-          GitHub: { alias: "github", href: "https://github.com" },
-        }}
-      />
-    </>
-  );
+	return (
+		<>
+			<NavBar
+				login={{ register: { href: "/register" }, auth: { href: "/login" } }}
+				logo={{ alt: "Feed City Logo", src: "/feedcitylogo.svg" }}
+				nav={{
+					_: {
+						"Sign In": { text: "", href: "/login" },
+						"Sign Up": { text: "", href: "/register" },
+					},
+				}}
+			/>
+			<AboutHero />
+			<Centered />
+			<SectionWithTiles />
+			<TieredImage />
+			<BgImgSection />
+			<AlternatingFeatures />
+			<ShopColelctions />
+			<ScollingCards />
+			<CtaPanel />
+			<Footer
+				nav={{
+					About: "/about",
+					Blog: "/blog",
+					Jobs: "/jobs",
+					Press: "/press",
+					Market: "/market",
+				}}
+				social={{
+					Twitter: { alias: "twitter", href: "https://twitter.com" },
+					Discord: { alias: "discord", href: "https://discord.com" },
+					YouTube: { alias: "youtube", href: "https://youtube.com" },
+					Twitch: { alias: "twitch", href: "https://twitch.com" },
+					Reddit: { alias: "reddit", href: "https://reddit.com" },
+					GitHub: { alias: "github", href: "https://github.com" },
+				}}
+			/>
+		</>
+	);
 }

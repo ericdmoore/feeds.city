@@ -9,20 +9,20 @@ import er from "../../parsers/helpers/error.ts";
 
 export const paramSchema = setPathSchema;
 export const SetPathParamStruct = s.object({
-  path: s.string(),
-  value: s.string(),
+	path: s.string(),
+	value: s.string(),
 });
 
 const discoverValueType = (
-  s: string,
+	s: string,
 ): { type: "json" | "mustache" | "error"; str: string } => {
-  if (s.toLowerCase().startsWith("json::")) {
-    return { type: "json", str: s.slice("json::".length) };
-  } else if (s.toLowerCase().startsWith("{{::")) {
-    return { type: "mustache", str: s.slice("{{::".length) };
-  } else {
-    return { type: "error", str: "" };
-  }
+	if (s.toLowerCase().startsWith("json::")) {
+		return { type: "json", str: s.slice("json::".length) };
+	} else if (s.toLowerCase().startsWith("{{::")) {
+		return { type: "mustache", str: s.slice("{{::".length) };
+	} else {
+		return { type: "error", str: "" };
+	}
 };
 
 /**
@@ -33,41 +33,41 @@ const discoverValueType = (
  * @param input.value - a stringified JSON value - default: 'Hello World'
  */
 export const setPath = (
-  input: s.Infer<typeof SetPathParamStruct> = {
-    path: "title",
-    value: 'json::"Title: Hello World!"',
-  },
+	input: s.Infer<typeof SetPathParamStruct> = {
+		path: "title",
+		value: 'json::"Title: Hello World!"',
+	},
 ) =>
 async (_ast: PromiseOr<ASTComputable>): Promise<ASTComputable> => {
-  if (!SetPathParamStruct.is(input)) {
-    return Promise.reject(er(input, "input is not valid", new Error().stack));
-  }
-  try {
-    const { type, str } = discoverValueType(input.value);
+	if (!SetPathParamStruct.is(input)) {
+		return Promise.reject(er(input, "input is not valid", new Error().stack));
+	}
+	try {
+		const { type, str } = discoverValueType(input.value);
 
-    const ast = await computableToJson(await _ast);
-    let replacerVal: JsonValue;
-    let mustacheRender: string;
+		const ast = await computableToJson(await _ast);
+		let replacerVal: JsonValue;
+		let mustacheRender: string;
 
-    switch (type) {
-      case "json":
-        replacerVal = JSON.parse(str) as JsonValue;
-        break;
-      case "mustache":
-        mustacheRender = mustache.render(
-          str,
-          ast as Record<string, unknown>,
-        ) as string;
-        replacerVal = JSON.parse(mustacheRender) as string;
-        break;
-      default:
-        replacerVal = JSON.parse(str) as JsonValue;
-    }
-    setter(input.path, replacerVal, ast as JsonValue);
-    return jsonToComputable(ast);
-  } catch (e) {
-    return Promise.reject(
-      er({ input }, `JSON.parse error on input \n ${e}`, new Error().stack),
-    );
-  }
+		switch (type) {
+			case "json":
+				replacerVal = JSON.parse(str) as JsonValue;
+				break;
+			case "mustache":
+				mustacheRender = mustache.render(
+					str,
+					ast as Record<string, unknown>,
+				) as string;
+				replacerVal = JSON.parse(mustacheRender) as string;
+				break;
+			default:
+				replacerVal = JSON.parse(str) as JsonValue;
+		}
+		setter(input.path, replacerVal, ast as JsonValue);
+		return jsonToComputable(ast);
+	} catch (e) {
+		return Promise.reject(
+			er({ input }, `JSON.parse error on input \n ${e}`, new Error().stack),
+		);
+	}
 };

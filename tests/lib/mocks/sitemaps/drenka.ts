@@ -1,6 +1,6 @@
 // curl https://stephaniedrenka.com/sitemap.xml >> src/tests/mocks/drenka.ts
 export const sitemap =
-  `<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="https://stephaniedrenka.com/wp-content/plugins/google-sitemap-generator/sitemap.xsl"?><!-- sitemap-generator-url="http://www.arnebrachhold.de" sitemap-generator-version="4.1.1" -->
+	`<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="https://stephaniedrenka.com/wp-content/plugins/google-sitemap-generator/sitemap.xsl"?><!-- sitemap-generator-url="http://www.arnebrachhold.de" sitemap-generator-version="4.1.1" -->
 <!-- generated-on="Friday, February 4, 2022 4:46 am" -->
 <sitemapindex 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 

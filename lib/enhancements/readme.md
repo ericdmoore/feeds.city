@@ -2,14 +2,14 @@
 
 Usually pair well with analysis
 
-Since Analysis can compure interesting stuff, the enhancements are often in
-charge of wrapping those with meaningful and well managed side effects.
+Since Analysis can compure interesting stuff, the enhancements are often in charge of wrapping those
+with meaningful and well managed side effects.
 
-They might place the analysis in the body within a footer they might add it to
-the feed as meta data for another application to pick up.
+They might place the analysis in the body within a footer they might add it to the feed as meta data
+for another application to pick up.
 
-enhancements need to define default values for all params but more important
-define the params and how they are marshalled from the proxy URL
+enhancements need to define default values for all params but more important define the params and
+how they are marshalled from the proxy URL
 
 analysis may have params required
 

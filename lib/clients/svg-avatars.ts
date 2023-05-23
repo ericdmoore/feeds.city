@@ -98,43 +98,43 @@ const OFFSET_BASIS = 2166136261;
 
 // based on the FNV-1a hash algorithm, modified for *signed* 32 bit integers http://www.isthe.com/chongo/tech/comp/fnv/index.html
 function simpleHash(str: string) {
-  return str.split("")
-    // >>> 0 for 32 bit unsigned integer conversion https://2ality.com/2012/02/js-integers.html
-    .reduce(
-      (hash, char) => ((hash ^ char.charCodeAt(0)) >>> 0) * FNV_PRIME,
-      OFFSET_BASIS,
-    );
+	return str.split("")
+		// >>> 0 for 32 bit unsigned integer conversion https://2ality.com/2012/02/js-integers.html
+		.reduce(
+			(hash, char) => ((hash ^ char.charCodeAt(0)) >>> 0) * FNV_PRIME,
+			OFFSET_BASIS,
+		);
 }
 
 export function identicon(
-  msg: string,
-  saturation = DEFAULT_SATURATION,
-  lightness = DEFAULT_LIGHTNESS,
+	msg: string,
+	saturation = DEFAULT_SATURATION,
+	lightness = DEFAULT_LIGHTNESS,
 ) {
-  const hash = simpleHash(msg);
-  // dividing hash by FNV_PRIME to get last XOR result for better color randomness (will be an integer except for empty string hash)
-  const hue = ((hash / FNV_PRIME) % COLORS_NB) * (360 / COLORS_NB);
-  const rects = [...Array(msg ? 25 : 0).keys()]
-    // 2 + ((3 * 5 - 1) - modulo) to concentrate squares at the center
-    .map((i) => {
-      let str = "";
-      const x = i > 14 ? 7 - ~~(i / 5) : ~~(i / 5);
-      const y = i % 5;
+	const hash = simpleHash(msg);
+	// dividing hash by FNV_PRIME to get last XOR result for better color randomness (will be an integer except for empty string hash)
+	const hue = ((hash / FNV_PRIME) % COLORS_NB) * (360 / COLORS_NB);
+	const rects = [...Array(msg ? 25 : 0).keys()]
+		// 2 + ((3 * 5 - 1) - modulo) to concentrate squares at the center
+		.map((i) => {
+			let str = "";
+			const x = i > 14 ? 7 - ~~(i / 5) : ~~(i / 5);
+			const y = i % 5;
 
-      if (hash % (16 - i % 15) < SQUARE_DENSITY) {
-        str = `<rect x="${x}" y="${y}" width="1" height="1"/>`;
-      }
-      return { x, y, str };
-    })
-    .filter((r) => r.str.length > 0);
-  // xmlns attribute added in case of SVG file generation https://developer.mozilla.org/en-US/docs/Web/SVG/Element/svg#sect1
-  const fill = `fill="hsl(${hue} ${saturation}% ${lightness}%)"`;
-  const rectStr = rects.map((r) => r.str).join("\n");
-  return {
-    fill,
-    rects,
-    rectStr,
-    svgString:
-      `<svg viewBox="-1.5 -1.5 8 8" xmlns="http://www.w3.org/2000/svg" ${fill}">${rectStr}</svg>`,
-  };
+			if (hash % (16 - i % 15) < SQUARE_DENSITY) {
+				str = `<rect x="${x}" y="${y}" width="1" height="1"/>`;
+			}
+			return { x, y, str };
+		})
+		.filter((r) => r.str.length > 0);
+	// xmlns attribute added in case of SVG file generation https://developer.mozilla.org/en-US/docs/Web/SVG/Element/svg#sect1
+	const fill = `fill="hsl(${hue} ${saturation}% ${lightness}%)"`;
+	const rectStr = rects.map((r) => r.str).join("\n");
+	return {
+		fill,
+		rects,
+		rectStr,
+		svgString:
+			`<svg viewBox="-1.5 -1.5 8 8" xmlns="http://www.w3.org/2000/svg" ${fill}">${rectStr}</svg>`,
+	};
 }

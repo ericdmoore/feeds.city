@@ -1,61 +1,61 @@
 {
-  "version": "https://jsonfeed.org/version/1.1",
-  "title": "Daring Fireball",
-  "home_page_url": "https://daringfireball.net/",
-  "feed_url": "https://daringfireball.net/feeds/json",
-  "authors": [{ "url": "https://twitter.com/gruber", "name": "John Gruber" }],
-  "icon": "https://daringfireball.net/graphics/apple-touch-icon.png",
-  "favicon": "https://daringfireball.net/graphics/favicon-64.png",
-  "items": [
-    {
-      "title": "Elon Musk Says He Has the Dough to Back Twitter Acquisition",
-      "date_published": "2022-04-21T17:39:22Z",
-      "date_modified": "2022-04-21T17:58:50Z",
-      "id": "https://daringfireball.net/linked/2022/04/21/musk-dough-twitter",
-      "url": "https://daringfireball.net/linked/2022/04/21/musk-dough-twitter",
-      "external_url": "https://www.axios.com/elon-musk-twitter-funding-d0a9c8e1-9c75-4dc9-948c-4618588450ca.html",
-      "authors": [{ "name": "John Gruber" }],
-      "content_html": "Dan Primack, reporting for Axios: Elon Musk on Thursday disclosed in a federal securities filing that he doesn’t yet have any equity partners on his takeover bid for Twitter, but said that he has secured billions of dollars worth of loan commitments from Morgan Stanley. Musk committed to invest up to $21 billion of his own money, although this wouldn’t preclude him from cutting back on that amount by bringing on equity partners at a later date. He also said he has $13 billion in committed debt financing from Morgan Stanley and $12.5 billion of margin loan commitments from Morgan Stanley. Link: https://www.axios.com/elon-musk-twitter-funding-d0a9c8e1-9c75-4dc9-948c-4618588450ca.html"
-    },
-    {
-      "title": "Elon Musk Makes Play to Buy Twitter Entirely and Take It Private",
-      "date_published": "2022-04-15T00:15:48Z",
-      "date_modified": "2022-04-15T00:15:48Z",
-      "id": "https://daringfireball.net/linked/2022/04/14/musk-twitter-private",
-      "url": "https://daringfireball.net/linked/2022/04/14/musk-twitter-private",
-      "external_url": "https://www.sec.gov/Archives/edgar/data/1418091/000110465922045641/tm2212748d1_sc13da.htm#ex-b_001",
-      "authors": [{ "name": "John Gruber" }],
-      "content_html": "Elon Musk, in a letter to Twitter chairman Bret Taylor and filed with the SEC: I invested in Twitter as I believe in its potential to be the platform for free speech around the globe, and I believe free speech is a societal imperative for a functioning democracy. However, since making my investment I now realize the company will neither thrive nor serve this societal imperative in its current form. Twitter needs to be transformed as a private company. As a result, I am offering to buy 100% of Twitter for $54.20 per\nshare in cash, a 54% premium over the day before I began investing in Twitter and a 38% premium over the day before my investment was publicly announced. My offer is my best and final offer and if it is not accepted, I would need to reconsider my position as a shareholder.Twitter has extraordinary potential. I will unlock it. Also from that SEC filing, these bullet points from Musk:</p>\n\n<ul>\n<li>I am not playing the back-and-forth game.</li>\n<li>I have moved straight to the end.</li>\n<li>It’s a high price and your shareholders will love it. If the deal doesn’t work, given that I don’t have confidence in management nor do I believe I can drive the necessary change in the public market, I would need to reconsider my position as a shareholder. This is not a threat, it’s simply not a good investment without the changes that need to be made. And those changes won’t happen without taking the company private. Musk can say it’s not a threat, but what he means is that it’s not merely a threat. If Musk pulls out of Twitter I think Twitter’s share price will, at least temporarily, sink. Link: https://www.sec.gov/Archives/edgar/data/1418091/000110465922045641/tm2212748d1_sc13da.htm"
-    },
-    {
-      "title": "Elon Musk’s Twitter Board Seat: Never Mind",
-      "date_published": "2022-04-11T17:19:14Z",
-      "date_modified": "2022-04-11T22:40:24Z",
-      "id": "https://daringfireball.net/linked/2022/04/11/musk-twitter-board-seat",
-      "url": "https://daringfireball.net/linked/2022/04/11/musk-twitter-board-seat",
-      "external_url": "https://twitter.com/paraga/status/1513354622466867201",
-      "authors": [{ "name": "John Gruber" }],
-      "content_html": "Twitter CEO Parag Agrawal, in a tweet: Elon has decided not to join our board. I sent a brief note to the company, sharing with you all here. The first thing I’ll note is that Agrawal had to share the “brief note” itself as a screenshot, because, well, Twitter only supports up to 280 characters in a post. Duh, right? We all know that. But it’s really kind of silly when you consider that even Twitter’s own CEO, sharing important breaking news, has to use screenshots to share even a “brief note”. (The seemingly obvious solution would be to allow users to include a text attachment to a tweet, the same way we’ve been able to attach images and videos for years.) From the note: We announced on Tuesday that Elon would be appointed to the Board contingent on a background check and formal acceptance. Elon’s appointment to the board was to become officially effective 4/9, but Elon shared that same morning that he will no longer be joining the board. Is the “background check” relevant here? Like, did something turn up in the background check that Twitter deemed problematic? The simple explanation is that Musk simply realized that he could have freer rein — and thus more fun, and more influence not on the board than on it. But why mention the background check at all here then? Just as a jab a not-so-subtle dig? I believe this is for the best. We have and will always value input from our shareholders whether they are on our Board or not. Elon is our biggest shareholder and we will remain open to his input. There will be distractions ahead, but our goals and priorities remain unchanged. Translation: We are largely beholden to Elon Musk now, as our stock price is inextricably tied to his continuing shareholding. I mean what happens to Twitter’s share price if Musk dumps all his stock and tweets something like “I tried to help Twitter but the company is run by a bunch of bozos. I’m out.” That’s just 76 characters and I bet it would tank Twitter’s stock. Link: https://twitter.com/paraga/status/1513354622466867201"
-    },
-    {
-      "title": "Matt Levine on Elon Musk",
-      "date_published": "2022-04-10T17:59:43Z",
-      "date_modified": "2022-04-10T18:02:13Z",
-      "id": "https://daringfireball.net/linked/2022/04/10/levine-musk-twitter",
-      "url": "https://daringfireball.net/linked/2022/04/10/levine-musk-twitter",
-      "external_url": "https://www.bloomberg.com/opinion/articles/2022-04-04/elon-musk-bought-some-twitter",
-      "authors": [{ "name": "John Gruber" }],
-      "content_html": "Matt Levine, in his Money Stuff column for Bloomberg: Look this all makes complete sense, obvious, intuitive, simple sense. If you are the richest person in the world, and annoying, and you constantly play a computer game, and you get a lot of enjoyment and a sense of identity from that game and are maybe a little addicted, then at some point you might have some suggestions for improvements in the game. So you might leave comments and email the company that makes the game saying “hey you should try my ideas.” And the company might ignore you (or respond politely but not move fast enough for your liking). It might occur to you: “Look, I am the richest person in the world; how much could this game company possibly cost? I should just buy it and change the game however I want.” Even if your complaints are quite minor, why shouldn’t you get to play exactly the game you want? Even if you have no complaints, why not own the game you love, just to make sure it continues to be exactly what you want? The game is Twitter, the richest person in the world is Elon Musk. I don’t think anyone in the media gets Elon Musk the way Matt Levine does. Link: https://www.bloomberg.com/opinion/articles/2022-04-04/elon-musk-bought-some-twitter"
-    },
-    {
-      "title": "Elon Musk Buys 9.2 Percent of Twitter, Making Him the Largest Shareholder",
-      "date_published": "2022-04-05T15:47:02Z",
-      "date_modified": "2022-04-05T19:01:50Z",
-      "id": "https://daringfireball.net/linked/2022/04/05/musk-twitter",
-      "url": "https://daringfireball.net/linked/2022/04/05/musk-twitter",
-      "external_url": "https://www.cnn.com/2022/04/04/investing/elon-musk-twitter-shares-stake/index.html",
-      "authors": [{ "name": "John Gruber" }],
-      "content_html": "Chris Isidore, CNN Business: Elon Musk recently purchased 9.2% of Twitter stock, according to a filing Monday, making him the largest shareholder in the company. News of the purchase sent shares of Twitter soaring 22% in early trading. Musk did not disclose what he paid for the shares, but\nhis stake was worth $2.9 billion as of the close of trading Friday, and $3.5 billion after the spike early Monday. He does keep things interesting. UPDATE: Musk is now on Twitter’s board of directors. As a friend quipped, imagine how bad it would be if Trump were actually a billionaire. Link: https://www.cnn.com/2022/04/04/investing/elon-musk-twitter-shares-stake/index.html"
-    }
-  ]
+	"version": "https://jsonfeed.org/version/1.1",
+	"title": "Daring Fireball",
+	"home_page_url": "https://daringfireball.net/",
+	"feed_url": "https://daringfireball.net/feeds/json",
+	"authors": [{ "url": "https://twitter.com/gruber", "name": "John Gruber" }],
+	"icon": "https://daringfireball.net/graphics/apple-touch-icon.png",
+	"favicon": "https://daringfireball.net/graphics/favicon-64.png",
+	"items": [
+		{
+			"title": "Elon Musk Says He Has the Dough to Back Twitter Acquisition",
+			"date_published": "2022-04-21T17:39:22Z",
+			"date_modified": "2022-04-21T17:58:50Z",
+			"id": "https://daringfireball.net/linked/2022/04/21/musk-dough-twitter",
+			"url": "https://daringfireball.net/linked/2022/04/21/musk-dough-twitter",
+			"external_url": "https://www.axios.com/elon-musk-twitter-funding-d0a9c8e1-9c75-4dc9-948c-4618588450ca.html",
+			"authors": [{ "name": "John Gruber" }],
+			"content_html": "Dan Primack, reporting for Axios: Elon Musk on Thursday disclosed in a federal securities filing that he doesn’t yet have any equity partners on his takeover bid for Twitter, but said that he has secured billions of dollars worth of loan commitments from Morgan Stanley. Musk committed to invest up to $21 billion of his own money, although this wouldn’t preclude him from cutting back on that amount by bringing on equity partners at a later date. He also said he has $13 billion in committed debt financing from Morgan Stanley and $12.5 billion of margin loan commitments from Morgan Stanley. Link: https://www.axios.com/elon-musk-twitter-funding-d0a9c8e1-9c75-4dc9-948c-4618588450ca.html"
+		},
+		{
+			"title": "Elon Musk Makes Play to Buy Twitter Entirely and Take It Private",
+			"date_published": "2022-04-15T00:15:48Z",
+			"date_modified": "2022-04-15T00:15:48Z",
+			"id": "https://daringfireball.net/linked/2022/04/14/musk-twitter-private",
+			"url": "https://daringfireball.net/linked/2022/04/14/musk-twitter-private",
+			"external_url": "https://www.sec.gov/Archives/edgar/data/1418091/000110465922045641/tm2212748d1_sc13da.htm#ex-b_001",
+			"authors": [{ "name": "John Gruber" }],
+			"content_html": "Elon Musk, in a letter to Twitter chairman Bret Taylor and filed with the SEC: I invested in Twitter as I believe in its potential to be the platform for free speech around the globe, and I believe free speech is a societal imperative for a functioning democracy. However, since making my investment I now realize the company will neither thrive nor serve this societal imperative in its current form. Twitter needs to be transformed as a private company. As a result, I am offering to buy 100% of Twitter for $54.20 per\nshare in cash, a 54% premium over the day before I began investing in Twitter and a 38% premium over the day before my investment was publicly announced. My offer is my best and final offer and if it is not accepted, I would need to reconsider my position as a shareholder.Twitter has extraordinary potential. I will unlock it. Also from that SEC filing, these bullet points from Musk:</p>\n\n<ul>\n<li>I am not playing the back-and-forth game.</li>\n<li>I have moved straight to the end.</li>\n<li>It’s a high price and your shareholders will love it. If the deal doesn’t work, given that I don’t have confidence in management nor do I believe I can drive the necessary change in the public market, I would need to reconsider my position as a shareholder. This is not a threat, it’s simply not a good investment without the changes that need to be made. And those changes won’t happen without taking the company private. Musk can say it’s not a threat, but what he means is that it’s not merely a threat. If Musk pulls out of Twitter I think Twitter’s share price will, at least temporarily, sink. Link: https://www.sec.gov/Archives/edgar/data/1418091/000110465922045641/tm2212748d1_sc13da.htm"
+		},
+		{
+			"title": "Elon Musk’s Twitter Board Seat: Never Mind",
+			"date_published": "2022-04-11T17:19:14Z",
+			"date_modified": "2022-04-11T22:40:24Z",
+			"id": "https://daringfireball.net/linked/2022/04/11/musk-twitter-board-seat",
+			"url": "https://daringfireball.net/linked/2022/04/11/musk-twitter-board-seat",
+			"external_url": "https://twitter.com/paraga/status/1513354622466867201",
+			"authors": [{ "name": "John Gruber" }],
+			"content_html": "Twitter CEO Parag Agrawal, in a tweet: Elon has decided not to join our board. I sent a brief note to the company, sharing with you all here. The first thing I’ll note is that Agrawal had to share the “brief note” itself as a screenshot, because, well, Twitter only supports up to 280 characters in a post. Duh, right? We all know that. But it’s really kind of silly when you consider that even Twitter’s own CEO, sharing important breaking news, has to use screenshots to share even a “brief note”. (The seemingly obvious solution would be to allow users to include a text attachment to a tweet, the same way we’ve been able to attach images and videos for years.) From the note: We announced on Tuesday that Elon would be appointed to the Board contingent on a background check and formal acceptance. Elon’s appointment to the board was to become officially effective 4/9, but Elon shared that same morning that he will no longer be joining the board. Is the “background check” relevant here? Like, did something turn up in the background check that Twitter deemed problematic? The simple explanation is that Musk simply realized that he could have freer rein — and thus more fun, and more influence not on the board than on it. But why mention the background check at all here then? Just as a jab a not-so-subtle dig? I believe this is for the best. We have and will always value input from our shareholders whether they are on our Board or not. Elon is our biggest shareholder and we will remain open to his input. There will be distractions ahead, but our goals and priorities remain unchanged. Translation: We are largely beholden to Elon Musk now, as our stock price is inextricably tied to his continuing shareholding. I mean what happens to Twitter’s share price if Musk dumps all his stock and tweets something like “I tried to help Twitter but the company is run by a bunch of bozos. I’m out.” That’s just 76 characters and I bet it would tank Twitter’s stock. Link: https://twitter.com/paraga/status/1513354622466867201"
+		},
+		{
+			"title": "Matt Levine on Elon Musk",
+			"date_published": "2022-04-10T17:59:43Z",
+			"date_modified": "2022-04-10T18:02:13Z",
+			"id": "https://daringfireball.net/linked/2022/04/10/levine-musk-twitter",
+			"url": "https://daringfireball.net/linked/2022/04/10/levine-musk-twitter",
+			"external_url": "https://www.bloomberg.com/opinion/articles/2022-04-04/elon-musk-bought-some-twitter",
+			"authors": [{ "name": "John Gruber" }],
+			"content_html": "Matt Levine, in his Money Stuff column for Bloomberg: Look this all makes complete sense, obvious, intuitive, simple sense. If you are the richest person in the world, and annoying, and you constantly play a computer game, and you get a lot of enjoyment and a sense of identity from that game and are maybe a little addicted, then at some point you might have some suggestions for improvements in the game. So you might leave comments and email the company that makes the game saying “hey you should try my ideas.” And the company might ignore you (or respond politely but not move fast enough for your liking). It might occur to you: “Look, I am the richest person in the world; how much could this game company possibly cost? I should just buy it and change the game however I want.” Even if your complaints are quite minor, why shouldn’t you get to play exactly the game you want? Even if you have no complaints, why not own the game you love, just to make sure it continues to be exactly what you want? The game is Twitter, the richest person in the world is Elon Musk. I don’t think anyone in the media gets Elon Musk the way Matt Levine does. Link: https://www.bloomberg.com/opinion/articles/2022-04-04/elon-musk-bought-some-twitter"
+		},
+		{
+			"title": "Elon Musk Buys 9.2 Percent of Twitter, Making Him the Largest Shareholder",
+			"date_published": "2022-04-05T15:47:02Z",
+			"date_modified": "2022-04-05T19:01:50Z",
+			"id": "https://daringfireball.net/linked/2022/04/05/musk-twitter",
+			"url": "https://daringfireball.net/linked/2022/04/05/musk-twitter",
+			"external_url": "https://www.cnn.com/2022/04/04/investing/elon-musk-twitter-shares-stake/index.html",
+			"authors": [{ "name": "John Gruber" }],
+			"content_html": "Chris Isidore, CNN Business: Elon Musk recently purchased 9.2% of Twitter stock, according to a filing Monday, making him the largest shareholder in the company. News of the purchase sent shares of Twitter soaring 22% in early trading. Musk did not disclose what he paid for the shares, but\nhis stake was worth $2.9 billion as of the close of trading Friday, and $3.5 billion after the spike early Monday. He does keep things interesting. UPDATE: Musk is now on Twitter’s board of directors. As a friend quipped, imagine how bad it would be if Trump were actually a billionaire. Link: https://www.cnn.com/2022/04/04/investing/elon-musk-twitter-shares-stake/index.html"
+		}
+	]
 }
