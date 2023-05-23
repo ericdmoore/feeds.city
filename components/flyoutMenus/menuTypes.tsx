@@ -1,5 +1,5 @@
 import type { JSX } from "preact";
-import type { Icon } from "../../types.ts";
+import type { Icon } from "../../lib/types.ts";
 
 export interface Openable {
 	open: boolean;
