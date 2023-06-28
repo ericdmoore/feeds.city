@@ -6,6 +6,7 @@
 		"$lib/": "./lib/",
 		"$static/": "./static/",
 		"$std/": "https://deno.land/std@0.181.0/",
+		"$routes/": "./routes/",
 
 		"@aws-sdk/client-dynamodb/": "https://esm.sh/@aws-sdk/client-dynamodb@3.200.0?deno-std=0.181.0/",
 		"@aws-sdk/client-dynamodb": "https://esm.sh/@aws-sdk/client-dynamodb@3.200.0?deno-std=0.181.0?dts",

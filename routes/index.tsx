@@ -41,6 +41,49 @@ interface HomeProps {
 	exp: number;
 }
 
+
+interface AirtableSideEffectRequestBase{
+	apiToken: string
+	baseId: string
+	tableName: string
+}
+
+interface AirtableSideEffectRequestDataInput{
+	email: string
+	status: string
+}
+
+interface AirtableSideEffectResponse{
+	id: string;
+	createdTime?: string;
+}
+
+const airtableSideEffect = async (client:AirtableSideEffectRequestBase, input: AirtableSideEffectRequestDataInput): Promise<AirtableSideEffectResponse> => {
+	
+	
+	const airtable = new Airtable({
+		// apiToken: client.apiToken,
+		baseId: client.baseId,
+		tableName: client.tableName,
+	});
+
+	const doesAlreadyExist = await airtable.select({
+		maxRecords: 1,
+		pageSize: 1,
+		fields: ["Email", "Status"],
+		filterByFormula: `{Email}="${input.email}"`,
+	}).catch((er) => {
+		console.error(">>>", er);
+		return { er, records: [] as { id: string; [key: string]: string }[] };
+	});
+
+	const id = !("er" in doesAlreadyExist) && doesAlreadyExist?.records.length === 0
+		? (await airtable.create({ Email: input.email, Status: input.status })).id
+		: doesAlreadyExist?.records[0].id ?? "id_FOUND_ERROR_INSTEAD";
+
+	return {id};
+}
+
 export default function Home(props: PageProps<Partial<HomeProps>>) {
 	return (
 		<>
@@ -247,14 +290,19 @@ export const handler: Handlers = {
 			const { payload } = await v1tok.parse(token);
 
 			if (await v1tok.validate(token) && await v1tok.verify(token)) {
-				const [apiKey, baseId, tableName] = await Promise.all([
-					Deno.env.get("AIRTABLE_KEY"),
-					Deno.env.get("AIRTABLE_BASE"),
-					Deno.env.get("AIRTABLE_TABLE"),
+				
+				const [apiToken, baseId, tableName] = await Promise.all([
+					Deno.env.get("AIRTABLE_TOKEN") ?? 'MISSING',
+					Deno.env.get("AIRTABLE_BASE") ?? 'MISSING',
+					Deno.env.get("AIRTABLE_TABLE") ?? 'MISSING',
 				]);
+
+				await airtableSideEffect({apiToken, baseId, tableName}, {email:'', status: ''})
+				
+				
 				const airtable = new Airtable({
 					useEnv: false,
-					apiKey,
+					// apiKey,
 					baseId,
 					tableName,
 				});

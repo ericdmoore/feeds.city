@@ -11,10 +11,9 @@ import dotSet from "lodash.set";
 import dotMerge from "lodash.merge";
 
 import { Status } from "$std/http/http_status.ts";
-
+import type { Either } from '$lib/types.ts';
 import {
 	defaultedOptions,
-	type Either,
 	type FuncInterface,
 	type FuncInterface_Param,
 	FunctionBuilderParamInputs,
