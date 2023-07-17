@@ -1,17 +1,17 @@
 import {
 	decode as hexDecode,
 	encode as hexEncode,
-} from "https://deno.land/std@0.181.0/encoding/hex.ts";
+} from "$std/encoding/hex.ts";
 
 import {
 	decode as b64Decode,
 	encode as b64Encode,
-} from "https://deno.land/std@0.181.0/encoding/base64.ts";
+} from "$std/encoding/base64.ts";
 
 import {
 	decode as b64urlDecode,
 	encode as b64urlEncode,
-} from "https://deno.land/std@0.181.0/encoding/base64url.ts";
+} from "$std/encoding/base64url.ts";
 
 export type EncodingFormatOptions = "hex" | "base64" | "base64url" | "utf8";
 
