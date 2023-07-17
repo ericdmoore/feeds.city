@@ -6,17 +6,20 @@ import exampleKeys from "./helpers/jwKeys.example.ts";
 
 import { assert, assertEquals, assertObjectMatch } from "$std/testing/asserts.ts";
 
+import type {
+	FuncInterface,
+	FunctionParsingOptions,
+	FunctionPathBuilderInputDict,
+	ParamTree,
+} from "$lib/parsers/enhancementFunctions.ts";
+
 import {
 	defaultedOptions,
 	flattenParamTree,
-	type FuncInterface,
-	type FunctionParsingOptions,
-	type FunctionPathBuilderInputDict,
 	functions,
 	legends,
 	paramElement,
 	params,
-	type ParamTree,
 	// nestDottedTree
 } from "$lib/parsers/enhancementFunctions.ts";
 
@@ -114,7 +117,7 @@ Deno.test("SA decodeParams", async () => {
 Deno.test("SBA encode decode", async () => {
 	const encSBA = await paramElement.stringify("sba")(hipsteripsum);
 	if (encSBA.left) {
-		console.error(encSBA.left);
+		// console.error(encSBA.left);
 		assert(!encSBA.left);
 	} else {
 		assert(
@@ -350,7 +353,7 @@ Deno.test("Pass In Encrypted params", async () => {
 
 	const fStr = await functions.stringify(config)(data);
 	assert(fStr.right && !fStr.left);
-	fStr.left && console.log("fStr: ", fStr);
+	// fStr.left && console.log("fStr: ", fStr);
 });
 
 Deno.test("Encrypted Serialization is bijective", async () => {
@@ -384,10 +387,10 @@ Deno.test("Encrypted Serialization is bijective", async () => {
 	const paramStr = await params.stringify(config)(data);
 	assert(paramStr.right && !paramStr.left);
 	assert(typeof paramStr.right === "string");
-	paramStr.left && console.log("params: ", paramStr);
+	// paramStr.left && console.log("params: ", paramStr);
 
 	const d = await params.parse(config)(paramStr.right);
-	console.log("d: ", d);
+	// console.log("d: ", d);
 	assert(d.right);
 	assertEquals(d.right, data); // input to ENCRYPTED LAND and back again, and it's the same
 });

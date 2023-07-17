@@ -257,7 +257,7 @@ export const addError = (
 	msg: Omit<ISCIPAB, "msgType">,
 	existingMsgs: ReturnedMessages = { errors: [], warnings: [] },
 ) => {
-	console.log("addError", { msg, existingMsgs });
+	// console.log("addError", { msg, existingMsgs });
 	return {
 		warnings: existingMsgs.warnings,
 		errors: existingMsgs.errors.concat([{ msgType: "error", ...msg }]),
@@ -624,12 +624,12 @@ const runEverything = async (
 			{ errors: [], warnings: [] } as ReturnedMessages,
 		);
 
-	console.log(357, "runEverything: ", {
-		eitherModuleOrMessgage,
-		enhancementsModules,
-		errMessages,
-		ast,
-	});
+	// console.log(357, "runEverything: ", {
+	// 	eitherModuleOrMessgage,
+	// 	enhancementsModules,
+	// 	errMessages,
+	// 	ast,
+	// });
 
 	// console.log(370, "AST + Modules Loaded", ast, enhancementsModules.length);
 
@@ -666,7 +666,7 @@ const runEverything = async (
 		if (isLeft(ast)) {
 			return Left(mergeMessages(ast.left, errMessages));
 		} else {
-			console.log(395, "Exporting w/ Messages", { ast, errMessages });
+			// console.log(395, "Exporting w/ Messages", { ast, errMessages });
 
 			return exporting(
 				state.exportingAST.fn,

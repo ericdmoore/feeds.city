@@ -1,4 +1,4 @@
-//# region interfaces
+//#region interfaces
 export interface AirtableState {
 	baseURL: string;
 	apiToken: string;
@@ -12,7 +12,7 @@ export interface MiddleLayerReturns<T> {
 	json: () => Promise<T>;
 }
 export type SortOptions = string | { field: string; direction?: "asc" | "desc" };
-export type toStringForQueryValues = (data: unknown) => string;
+export type toStringForQueryValues = (key:string, data: unknown) => [string, string][];
 export interface Stringable {
 	toString: () => string;
 }
@@ -89,7 +89,7 @@ export interface UpdateMethodResponse {
 	createdRecords: string[];
 }
 
-//# endregion interfaces
+//#endregion interfaces
 
 const makeReturnable = <T>(state: AirtableState, req: Request) => {
 	req.headers.set("Authorization", `Bearer ${state.apiToken}`);
@@ -109,29 +109,33 @@ const makeReturnable = <T>(state: AirtableState, req: Request) => {
 const intergratateQuerryParams = (
 	url: URL,
 	params: Record<string, unknown>,
-	mapOfOverideRules: Record<string, (data: unknown) => string> = {},
+	mapOfOverideRules: Record<string, (key:string, data: unknown) => [string, string][]> = {},
 ): URL => {
 	return Object.entries(params).reduce((url, [key, val]) => {
 		key in mapOfOverideRules
-			? url.searchParams.set(key, mapOfOverideRules[key](val))
+			? mapOfOverideRules[key](key, val).map(([newkey, newVal]) => url.searchParams.set(newkey, newVal))
 			: typeof val === "string"
-			? url.searchParams.set(key, val)
-			: url.searchParams.set(key, (val as Stringable).toString());
+				? url.searchParams.set(key, val)
+				: url.searchParams.set(key, (val as Stringable).toString());
 		// console.log([...url.searchParams.entries()])
 		return url;
 	}, new URL(url.href));
 };
 
-const overrideSortOptions = ((val: SortOptions[]) => {
-	const sortString = (val as SortOptions[]).map((v, i) => {
-		if (typeof v === "string") {
-			return `sort[${i}][field]=${v}`;
-		} else {
-			return `sort[${i}][field]=${v.field}&sort[${i}][direction]=${v.direction || "asc"}`;
-		}
-	}).join("&");
-	return sortString;
-}) as toStringForQueryValues;
+const overrideSortOptions = (_key:string, val: unknown) => {
+	return (val as SortOptions[]).reduce((acc, v, i) => {
+		return typeof v === "string"
+			?  [...acc, 
+				[`sort[${i}][field]`, v] as [string, string],
+				[`sort[${i}][direction]`, "asc"] as [string, string]
+			]
+			:  [...acc,
+				[`sort[${i}][field]`, v.field] as [string, string],
+				[`sort[${i}][direction]`, v.direction || "asc"] as [string, string]
+			];
+		},[] as [string, string][]
+	)
+}
 
 export type ezStarer = { "AND_": ezObject } | { "OR_": ezObject };
 export type ezElement = { [key: string]: string | number | boolean };
@@ -139,8 +143,8 @@ export type ezObject = ezElement | ezStarer;
 export const OR = (val: ezObject): ezStarer => ({ OR_: val });
 export const AND = (val: ezObject): ezStarer => ({ AND_: val });
 
-const ANDoperator = (val: string) => `AND(${val})`;
-const ORoperator = (val: string) => `OR(${val})`;
+const ANDoperator = (val: string) => `AND(${val})`
+const ORoperator = (val: string) => `OR(${val})`
 
 const isSpecialKey = (key: string): { opr: string | false; key: string } => {
 	if (key.endsWith(">=")) return { opr: ">=", key: key.slice(0, -2) };
@@ -162,7 +166,7 @@ export const _handleRecords = (obj: ezObject, init = ""): string => {
 	}).join(",");
 };
 
-export const _handleNestedRecords = (obj: ezStarer, init = ""): string => {
+export const _handleNestedRecords = (obj: ezStarer, init = "") => {
 	// console.log('nest', {init, obj})
 	return Object.entries(obj)
 		.reduce((acc, [key, objVal]) => {
@@ -173,9 +177,11 @@ export const _handleNestedRecords = (obj: ezStarer, init = ""): string => {
 		}, init);
 };
 
-const overrideFilterByFormula = ((val: string | ezStarer) => {
+const overrideFilterByFormula = ((_key:string, val: string | ezStarer) => {
 	// console.log('overrideFilterByFormula', typeof val, val)
-	return typeof val === "string" ? val : _handleNestedRecords(val as ezStarer);
+	return typeof val === "string" 
+		? [['filterByFormula', val]]
+		: [['filterByFormula', _handleNestedRecords(val as ezStarer)]];
 }) as toStringForQueryValues;
 
 const listMethod =

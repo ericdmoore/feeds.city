@@ -1,27 +1,30 @@
+//#region interfaces
 // import { skip, only } from "../helpers.ts";
 
-import { assert, assertEquals, assertNotEquals, assertRejects } from "$std/testing/asserts.ts";
-
 import { StringReader } from "$std/io/mod.ts";
+import { assert, assertEquals, assertNotEquals, assertRejects } from "$std/testing/asserts.ts";
 import { readableStreamFromReader } from "$std/streams/mod.ts";
 import { readToString, streamToString } from "$lib/utils/pumpReader.ts";
 
 import {
-	cacheOurBreadcrumbs,
+	makeKey,
+	textToVoice,
 	haveEverStarted,
 	isMediaFinished,
-	makeKey,
-	// splitBucketItemURL,
+	cacheOurBreadcrumbs,
 	splitSynthTaskResponse,
-	textToVoice,
+	// splitBucketItemURL,
 } from "$lib/enhancements/addVoice2text/addVoice2text.ts";
 
-import { type SynthesisTaskConfig, type SynthesisTaskIdentifiers } from "$lib/clients/aws-polly.ts";
+import type { 
+	SynthesisTaskConfig, 
+	SynthesisTaskIdentifiers 
+} from "$lib/clients/aws-polly.ts";
 
 import {
 	type ASTcomputable,
-	ASTFeedItemJson,
 	type ASTjson,
+	ASTFeedItemJson,
 	ASTKindJson,
 	computableToJson,
 	rezVal,
@@ -29,16 +32,17 @@ import {
 
 import { urlToAST } from "$lib/start.ts";
 import { s3Mock } from "../mocks/s3/s3Mock.ts";
-
 import { jsonFeed, jsonFeedUrl } from "../mocks/jsonFeed/daringFireball.elon.ts";
 
-import mkEnvVar from "$lib/utils/vars.ts";
 import { S3Client } from "https://esm.sh/@aws-sdk/client-s3@3.329.0?deno-std=0.172.0&dts";
+import mkEnvVar from "$lib/utils/vars.ts";
 
 type AST = ASTjson | ASTcomputable;
 type ASTItem = typeof ASTFeedItemJson.TYPE;
 type ASTItemAssertion = (item: ASTItem) => Promise<void>;
 type ASTAllAssertion = (item: AST) => Promise<void>;
+
+//#endregion interfaces
 
 console.warn("WARNING: This Test Runs Against Production Resources");
 
@@ -46,17 +50,17 @@ const _encoder = new TextEncoder();
 const _s3stateGlobal = new Map<string, Uint8Array>();
 
 const cfg = async () => {
-	const envs = await mkEnvVar("MISSING-KEY-VALUE");
+	const env = await mkEnvVar("MISSING-KEY-VALUE");
 	return {
 		aws: {
-			key: envs("AWS_KEY"),
-			secret: envs("AWS_SECRET"),
-			region: envs("REGION"),
+			key: env("AWS_KEY"),
+			secret: env("AWS_SECRET"),
+			region: env("REGION"),
 		},
 		config: {
 			s3: {
-				bucket: envs("POLLYBUCKET"),
-				prefix: envs("POLLYPREFIX"),
+				bucket: env("POLLYBUCKET"),
+				prefix: env("POLLYPREFIX"),
 			},
 		},
 	};
@@ -448,5 +452,4 @@ Deno.test("isMediaFinished is now complete", async () => {
 });
 
 // Deno.test(skip("example", async () => {}));
-
 // WAIT FOR the s3 resources to show ... then delete

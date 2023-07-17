@@ -1,4 +1,9 @@
-import { assert, assertEquals, assertRejects } from "$std/testing/asserts.ts";
+import { 
+	assert, 
+	assertEquals, 
+	assertRejects 
+} from "$std/testing/asserts.ts";
+
 import {
 	addError,
 	addWarning,
@@ -11,7 +16,6 @@ import {
 } from "$lib/parsers/index.ts";
 
 import { functions } from "$lib/parsers/enhancementFunctions.ts";
-
 import { jsonFeed as dfjsf } from "../mocks/jsonFeed/daringFireball.ts";
 import { fn as addHashEnhancement } from "$lib/enhancements/addHash/run.ts";
 
@@ -96,7 +100,7 @@ Deno.test("Merge Messages", () => {
 		from: "1",
 		loc: "A",
 	});
-	console.log("retMsg1", retMsg1);
+	// console.log("retMsg1", retMsg1);
 
 	const retMsg2 = addError({
 		situation: "2",
@@ -107,7 +111,7 @@ Deno.test("Merge Messages", () => {
 		from: "2",
 		loc: "A",
 	});
-	console.log("retMsg2", retMsg2);
+	// console.log("retMsg2", retMsg2);
 
 	const retMsg3 = addWarning({
 		situation: "3",
@@ -118,7 +122,7 @@ Deno.test("Merge Messages", () => {
 		from: "3",
 		loc: "A",
 	});
-	console.log("retMsg3", retMsg3);
+	// console.log("retMsg3", retMsg3);
 
 	const mergedAllActual = mergeMessages(
 		mergeMessages(retMsg1, retMsg2),
@@ -162,7 +166,7 @@ Deno.test("Merge Messages", () => {
 		],
 	} as ReturnedMessages;
 
-	console.log({ mergedAllActual, expected });
+	// console.log({ mergedAllActual, expected });
 	assertEquals(mergedAllActual, expected);
 });
 
@@ -171,12 +175,12 @@ Deno.test("Local Adaapted Enhancement", async () => {
 		.fromString(daringFireball.txt, daringFireball.url)
 		.use(addHashEnhancement)
 		.toJsonFeed({ exportingParam: null })
-		.catch((er) => {
-			console.error("er caught:: ", er);
+		.catch((_er) => {
+			// console.error("er caught:: ", er);
 			return null;
 		});
 
-	resp && console.log(Object.keys(resp));
+	// resp && console.log(Object.keys(resp));
 
 	if (resp) {
 		assert(resp.string, "string version of the AST must be in the response");
@@ -284,13 +288,13 @@ Deno.test("Fetch the original jsonfeed", async () => {
 	const resp = await loadFeed()
 		.fromURL("https://www.jsonfeed.org/feed.json")
 		.toCity()
-		.catch((er) => {
-			console.error("er caught:: ", er);
+		.catch((_er) => {
+			// console.error("er caught:: ", er);
 			return null;
 		});
 
 	if (resp) {
-		console.log("resp.ast:: ", resp.ast);
+		// console.log("resp.ast:: ", resp.ast);
 		assert(resp);
 		assert(resp.ast);
 	} else {
@@ -340,7 +344,7 @@ Deno.test("USE call with URL", async () => {
 		.toJsonFeed();
 
 	if (resp) {
-		console.log(resp);
+		// console.log(resp);
 		assert(resp);
 	} else {
 		assert(
@@ -393,7 +397,7 @@ Deno.test("Using a Parsed Composition", async () => {
 		assert(typeof params === "object");
 	});
 
-	console.log(400, "pipeline test", "parsedComposition:", parsedComposition.right);
+	// console.log(400, "pipeline test", "parsedComposition:", parsedComposition.right);
 
 	const resp = await loadFeed({ params: { defaultModuleLoaderMap: modulelMapper } })
 		.fromString(dfjsf, jsonFeedURL)
@@ -401,10 +405,10 @@ Deno.test("Using a Parsed Composition", async () => {
 		.withFunctionAccess(modulelMapper)
 		.toJsonFeed();
 
-	console.log({ resp });
+	// console.log({ resp });
 
 	if (resp) {
-		console.log(resp);
+		// console.log(resp);
 		assert(resp);
 		assert(resp.ast);
 		assert("messages" in resp);

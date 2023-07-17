@@ -8,18 +8,18 @@ import { atom as dhhAtom } from "../mocks/atom/dhh_hey.ts";
 Deno.test(skip(
 	"Atom -> AST -> Atom",
 	async () => {
-		console.log();
+		// console.log();
 		const fakeUrl = "http://world.hey.com/dhh/atom.xml";
 
 		const a1 = await parseAndValidate({ url: fakeUrl, txt: dhhAtom });
 		const ast = await Atom(a1, fakeUrl).toAST();
-		console.log("ast:", ast);
+		// console.log("ast:", ast);
 
 		const astJson = await computableToJson(ast);
-		console.log("astJson:", astJson);
+		// console.log("astJson:", astJson);
 
 		const a2 = await Atom<RespStruct>({}, fakeUrl).fromAST(astJson);
-		console.log("a2:", a2);
+		// console.log("a2:", a2);
 
 		assertEquals(a1.data, a2);
 	},
