@@ -24,7 +24,7 @@ export const handler: Handler = async (req, ctx) => {
 			},
 		});
 	} else {
-		const loaded = loadFeed({params:{}}).fromURL(url).using(parsed.right);
+		const loaded = loadFeed({ params: {} }).fromURL(url).using(parsed.right);
 
 		let r: EnhanceFeed;
 		switch (outputType) {

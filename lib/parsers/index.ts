@@ -3,7 +3,10 @@
  */
 
 import { startFromURL, urlToAST } from "$lib/start.ts";
-import type { FuncInterface_Param, FunctionBuilderParamInputs } from "$lib/parsers/enhancementFunctions.ts";
+import type {
+	FuncInterface_Param,
+	FunctionBuilderParamInputs,
+} from "$lib/parsers/enhancementFunctions.ts";
 import type { Either as EITHER, Left as LEFT, PromiseOr, Right as RIGHT } from "$lib/types.ts";
 
 import { Either, isLeft, isRight, Left, Right } from "$lib/types.ts";
@@ -73,7 +76,11 @@ type ParameterizedFn<EFn> = {
 	// moduleLoader: never;
 };
 
-type EnhancementFunctionInputUnion = FuncInterface_Param | ParameterizedFn<UnResolvedEnhacement> | LoadableModule | ResolvedEnhacementFn;
+type EnhancementFunctionInputUnion =
+	| FuncInterface_Param
+	| ParameterizedFn<UnResolvedEnhacement>
+	| LoadableModule
+	| ResolvedEnhacementFn;
 
 export type LoadableModule = {
 	fn: ExternalSystemAlias;
@@ -87,7 +94,7 @@ type IEnhancementLoaderFn = (
 	data?: JsonObject,
 ) => Promise<EITHER<ParameterizedFn<ResolvedEnhacementFn>, ReturnedMessages>>;
 
-type IEnhancementLoaderUnion = { [alias: string]: ResolvedEnhacementFn } | IEnhancementLoaderFn ;
+type IEnhancementLoaderUnion = { [alias: string]: ResolvedEnhacementFn } | IEnhancementLoaderFn;
 
 export interface PipelineState {
 	sourceURL?: string;
@@ -97,7 +104,7 @@ export interface PipelineState {
 	exportingAST: { fn: IFeedExportingFn; params: unknown };
 	enhancements: {
 		// add a nice loader in here for default
-		loaderFunctions: Record<string, IEnhancementLoaderFn[]>
+		loaderFunctions: Record<string, IEnhancementLoaderFn[]>;
 		// bare specifiers -> map; /
 		// http specifiers -> fetch()
 		// s3 specifiers -> s3 client
@@ -131,8 +138,11 @@ interface IExporters {
 }
 
 interface IMiddlwares {
-	use: ( enhancementFn: string | EnhancementFunctionInputUnion, params?: unknown) => IMiddlwares & IExporters;
-	using: ( enhancementFnArr: EnhancementFunctionInputUnion[]) => IMiddlwares & IExporters;
+	use: (
+		enhancementFn: string | EnhancementFunctionInputUnion,
+		params?: unknown,
+	) => IMiddlwares & IExporters;
+	using: (enhancementFnArr: EnhancementFunctionInputUnion[]) => IMiddlwares & IExporters;
 	withFunctionAccess: (input: IEnhancementLoaderUnion) => IMiddlwares & IExporters;
 	data: (dataToAdd: JsonObject) => IMiddlwares & IExporters;
 	config: (configOpt: JsonObject) => IMiddlwares & IExporters;
@@ -144,38 +154,39 @@ interface ILoaders {
 	fromString: (string: string, url?: string) => IMiddlwares & IExporters;
 	fromCustomLoader: (loaderFn: IFeedLoaderFn) => IMiddlwares & IExporters;
 	withFunctionAccess: (input: IEnhancementLoaderUnion) => IMiddlwares & IExporters;
-	use: ( enhancementFn: string | EnhancementFunctionInputUnion, params?: unknown) => IMiddlwares & IExporters;
-	using: ( enhancementFnArr: EnhancementFunctionInputUnion[]) => IMiddlwares & IExporters;
+	use: (
+		enhancementFn: string | EnhancementFunctionInputUnion,
+		params?: unknown,
+	) => IMiddlwares & IExporters;
+	using: (enhancementFnArr: EnhancementFunctionInputUnion[]) => IMiddlwares & IExporters;
 }
 
-
-
-interface Specifer_URL{
-	kind: 'url',
+interface Specifer_URL {
+	kind: "url";
 	raw: {
-		specifier: string
-		params: unknown
-	}
-	parsed:{
-		specifier: string
-		params: JsonObject
-		url: URL
-	}
+		specifier: string;
+		params: unknown;
+	};
+	parsed: {
+		specifier: string;
+		params: JsonObject;
+		url: URL;
+	};
 }
 
-interface Specifer_Bare{
-	kind: 'bare',
+interface Specifer_Bare {
+	kind: "bare";
 	raw: {
-		specifier: string
-		params: unknown
-	}
-	parsed:{
-		specifier: string
-		params: unknown
-	}
+		specifier: string;
+		params: unknown;
+	};
+	parsed: {
+		specifier: string;
+		params: unknown;
+	};
 }
 
-type SpecifierUnion = Specifer_URL |  Specifer_Bare 
+type SpecifierUnion = Specifer_URL | Specifer_Bare;
 type PromisedPotentiallyLoadedEnhancement = Promise<
 	EITHER<ParameterizedFn<ResolvedEnhacementFn>, ReturnedMessages>
 >;
@@ -227,7 +238,7 @@ export const defaultState = (
 		},
 		enhancements: {
 			enhancementMap: Object.freeze(initEnhancementMap),
-			loaderFunctions: {'*': [initModuleLoaderFn]},
+			loaderFunctions: { "*": [initModuleLoaderFn] },
 			input: [] as (ParameterizedFn<UnResolvedEnhacement> | LoadableModule)[],
 			resolved: [] as ParameterizedFn<ResolvedEnhacementFn>[],
 		},
@@ -237,22 +248,21 @@ export const addWarning = (
 	msg: Omit<ISCIPAB, "msgType">,
 	existingMsgs: ReturnedMessages = { errors: [], warnings: [] },
 ) =>
-	({	errors: existingMsgs.errors,
+	({
+		errors: existingMsgs.errors,
 		warnings: existingMsgs.warnings.concat([{ ...msg, msgType: "warning" }]),
 	}) as ReturnedMessages;
 
 export const addError = (
 	msg: Omit<ISCIPAB, "msgType">,
 	existingMsgs: ReturnedMessages = { errors: [], warnings: [] },
-) =>{
-
-	console.log('addError', { msg, existingMsgs })
-	return {	warnings: existingMsgs.warnings,
-		errors: existingMsgs.errors.concat([{ msgType: "error", ...msg, }]) ,
+) => {
+	console.log("addError", { msg, existingMsgs });
+	return {
+		warnings: existingMsgs.warnings,
+		errors: existingMsgs.errors.concat([{ msgType: "error", ...msg }]),
 	} as ReturnedMessages;
-}
-
-	
+};
 
 export const mergeMessages = (
 	a: ReturnedMessages,
@@ -265,14 +275,15 @@ export const mergeMessages = (
 export const enhancementAdapter = (astChainFn: ASTChainFunc) => {
 	// console.log(175, 'Adapter INIT ', {astChainFn})
 
-	return ((i: unknown) => ( 
+	return ((i: unknown) =>
+	(
 		ast: PromiseOr<AST>,
 		_data?: JsonObject,
-		messages: ReturnedMessages = {warnings:[], errors:[]}
+		messages: ReturnedMessages = { warnings: [], errors: [] },
 	) => {
 		// console.log(183, {ast, data, messages})
 
-		const errorBody = (e:unknown)=>({
+		const errorBody = (e: unknown) => ({
 			from: `From the enhancementAdapter working on AST-Chain-Fn: ${astChainFn.name}`,
 			loc: `${e}`,
 			action: "Moving On",
@@ -280,14 +291,14 @@ export const enhancementAdapter = (astChainFn: ASTChainFunc) => {
 			complication: "the funciton failed to perform its task",
 			implication: "Zero changes to the feed from this function",
 			benefit: "Hopefully get functions will run",
-		})
+		});
 
 		return astChainFn(i)(ast)
 			.then(async (d) => Right(await computableToJson(d)))
-			.catch((e) =>{
-				console.warn('Error Thrown from the adapted AST Chain Func', {e, messages})
-				return Left(addError(errorBody(e), messages))
-			})
+			.catch((e) => {
+				console.warn("Error Thrown from the adapted AST Chain Func", { e, messages });
+				return Left(addError(errorBody(e), messages));
+			});
 	}) as ResolvedEnhacementFn;
 };
 
@@ -390,10 +401,9 @@ const enhancementResolver: IEnhancementLoaderFn = async (
 };
 // Promise<EITHER<ResolvedEnhacementFn, ReturnedMessages>>
 
-
-const attemptToLoadModuleWithLoaders = (loaders: IEnhancementLoaderFn[], config: Record<string, unknown>, data?: JsonObject) =>
+const attemptToLoadModuleWithLoaders =
+	(loaders: IEnhancementLoaderFn[], config: Record<string, unknown>, data?: JsonObject) =>
 	async (moduleToAttempt: FuncInterface_Param): PromisedPotentiallyLoadedEnhancement => {
-		
 		const startingError = Either<ParameterizedFn<ResolvedEnhacementFn>, ReturnedMessages>(
 			Left(addError({
 				from: "attemptToLoadModuleWithLoaders",
@@ -408,7 +418,7 @@ const attemptToLoadModuleWithLoaders = (loaders: IEnhancementLoaderFn[], config:
 
 		const { fname, params } = moduleToAttempt;
 		let maybeLoaded = Promise.resolve(startingError);
-		
+
 		for (const thisLoaderFn of loaders) {
 			const maybeMod = await maybeLoaded;
 			if (isRight(maybeMod)) {
@@ -422,88 +432,113 @@ const attemptToLoadModuleWithLoaders = (loaders: IEnhancementLoaderFn[], config:
 		return maybeLoaded;
 	};
 
+const resolveFuncInterfaceParam = async (
+	state: PipelineState,
+	input: FuncInterface_Param,
+): PromisedPotentiallyLoadedEnhancement => {
+	const { fname, params } = input;
+	const specifier = await parseSpecifier(fname, params);
 
-const resolveFuncInterfaceParam = async (state: PipelineState, input: FuncInterface_Param): PromisedPotentiallyLoadedEnhancement => {
-	
-	const {fname, params} = input
-	const specifier = await parseSpecifier(fname, params)
-				
-	if(specifier.kind === 'bare'){
-		return fname in state.enhancements.enhancementMap 
-		? Right({
-			fn: state.enhancements.enhancementMap[fname],
-			params: params,
-		})
-		: attemptToLoadModuleWithLoaders([
-			...state.enhancements.loaderFunctions[fname],
-			...(state.enhancements.loaderFunctions['*'] ?? []) 
-		] , state.config, state.data)(input)
-	}else{
-		return fname in state.enhancements.enhancementMap 
-		? Right({
-			fn: state.enhancements.enhancementMap[fname],
-			params:params,
-		})
-		: attemptToLoadModuleWithLoaders([
-			...(state.enhancements.loaderFunctions[fname] ?? []), 
-			...(state.enhancements.loaderFunctions[specifier.parsed.url.protocol] ?? []),
-			...(state.enhancements.loaderFunctions['*'] ?? []) 
-		] , state.config, state.data)(input);
+	if (specifier.kind === "bare") {
+		return fname in state.enhancements.enhancementMap
+			? Right({
+				fn: state.enhancements.enhancementMap[fname],
+				params: params,
+			})
+			: attemptToLoadModuleWithLoaders(
+				[
+					...state.enhancements.loaderFunctions[fname],
+					...(state.enhancements.loaderFunctions["*"] ?? []),
+				],
+				state.config,
+				state.data,
+			)(input);
+	} else {
+		return fname in state.enhancements.enhancementMap
+			? Right({
+				fn: state.enhancements.enhancementMap[fname],
+				params: params,
+			})
+			: attemptToLoadModuleWithLoaders(
+				[
+					...(state.enhancements.loaderFunctions[fname] ?? []),
+					...(state.enhancements.loaderFunctions[specifier.parsed.url.protocol] ?? []),
+					...(state.enhancements.loaderFunctions["*"] ?? []),
+				],
+				state.config,
+				state.data,
+			)(input);
 	}
-}
+};
 
-const resolveUnresolvedEnhancement = async (state: PipelineState, input: ParameterizedFn<UnResolvedEnhacement>): PromisedPotentiallyLoadedEnhancement => {
-	const {fn, params} = input
+const resolveUnresolvedEnhancement = async (
+	state: PipelineState,
+	input: ParameterizedFn<UnResolvedEnhacement>,
+): PromisedPotentiallyLoadedEnhancement => {
+	const { fn, params } = input;
 
-	if(typeof fn === 'string'){
-		const specifier = await parseSpecifier(fn, params)
-		if(specifier.kind === 'bare'){
-			return fn in state.enhancements.enhancementMap 
-			? Right({
-				fn: state.enhancements.enhancementMap[fn],
-				params: params,
-			})
-			: attemptToLoadModuleWithLoaders([
-				...state.enhancements.loaderFunctions[fn],
-				...(state.enhancements.loaderFunctions['*'] ?? []) 
-			] , state.config, state.data)({ fname:fn, params:params as FunctionBuilderParamInputs });
-		}else{
-
-			return fn in state.enhancements.enhancementMap 
-			? Right({
-				fn: state.enhancements.enhancementMap[fn],
-				params: params,
-			})
-			: attemptToLoadModuleWithLoaders([
-				...(state.enhancements.loaderFunctions[fn] ?? []), 
-				...(state.enhancements.loaderFunctions[specifier.parsed.url.protocol] ?? []),
-				...(state.enhancements.loaderFunctions['*'] ?? []) 
-			] , state.config, state.data)({fname: fn, params: params as FunctionBuilderParamInputs});
+	if (typeof fn === "string") {
+		const specifier = await parseSpecifier(fn, params);
+		if (specifier.kind === "bare") {
+			return fn in state.enhancements.enhancementMap
+				? Right({
+					fn: state.enhancements.enhancementMap[fn],
+					params: params,
+				})
+				: attemptToLoadModuleWithLoaders(
+					[
+						...state.enhancements.loaderFunctions[fn],
+						...(state.enhancements.loaderFunctions["*"] ?? []),
+					],
+					state.config,
+					state.data,
+				)({ fname: fn, params: params as FunctionBuilderParamInputs });
+		} else {
+			return fn in state.enhancements.enhancementMap
+				? Right({
+					fn: state.enhancements.enhancementMap[fn],
+					params: params,
+				})
+				: attemptToLoadModuleWithLoaders(
+					[
+						...(state.enhancements.loaderFunctions[fn] ?? []),
+						...(state.enhancements.loaderFunctions[specifier.parsed.url.protocol] ?? []),
+						...(state.enhancements.loaderFunctions["*"] ?? []),
+					],
+					state.config,
+					state.data,
+				)({ fname: fn, params: params as FunctionBuilderParamInputs });
 		}
 	} else {
-		return Right({ fn, params })
+		return Right({ fn, params });
 	}
-}
+};
 
-const resolveLoadableModule = async (state: PipelineState, input: LoadableModule): PromisedPotentiallyLoadedEnhancement => {
-	const r = await input.moduleLoader(input.fn, Object.freeze(state.config), Object.freeze(state.data))
+const resolveLoadableModule = async (
+	state: PipelineState,
+	input: LoadableModule,
+): PromisedPotentiallyLoadedEnhancement => {
+	const r = await input.moduleLoader(
+		input.fn,
+		Object.freeze(state.config),
+		Object.freeze(state.data),
+	);
 	return isRight(r)
 		? Right({
 			fn: r.right,
-			params: input.params
+			params: input.params,
 		})
-		: r
-}
+		: r;
+};
 
-const resolveResolvedEnhancement =  (_state: PipelineState, input: ResolvedEnhacementFn): PromisedPotentiallyLoadedEnhancement => 
-	Promise.resolve(Right({ fn: input, params: undefined }))
-
+const resolveResolvedEnhancement = (
+	_state: PipelineState,
+	input: ResolvedEnhacementFn,
+): PromisedPotentiallyLoadedEnhancement => Promise.resolve(Right({ fn: input, params: undefined }));
 
 const resolveAllEnhancements = async (
 	state: PipelineState,
 ): Promise<Either<ParameterizedFn<ResolvedEnhacementFn>, ReturnedMessages>[]> => {
-	
-	
 	// Supporting multi proto loading
 	// input
 	// mapStart => {name: [ string | loaded enhancement function ] }
@@ -524,19 +559,18 @@ const resolveAllEnhancements = async (
 
 	const allEnhancements = await Promise.all(
 		state.enhancements.input.map((eMod) => {
-
 			// eMod
 			// FuncInterface_Param 	| ParameterizedFn<UnResolvedEnhacement> | LoadableModule | ResolvedEnhacementFn;
 			// fname 				| fn									| loaderFn		 | typeof X === 'function'
 
-			if(typeof eMod === 'function'){
-				return resolveResolvedEnhancement(state, eMod)
-			} else if('fname'in eMod){
-				return resolveFuncInterfaceParam(state, eMod)
-			}else if('fn' in eMod){
-				return resolveUnresolvedEnhancement(state, eMod)
-			}else{
-				return resolveLoadableModule(state, eMod)
+			if (typeof eMod === "function") {
+				return resolveResolvedEnhancement(state, eMod);
+			} else if ("fname" in eMod) {
+				return resolveFuncInterfaceParam(state, eMod);
+			} else if ("fn" in eMod) {
+				return resolveUnresolvedEnhancement(state, eMod);
+			} else {
+				return resolveLoadableModule(state, eMod);
 			}
 		}),
 	) as EITHER<ParameterizedFn<ResolvedEnhacementFn>, ReturnedMessages>[];
@@ -551,22 +585,15 @@ const runAllenhancements = (
 ) => {
 	const result = enhancementArr.reduce(
 		async (acc, { fn, params }) => {
-			const [ast, errs] = await acc
+			const [ast, errs] = await acc;
 			const result = await fn(params)(await ast.right, data, errs.left);
 			return isLeft(result)
-				? [ ast, 
-					Left(mergeMessages(result.left, errs.left))] as 
-						[ 	RIGHT<AST>,
-							LEFT<ReturnedMessages>,
-						]
-				: [result, errs] as 
-					[	RIGHT<AST>, 
-						LEFT<ReturnedMessages>
-					];
+				? [ast, Left(mergeMessages(result.left, errs.left))] as [RIGHT<AST>, LEFT<ReturnedMessages>]
+				: [result, errs] as [RIGHT<AST>, LEFT<ReturnedMessages>];
 		},
 		Promise.resolve([
 			Right(ast),
-			Left({errors:[], warnings:[]}),
+			Left({ errors: [], warnings: [] }),
 		]) as Promise<[RIGHT<AST>, LEFT<ReturnedMessages>]>,
 	);
 	// console.log(334, "runAllenhancements: ", { result });
@@ -598,10 +625,10 @@ const runEverything = async (
 		);
 
 	console.log(357, "runEverything: ", {
-	  eitherModuleOrMessgage,
-	  enhancementsModules,
-	  errMessages,
-	  ast,
+		eitherModuleOrMessgage,
+		enhancementsModules,
+		errMessages,
+		ast,
 	});
 
 	// console.log(370, "AST + Modules Loaded", ast, enhancementsModules.length);
@@ -655,7 +682,7 @@ const runEverything = async (
 //#endregion ActionLoop
 
 const withFunctionAccess = (state: PipelineState) =>
-(	// accessfunctionForEnhancement OR enhancementMap
+( // accessfunctionForEnhancement OR enhancementMap
 	input: IEnhancementLoaderFn | Record<string, ResolvedEnhacementFn>,
 ): IMiddlwares & IExporters => {
 	const nextState = {
@@ -664,7 +691,7 @@ const withFunctionAccess = (state: PipelineState) =>
 			...state.enhancements,
 			...(typeof input === "function"
 				// loader get applied with specifiers - and the specifiers becomes the name - in the map
-				? { loaderFunctions: {...state.enhancements.loaderFunctions, '*':input }}
+				? { loaderFunctions: { ...state.enhancements.loaderFunctions, "*": input } }
 				// maps are already loaded and named
 				: { defaultFunctionMap: { ...state.enhancements.enhancementMap, ...input } }),
 		},
@@ -687,124 +714,121 @@ const withFunctionAccess = (state: PipelineState) =>
 	};
 };
 
-const using = (state: PipelineState) => ( enhancementFnArr: EnhancementFunctionInputUnion[]): IMiddlwares & IExporters => {
-	const nextState = enhancementFnArr.reduce((curState, elem) => {
-		if ("fname" in elem) {
-			return {
-				...curState,
-				enhancements: {
-					...curState.enhancements,
-					input: [...curState.enhancements.input, {
-						fn: elem.fname,
-						params: elem.params,
-						moduleLoader: state.enhancements.loaderFunctions,
-					}],
-				},
-			} as PipelineState;
-		} else {
-			return {
-				...curState,
-				enhancements: {
-					...curState.enhancements,
-					input: [...curState.enhancements.input, { ...elem, moduleLoader: enhancementResolver }],
-				},
-			} as PipelineState;
-		}
-	}, state as PipelineState);
+const using =
+	(state: PipelineState) =>
+	(enhancementFnArr: EnhancementFunctionInputUnion[]): IMiddlwares & IExporters => {
+		const nextState = enhancementFnArr.reduce((curState, elem) => {
+			if ("fname" in elem) {
+				return {
+					...curState,
+					enhancements: {
+						...curState.enhancements,
+						input: [...curState.enhancements.input, {
+							fn: elem.fname,
+							params: elem.params,
+							moduleLoader: state.enhancements.loaderFunctions,
+						}],
+					},
+				} as PipelineState;
+			} else {
+				return {
+					...curState,
+					enhancements: {
+						...curState.enhancements,
+						input: [...curState.enhancements.input, { ...elem, moduleLoader: enhancementResolver }],
+					},
+				} as PipelineState;
+			}
+		}, state as PipelineState);
 
-	return {
-		use: use(nextState),
-		withFunctionAccess: withFunctionAccess(nextState),
-		using: using(nextState),
-		data: data(nextState),
-		state: extractState(nextState),
-		config: config(nextState),
-		toAtom: toAtom(nextState),
-		toCity: toCity(nextState),
-		toJsonFeed: toJsonFeed(nextState),
-		toRSS: toRSS(nextState),
-		toCustomExport: toCustomExport(nextState),
+		return {
+			use: use(nextState),
+			withFunctionAccess: withFunctionAccess(nextState),
+			using: using(nextState),
+			data: data(nextState),
+			state: extractState(nextState),
+			config: config(nextState),
+			toAtom: toAtom(nextState),
+			toCity: toCity(nextState),
+			toJsonFeed: toJsonFeed(nextState),
+			toRSS: toRSS(nextState),
+			toCustomExport: toCustomExport(nextState),
+		};
 	};
-};
-
 
 const tryJsonParse = (s: string): JsonType => {
 	try {
-		return JSON.parse(`${s}`) as JsonObject
+		return JSON.parse(`${s}`) as JsonObject;
 	} catch {
-		return null
-	}	
-}
+		return null;
+	}
+};
 
-const checkParsingRulesFor = (s: string ):boolean => {
-	const startsWithNumber = /^[0-9].*/gi.test(s) 
-	const startsWithCurly = /^\{.*$/gi.test(s)
-	const startsWithBracket = /^\[.*$/gi.test(s)
-	const isNullString = s === 'null'
-	return 	startsWithNumber 	|| 
-			startsWithCurly 	||
-	 		startsWithBracket 	||
-	 		isNullString
-}
+const checkParsingRulesFor = (s: string): boolean => {
+	const startsWithNumber = /^[0-9].*/gi.test(s);
+	const startsWithCurly = /^\{.*$/gi.test(s);
+	const startsWithBracket = /^\[.*$/gi.test(s);
+	const isNullString = s === "null";
+	return startsWithNumber ||
+		startsWithCurly ||
+		startsWithBracket ||
+		isNullString;
+};
 
 /**
  * Getting a strange Deno/Typescript erorr when trying to use the url.SearchParams.entries
  */
 export const parseSearchString = (s: string | URLSearchParams): JsonObject => {
 	// console.log(773, 'parseSearchString', {str : s})
-	if(typeof s === 'string'){
-		if(s===''){
-			return {}
-		}else{
-			s = s.startsWith('?') ? s.slice(1) : s
-			const entries = 
-				s.split('&')
-				.map(ts => ts.split('='))
-				.map(([key, val])=>{
+	if (typeof s === "string") {
+		if (s === "") {
+			return {};
+		} else {
+			s = s.startsWith("?") ? s.slice(1) : s;
+			const entries = s.split("&")
+				.map((ts) => ts.split("="))
+				.map(([key, val]) => {
 					// console.log(762, 'map', {key, val})
-					return [key, checkParsingRulesFor(val) ? tryJsonParse(val) : val]
-				})
-			return Object.fromEntries(entries)
+					return [key, checkParsingRulesFor(val) ? tryJsonParse(val) : val];
+				});
+			return Object.fromEntries(entries);
 		}
-	} else{
-		const acc = {} as JsonObject
+	} else {
+		const acc = {} as JsonObject;
 		s.forEach((val, key) => {
 			// console.log(765, ' checkParsingRulesFor:',  checkParsingRulesFor(val))
-			acc[key] = checkParsingRulesFor(val) ? tryJsonParse(val) : val
-		})
-		return acc
+			acc[key] = checkParsingRulesFor(val) ? tryJsonParse(val) : val;
+		});
+		return acc;
 	}
-}
+};
 
-
-export const parseSpecifier = (specifier: string, params?:unknown): SpecifierUnion  => {
-	if(specifier.includes('://')){		
-		const u = new URL(specifier)
+export const parseSpecifier = (specifier: string, params?: unknown): SpecifierUnion => {
+	if (specifier.includes("://")) {
+		const u = new URL(specifier);
 		return {
-			kind: 'url',
-			raw: { specifier,  params },
-			parsed: { 
-				url: u, 
-				specifier: u.href, 
-				params: parseSearchString(u.search)
-			}
-		}
-	}else {
+			kind: "url",
+			raw: { specifier, params },
+			parsed: {
+				url: u,
+				specifier: u.href,
+				params: parseSearchString(u.search),
+			},
+		};
+	} else {
 		return {
-			kind: 'bare',
+			kind: "bare",
 			raw: { specifier: specifier, params },
-			parsed: { specifier, params }
-		}
+			parsed: { specifier, params },
+		};
 	}
-}
-
+};
 
 const use = (state: PipelineState) =>
 (
 	enhancementFn: string | EnhancementFunctionInputUnion,
 	params?: unknown,
 ): IMiddlwares & IExporters => {
-	
 	const resolveableEnhancementMod = typeof enhancementFn === "string"
 		// give strings the default loader
 		? {
@@ -1254,9 +1278,7 @@ const fromCustomLoader =
 
 //#endregion Loader
 
-
 export const loadFeed = (input?: LoadFeedMode_Params | LoadFeedMode_State): ILoaders => {
-	
 	const startingState: PipelineState = input
 		? "params" in input && input.params
 			? defaultState(

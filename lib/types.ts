@@ -146,9 +146,7 @@ export const Right = <R>(right: R): Right<R> => ({ type: TypeNames.Right, right 
 export type Either<R, L = Error> = NonNullable<Right<R> | Left<L>>;
 
 export const Either = <R, L>(leftOrRight: Right<R> | Left<L>): Either<R, L> =>
-	isRight(leftOrRight)
-		? Right(leftOrRight.right)
-		: Left(leftOrRight.left) 
+	isRight(leftOrRight) ? Right(leftOrRight.right) : Left(leftOrRight.left);
 
 type RightSideMapFn<R, L, R2, L2> = (
 	v: Right<R>,

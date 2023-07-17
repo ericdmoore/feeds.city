@@ -2,10 +2,9 @@
 	"tasks": {
 		"bundle": "deno bundle main.ts",
 		"test": "deno test tests/ --allow-net --allow-env --allow-read --coverage=.cov/",
-		"cov": "deno coverage --lcov --output=cov.lcov .cov/ ; genhtml -o cov_html cov.lcov",
-		"start": "deno run -A --watch=static/,routes/ dev.ts"
+		"cov": "deno coverage --lcov --output=cov.lcov .cov/ ; genhtml -o ./.cov/html_cov cov.lcov ; open .cov/html_cov/index.html",
+		"start": "deno run -Ar --watch=static/,routes/ dev.ts"
 	},
-	"importMap": "./import_map.json",
 	"compilerOptions": {
 		"jsx": "react-jsx",
 		"jsxImportSource": "preact"
@@ -13,5 +12,64 @@
 	"fmt": {
 		"useTabs": true,
 		"lineWidth": 100
+	},
+	"imports": {
+		"$std/": "https://deno.land/std@0.181.0/",
+		"$lib/": "./lib/",
+		"$static/": "./static/",
+		"$routes/": "./routes/",
+		"$components/": "./components/",
+		"$islands/": "./islands/",
+		"$fresh/": "https://deno.land/x/fresh@1.2.0/",
+		"@aws-sdk/client-dynamodb/": "https://esm.sh/@aws-sdk/client-dynamodb@3.200.0?deno-std=0.181.0/",
+		"@aws-sdk/client-dynamodb": "https://esm.sh/@aws-sdk/client-dynamodb@3.200.0?deno-std=0.181.0?dts",
+		"@aws-sdk/client-polly/": "https://esm.sh/@aws-sdk/client-dynamodb@3.200.0?deno-std=0.181.0/",
+		"@aws-sdk/client-polly": "https://esm.sh/@aws-sdk/client-dynamodb@3.200.0?deno-std=0.181.0?dts",
+		"@aws-sdk/client-s3/": "https://esm.sh/@aws-sdk/client-s3@3.332.0?deno-std=0.181.0/",
+		"@aws-sdk/client-s3": "https://esm.sh/@aws-sdk/client-s3@3.332.0?deno-std=0.181.0?dts",
+		"@preact/signals": "https://esm.sh/*@preact/signals@1.1.3",
+		"@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.2.3",
+		"@twind/": "https://esm.sh/@twind/",
+		"@twind/aspect-ratio": "https://esm.sh/@twind/aspect-ratio@0.1.4?dts",
+		"@twind/aspect-ratio/": "https://esm.sh/@twind/aspect-ratio@0.1.4/",
+		"@twind/forms": "https://esm.sh/@twind/forms@0.1.4?deno-std=0.181.0?dts",
+		"@twind/forms/": "https://esm.sh/@twind/forms@0.1.4/",
+		"VFile": "https://esm.sh/vfile@main/mod.ts?deno-std=0.181.0?dts",
+		"brotli": "https://deno.land/x/brotli@v0.1.4/mod.ts",
+		"bson_deno": "https://deno.land/x/deno_bson@v0.0.2/mod.ts",
+		"djwt": "https://deno.land/x/djwt@v2.7/mod.ts",
+		"dom_deno": "https://deno.land/x/deno_dom@v0.1.21-alpha/deno-dom-wasm.ts",
+		"fluentSchema": "https://esm.sh/fluent-json-schema@3.1.0",
+		"fromXml": "https://deno.land/x/xml2js@1.0.0/mod.ts",
+		"gzip_wasm": "https://deno.land/x/wasm_gzip@v1.0.0/mod.ts",
+		"jsonSchema": "https://deno.land/x/json_schema_typed@v8.0.0/draft_latest.ts",
+		"lodash.get": "https://esm.sh/lodash.get@4.4.2?deno-std=0.181.0?dts",
+		"lodash.merge": "https://esm.sh/lodash.merge@4.6.2?deno-std=0.181.0?dts",
+		"lodash.set": "https://esm.sh/lodash.set@4.3.2?deno-std=0.181.0?dts",
+		"lodash.groupby": "https://esm.sh/lodash.groupby@4.6.0?deno-std=0.181.0?dts",
+		"minhash": "https://esm.sh/minhash@0.0.9?deno-std=0.181.0&dts",
+		"mu-forms/": "https://esm.sh/mu-forms@1.0.7/",
+		"multiformats": "https://esm.sh/multiformats@9.6.4?deno-std=0.181.0&dts",
+		"mustache": "https://deno.land/x/mustache@v0.3.0/mod.ts",
+		"preact": "https://esm.sh/preact@10.15.1",
+		"preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.1.0",
+		"preact/": "https://esm.sh/preact@10.15.1/",
+		"superstruct": "https://deno.land/x/deno_superstruct@0.0.0/mod.ts",
+		"toXml": "https://deno.land/x/js2xml@1.0.2/mod.ts",
+		"twind": "https://esm.sh/twind@0.16.19",
+		"twind/": "https://esm.sh/twind@0.16.19/",
+		"zstd_wasm": "https://deno.land/x/zstd_wasm@0.0.16/deno/zstd.ts"
+	},
+	"scopes": {
+		"https://deno.land/x/aws_s3_presign@1.3.0/mod.ts": {
+			"https://deno.land/std/hash/sha256.ts": "https://deno.land/std@0.123.0/hash/sha256.ts"
+		},
+		"https://esm.sh/react-hook-form@7.43.9": {
+			"react": "https://esm.sh/preact@10.11.0/compat",
+			"react-dom": "https://esm.sh/preact@10.11.0/compat"
+		},
+		"https://denopkg.com/ericdmoore/s3_deno@main/mod.ts": {
+			"https://denopkg.com/ericdmoore/feedBarber@main/src/lib/clients/aws-url-signer.ts": "./lib/clients/aws-url-signer.ts"
+		}
 	}
 }

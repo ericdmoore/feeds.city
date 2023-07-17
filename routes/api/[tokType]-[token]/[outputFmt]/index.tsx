@@ -1,11 +1,10 @@
 // import type { JSX } from "preact";
 import type { Handlers, PageProps, RouteConfig } from "$fresh/server.ts";
 import { FormDataToParsedFunctionString, FormTypeNewParams } from "./[composition]/index.tsx";
-import type { Either } from "$lib/types.ts"
+import type { Either } from "$lib/types.ts";
 
 import {
 	defaultedOptions,
-	
 	type FuncInterface,
 	type FuncInterface_Param,
 	FunctionBuilderParamInputs,

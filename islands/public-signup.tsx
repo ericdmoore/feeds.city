@@ -9,21 +9,6 @@ import {
 	X_mark,
 } from "../components/heroicons/outline.tsx";
 
-/*
-  This example requires some changes to your config:
-
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
-
 interface NotificaitonProps {
 	display: boolean | HiddenPendingHappyError;
 	color: keyof typeof Color;
@@ -37,7 +22,7 @@ interface SingUpProps {
 	exp: number;
 }
 
-type HiddenPendingHappyError = 0 | 1 | 2 | Error;
+type HiddenPendingHappyError = "Hidden" | "Pending" | "Happy" | Error;
 // 0 = Hidden
 // 1 = pending
 // 2 - Happy
@@ -47,7 +32,7 @@ function NotificationSuccess(props: NotificaitonProps) {
 	// green
 	return (
 		<div
-			class={`${props.display === 2 ? "" : "hidden"} rounded-md bg-${props.color}-50 p-4`}
+			class={`${props.display === "Happy" ? "" : "hidden"} rounded-md bg-${props.color}-50 p-4`}
 		>
 			<div class="flex">
 				<div class="flex-shrink-0">
@@ -112,7 +97,7 @@ function NotificationFailure(props: NotificaitonProps) {
 function NotificationPending(props: NotificaitonProps) {
 	return (
 		<div
-			class={`${props.display === 1 ? "" : "hidden"} rounded-md bg-${props.color}-50 p-4`}
+			class={`${props.display === "Pending" ? "" : "hidden"} rounded-md bg-${props.color}-50 p-4`}
 		>
 			<div class="flex">
 				<div class="flex-shrink-0">
@@ -152,7 +137,7 @@ export function SignUp(props: Partial<SingUpProps>) {
 	const [pendingMessage, setPendingMessage] = useState("...sending");
 	const [sessionExpired, setSssionExpired] = useState(false);
 	const [notificationStates, setNotificationState] = useState(
-		0 as HiddenPendingHappyError,
+		"Hidden" as HiddenPendingHappyError,
 	);
 
 	const expMS = new Date(props.exp! * 1000).getTime();
@@ -163,7 +148,7 @@ export function SignUp(props: Partial<SingUpProps>) {
 			setPendingMessage(
 				"The session has timeed out. Please Refresh the page and try again.",
 			);
-			setNotificationState(1); // Pending = 1
+			setNotificationState("Pending");
 			setSssionExpired(true);
 		}, expMS - nowMS);
 	});
@@ -182,12 +167,12 @@ export function SignUp(props: Partial<SingUpProps>) {
 
 	const onClick: JSX.GenericEventHandler<EventTarget> = async (e) => {
 		e.preventDefault();
-		setNotificationState(1);
+		setNotificationState("Pending");
 		const resp = await submitEmail(email, props.token);
 		if ("_error" in resp) {
 			setNotificationState(resp._error);
 		} else {
-			setNotificationState(2);
+			setNotificationState("Happy");
 		}
 		setEmail(""); // clear out input box
 	};
@@ -207,21 +192,21 @@ export function SignUp(props: Partial<SingUpProps>) {
 					color="gray"
 					closeable={!sessionExpired}
 					msg={pendingMessage}
-					shutClose={() => setNotificationState(0)} // Closed = 0
+					shutClose={() => setNotificationState("Hidden")} // Closed = 0
 				/>
 				<NotificationSuccess
 					display={notificationStates}
 					color="green"
 					closeable
 					msg="Request Sent!"
-					shutClose={() => setNotificationState(0)} // Closed = 0
+					shutClose={() => setNotificationState("Hidden")} // Closed = 0
 				/>
 				<NotificationFailure
 					display={notificationStates}
 					color="red"
 					closeable
 					msg="Hmm.... Something Went wrong, Please try again, in 10 minutes"
-					shutClose={() => setNotificationState(0)} // Closed = 0
+					shutClose={() => setNotificationState("Hidden")} // Closed = 0
 				/>
 
 				<div class="rounded-lg bg-indigo-700 px-6 py-6 md:py-12 md:px-12 lg:py-16 lg:px-16 xl:flex xl:items-center">
@@ -254,10 +239,10 @@ export function SignUp(props: Partial<SingUpProps>) {
 							<button
 								type="submit"
 								onClick={onClick}
-								disabled={sessionExpired || notificationStates === 1}
+								disabled={sessionExpired || notificationStates === "Pending"}
 								class="mt-3 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-500 px-5 py-3 text-base font-medium text-white shadow hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-700 sm:mt-0 sm:ml-3 sm:w-auto sm:flex-shrink-0"
 							>
-								{notificationStates === 1
+								{notificationStates === "Pending"
 									? <Ellipsis_horizontal class={`h-5 w-5 text-white`} />
 									: <p>Request</p>}
 							</button>

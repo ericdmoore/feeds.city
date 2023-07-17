@@ -1,24 +1,28 @@
 // deno-lint-ignore-file require-await ban-unused-ignore
 import type { Handlers, PageProps } from "$fresh/server.ts";
 
-import { load } from "$std/dotenv/mod.ts";
-import { Airtable } from "airtable";
-import sendJson from "../lib/responder/sendjson.ts";
+import keys from "$lib/utils/keys.ts";
+import envVars from "$lib/utils/vars.ts";
+import sendJson from "$lib/responder/sendjson.ts";
+import airtable from "$lib/clients/airtable.ts";
 
 import { refreshCookieToken } from "../utils/cookies/refresh.ts";
 import { getCookies } from "$std/http/cookie.ts";
-import keys from "../lib/utils/keys.ts";
 
-import { TopHatBlack } from "../components/TopHat.tsx";
-import NavBar from "../islands/public-navbar.tsx";
-import PublicHero from "../components/public-hero.tsx";
-import PublicFeatures from "../components/public/featureGrid.tsx";
-import Testimonial from "../components/public/testimonial.tsx";
+import NavBar from "$islands/public-navbar.tsx";
+import SignUp from "$islands/public-signup.tsx";
+
+import { TopHatBlack } from "$components/TopHat.tsx";
+import PublicHero from "$components/public-hero.tsx";
+import PublicFeatures from "$components/public/featureGrid.tsx";
+import Testimonial from "$components/public/testimonial.tsx";
+
 // import Pricing from "../components/public/pricing.tsx";
-import Stats from "../components/public/stats.tsx";
-import SignUp from "../islands/public-signup.tsx";
-import Footer from "../components/public/footer.tsx";
-import CtaPanel from "../components/cta-panel.tsx";
+
+import Stats from "$components/public/stats.tsx";
+import Footer from "$components/public/footer.tsx";
+import CtaPanel from "$components/cta-panel.tsx";
+
 // import { Color } from "../types.ts";
 import v1token, { validatiorsAvailable as availVals } from "../utils/tokens/v1.ts";
 
@@ -41,48 +45,43 @@ interface HomeProps {
 	exp: number;
 }
 
-
-interface AirtableSideEffectRequestBase{
-	apiToken: string
-	baseId: string
-	tableName: string
+interface AirtableSideEffectRequestBase {
+	apiToken: string;
+	baseId: string;
+	tableName: string;
 }
 
-interface AirtableSideEffectRequestDataInput{
-	email: string
-	status: string
+interface AirtableSideEffectRequestDataInput
+	extends Record<string, string | number | null | boolean> {
+	Email: string;
+	Status: string;
 }
 
-interface AirtableSideEffectResponse{
+interface AirtableSideEffectResponse {
 	id: string;
 	createdTime?: string;
 }
 
-const airtableSideEffect = async (client:AirtableSideEffectRequestBase, input: AirtableSideEffectRequestDataInput): Promise<AirtableSideEffectResponse> => {
-	
-	
-	const airtable = new Airtable({
-		// apiToken: client.apiToken,
-		baseId: client.baseId,
-		tableName: client.tableName,
-	});
+const sendToAirtable = async (
+	client: AirtableSideEffectRequestBase,
+	input: AirtableSideEffectRequestDataInput,
+): Promise<AirtableSideEffectResponse> => {
+	const air = airtable(client);
+	const listedRecords = await air.LIST({ filterByFormula: `{Email}="${input.Email}"` }).json();
+	let returnVal: AirtableSideEffectResponse;
 
-	const doesAlreadyExist = await airtable.select({
-		maxRecords: 1,
-		pageSize: 1,
-		fields: ["Email", "Status"],
-		filterByFormula: `{Email}="${input.email}"`,
-	}).catch((er) => {
-		console.error(">>>", er);
-		return { er, records: [] as { id: string; [key: string]: string }[] };
-	});
-
-	const id = !("er" in doesAlreadyExist) && doesAlreadyExist?.records.length === 0
-		? (await airtable.create({ Email: input.email, Status: input.status })).id
-		: doesAlreadyExist?.records[0].id ?? "id_FOUND_ERROR_INSTEAD";
-
-	return {id};
-}
+	if (listedRecords.records.length > 0) {
+		// found it
+		// send back zeroth record
+		returnVal = listedRecords.records[0];
+	} else {
+		// not found case
+		// make it + send it back
+		const createdRecords = await air.CREATE(input).json();
+		returnVal = createdRecords.records[0];
+	}
+	return returnVal;
+};
 
 export default function Home(props: PageProps<Partial<HomeProps>>) {
 	return (
@@ -232,12 +231,13 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
  */
 export const handler: Handlers = {
 	GET: async (req, ctx) => {
+		const env = await envVars("<< MISSING >>");
 		const v1 = v1token(
 			{
 				privateKey: keys.key.ecdsa.sign,
 				publicKey: keys.key.ecdsa.verify,
 			},
-			Deno.env.get("KEY_ID")!,
+			env("KEY_ID")!,
 			[
 				availVals.isFromMe,
 				availVals.isV1Token,
@@ -257,6 +257,7 @@ export const handler: Handlers = {
 			jwt,
 			exp: jwtData.headers?.exp as number,
 		} as HomeProps);
+
 		return new Response(rendered.body, {
 			headers: respHeaders,
 			status: 200,
@@ -265,16 +266,16 @@ export const handler: Handlers = {
 	},
 
 	POST: async (req) => {
-		await load({ export: true }).catch(() => console.error("errored while processsing .env file"));
+		const env = await envVars("<< MISSING >>");
 
 		const _email = new URL(req.url).searchParams.get("email");
-		const email = _email ? decodeURIComponent(_email) : null;
+		const Email = _email ? decodeURIComponent(_email) : null;
 
 		const _keyID = new URL(req.url).searchParams.get("keyID");
 		const keyID = _keyID ? decodeURIComponent(_keyID) : null;
 
 		const status = new URL(req.url).searchParams.get("status");
-		const Status = status === "test" && keyID === Deno.env.get("KEY_D_PRIVATE")
+		const Status = status === "test" && keyID === env("KEY_D_PRIVATE")
 			? "test"
 			: "WaitingToVerifyAddress";
 
@@ -284,51 +285,27 @@ export const handler: Handlers = {
 		const v1tok = v1token({
 			privateKey: keys.key.ecdsa.sign,
 			publicKey: keys.key.ecdsa.verify,
-		}, Deno.env.get("KEY_ID")!);
+		}, env("KEY_ID")!);
 
-		if (token && email) {
+		if (token && Email) {
 			const { payload } = await v1tok.parse(token);
 
 			if (await v1tok.validate(token) && await v1tok.verify(token)) {
-				
-				const [apiToken, baseId, tableName] = await Promise.all([
-					Deno.env.get("AIRTABLE_TOKEN") ?? 'MISSING',
-					Deno.env.get("AIRTABLE_BASE") ?? 'MISSING',
-					Deno.env.get("AIRTABLE_TABLE") ?? 'MISSING',
-				]);
-
-				await airtableSideEffect({apiToken, baseId, tableName}, {email:'', status: ''})
-				
-				
-				const airtable = new Airtable({
-					useEnv: false,
-					// apiKey,
-					baseId,
-					tableName,
-				});
-
-				const doesAlreadyExist = await airtable.select({
-					maxRecords: 1,
-					pageSize: 1,
-					fields: ["Email", "Status"],
-					filterByFormula: `{Email}="${email}"`,
-				}).catch((er) => {
-					console.error(">>>", er);
-					return { er, records: [] as { id: string; [key: string]: string }[] };
-				});
-
-				const id = !("er" in doesAlreadyExist) && doesAlreadyExist?.records.length === 0
-					? (await airtable.create({ Email: email, Status })).id
-					: doesAlreadyExist?.records[0].id ?? "id_FOUND_ERROR_INSTEAD";
+				const [apiToken, baseId, tableName] = [
+					env("AIRTABLE_TOKEN"),
+					env("AIRTABLE_BASE"),
+					env("AIRTABLE_TABLE"),
+				];
+				const id = await sendToAirtable({ apiToken, baseId, tableName }, { Email, Status });
 
 				return sendJson(
-					{ id, email, jwt: await v1tok.mint({ ...payload, email }) },
+					{ id, Email, jwt: await v1tok.mint({ ...payload, Email }) },
 					200,
 					"OK",
 				);
 			} else {
 				return sendJson(
-					{ jwt: await v1tok.mint({ ...payload, email }) },
+					{ jwt: await v1tok.mint({ ...payload, Email }) },
 					401,
 					"INVALID_TOKEN",
 				);

@@ -2,7 +2,7 @@ import type { HandlerContext, Handlers, PageProps, RouteConfig } from "$fresh/se
 
 import { Status } from "$std/http/http_status.ts";
 
-import { type Either}  from "$lib/types.ts";
+import { type Either } from "$lib/types.ts";
 import { type FuncInterface_Param } from "$lib/parsers/enhancementFunctions.ts";
 
 import NavPanels from "$components/navigation/panels.tsx";
