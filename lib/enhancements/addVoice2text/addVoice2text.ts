@@ -12,9 +12,7 @@
 */
 
 import * as s from "superstruct";
-
 import type { PromiseOr } from "../../types.ts";
-
 import {
 	type ASTcomputable,
 	type ASTFeedItemJsonTYPE,
@@ -36,6 +34,19 @@ import {
 	type SynthesisTaskResponse,
 	type VoiceId,
 } from "../../clients/aws-polly.ts";
+
+// import {
+// 	PollyClient, 
+// 	// ServiceInputTypes,
+// 	StartSpeechSynthesisTaskCommand, 
+// 	StartSpeechSynthesisTaskCommandInput, 
+// 	// StartSpeechSynthesisTaskCommandOutput,
+// 	// GetSpeechSynthesisTaskCommand, 
+// 	// DescribeVoicesCommand,
+// 	// SynthesizeSpeechCommand,
+// 	// ListSpeechSynthesisTasksCommand, 
+// } from '@aws-sdk/client-polly'
+
 
 // import {} from "@aws-sdk/client-polly"
 
@@ -582,6 +593,28 @@ async (
 		};
 
 		// console.log('nice to meet you, Ill create some audio for ya!');
+
+		// const _pollyC = new PollyClient({
+		// 	region: config.aws.region, 
+		// 	credentials:{
+		// 		accessKeyId: config.aws.key, secretAccessKey: config.aws.secret
+		// 	}
+		// })
+
+		// const startCmdInput: StartSpeechSynthesisTaskCommandInput = {
+		// 	OutputFormat: config.polly.outputFormat, 
+		// 	Text: chosenText, 
+		// 	OutputS3BucketName: config.s3.bucket, 
+		// 	OutputS3KeyPrefix: config.s3.prefix,
+		// 	VoiceId: config.polly.voiceId as VoiceId,
+		// 	TextType: config.polly.isPlainText ? "text" : "ssml",
+		// 	Engine: config.polly.useNeuralEngine ? "neural" : "standard",
+		// }
+
+		// const _startCmd = new StartSpeechSynthesisTaskCommand(startCmdInput)
+
+		// tytpe ipt ServiceInputTypes
+		// const resp = await pollyC.send<StartSpeechSynthesisTaskCommandInput, StartSpeechSynthesisTaskCommandOutput>(startCmd)
 
 		const commandResponse = await pc.StartSpeechSynthesisTask(
 			taskCommandReqd,

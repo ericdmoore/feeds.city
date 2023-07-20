@@ -12,8 +12,8 @@ const port = 8000;
 const urlPath = (path: string) => `${host}:${port}${path}`;
 
 const CONN_INFO = {
-	localAddr: { transport: "tcp", hostname: "0.0.0.0", port: 80 },
-	remoteAddr: { transport: "tcp", hostname: "1.0.0.0", port: 80 },
+	localAddr: { transport: "tcp", hostname: "127.0.0.1", port: 80 },
+	remoteAddr: { transport: "tcp", hostname: "192.168.1.2", port: 80 },
 } as ConnInfo;
 
 console.info("\n\n ... be sure to start a dev server from another session\n\n");

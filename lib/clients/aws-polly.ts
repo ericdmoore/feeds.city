@@ -1,6 +1,9 @@
-import { awsV4Sig } from "./aws-url-signer.ts";
+// import { awsV4Sig } from "./aws-url-signer.ts";
+
 // mod.ts audit: OK
 import { stringify as qsStringify } from "https://deno.land/x/querystring@v1.0.2/mod.js";
+import { sigMaker } from '$lib/clients/aws-url-signer.ts'
+import type { PromiseOr } from '$lib/types.ts'
 
 // #region types
 export type Engine = "neural" | "standard";
@@ -289,26 +292,10 @@ export interface PollyClientInterface {
 	SynthesizeSpeech: (opts: SynthesisRequest) => ResponseOptions;
 }
 
-type PromiseOr<T> = T | Promise<T>;
-
 // #endregion types
 
 const encoder = new TextEncoder();
 
-const sigMaker = (
-	accessKeyId: string,
-	secretAccessKey: string,
-	region: string,
-	service: string,
-) => {
-	const sign = awsV4Sig({
-		region,
-		service,
-		awsAccessKeyId: accessKeyId,
-		awsSecretKey: secretAccessKey,
-	});
-	return async (req: Request) => sign(await req);
-};
 
 const middleware = async (r: PromiseOr<Request>) => {
 	// @todo
@@ -329,6 +316,7 @@ const final = <T>(r: PromiseOr<Request>) => {
 		__mockedResponse: async (testingResponse: unknown) => await testingResponse,
 	};
 };
+
 
 export const pollyClient = (
 	awsKey: string,
