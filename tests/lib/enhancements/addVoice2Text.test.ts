@@ -6,17 +6,22 @@ import { assert, assertEquals, assertNotEquals, assertRejects } from "$std/testi
 import { readableStreamFromReader } from "$std/streams/mod.ts";
 import { readToString, streamToString } from "$lib/utils/pumpReader.ts";
 
+import {loadFeed, enhancementAdapter} from '$lib/parsers/index.ts'
+
 import {
 	makeKey,
+	signS3Urlsigner,
 	textToVoice,
-	haveEverStarted,
+	checkChache,
 	isMediaFinished,
-	cacheOurBreadcrumbs,
+	sendToCache,
 	splitSynthTaskResponse,
+	default as addVoice2text,
 	// splitBucketItemURL,
 } from "$lib/enhancements/addVoice2text/addVoice2text.ts";
 
 import type { 
+PollyClientInterface,
 	SynthesisTaskConfig, 
 	SynthesisTaskIdentifiers 
 } from "$lib/clients/aws-polly.ts";
@@ -33,9 +38,11 @@ import {
 import { urlToAST } from "$lib/start.ts";
 import { s3Mock } from "../mocks/s3/s3Mock.ts";
 import { jsonFeed, jsonFeedUrl } from "../mocks/jsonFeed/daringFireball.elon.ts";
+import { S3Client } from "@aws-sdk/client-s3";
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 
-import { S3Client } from "https://esm.sh/@aws-sdk/client-s3@3.329.0?deno-std=0.172.0&dts";
 import mkEnvVar from "$lib/utils/vars.ts";
+
 
 type AST = ASTjson | ASTcomputable;
 type ASTItem = typeof ASTFeedItemJson.TYPE;
@@ -49,20 +56,27 @@ console.warn("WARNING: This Test Runs Against Production Resources");
 const _encoder = new TextEncoder();
 const _s3stateGlobal = new Map<string, Uint8Array>();
 
-const cfg = async () => {
+const cfg = async (i?: {s3?: S3Client, dyn?: DynamoDBClient, pc?: PollyClientInterface}) => {
 	const env = await mkEnvVar("MISSING-KEY-VALUE");
+
+	const aws = {
+		key: env("AWS_KEY"),
+		secret: env("AWS_SECRET"),
+		region: env("AWS_REGION"),
+	}
+	const config = {
+		s3: {
+			bucket: env("POLLYBUCKET"),
+			prefix: env("POLLYPREFIX"),
+			...(i?.s3 ? {client: i?.s3} : {})
+		},
+		...(i?.dyn ? { dynamo:{ client: i?.dyn }} : {}),
+		...(i?.pc ? {polly:{ client: i?.pc}} : {}),
+	}
+	// console.log({ s3: config.s3 })
 	return {
-		aws: {
-			key: env("AWS_KEY"),
-			secret: env("AWS_SECRET"),
-			region: env("REGION"),
-		},
-		config: {
-			s3: {
-				bucket: env("POLLYBUCKET"),
-				prefix: env("POLLYPREFIX"),
-			},
-		},
+		aws, 
+		config
 	};
 };
 
@@ -75,20 +89,32 @@ const runAssertions =
 
 		ASTassertionFns.forEach(async (fASTAssert) => await fASTAssert(ast));
 
-		itemAssertionFns.forEach((fItemAssert) => {
+		itemAssertionFns.forEach((fnItemAssert) => {
 			_ast.items.forEach(async (item, _i) => {
 				// console.log({ i, 'Len(attachedList)': item.attachments.length, item })
-				await fItemAssert(item);
+				await fnItemAssert(item);
 			});
 		});
 	};
 
 const allAttachmentsShouldHave = (p: string) => `All attachments should have a ${p}`;
+
 const assertPropertyPresensce =
 	(prop: string, msg: (prop: string) => string) => (obj: { [key: string]: unknown }) =>
 		assert(obj[prop], msg(prop));
+
 const dynamicPresenceAssertion = (prop: string) =>
 	assertPropertyPresensce(prop, allAttachmentsShouldHave);
+
+const assertS3signedUrl = (u:URL)=>{
+	assert(u.searchParams.has('X-Amz-Algorithm'))
+	assert(u.searchParams.has('X-Amz-Content-Sha256'))
+	assert(u.searchParams.has('X-Amz-Credential'))
+	assert(u.searchParams.has('X-Amz-Date'))
+	assert(u.searchParams.has('X-Amz-Expires'))
+	assert(u.searchParams.has('X-Amz-Signature'))
+	assert(u.searchParams.has('X-Amz-SignedHeaders'))	
+}	
 
 const propertyAssertions = {
 	url: dynamicPresenceAssertion,
@@ -106,27 +132,39 @@ const buildDynamicAssertions = (
 	},
 ) =>
 (obj: { [key: string]: unknown }) => {
-	Object.entries(assertionMap).forEach(([prop, assertionFn]) => {
-		assertionFn(prop)(obj);
-	});
+	Object.entries(assertionMap)	
+		.forEach(([prop, assertionFn]) => {
+			assertionFn(prop)(obj);
+		});
 };
 
-const testItemsHaveValidAttachments = async (item: ASTItem) => {
-	const attachentList = await rezVal(item.attachments);
-	const dynamicAssertions = buildDynamicAssertions(propertyAssertions);
+const hasAnActualAttachment = async (attachedList: unknown[]) => {	
 	assertEquals(
-		attachentList.length > 0,
+		(await attachedList).length > 0,
 		true,
 		"All ast items should have attachment",
 	);
+}
 
-	for (const attach of attachentList) {
-		dynamicAssertions(attach);
-		// assert(attach.url, 'All attachments should have a url');
-		// assert(attach.title, 'All attachments should have a title');
-		// assert(attach.mimeType, 'All attachments should have mimeType');
-		// assert(attach.sizeInBytes, 'All attachments should have sizeInBytes');
-		// assert(attach.durationInSeconds, 'All attachments should have durationInSeconds')
+const attachmentHasRightProperties = async (attached: unknown[]) => {
+	const dynamicAssertions = await buildDynamicAssertions(propertyAssertions);
+	for (const attachedItem of attached) {
+		dynamicAssertions(attachedItem as Record<string, unknown>)
+	}
+}
+
+// deno-lint-ignore require-await
+const attachedURLIsSigned = async (attached: unknown[]) => {
+	for (const attachedItem of (attached as Record<string,unknown>[])) {
+		const u = new URL(attachedItem.url as string)
+		assertS3signedUrl(u)
+	}
+}
+
+const testItemsThatHaveAttachments = (...fns:((attachedList: unknown[])=>Promise<void>)[] ) => async (item: ASTItem) => {
+	const attached = await rezVal(item.attachments);
+	for await(const fn of fns){
+		await fn(attached as unknown[])
 	}
 };
 
@@ -147,29 +185,71 @@ Deno.test("readToString", async () => {
 	assertEquals(input, collected);
 });
 
+
+Deno.test({
+	name:'Signing an S3 URL',
+	fn: async ()=>{
+		const c = await cfg()
+
+		const signer = signS3Urlsigner({
+			accessKeyId: c.aws.key,
+			secretAccessKey: c.aws.secret,
+		 })
+
+		 const url = await signer({
+			Bucket:'THIS_IS_THE_BUCKET',
+			Key:'THIS_IS_THE_KEY',
+			region:  c.aws.region
+		})
+		const u = new URL(url)
+		assert(u.origin ===`https://s3.${c.aws.region}.amazonaws.com`)
+		assert(u.pathname === '/THIS_IS_THE_BUCKET/THIS_IS_THE_KEY')
+		assertS3signedUrl(u)
+	}
+})
+
 Deno.test({
 	// only: true,
 	name: "Valid Attachment For Each Entry ",
 	fn: async () => {
-		const addTextFn = textToVoice(await cfg());
-		const ast = await computableToJson(
-			urlToAST({ url: jsonFeedUrl, txt: jsonFeed }),
-		);
-		const astWithAttachment = await computableToJson(addTextFn(ast));
-		runAssertions()(testItemsHaveValidAttachments)( // All AST assertions
-			astWithAttachment,
-		);
+
+		const enhanced = await loadFeed()
+			.fromString(jsonFeed, jsonFeedUrl)
+			.use(enhancementAdapter(addVoice2text), await cfg())
+			.toCity()
+				
+		const astWithAttachments = await computableToJson(enhanced.ast);
+		
+		runAssertions()(
+			testItemsThatHaveAttachments(
+				hasAnActualAttachment,
+				attachmentHasRightProperties,
+				attachedURLIsSigned
+			))
+			( // AST forAll assertions
+				astWithAttachments,
+			);
 	},
 });
 
-Deno.test({
-	name: "Homomorphic Enhancement",
+Deno.test({ // @todo
+	name: "Homomorphic Enhancement", 
+	// only: true, 
 	fn: async () => {
-		const ast = urlToAST({ url: jsonFeedUrl, txt: jsonFeed });
-		const addTextFn = textToVoice(await cfg());
-		const astWithAttachment = await computableToJson(addTextFn(ast));
-		// console.log(JSON.stringify(astWithAttachment, null, 2))
-		const [err, data] = ASTKindJson.validate(astWithAttachment);
+
+		const { ast } = await loadFeed()
+			.fromString(jsonFeed, jsonFeedUrl)
+			.use(enhancementAdapter(addVoice2text), await cfg() )
+			.toCity()
+
+		console.log('test:220', {ast} )
+		const [err, data] = ASTKindJson.validate(ast);
+		runAssertions()(
+			testItemsThatHaveAttachments(
+				hasAnActualAttachment,
+				attachedURLIsSigned,
+		))(ast)
+
 		assertEquals(err, undefined);
 		assert(
 			data,
@@ -239,7 +319,7 @@ Deno.test("S3 Mock Unit Test", async () => {
 	const s3m = s3Mock();
 	const data = { a: 1, b: 2, c: { d: 4, e: 5 } };
 	await s3m.putObject("someKey", data);
-	const s3DataStr = await streamToString((await s3m.getObject("someKey")).body);
+	const s3DataStr = await streamToString((await s3m.getObject("someKey")).Body as unknown as ReadableStream<Uint8Array>);
 	const s3DataObj = JSON.parse(s3DataStr);
 
 	// console.log('>> await readToString(fromS3Mock) :: ', s3DataStr)
@@ -248,61 +328,71 @@ Deno.test("S3 Mock Unit Test", async () => {
 	assertEquals(s3DataObj, data);
 });
 
-Deno.test("haveEverStarted is based on breadcrumbs", async () => {
-	const s3cm = s3Mock() as unknown as S3Client;
-	const key = "abcd";
-	const url = `https://example.com/${key}`;
-	const item = {
-		title: "example",
-		url,
-		id: url,
-		authors: [{ name: "Eric", imageUri: "http://example.com" }],
-		content: { text: "Some Text" },
-		images: { bannerImage: "", indexImage: "" },
-		links: {
-			category: "",
-			nextPost: "",
-			prevPost: "",
-			externalURLs: [],
-			tags: [],
-			relLinks: {},
-		},
-		attachments: [],
-		dates: { modified: Date.now(), published: Date.now() },
-	};
+Deno.test({
+	name: "haveEverStarted is based on breadcrumbs", 
+	// only: true,
+	fn: async () => {
+		const key = "abcd";
+		const url = `https://example.com/${key}`;
+		const item = {
+			title: "example",
+			url,
+			id: url,
+			authors: [{ name: "Eric", imageUri: "http://example.com" }],
+			content: { text: "Some Text" },
+			images: { bannerImage: "", indexImage: "" },
+			links: {
+				category: "",
+				nextPost: "",
+				prevPost: "",
+				externalURLs: [],
+				tags: [],
+				relLinks: {},
+			},
+			attachments: [],
+			dates: { modified: Date.now(), published: Date.now() },
+		};
 
-	const pollyconfig = {
-		OutputFormat: "mp3",
-		Engine: "neural",
-		LanguageCode: "en-US",
-		LexiconNames: ["english"],
-		SampleRate: "24000",
-		VoiceId: "Matthew",
-		SpeechMarkTypes: ["sentence"],
-		TextType: "text",
-	} as SynthesisTaskConfig;
+		const pollyconfig = {
+			OutputFormat: "mp3",
+			Engine: "neural",
+			LanguageCode: "en-US",
+			LexiconNames: ["english"],
+			SampleRate: "24000",
+			VoiceId: "Matthew",
+			SpeechMarkTypes: ["sentence"],
+			TextType: "text",
+		} as SynthesisTaskConfig;
 
-	const IDs = {
-		CreationTime: (new Date().getTime()),
-		TaskStatus: "inProgress",
-		SnsTopicArn: "",
-		TaskId: "some-uuid-that-has-hypens-and-numbers",
-		OutputUri: "mock://data",
-		TaskStatusReason: "",
-		RequestCharacters: 42,
-	} as SynthesisTaskIdentifiers;
+		const IDs = {
+			CreationTime: (new Date().getTime()),
+			TaskStatus: "inProgress",
+			SnsTopicArn: "SOME_EXAMPLE_ARN",
+			TaskId: "some-uuid-that-has-hypens-and-numbers",
+			OutputUri: "mock://data",
+			TaskStatusReason: "Here-Is-A-Reason",
+			RequestCharacters: 42,
+		} as SynthesisTaskIdentifiers;
 
-	const s3stuff = { s3c: s3cm, Bucket: "MOCK", Prefix: "MOCKED_PREFIX" };
-	await cacheOurBreadcrumbs(
-		item,
-		key,
-		pollyconfig,
-		IDs,
-		s3stuff,
-	);
-	const hasStarted = await haveEverStarted(key, s3stuff);
-	// console.log({hasStarted})
-	assertEquals(hasStarted && true, true);
+		const s3config = { 
+			s3c: s3Mock() as unknown as S3Client, 
+			Bucket: "MOCK", 
+			Prefix: "MOCKED_PREFIX" 
+		};
+
+		await sendToCache(
+			item,
+			key,
+			pollyconfig,
+			IDs,
+			s3config,
+		);
+		// console.log({data})
+
+		const hasStarted = await checkChache(key, s3config).catch((er)=>{  console.error(394, er); return false })
+		console.log({hasStarted})
+		assert(hasStarted);
+	} 
 });
 
 Deno.test("isMediaFinished is based on bread crumbs", async () => {
@@ -356,14 +446,14 @@ Deno.test("isMediaFinished is based on bread crumbs", async () => {
 	const key = await makeKey(item, item.content.text);
 	const { taskIDs, ...tcfg } = splitSynthTaskResponse(synthTask.SynthesisTask);
 	const s3Stuff = { s3c: s3m, Bucket: "MOCK", Prefix: "MOCKED_PREFIX" };
-	const breadCrumbs = await cacheOurBreadcrumbs(
+	const breadCrumbs = await sendToCache(
 		item,
 		key,
 		tcfg.config,
 		taskIDs,
 		s3Stuff,
 	);
-	const hasStarted = await haveEverStarted(key, s3Stuff);
+	const hasStarted = await checkChache(key, s3Stuff);
 
 	assertEquals("sk" in breadCrumbs, true);
 	assertEquals("pk" in breadCrumbs, true);
@@ -376,6 +466,8 @@ Deno.test("isMediaFinished is based on bread crumbs", async () => {
 	}
 	assertEquals(!!hasStarted, true);
 });
+
+
 
 Deno.test("isMediaFinished is now complete", async () => {
 	const s3m = s3Mock() as unknown as S3Client;
@@ -429,27 +521,38 @@ Deno.test("isMediaFinished is now complete", async () => {
 
 	const { taskIDs, ...tcfg } = splitSynthTaskResponse(synthTask.SynthesisTask);
 	const s3stuff = { s3c: s3m, Bucket: "MOCK", Prefix: "MOCKED_PREFIX" };
-	const breadCrumbs = await cacheOurBreadcrumbs(
+	const breadCrumbs = await sendToCache(
 		item,
 		key,
 		tcfg.config,
 		taskIDs,
 		s3stuff,
 	);
-	const hasStarted = await haveEverStarted(key, s3stuff);
+	const hasStarted = await checkChache(key, s3stuff);
 
 	assertEquals("sk" in breadCrumbs, true);
 	assertEquals("pk" in breadCrumbs, true);
 	assertEquals(breadCrumbs.pk, breadCrumbs.sk);
 	assertEquals("item" in breadCrumbs, true);
 	assertEquals("task" in breadCrumbs, true);
-	assertEquals(!!hasStarted, true);
+	assertEquals(!!hasStarted, true); // @todo
 
 	if (hasStarted) {
 		const isFinished = await isMediaFinished(hasStarted);
 		assertEquals(isFinished, true);
 	}
 });
+
+Deno.test({
+	name: 'make item key',
+	fn: async ()=>{
+		const ka1 = await makeKey({ a: 1, b:2, c:3 }, "Hello World I am some example text!");
+		assert( ka1.startsWith('k01://') )
+		assert( !ka1.includes(',') )
+	}
+})
+
+
 
 // Deno.test(skip("example", async () => {}));
 // WAIT FOR the s3 resources to show ... then delete

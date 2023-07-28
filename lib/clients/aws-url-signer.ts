@@ -8,7 +8,7 @@ import type { PromiseOr } from '$lib/types.ts'
 
 import { encode as hexEnc } from "$std/encoding/hex.ts";
 
-import { SignatureV4,  } from '@aws-sdk/signature-v4'
+import { SignatureV4 } from '@aws-sdk/signature-v4'
 import { Sha256 } from "@aws-crypto/sha256-js";
 import { HttpRequest } from "@aws-sdk/protocol-http";
 
@@ -94,73 +94,77 @@ export interface Credentials {
 	sessionToken?: string;
 }
 
-export const awsV4Sig = (
-	cfg: Credentials & { region: string; service: string },
-) => {
-	return async (request: Request): Promise<Request> => {
-		const ALGO = "AWS4-HMAC-SHA256";
-		const date = new Date();
-		const amzdate = toAmz(date);
-		const datestamp = toDateStamp(date);
+// const awsV4Sig = (
+// 	cfg: Credentials & { region: string; service: string },
+// ) => {
+// 	return async (request: Request): Promise<Request> => {
+// 		const ALGO = "AWS4-HMAC-SHA256";
+// 		const date = new Date();
+// 		const amzdate = toAmz(date);
+// 		const datestamp = toDateStamp(date);
 
-		const urlObj = new URL(request.url);
-		const { host, pathname, searchParams } = urlObj;
-		const { awsAccessKeyId, awsSecretKey } = cfg;
-		searchParams.sort();
+// 		const urlObj = new URL(request.url);
+// 		const { host, pathname, searchParams } = urlObj;
+// 		const { awsAccessKeyId, awsSecretKey } = cfg;
+// 		searchParams.sort();
 
-		const canonicalQuerystring = searchParams.toString();
-		// const headers = {} as Record<string, string>; //  Object.fromEntries(request.headers.entries()) as Record<string, string>
-		const headers = Object.fromEntries(request.headers.entries()) as Record<string, string>
+// 		const canonicalQuerystring = searchParams.toString();
+// 		const headers = {} as Record<string, string>; //  Object.fromEntries(request.headers.entries()) as Record<string, string>
+// 		// const headers = Object.fromEntries(request.headers.entries()) as Record<string, string>
+// 		// entries is still not working
+// 		request.headers.forEach((val, key)=>{
+// 			headers[key] = val
+// 		})
 
-		if (cfg.sessionToken) {
-			headers["x-amz-security-token"] = cfg.sessionToken;
-		}
-		headers["x-amz-date"] = amzdate;
-		headers["host"] = host;
+// 		if (cfg.sessionToken) {
+// 			headers["x-amz-security-token"] = cfg.sessionToken;
+// 		}
+// 		headers["x-amz-date"] = amzdate;
+// 		headers["host"] = host;
 
-		const { canonicalArr, signedArr } = Object.entries(headers)
-			.sort((a, z) => a[0].localeCompare(z[0]))
-			.reduce((p, [key, value]) => ({
-				canonicalArr: [...p.canonicalArr, `${key.toLowerCase()}:${value}`],
-				signedArr: [...p.signedArr, `${key.toLowerCase()}`],
-			}), { canonicalArr: [] as string[], signedArr: [] as string[] });
+// 		const { canonicalArr, signedArr } = Object.entries(headers)
+// 			.sort((a, z) => a[0].localeCompare(z[0]))
+// 			.reduce((p, [key, value]) => ({
+// 				canonicalArr: [...p.canonicalArr, `${key.toLowerCase()}:${value}`],
+// 				signedArr: [...p.signedArr, `${key.toLowerCase()}`],
+// 			}), { canonicalArr: [] as string[], signedArr: [] as string[] });
 
-		const canonicalHeaders = canonicalArr.join("\n");
-		const signedHeaders = signedArr.join(";");
+// 		const canonicalHeaders = canonicalArr.join("\n");
+// 		const signedHeaders = signedArr.join(";");
 
-		const body = request.body ? new Uint8Array(await request.arrayBuffer()) : null;
-		const payloadHash = await sha256(body ?? new Uint8Array(0));
+// 		const body = request.body ? new Uint8Array(await request.arrayBuffer()) : null;
+// 		const payloadHash = await sha256(body ?? new Uint8Array(0));
 
-		const canonicalRequest =
-			`${request.method}\n${pathname}\n${canonicalQuerystring}\n${canonicalHeaders}\n${signedHeaders}\n${payloadHash}`;
+// 		const canonicalRequest =
+// 			`${request.method}\n${pathname}\n${canonicalQuerystring}\n${canonicalHeaders}\n${signedHeaders}\n${payloadHash}`;
 
-		const canonicalRequestDigest = await sha256(canonicalRequest);
+// 		const canonicalRequestDigest = await sha256(canonicalRequest);
 
-		const credentialScope = `${datestamp}/${cfg.region}/${cfg.service}/aws4_request`;
+// 		const credentialScope = `${datestamp}/${cfg.region}/${cfg.service}/aws4_request`;
 
-		const stringToSign = `${ALGO}\n${amzdate}\n${credentialScope}\n${canonicalRequestDigest}`;
+// 		const stringToSign = `${ALGO}\n${amzdate}\n${credentialScope}\n${canonicalRequestDigest}`;
 
-		const signingKey = await getSignatureKey(
-			awsSecretKey,
-			datestamp,
-			cfg.region,
-			cfg.service,
-		);
+// 		const signingKey = await getSignatureKey(
+// 			awsSecretKey,
+// 			datestamp,
+// 			cfg.region,
+// 			cfg.service,
+// 		);
 
-		const signature = await signAwsV4(signingKey, stringToSign);
-		headers["Authorization"] =
-			`${ALGO} Credential=${awsAccessKeyId}/${credentialScope},`
-		  + ` SignedHeaders=${signedHeaders},`
-		  + ` Signature=${signature}`;
+// 		const signature = await signAwsV4(signingKey, stringToSign);
+// 		headers["Authorization"] =
+// 			`${ALGO} Credential=${awsAccessKeyId}/${credentialScope},`
+// 		  + ` SignedHeaders=${signedHeaders},`
+// 		  + ` Signature=${signature}`;
 
-		return new Request(request.url, {
-			headers,
-			method: request.method,
-			body,
-			redirect: request.redirect,
-		});
-	};
-};
+// 		return new Request(request.url, {
+// 			headers,
+// 			method: request.method,
+// 			body,
+// 			redirect: request.redirect,
+// 		});
+// 	};
+// };
 
 
 
@@ -198,9 +202,19 @@ export const toRequest = async (promisedInput: PromiseOr<IHttpRequest>):Promise<
 
 export const toHttpRequest = async (promisedReq: PromiseOr<Request>): Promise<HttpRequest> => {
 	const req = await promisedReq
-	
 	const inputURL = new URL(req.url)
+
 	const body = await req.text()
+
+	const headerEnties = [['host', inputURL.hostname ]]
+	req.headers.forEach((val, key) => {
+		headerEnties.push([key, val])
+	})
+
+	const searchEntries = [] as string[][]
+	inputURL.searchParams.forEach((val, key) => {
+		searchEntries.push([key, val])
+	})
 
 	return new HttpRequest({
 		method: req.method,
@@ -211,8 +225,8 @@ export const toHttpRequest = async (promisedReq: PromiseOr<Request>): Promise<Ht
 		username: inputURL.username.length > 0 ? inputURL.username : undefined,
 		password: inputURL.password.length > 0 ? inputURL.password : undefined,
 		port: inputURL.port ? Number.parseInt(inputURL.port) : undefined,
-		headers: Object.fromEntries([['host', inputURL.hostname ],...req.headers.entries()]),
-		query: Object.fromEntries(inputURL.searchParams.entries()),
+		headers: Object.fromEntries(headerEnties),
+		query: Object.fromEntries(searchEntries),
 		...(body.length > 0 ? { body } : {body: undefined}),
 	})
 }

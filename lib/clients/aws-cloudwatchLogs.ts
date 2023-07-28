@@ -1,4 +1,4 @@
-import { awsV4Sig } from "./aws-url-signer.ts";
+import { sigMaker } from "./aws-url-signer.ts";
 
 // #region types
 type Dict<T> = { [key: string]: T };
@@ -473,20 +473,20 @@ export type PromiseRequestFn = (
 	req: Request | Promise<Request>,
 ) => Promise<Request>;
 
-const sigMaker = (
-	accessKeyId: string,
-	secretAccessKey: string,
-	region: string,
-	service: string,
-) => {
-	const sign = awsV4Sig({
-		region,
-		service,
-		awsAccessKeyId: accessKeyId,
-		awsSecretKey: secretAccessKey,
-	});
-	return async (req: Request | Promise<Request>) => sign(await req);
-};
+// const sigMaker = (
+// 	accessKeyId: string,
+// 	secretAccessKey: string,
+// 	region: string,
+// 	service: string,
+// ) => {
+// 	const sign = awsV4Sig({
+// 		region,
+// 		service,
+// 		awsAccessKeyId: accessKeyId,
+// 		awsSecretKey: secretAccessKey,
+// 	});
+// 	return async (req: Request | Promise<Request>) => sign(await req);
+// };
 
 const middleware =
 	(fns: ((r: Request | Promise<Request>) => Promise<Request>)[]) =>

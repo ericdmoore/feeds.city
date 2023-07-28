@@ -73,7 +73,7 @@ Deno.test("POST the root to Join waitlist ", async () => {
 	url.searchParams.append("status", encodeURIComponent("test"));
 	url.searchParams.append(
 		"keyID",
-		encodeURIComponent(!env("KEY_D_PRIVATE")),
+		encodeURIComponent(env("KEY_D_PRIVATE")),
 	);
 	// using keyID as a secret  in order to pass in the test cases
 

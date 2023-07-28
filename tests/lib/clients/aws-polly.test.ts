@@ -100,17 +100,30 @@ Deno.test({
 		// 
 		// assertEquals(actualHttpReq, httpReq)		
 
+		const headers = {} as Record<string, string>
+		req.headers.forEach((val, key)=>{
+			headers[key] = val
+		})
+
+		const search = {} as Record<string, string>
+		reqURL.searchParams.forEach((val, key)=>{
+			search[key] = val
+		})
+
 		assert(!httpReq.body && !req.body)
 		assert(httpReq.fragment	=== reqURL.hash)
 		assert(httpReq.hostname === reqURL.hostname)
-		assertEquals(httpReq.headers , Object.fromEntries([['host','foo.com'],...req.headers.entries()]))
+		assertEquals(httpReq.headers , {
+			host:'foo.com',
+			...headers
+		} as Record<string, string>)
 		assert(httpReq.method === req.method)
 		assert(httpReq.password === undefined && reqURL.password === '')
 		assert(httpReq.username === undefined && reqURL.username === '')
 		assert(httpReq.port === undefined)
 		assert(reqURL.port === '')
 		assert(httpReq.protocol === reqURL.protocol)
-		assertEquals(httpReq.query, Object.fromEntries(reqURL.searchParams.entries()))
+		assertEquals(httpReq.query, search)
 		
 	}
 })
@@ -205,7 +218,10 @@ Deno.test("ListSpeechSynthesisTasks", async () => {
 	assert(authHdr?.includes("Signature="));
 
 	const r = await pc.ListSpeechSynthesisTasks().response();
+	
 	// console.log(await r.text())
+	r.body?.cancel()
+
 	assertEquals(r.status, 200);
 
 	// const rjson = await pc.ListSpeechSynthesisTasks().json()

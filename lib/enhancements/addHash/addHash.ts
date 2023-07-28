@@ -13,7 +13,7 @@ export const addHash =
 
 		ast = await ast as ASTComputable;
 		const _meta = await rezVal(ast._meta);
-		const list = await rezVal(ast.item.list);
+		const list = await rezVal(ast.item?.list ?? []);
 
 		const itemHashes = await Promise.all(list.map(async (i) => {
 			const { html, text, markdown } = await rezVal(i.content);

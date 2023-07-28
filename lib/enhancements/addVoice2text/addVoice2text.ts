@@ -13,6 +13,7 @@
 
 import * as s from "superstruct";
 import type { PromiseOr } from "../../types.ts";
+
 import {
 	type ASTcomputable,
 	type ASTFeedItemJsonTYPE,
@@ -20,6 +21,10 @@ import {
 	computableToJson,
 	rezVal,
 } from "../../parsers/ast.ts";
+
+import { ASTChainFunc } from "../index.ts";
+
+// import { toRequest, toHttpRequest} from '$lib/clients/aws-url-signer.ts'
 
 import {
 	type OutputFormat,
@@ -35,41 +40,35 @@ import {
 	type VoiceId,
 } from "../../clients/aws-polly.ts";
 
-// import {
-// 	PollyClient, 
-// 	// ServiceInputTypes,
-// 	StartSpeechSynthesisTaskCommand, 
-// 	StartSpeechSynthesisTaskCommandInput, 
-// 	// StartSpeechSynthesisTaskCommandOutput,
-// 	// GetSpeechSynthesisTaskCommand, 
-// 	// DescribeVoicesCommand,
-// 	// SynthesizeSpeechCommand,
-// 	// ListSpeechSynthesisTasksCommand, 
-// } from '@aws-sdk/client-polly'
-
-
-// import {} from "@aws-sdk/client-polly"
-
 import { identicon } from "../../clients/svg-avatars.ts";
 
 import {
 	DynamoDBClient,
 	GetItemCommand,
 	PutItemCommand,
-} from "https://esm.sh/@aws-sdk/client-dynamodb@3.329.0?deno-std=0.172.0&dts";
+} from "@aws-sdk/client-dynamodb";
 
-import { marshall } from "https://esm.sh/@aws-sdk/util-dynamodb@3.329.0?deno-std=0.172.0&dts";
+import { marshall } from "@aws-sdk/util-dynamodb";
 
 import {
 	GetObjectCommand,
+	GetObjectCommandInput,
+	GetObjectOutput,
+	// GetObjectCommandOutput,
 	HeadObjectCommand,
 	PutObjectCommand,
 	S3Client,
-} from "https://esm.sh/@aws-sdk/client-s3@3.329.0?deno-std=0.172.0&dts";
+} from "@aws-sdk/client-s3";
+
+// import type { Client } from "@aws-sdk/types"
+import { getSignedUrl} from "@aws-sdk/s3-request-presigner";
+
+// import { Sha256 } from "@aws-crypto/sha256-js";
+// Uncached or missing remote URL: "https://esm.sh/v129/@aws-sdk/types".
+
 
 import { hmac } from "../../utils/hmac.ts";
-import { extname } from "$std/path/mod.ts";
-import { getSignedUrl } from "https://deno.land/x/aws_s3_presign@1.3.0/mod.ts";
+import { extname } from "$std/path/mod.ts"
 
 // #region types
 
@@ -84,7 +83,7 @@ interface BreadCrumbCacheMeta {
 	"Cache-Control"?: string;
 }
 
-interface BreadcrumbCache {
+interface CachedStatusData {
 	sk: string;
 	pk: string;
 	task: SynthesisTaskConfig;
@@ -93,14 +92,6 @@ interface BreadcrumbCache {
 	meta: {
 		item?: BreadCrumbCacheMeta;
 	};
-}
-
-interface pollyConfig {
-	VoiceId: VoiceId;
-	OutputFormat: OutputFormat;
-	SampleRate: string;
-	useNeuralEngine: true;
-	isPlainText: true;
 }
 
 // #endregion types
@@ -118,6 +109,7 @@ export const text2VoiceParams = s.object({
 		s3: s.object({
 			bucket: s.string(),
 			prefix: s.optional(s.string()),
+			client: s.optional(s.unknown()),
 		}),
 		polly: s.optional(s.partial(s.object({
 			voiceId: s.string(),
@@ -126,16 +118,16 @@ export const text2VoiceParams = s.object({
 			sampleRate: s.string(),
 			useNeuralEngine: s.boolean(),
 			isPlainText: s.boolean(),
-			onCompletion: s.object({
-				snsTopic: s.string(),
-			}),
+			onCompletion: s.object({ snsTopic: s.string() }),
+			client: s.optional(s.unknown()),
 		}))),
 		cloudfront: s.optional(s.object({
 			host: s.string(),
 			expiresAfterSeconds: s.optional(s.number()),
 		})),
 		dynamo: s.optional(s.object({
-			table: s.string(),
+			client: s.optional(s.unknown()),
+			table: s.optional(s.string()),
 		})),
 	}),
 });
@@ -146,11 +138,14 @@ const defCfgType = s.object({
 		...text2VoiceParams.schema.config.schema.s3.schema,
 		prefix: s.string(),
 	}),
+	dynamo: s.optional(s.object({
+		...text2VoiceParams.schema.config.schema.dynamo.schema,
+		table: s.optional(s.string())
+	})),
 	cloudfront: s.optional(s.object({
 		host: s.string(),
 		expiresAfterSeconds: s.optional(s.number()),
 	})),
-	dynamo: s.optional(s.object({ table: s.string() })),
 	polly: s.object({
 		...text2VoiceParams.schema.config.schema.polly.schema,
 		voiceId: s.string(),
@@ -175,6 +170,7 @@ export const splitSynthTaskResponse = (
 		...config
 	} = resp;
 	return {
+		config,
 		taskIDs: {
 			CreationTime,
 			RequestCharacters,
@@ -183,22 +179,27 @@ export const splitSynthTaskResponse = (
 			TaskStatus,
 			TaskStatusReason,
 			SnsTopicArn,
-		},
-		config,
+		}
 	};
 };
 
-const signS3Urlsigner = (
-	i: { accessKeyId: string; secretAccessKey: string },
-	method: "GET" | "PUT" = "GET",
-	expiresIn = 3600,
-) =>
-(
-	j: { bucketName: string; region: string; objectPath: string },
-	date = new Date(),
-) => getSignedUrl({ ...i, ...j, method, expiresIn, date });
+export const signS3Urlsigner = ( creds: { accessKeyId: string; secretAccessKey: string}) => 
+(input: GetObjectCommandInput & {region: string}): Promise<string> => {
+	const client = new S3Client({
+		region: input.region, 
+		credentials: creds,
+	})
+	
+	// deno-lint-ignore no-explicit-any
+	return getSignedUrl(client as any,
+		// deno-lint-ignore no-explicit-any
+		new GetObjectCommand(input) as any, 
+		{ expiresIn: 3600 }
+	);
+}
 
-export const splitBucketItemURL = (bucket: string, s3uri: string) => {
+
+export const pluckAudioURI = (bucket: string, s3uri: string) => {
 	const s3url = new URL(s3uri);
 	const indexes = bucket.includes(".") ? { key: 2, region: 1 } : { key: 1, region: 2 };
 	return {
@@ -214,72 +215,58 @@ export const splitBucketItemURL = (bucket: string, s3uri: string) => {
  * @param params
  * @param ast
  */
-export const textToVoice = (
-	userParams: s.Infer<typeof text2VoiceParams>,
-	pc?: PollyClientInterface,
-	s3?: { s3c: S3Client },
-	// dynC?: DynamoDBClient,
-) =>
+export const textToVoice = (params: s.Infer<typeof text2VoiceParams>) =>
 async (_ast: PromiseOr<AST>): Promise<ASTjson> => {
 	// check key,secret permissions
 	// s3: read, write
 	// polly send, sendTask
 
 	const ast = await computableToJson(_ast);
-
+	
 	const defCfg = {
-		aws: { ...userParams.aws },
+		aws: { ...params.aws },
 		s3: {
+			...params.config.s3,
 			prefix: "",
-			...userParams.config.s3,
 		},
-		dynamo: userParams.config.dynamo,
-		cloudfront: userParams.config.cloudfront,
+		dynamo: params.config.dynamo,
+		cloudfront: params.config.cloudfront,
 		polly: {
 			voiceId: "Matthew" as VoiceId,
 			outputFormat: "mp3" as OutputFormat,
 			sampleRate: "24000",
 			useNeuralEngine: true,
 			isPlainText: true,
-			...userParams.config.polly,
-		} as typeof userParams.config.polly,
+			...params.config.polly,
+		} as typeof params.config.polly,
 	};
 
 	const [err, validatedData] = defCfgType.validate(defCfg);
+	
 	if (err) {
 		return Promise.reject({ msg: "Input Validate Error", err, code: 400 });
 	}
 
 	const handleItem = makeItemHandler(
 		validatedData,
-		pc ?? pollyClient(
-			defCfg.aws.key,
-			defCfg.aws.secret,
-			defCfg.aws.region,
-		),
+		params.config.polly?.client as PollyClientInterface 
+			?? pollyClient(
+				defCfg.aws.key,
+				defCfg.aws.secret,
+				defCfg.aws.region,
+			),
 		{
 			Bucket: defCfg.s3.bucket,
 			Prefix: defCfg.s3.prefix,
-			s3c: s3?.s3c ?? new S3Client({
-				region: defCfg.aws.region,
-				credentials: {
-					accessKeyId: defCfg.aws.key,
-					secretAccessKey: defCfg.aws.secret,
-				},
-			}),
-		},
-		// dynC
-		//   ? {
-		//     table: userParams.config.dynamo?.table ?? ">> MISSING TABLE",
-		//     c: createClient({
-		//       region: defCfg.aws.region,
-		//       credentials: {
-		//         accessKeyId: defCfg.aws.key,
-		//         secretAccessKey: defCfg.aws.secret,
-		//       },
-		//     }),
-		//   }
-		//   : dynC,
+			s3c: params.config.s3.client as S3Client
+				?? new S3Client({
+					region: defCfg.aws.region,
+					credentials: {
+						accessKeyId: defCfg.aws.key,
+						secretAccessKey: defCfg.aws.secret,
+					},
+				}),
+		}
 	);
 
 	return {
@@ -311,56 +298,80 @@ const placeholderURL = (status: Status) =>
 
 export const makeKey = async (config: unknown, itemText: string) => {
 	const dec = new TextDecoder();
+	
 	const sig = (msg: string, key?: string) =>
 		hmac("SHA-256", enc.encode(key ?? msg), enc.encode(msg), "hex");
 
-	const configHMAC = dec.decode(
-		await sig(
-			typeof config === "string" ? config : JSON.stringify(config),
-		),
-	) as string;
-	const dataHMAC = dec.decode(await sig(itemText)) as string;
+	const configStr = typeof config === "string" 
+		? config 
+		: JSON.stringify(config)
 
-	return `k01://${await sig(dataHMAC, configHMAC)}`;
+	// HMAC-SHA256(:msg, :key)
+	//
+	// HMAC-SHA256( HMAC-SHA256(data, data), HMAC-SHA256(config, config) )
+	//
+	const dataHMAC = dec.decode(await sig(itemText)) as string;
+	const configHMAC = dec.decode( await sig(configStr)) as string;	
+	const combo = dec.decode(await sig(dataHMAC, configHMAC))
+	return `k01://${combo}`;
 };
 
-export const haveEverStarted = async (
+const urlSafeKey = (itemKey:string)=>itemKey.replace("://", "!!")
+
+export const checkChache = async (
 	itemKey: string,
 	s3: { s3c: S3Client; Bucket: string; Prefix: string },
 	dyn?: { dyc: DynamoDBClient; Table: string },
-): Promise<BreadcrumbCache | null> => {
+): Promise<CachedStatusData | null> => {
+	
+	// console.log(332, {itemKey, s3, dyn})
+
 	if (dyn) {
 		console.log("using dynamo - not s3");
 		const GetItemCmd = new GetItemCommand({
 			TableName: dyn.Table,
 			Key: marshall({ pk: itemKey, sk: itemKey }),
 		});
+
 		const dynoResp = await dyn.dyc.send(GetItemCmd).catch(() => null) as
-			| BreadcrumbCache
+			| CachedStatusData
 			| null;
 		return dynoResp;
+
 	} else {
-		const s3CacheCrumb = await s3.s3c.send(
-			new GetObjectCommand({
-				Bucket: s3.Bucket,
-				// https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-keys.html
-				Key: itemKey.replace("://", ".!!") + ".json",
-			}),
-		);
+
+		let s3CacheCrumb: null | GetObjectOutput
+		try{
+			s3CacheCrumb = await s3.s3c.send(
+				new GetObjectCommand({
+					Bucket: s3.Bucket,
+					Key: urlSafeKey(itemKey) + ".json",
+				})
+			) as GetObjectOutput
+		}catch(er){
+			console.error(er)
+			s3CacheCrumb = null
+		}
+		
+		console.log(349, { s3CacheCrumb })
 
 		if (s3CacheCrumb) {
-			const str = await s3CacheCrumb.Body?.transformToString()!;
-			return JSON.parse(str) as BreadcrumbCache;
+			const str = await (s3CacheCrumb.Body as unknown as StringConvertable).transformToString('utf-8')!;
+			return JSON.parse(str) as CachedStatusData;
 		} else {
 			return null;
 		}
 	}
 };
 
-export const isMediaFinished = (bc: BreadcrumbCache) =>
+interface StringConvertable{
+	transformToString: (enc: 'utf-8' | string) => Promise<string>
+}
+
+export const isMediaFinished = (bc: CachedStatusData) =>
 	bc.taskIDs.TaskStatus?.toLowerCase() === "completed";
 
-export const cacheOurBreadcrumbs = async (
+export const sendToCache = async (
 	item: ASTFeedItemJsonTYPE,
 	itemKey: string,
 	taskConfig: SynthesisTaskConfig,
@@ -368,8 +379,9 @@ export const cacheOurBreadcrumbs = async (
 	s3: { s3c: S3Client; Bucket: string; Prefix: string },
 	dyn?: { dyc: DynamoDBClient; Table: string },
 	meta?: BreadCrumbCacheMeta,
-): Promise<BreadcrumbCache & { taskIDs: SynthesisTaskIdentifiers }> => {
+): Promise<CachedStatusData & { taskIDs: SynthesisTaskIdentifiers }> => {
 	const icon = identicon(itemKey);
+	
 	const saved = {
 		sk: itemKey,
 		pk: itemKey,
@@ -387,32 +399,26 @@ export const cacheOurBreadcrumbs = async (
 				)
 			}`,
 		},
-	} as BreadcrumbCache;
+	} as CachedStatusData & { taskIDs: SynthesisTaskIdentifiers }
 
-	// console.log({ saved, icon });
+	console.log(395, { saved });
 
-	if (dyn) {
-		await dyn.dyc.send(
-			new PutItemCommand({
-				TableName: dyn.Table,
-				Item: marshall(saved),
-			}),
-		);
+	if (dyn?.dyc) {
+		await dyn.dyc.send(new PutItemCommand({
+			TableName: dyn.Table, 
+			Item: marshall(saved)
+		}));
 	}
 
-	const s3keyName = itemKey.replace("://", ".!!");
-
-	await s3.s3c.send(
-		new PutObjectCommand({
-			Key: s3keyName + ".json",
-			Bucket: s3.Bucket,
-			Body: enc.encode(JSON.stringify(saved, null, 2)),
-		}),
-	);
-
-	return { ...saved, taskIDs } as BreadcrumbCache & {
-		taskIDs: SynthesisTaskIdentifiers;
-	};
+	if(s3.s3c){
+		await s3.s3c.send(
+			new PutObjectCommand({
+				Bucket: s3.Bucket,
+				Key: urlSafeKey(itemKey)+ ".json",
+				Body: JSON.stringify(saved)
+		}));
+	}
+	return saved
 };
 
 export const makeItemHandler = (
@@ -426,11 +432,7 @@ async (
 	_itemNumber: number,
 	_list: ASTFeedItemJsonTYPE[],
 ): Promise<ASTFeedItemJsonTYPE> => {
-	const s3url = signS3Urlsigner({
-		accessKeyId: config.aws.key,
-		secretAccessKey: config.aws.secret,
-	});
-
+	
 	const content = await rezVal(item.content);
 	const chosenText = content.text ??
 		content.markdown ??
@@ -439,84 +441,35 @@ async (
 		content.raw ??
 		"no text provided";
 
-	const k = await makeKey(config.polly, chosenText);
+	const itemKey = await makeKey(config.polly, chosenText);
 
-	const downStreamStatus = (bc: BreadcrumbCache) => ({
-		addVoice2Text: { [`${bc.pk}-${bc.sk}`]: bc.taskIDs.TaskStatus },
-	});
-
-	const addAttachment = (
-		item: ASTFeedItemJsonTYPE,
-		bc: BreadcrumbCache,
-		k: string,
-	) => {
-		const icon = identicon(k);
-		const sizeInBytes = Number.parseInt(
-			bc.meta.item?.["Content-Length"] ??
-				(bc.taskIDs.RequestCharacters * 12).toString(),
-		);
-		const durationInSeconds = sizeInBytes / 6050; // magic number averaged out from 5 samples below
-		const s3urlparts = splitBucketItemURL(
-			config.s3.bucket,
-			bc.taskIDs.OutputUri,
-		);
-		const url = s3url({
-			bucketName: s3urlparts.bucket,
-			region: s3urlparts.region,
-			objectPath: s3urlparts.key,
-		});
-
-		// console.log('s3url:', url)
-
-		return {
-			title: item.title ??
-				"AWS/Polly Audio for: " + chosenText.slice(0, 20) + "...",
-			url,
-			sizeInBytes,
-			durationInSeconds,
-			characters: bc.taskIDs.RequestCharacters,
-			status: bc.taskIDs.TaskStatus,
-			etag: bc.meta.item?.ETag ?? null,
-			mimeType: OutputFormatMimeEnum[config.polly.outputFormat],
-			_: {
-				meta: bc.meta.item,
-				imageUrls: {
-					base64: `data:image/svg+xml;base64,${
-						btoa(placeholderURL(bc.taskIDs.TaskStatus)(icon.rectStr, icon.fill))
-					}`,
-					svgText: `data:image/svg+xml;${
-						encodeURIComponent(
-							placeholderURL(bc.taskIDs.TaskStatus)(icon.rectStr, icon.fill),
-						)
-					}`,
-				},
-			},
-		};
-	};
-
-	const cacheItem = await haveEverStarted(
-		k,
+	const cacheItem = await checkChache(
+		itemKey,
 		s3,
 		dyn,
 	);
 
 	if (cacheItem) {
+		// 
 		if (isMediaFinished(cacheItem)) {
-			// console.log('...media is finished, update the cache >> ', cacheItem);
+			console.log(442, '...media is finished, update the cache >> ', cacheItem);
 
-			// complete but somehow missed thge
+			// complete but somehow missed the
 			if (!cacheItem.meta?.item) {
-				const s3parts = splitBucketItemURL(
+
+				const s3AudioLoc = pluckAudioURI(
 					config.s3.bucket,
 					cacheItem.taskIDs.OutputUri,
 				);
 
-				const headCmd = new HeadObjectCommand({
+				const s3r = await s3.s3c.send(
+					new HeadObjectCommand({
 					Bucket: s3.Bucket,
-					Key: `${s3.Prefix}${s3parts.key}`,
-				});
-				const s3r = await s3.s3c.send(headCmd).catch(() => null);
-				// console.log({ s3r });
+					Key: `${s3.Prefix}${s3AudioLoc.key}`,
+					}
+				)).catch(() => null);
+				
+				console.log({ s3r });
 
 				const meta = {
 					ETag: s3r?.ETag ?? "etag:missing",
@@ -527,9 +480,9 @@ async (
 					"Content-Encoding": s3r?.ContentEncoding,
 				} as BreadCrumbCacheMeta;
 
-				const breadcrumbs = await cacheOurBreadcrumbs(
+				const breadcrumbs = await sendToCache(
 					item,
-					k,
+					itemKey,
 					cacheItem.task,
 					cacheItem.taskIDs,
 					s3,
@@ -537,45 +490,76 @@ async (
 					meta,
 				);
 
-				item.__enhancement = {
-					...item.__enhancement,
-					...downStreamStatus(breadcrumbs),
+				// item.__enhancement = {
+				// 	...item.__enhancement,
+				// 	...downStreamStatus(breadcrumbs),
+				// };
+				// item.attachments.push(await addAttachment(item, breadcrumbs, itemKey, config, chosenText));
+		
+				return {
+					...item,
+					attachments: 
+						item.attachments.concat(
+							await addAttachment(item, breadcrumbs, itemKey, config, chosenText)
+						),
+					__enhancement: {
+						...item.__enhancement,
+						...downStreamStatus(breadcrumbs),
+					}
 				};
-				item.attachments.push(addAttachment(item, breadcrumbs, k));
-				return item;
 			} else {
-				item.__enhancement = {
-					...item.__enhancement,
-					...downStreamStatus(cacheItem),
+				// item.__enhancement = {
+				// 	...item.__enhancement,
+				// 	...downStreamStatus(cacheItem),
+				// };
+				// item.attachments.push(await addAttachment(item, cacheItem, itemKey, config, chosenText));
+				return {
+					...item, 
+					__enhancement: {
+						...item.__enhancement,
+						...downStreamStatus(cacheItem),
+					},
+					attachments: item.attachments.concat(await addAttachment(item, cacheItem, itemKey, config, chosenText))
 				};
-				item.attachments.push(addAttachment(item, cacheItem, k));
-				return item;
 			}
 		} else {
-			// console.log('...updating the cache >> ', cacheItem);
-			// console.log({ taskID: cacheItem.taskIDs.TaskId });
+			console.log(495, '...update the cache >> ', cacheItem);
+			console.log({ taskID: cacheItem.taskIDs.TaskId });
 
-			const resp = await pc.GetSpeechSynthesisTask(cacheItem.taskIDs.TaskId)
-				.json();
+			const resp = await pc.GetSpeechSynthesisTask(cacheItem.taskIDs.TaskId).json();
 			const { taskIDs, ...tcfg } = splitSynthTaskResponse(resp.SynthesisTask);
-			const breadcrumbs = await cacheOurBreadcrumbs(
+			const breadcrumbs = await sendToCache(
 				item,
-				k,
+				itemKey,
 				tcfg.config,
 				taskIDs,
 				s3,
 				dyn,
 			);
-			// console.log({ breadcrumbs });
+			console.log({ breadcrumbs });
 
-			item.__enhancement = {
-				...item.__enhancement,
-				...downStreamStatus(breadcrumbs),
-			};
-			item.attachments.push(addAttachment(item, breadcrumbs, k));
-			return item;
+			// item.__enhancement = {
+			// 	...item.__enhancement,
+			// 	...downStreamStatus(breadcrumbs),
+			// };
+
+			// item.attachments.push(
+			// 	await addAttachment(item, breadcrumbs, itemKey, config, chosenText)
+			// );
+
+			return {
+				...item,
+				attachments: item.attachments.concat(
+					await addAttachment(item, breadcrumbs, itemKey, config, chosenText)
+				),
+				__enhancement: {
+					...item.__enhancement,
+					...downStreamStatus(breadcrumbs),
+				}
+			}
 		}
 	} else {
+		// cache miss (new content needing auddio )
 		const taskCommandReqd: StartSpeechTaskRequired = {
 			Text: chosenText,
 			OutputS3BucketName: config.s3.bucket,
@@ -589,58 +573,138 @@ async (
 			Engine: config.polly.useNeuralEngine ? "neural" : "standard",
 			...(config.polly.onCompletion?.snsTopic
 				? { SnsTopicArn: config.polly.onCompletion?.snsTopic }
-				: {}),
+				: {}
+			),
 		};
-
-		// console.log('nice to meet you, Ill create some audio for ya!');
-
-		// const _pollyC = new PollyClient({
-		// 	region: config.aws.region, 
-		// 	credentials:{
-		// 		accessKeyId: config.aws.key, secretAccessKey: config.aws.secret
-		// 	}
-		// })
-
-		// const startCmdInput: StartSpeechSynthesisTaskCommandInput = {
-		// 	OutputFormat: config.polly.outputFormat, 
-		// 	Text: chosenText, 
-		// 	OutputS3BucketName: config.s3.bucket, 
-		// 	OutputS3KeyPrefix: config.s3.prefix,
-		// 	VoiceId: config.polly.voiceId as VoiceId,
-		// 	TextType: config.polly.isPlainText ? "text" : "ssml",
-		// 	Engine: config.polly.useNeuralEngine ? "neural" : "standard",
-		// }
-
-		// const _startCmd = new StartSpeechSynthesisTaskCommand(startCmdInput)
-
-		// tytpe ipt ServiceInputTypes
-		// const resp = await pollyC.send<StartSpeechSynthesisTaskCommandInput, StartSpeechSynthesisTaskCommandOutput>(startCmd)
 
 		const commandResponse = await pc.StartSpeechSynthesisTask(
 			taskCommandReqd,
 			taskCommandOpts,
 		).json();
-		// console.log(434, { commandResponse });
+
+		console.log(434, { commandResponse });
 
 		const { taskIDs, ...tcfg } = splitSynthTaskResponse(
 			commandResponse.SynthesisTask,
 		);
-		const breadcrumbs = await cacheOurBreadcrumbs(
+
+		const breadcrumbs = await sendToCache(
 			item,
-			k,
+			itemKey,
 			tcfg.config,
 			taskIDs,
 			s3,
 			dyn,
 		);
-		// console.log({ breadcrumbs });
 
-		item.__enhancement = {
-			...item.__enhancement,
-			...downStreamStatus(breadcrumbs),
+		console.log(561, { breadcrumbs });
+
+		// item.__enhancement = {
+		// 	...item.__enhancement,
+		// 	...downStreamStatus(breadcrumbs),
+		// };
+
+		// item.attachments.push(await addAttachment(item, breadcrumbs, itemKey, config, chosenText));
+
+		return {
+			...item,
+			attachments: item.attachments.concat(
+				await addAttachment(item, breadcrumbs, itemKey, config, chosenText)
+			),
+			__enhancement: {
+				...item.__enhancement,
+				...downStreamStatus(breadcrumbs),
+			}
 		};
-		item.attachments.push(addAttachment(item, breadcrumbs, k));
-
-		return item;
 	}
 };
+
+
+const downStreamStatus = (bc: CachedStatusData) => ({
+	addVoice2Text: { [`${bc.pk}-${bc.sk}`]: bc.taskIDs.TaskStatus },
+});
+
+const addAttachment = async (
+	item: ASTFeedItemJsonTYPE,
+	bc: CachedStatusData,
+	k: string,
+	config: s.Infer<typeof defCfgType>,
+	chosenText: string
+) => {
+
+	const s3urlsigner = signS3Urlsigner({
+		accessKeyId: config.aws.key,
+		secretAccessKey: config.aws.secret,
+	});
+
+	const icon = identicon(k);
+	const sizeInBytes = Number.parseInt(
+		bc.meta.item?.["Content-Length"] ??
+			(bc.taskIDs.RequestCharacters * 12).toString(),
+	);
+	const durationInSeconds = sizeInBytes / 6050; // magic number averaged out from 5 samples below
+	const s3urlparts = pluckAudioURI(
+		config.s3.bucket,
+		bc.taskIDs.OutputUri,
+	);
+
+	const url = await s3urlsigner({
+		Bucket: s3urlparts.bucket, 
+		region: s3urlparts.region,
+		Key: s3urlparts.key
+	})
+	
+	// console.log('s3url:', url)
+
+	return {
+		title: item.title ??
+			"AWS/Polly Audio for: " + chosenText.slice(0, 20) + "...",
+		url: url,
+		sizeInBytes,
+		durationInSeconds,
+		characters: bc.taskIDs.RequestCharacters,
+		status: bc.taskIDs.TaskStatus,
+		etag: bc.meta.item?.ETag ?? null,
+		mimeType: OutputFormatMimeEnum[config.polly.outputFormat],
+		_: {
+			meta: bc.meta.item,
+			imageUrls: {
+				base64: `data:image/svg+xml;base64,${
+					btoa(placeholderURL(bc.taskIDs.TaskStatus)(icon.rectStr, icon.fill))
+				}`,
+				svgText: `data:image/svg+xml;${
+					encodeURIComponent(
+						placeholderURL(bc.taskIDs.TaskStatus)(icon.rectStr, icon.fill),
+					)
+				}`,
+			},
+		},
+	};
+};
+
+export default textToVoice as ASTChainFunc
+
+
+/**
+ * 
+ * 
+ * 
+ * invoked with the AST
+ * for each item in the list
+ * 
+ *   Make a cache key based on `item.content`
+ *  
+ * 	 Does the cache have the key?
+ * 
+ *   N: start a self-caching "polly task" with the item content
+ *      add placeholder content to the AST item
+ * 
+ *   Y: Grab the Cache Data
+ *       
+ * 		cache status is complete?
+ * 
+ * 		Y: Inject COMPLETED attachment into the AST item (mutate/replace the item witihn the AST list)
+ * 
+ * 		N: Inject INPROGRESS attachment into the AST item (mutate/replace the item witihn the AST list)
+ * 
+ */

@@ -5,14 +5,25 @@ import {
 	GetObjectCommand,
 	HeadObjectCommand,
 	PutObjectCommand,
-} from "https://esm.sh/@aws-sdk/client-s3@3.329.0?deno-std=0.172.0&dts";
+} from "@aws-sdk/client-s3";
+import { streamToString } from "$lib/utils/pumpReader.ts";
 
 const encoder = new TextEncoder();
+class Body {
+	body: ReadableStream<Uint8Array>
+	constructor(input: Uint8Array){
+		this.body = new Response(input).body!
+	}
+	valueOf(){return this.body}
+	transformToString() {
+		return streamToString(this.body)
+	}
+}
 
 export const s3Mock = (
 	state: Map<string, Uint8Array> = new Map<string, Uint8Array>(),
-) => ({
-	headObject: (key: string) => {
+) => {
+	const headObject = (key: string) => {
 		const res = state.get(key) ?? new Uint8Array();
 		return {
 			contentLength: res.length,
@@ -36,43 +47,43 @@ export const s3Mock = (
 			versionId: undefined,
 			websiteRedirectLocation: undefined,
 		};
-	},
-	putObject: (
+	}
+	const putObject=  (
 		key: string,
 		data: unknown | string | Uint8Array,
 	): Promise<Uint8Array> => {
 		const val = typeof data === "string"
 			? encoder.encode(data)
 			: data instanceof Uint8Array
-			? data
-			: encoder.encode(JSON.stringify(data));
+				? data
+				: encoder.encode(JSON.stringify(data));
 		state.set(key, val);
 		return Promise.resolve(val);
-	},
-	getObject: (key: string) => {
+	}
+	const getObject=  (key: string) => {
 		const data = state.get(key);
-		return data
-			? { body: new Response(data).body! }
-			: Promise.reject({ err: "Object Not Found", code: 404 });
-	},
-	send: (command: PutObjectCommand | HeadObjectCommand | GetObjectCommand) => {
-		if (command instanceof PutObjectCommand) {
-			console.log(command);
-		} else if (command instanceof HeadObjectCommand) {
-			console.log(command);
-		} else {
-			console.log(command);
-		}
 
-		switch (command.constructor) {
-			case PutObjectCommand:
-				return Promise.resolve(null);
-			case HeadObjectCommand:
-				return Promise.resolve(null);
-			case GetObjectCommand:
-				return Promise.resolve(null);
-			default:
-				return null as never;
+		return data
+			? { Body: new Body(data) }
+			: Promise.reject({ err: "Object Not Found", code: 404 });
+	}
+	const send =  (command: PutObjectCommand | HeadObjectCommand | GetObjectCommand) => {
+		if ('Body' in command.input) {
+			console.log(63,'put', command.input);
+			return putObject(`${command.input.Bucket}/${command.input.Key}`, (command as PutObjectCommand).input.Body);
+		} else if (command instanceof HeadObjectCommand) {
+			console.log(65, 'head', command.input);
+			return headObject(`${command.input.Bucket}/${command.input.Key}`);
+		} else {
+			console.log(67, 'get', command.input);
+			return getObject(`${command.input.Bucket}/${command.input.Key}`);
 		}
-	},
-});
+	}
+
+	return {
+		send,
+		getObject,
+		putObject,
+		headObject
+	}
+};
