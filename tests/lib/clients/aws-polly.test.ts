@@ -183,7 +183,7 @@ Deno.test({
 	fn: async () => {
 		const pc = pollyClient(env('AWS_KEY'), env('AWS_SECRET'));
 		const input = {
-			OutputS3BucketName: env('POLLYBUCKET'),
+			OutputS3BucketName: env('AWS_POLLY_BUCKET'),
 			OutputS3KeyPrefix: "helloWorld",
 			Text: "Hello World! I some text that you can both read and hear.",
 		};
@@ -233,7 +233,7 @@ Deno.test("ListSpeechSynthesisTasks", async () => {
 Deno.test(skip("StartSpeechSynthesisTask Issue Request", async () => {
 	const pc = pollyClient(env('AWS_KEY'), env('AWS_SECRET'));
 	const req = {
-		OutputS3BucketName: env('POLLYBUCKET'),
+		OutputS3BucketName: env('AWS_POLLY_BUCKET'),
 		OutputS3KeyPrefix: "deleteMe-fromTest",
 		Text: "Hello World! I some text that you can both read and hear.",
 	};
@@ -253,7 +253,7 @@ Deno.test("Observe a task in-flight (within the queue)", async (t) => {
 	let status: Status;
 
 	const req = {
-		OutputS3BucketName: env('POLLYBUCKET'),
+		OutputS3BucketName: env('AWS_POLLY_BUCKET'),
 		OutputS3KeyPrefix: `deleteMe-${Date.now()}-${b}`,
 		Text: `This text was generated on ${(new Date()).toISOString()} from a system that has ${
 			Object.entries(Deno.build).map(([k, v]) => `${k} equal to ${v}`).join(

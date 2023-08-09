@@ -69,13 +69,13 @@ export const s3Mock = (
 	}
 	const send =  (command: PutObjectCommand | HeadObjectCommand | GetObjectCommand) => {
 		if ('Body' in command.input) {
-			console.log(63,'put', command.input);
+			// console.log(63,'put', command.input);
 			return putObject(`${command.input.Bucket}/${command.input.Key}`, (command as PutObjectCommand).input.Body);
 		} else if (command instanceof HeadObjectCommand) {
-			console.log(65, 'head', command.input);
+			// console.log(65, 'head', command.input);
 			return headObject(`${command.input.Bucket}/${command.input.Key}`);
 		} else {
-			console.log(67, 'get', command.input);
+			// console.log(67, 'get', command.input);
 			return getObject(`${command.input.Bucket}/${command.input.Key}`);
 		}
 	}

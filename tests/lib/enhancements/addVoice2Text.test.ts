@@ -66,12 +66,12 @@ const cfg = async (i?: {s3?: S3Client, dyn?: DynamoDBClient, pc?: PollyClientInt
 	}
 	const config = {
 		s3: {
-			bucket: env("POLLYBUCKET"),
-			prefix: env("POLLYPREFIX"),
+			bucket: env("AWS_POLLY_BUCKET"),
+			prefix: env("AWS_POLLY_PREFIX"),
 			...(i?.s3 ? {client: i?.s3} : {})
 		},
 		...(i?.dyn ? { dynamo:{ client: i?.dyn }} : {}),
-		...(i?.pc ? {polly:{ client: i?.pc}} : {}),
+		...(i?.pc ? { polly:{ client: i?.pc}} : {}),
 	}
 	// console.log({ s3: config.s3 })
 	return {
@@ -209,7 +209,7 @@ Deno.test({
 })
 
 Deno.test({
-	// only: true,
+	only: true,
 	name: "Valid Attachment For Each Entry ",
 	fn: async () => {
 
@@ -218,17 +218,24 @@ Deno.test({
 			.use(enhancementAdapter(addVoice2text), await cfg())
 			.toCity()
 				
-		const astWithAttachments = await computableToJson(enhanced.ast);
+		// const astWithAttachments = await computableToJson(enhanced.ast);
+		console.log('test>>', 222, 
+			enhanced.ast.items.length,
+			enhanced.ast.items.filter((i)=>i.attachments.length>0).length,
+		)
 		
+		// enhanced.ast.items.forEach((i,n)=>{
+		// 	console.log(228, n, i.attachments)
+		// })
+
 		runAssertions()(
 			testItemsThatHaveAttachments(
 				hasAnActualAttachment,
 				attachmentHasRightProperties,
 				attachedURLIsSigned
-			))
-			( // AST forAll assertions
-				astWithAttachments,
-			);
+			)
+		)
+		(enhanced.ast);
 	},
 });
 

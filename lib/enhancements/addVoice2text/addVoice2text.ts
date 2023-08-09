@@ -353,7 +353,7 @@ export const checkChache = async (
 			s3CacheCrumb = null
 		}
 		
-		console.log(349, { s3CacheCrumb })
+		// console.log(349, { s3CacheCrumb })
 
 		if (s3CacheCrumb) {
 			const str = await (s3CacheCrumb.Body as unknown as StringConvertable).transformToString('utf-8')!;
@@ -380,7 +380,19 @@ export const sendToCache = async (
 	dyn?: { dyc: DynamoDBClient; Table: string },
 	meta?: BreadCrumbCacheMeta,
 ): Promise<CachedStatusData & { taskIDs: SynthesisTaskIdentifiers }> => {
+
 	const icon = identicon(itemKey);
+
+	console.log(386, {
+		item
+	   ,itemKey
+	   ,taskConfig
+	   ,taskIDs
+	   ,s3
+	   ,dyn
+	   ,meta
+	   ,icon
+   })
 	
 	const saved = {
 		sk: itemKey,
@@ -415,7 +427,7 @@ export const sendToCache = async (
 			new PutObjectCommand({
 				Bucket: s3.Bucket,
 				Key: urlSafeKey(itemKey)+ ".json",
-				Body: JSON.stringify(saved)
+				Body: JSON.stringify(saved, null, 2)
 		}));
 	}
 	return saved
@@ -449,10 +461,11 @@ async (
 		dyn,
 	);
 
+	console.log(452, {cacheItem})
+
 	if (cacheItem) {
-		// 
 		if (isMediaFinished(cacheItem)) {
-			console.log(442, '...media is finished, update the cache >> ', cacheItem);
+			// console.log(442, '...media is finished, update the cache >> ', cacheItem);
 
 			// complete but somehow missed the
 			if (!cacheItem.meta?.item) {
@@ -469,8 +482,6 @@ async (
 					}
 				)).catch(() => null);
 				
-				console.log({ s3r });
-
 				const meta = {
 					ETag: s3r?.ETag ?? "etag:missing",
 					"Content-Length": s3r?.ContentLength ?? "contentLength:missing",
@@ -479,6 +490,8 @@ async (
 					"Cache-Control": s3r?.CacheControl,
 					"Content-Encoding": s3r?.ContentEncoding,
 				} as BreadCrumbCacheMeta;
+
+				console.log(494, { s3r, meta });
 
 				const breadcrumbs = await sendToCache(
 					item,
@@ -508,18 +521,16 @@ async (
 					}
 				};
 			} else {
-				// item.__enhancement = {
-				// 	...item.__enhancement,
-				// 	...downStreamStatus(cacheItem),
-				// };
-				// item.attachments.push(await addAttachment(item, cacheItem, itemKey, config, chosenText));
+
 				return {
-					...item, 
+					...item,
 					__enhancement: {
 						...item.__enhancement,
 						...downStreamStatus(cacheItem),
 					},
-					attachments: item.attachments.concat(await addAttachment(item, cacheItem, itemKey, config, chosenText))
+					attachments: item.attachments.concat(
+						await addAttachment(item, cacheItem, itemKey, config, chosenText)
+					)
 				};
 			}
 		} else {
@@ -536,26 +547,17 @@ async (
 				s3,
 				dyn,
 			);
-			console.log({ breadcrumbs });
-
-			// item.__enhancement = {
-			// 	...item.__enhancement,
-			// 	...downStreamStatus(breadcrumbs),
-			// };
-
-			// item.attachments.push(
-			// 	await addAttachment(item, breadcrumbs, itemKey, config, chosenText)
-			// );
+			console.log(537, { breadcrumbs });
 
 			return {
 				...item,
-				attachments: item.attachments.concat(
-					await addAttachment(item, breadcrumbs, itemKey, config, chosenText)
-				),
 				__enhancement: {
 					...item.__enhancement,
 					...downStreamStatus(breadcrumbs),
-				}
+				},
+				attachments: item.attachments.concat(
+					await addAttachment(item, breadcrumbs, itemKey, config, chosenText)
+				),
 			}
 		}
 	} else {
@@ -599,13 +601,6 @@ async (
 
 		console.log(561, { breadcrumbs });
 
-		// item.__enhancement = {
-		// 	...item.__enhancement,
-		// 	...downStreamStatus(breadcrumbs),
-		// };
-
-		// item.attachments.push(await addAttachment(item, breadcrumbs, itemKey, config, chosenText));
-
 		return {
 			...item,
 			attachments: item.attachments.concat(
@@ -631,6 +626,7 @@ const addAttachment = async (
 	config: s.Infer<typeof defCfgType>,
 	chosenText: string
 ) => {
+	// console.log(614, {  bc, k, config, chosenText });
 
 	const s3urlsigner = signS3Urlsigner({
 		accessKeyId: config.aws.key,
@@ -642,6 +638,7 @@ const addAttachment = async (
 		bc.meta.item?.["Content-Length"] ??
 			(bc.taskIDs.RequestCharacters * 12).toString(),
 	);
+	
 	const durationInSeconds = sizeInBytes / 6050; // magic number averaged out from 5 samples below
 	const s3urlparts = pluckAudioURI(
 		config.s3.bucket,
@@ -654,19 +651,17 @@ const addAttachment = async (
 		Key: s3urlparts.key
 	})
 	
-	// console.log('s3url:', url)
-
 	return {
+		url,
 		title: item.title ??
 			"AWS/Polly Audio for: " + chosenText.slice(0, 20) + "...",
-		url: url,
 		sizeInBytes,
 		durationInSeconds,
-		characters: bc.taskIDs.RequestCharacters,
-		status: bc.taskIDs.TaskStatus,
-		etag: bc.meta.item?.ETag ?? null,
 		mimeType: OutputFormatMimeEnum[config.polly.outputFormat],
 		_: {
+			characters: bc.taskIDs.RequestCharacters,
+			status: bc.taskIDs.TaskStatus,
+			etag: bc.meta.item?.ETag ?? null,
 			meta: bc.meta.item,
 			imageUrls: {
 				base64: `data:image/svg+xml;base64,${

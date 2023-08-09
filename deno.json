@@ -11,7 +11,7 @@
 	},
 	"fmt": {
 		"useTabs": true,
-		"lineWidth": 100
+		"lineWidth": 120
 	},
 	"imports": {
 		"$std/": "https://deno.land/std@0.181.0/",
@@ -48,11 +48,13 @@
 		"fluentSchema": "https://esm.sh/fluent-json-schema@3.1.0",
 		"fromXml": "https://deno.land/x/xml2js@1.0.0/mod.ts",
 		"gzip_wasm": "https://deno.land/x/wasm_gzip@v1.0.0/mod.ts",
+		"imurmurhash":"https://esm.sh/imurmurhash@0.1.4?deno-std=0.181.0&dts",
 		"jsonSchema": "https://deno.land/x/json_schema_typed@v8.0.0/draft_latest.ts",
 		"lodash.get": "https://esm.sh/lodash.get@4.4.2?deno-std=0.181.0&dts",
 		"lodash.merge": "https://esm.sh/lodash.merge@4.6.2?deno-std=0.181.0&dts",
 		"lodash.set": "https://esm.sh/lodash.set@4.3.2?deno-std=0.181.0&dts",
 		"lodash.groupby": "https://esm.sh/lodash.groupby@4.6.0?deno-std=0.181.0&dts",
+		"lru-cache": "https://esm.sh/lru-cache@10.0.0?deno-std=0.181.0&dts",
 		"minhash": "https://esm.sh/minhash@0.0.9?deno-std=0.181.0&dts",
 		"mu-forms/": "https://esm.sh/mu-forms@1.0.7/",
 		"multiformats": "https://esm.sh/multiformats@9.6.4?deno-std=0.181.0&dts",
@@ -64,6 +66,7 @@
 		"toXml": "https://deno.land/x/js2xml@1.0.2/mod.ts",
 		"twind": "https://esm.sh/twind@0.16.19",
 		"twind/": "https://esm.sh/twind@0.16.19/",
+		"quick-lru":"https://esm.sh/quick-lru@6.1.1?deno-std=0.181.0&dts",
 		"zstd_wasm": "https://deno.land/x/zstd_wasm@0.0.16/deno/zstd.ts"
 	},
 	"scopes": {

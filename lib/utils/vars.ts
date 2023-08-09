@@ -8,7 +8,13 @@ export const envVar = async (defaultVal: string, path = "../../../.env") => {
 	const state = await parse(fileString);
 
 	return (key: string) => {
-		return state[key] ?? defaultVal;
+		if(state[key]){
+			return state[key]
+		}else{
+			console.error(`NO ENVAR EXISTS for: ${key}`)
+			console.error(`USING given defuaultVal: ${defaultVal}`)
+			return defaultVal
+		}
 	};
 };
 
