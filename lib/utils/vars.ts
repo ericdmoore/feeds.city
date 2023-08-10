@@ -3,8 +3,10 @@ import { parse } from "$std/dotenv/mod.ts";
 
 export const envVar = async (defaultVal: string, path = "../../../.env") => {
 	const p = resolve(import.meta.url, path).split(":")[1]; // crazy `file:` prefix after import.meta.url
-	const encFileBytes = await Deno.readFile(p).catch(() => null);
-	if(encFileBytes){
+	const stat = await Deno.stat(p).catch(()=>({isFile: false}))
+
+	if(stat.isFile){
+		const encFileBytes = await Deno.readFile(p)
 		const fileString = new TextDecoder().decode(encFileBytes);
 		const state = await parse(fileString);
 	
