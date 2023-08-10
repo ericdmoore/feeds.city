@@ -9,14 +9,14 @@ import {
 import { streamToString } from "$lib/utils/pumpReader.ts";
 
 const encoder = new TextEncoder();
-class Body {
-	body: ReadableStream<Uint8Array>
+export class Body {
+	Body: ReadableStream<Uint8Array>
 	constructor(input: Uint8Array){
-		this.body = new Response(input).body!
+		this.Body = new Response(input).body!
 	}
-	valueOf(){return this.body}
+	valueOf(){return this.Body}
 	transformToString() {
-		return streamToString(this.body)
+		return streamToString(this.Body)
 	}
 }
 
@@ -64,7 +64,7 @@ export const s3Mock = (
 		const data = state.get(key);
 
 		return data
-			? { Body: new Body(data) }
+			? new Body(data)
 			: Promise.reject({ err: "Object Not Found", code: 404 });
 	}
 	const send =  (command: PutObjectCommand | HeadObjectCommand | GetObjectCommand) => {

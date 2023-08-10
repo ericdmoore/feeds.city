@@ -1,6 +1,5 @@
 import { copy, readableStreamFromReader, readerFromStreamReader } from "$std/streams/mod.ts";
-
-import { StringReader } from "$std/io/mod.ts";
+import { StringReader, StringWriter } from "$std/io/mod.ts";
 
 const dec = new TextDecoder();
 
@@ -17,22 +16,11 @@ export const readToString = async (
 
 export const streamToString = async (
 	rs: ReadableStream<Uint8Array>,
-	result = "",
+	_result = "",
 ): Promise<string> => {
-	const ws = new WritableStream<string>({
-		write(chunk) {
-			// console.log(chunk);
-			result = result + chunk;
-		},
-	});
-	const dest = ws.getWriter();
-	// const src = rs.pipeThrough(new TextDecoderStream()).getReader()
-	// const whatisThis = await copy(src, dest)
-	for await (const line of rs.pipeThrough(new TextDecoderStream())) {
-		await dest.write(line);
-	}
-	dest.close();
-	return result;
+	const writer = new StringWriter()
+	await copy(readerFromStreamReader(rs.getReader()), writer)
+	return writer.toString()
 };
 
 export const readStream = (

@@ -209,7 +209,7 @@ Deno.test({
 })
 
 Deno.test({
-	only: true,
+	// only: true,
 	name: "Valid Attachment For Each Entry ",
 	fn: async () => {
 
@@ -295,8 +295,9 @@ Deno.test("Validates S3 Params", () => {
 	assertRejects(() => addTextFn(ast));
 });
 
-Deno.test("Validates Dynamo Params", () => {
-	const ast = urlToAST({ url: jsonFeedUrl, txt: jsonFeed });
+Deno.test("Validates Dynamo Params", async () => {
+	const ast = await urlToAST({ url: jsonFeedUrl, txt: jsonFeed });
+	console.log('test:300', {a: ast.title})
 	const addTextFn = textToVoice({
 		aws: {
 			key: "sillyExample",
@@ -322,17 +323,24 @@ Deno.test("makeKey changes for config + corpus", async () => {
 	assertNotEquals(kb1, ka2);
 });
 
-Deno.test("S3 Mock Unit Test", async () => {
-	const s3m = s3Mock();
-	const data = { a: 1, b: 2, c: { d: 4, e: 5 } };
-	await s3m.putObject("someKey", data);
-	const s3DataStr = await streamToString((await s3m.getObject("someKey")).Body as unknown as ReadableStream<Uint8Array>);
-	const s3DataObj = JSON.parse(s3DataStr);
+Deno.test({
+	name: "S3 Mock Unit Test", 
+	// only: true,
+	fn: async () => {
+		const s3m = s3Mock();
+		const data = { a: 1, b: 2, c: { d: 4, e: 5 } };
+		await s3m.putObject("someKey", data);
 
-	// console.log('>> await readToString(fromS3Mock) :: ', s3DataStr)
-	// console.log('>> parsed data object :: ', s3DataObj)
+		//streamToString
+		const s3DataStr = await readToString( (await s3m.getObject("someKey")).Body)
+		const s3DataObj = JSON.parse(s3DataStr);
 
-	assertEquals(s3DataObj, data);
+		// console.log('>> await readToString(fromS3Mock) :: ', s3DataStr)
+		// console.log('>> parsed data object :: ', s3DataObj)
+		// console.log({s3DataObj, data});
+		assertEquals(s3DataStr, JSON.stringify(data));
+		assertEquals(s3DataObj, data);
+	}
 });
 
 Deno.test({
