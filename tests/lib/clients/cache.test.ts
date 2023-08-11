@@ -1,5 +1,6 @@
 import { assert, assertEquals, assertNotEquals } from "$std/testing/asserts.ts";
-import { cacheStack, inMem as inMemCache, s3cache, dynamoCache, localizedS3Store } from "$lib/clients/cache.ts";
+import { cacheStack, inMem as inMemCache, } from "$lib/clients/cache.ts";
+import { s3, memFrontS3 } from "$lib/clients/cacheProviders/mod.ts";
 import s3uri from "$lib/parsers/s3uri.ts";
 import envVar from "$lib/utils/vars.ts";
 
@@ -21,6 +22,7 @@ Deno.test({
 	name: "Simple Stack Orderinality",
 	// only: true,
 	fn: async () => {
+		
 		const mem1 = inMemCache();
 		const mem2 = inMemCache();
 		const mem12 = cacheStack(mem1, mem2);
@@ -31,8 +33,8 @@ Deno.test({
 		assertEquals(await mem12.has("a"), true);
 		const a = await mem12.get("a");
 
-		assert(a?.name === "a");
-		assertEquals(a?.data, new Uint8Array([1, 1, 1]));
+		assert(a?.key.name === "a");
+		assertEquals(a?.value.data, new Uint8Array([1, 1, 1]));
 	},
 });
 
@@ -44,7 +46,7 @@ Deno.test({
 		const s3str = s3uri();
 
 		const mem1 = inMemCache();
-		const s3 = s3cache({
+		const s3cac = s3.cache({
 			key: env("AWS_KEY"),
 			secret: env("AWS_SECRET"),
 			region: env("AWS_REGION"),
@@ -52,7 +54,7 @@ Deno.test({
 			defualtPrefix: env("AWS_POLLY_PREFIX"),
 		}, {}, s3str.parse);
 
-		const localizedS3 = cacheStack(mem1, s3);
+		const localizedS3 = cacheStack(mem1, s3cac);
 		// set both cache destinations with `SET A = 123`
 		await localizedS3.set(cacheLocName, new Uint8Array([1, 2, 3]));
 		assertEquals(await localizedS3.has(cacheLocName), true);
@@ -60,17 +62,17 @@ Deno.test({
 		// corupt local cache to different value
 		await mem1.set(cacheLocName, new Uint8Array([1, 1, 1]));
 		const aInMem = await mem1.get(cacheLocName);
-		assert(aInMem?.name === cacheLocName);
+		assert(aInMem?.key.name === cacheLocName);
 		assert((await localizedS3.get(cacheLocName))?.provider === "RAM");
 
 		// assert local is different
-		assertEquals(aInMem?.data, new Uint8Array([1, 1, 1]));
+		assertEquals(aInMem?.value.data, new Uint8Array([1, 1, 1]));
 
-		const aInS3 = await s3.get(cacheLocName);
-		assert(aInS3?.name === cacheLocName);
+		const aInS3 = await s3cac.get(cacheLocName);
+		assert(aInS3?.key.name === cacheLocName);
 		// assert s3 is the same
-		assertEquals(aInS3?.data, new Uint8Array([1, 2, 3]));
-		assertNotEquals(aInS3.data, aInMem.data);
+		assertEquals(aInS3?.value.data, new Uint8Array([1, 2, 3]));
+		assertNotEquals(aInS3.value.data, aInMem.value.data);
 	},
 });
 
@@ -79,7 +81,7 @@ Deno.test({
 	fn: async () => {
 		const env = await envVar(">>MISSING<<");
 	
-		const localizedS3 = localizedS3Store(
+		const localizedS3 = memFrontS3(
 			// s3 params
 			{
 				params: {

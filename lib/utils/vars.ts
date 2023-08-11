@@ -28,6 +28,7 @@ export const envVar = async (defaultVal: string, path = "../../../.env") => {
 	}else{
 		console.error(`NO .env FILE FOUND at: ${p}`)
 		console.error(`falling back to "Deno.env.get" + the good ol default: ${defaultVal}`)
+		console.log('EXAMPLE:', Deno.env.get('AWS_POLLY_PREFIX'))
 		return (key:string) => Deno.env.get(key) ?? defaultVal
 	}
 };

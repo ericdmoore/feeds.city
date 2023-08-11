@@ -243,6 +243,8 @@ async (_ast: PromiseOr<AST>): Promise<ASTjson> => {
 
 	const [err, validatedData] = defCfgType.validate(defCfg);
 	
+	// console.log({ err, validatedData });
+
 	if (err) {
 		return Promise.reject({ msg: "Input Validate Error", err, code: 400 });
 	}

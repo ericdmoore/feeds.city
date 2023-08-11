@@ -21,7 +21,7 @@ import {
 } from "$lib/enhancements/addVoice2text/addVoice2text.ts";
 
 import type { 
-PollyClientInterface,
+	PollyClientInterface,
 	SynthesisTaskConfig, 
 	SynthesisTaskIdentifiers 
 } from "$lib/clients/aws-polly.ts";
@@ -295,22 +295,27 @@ Deno.test("Validates S3 Params", () => {
 	assertRejects(() => addTextFn(ast));
 });
 
-Deno.test("Validates Dynamo Params", async () => {
-	const ast = await urlToAST({ url: jsonFeedUrl, txt: jsonFeed });
-	console.log('test:300', {a: ast.title})
-	const addTextFn = textToVoice({
-		aws: {
-			key: "sillyExample",
-			region: "us-west-2",
-			secret: "somethingNotTooEmbarrasing",
-		},
-		config: {
-			s3: { bucket: "42", prefix: "prefix" },
-			dynamo: { table: undefined },
-		},
-		// deno-lint-ignore no-explicit-any
-	} as any);
-	assertRejects(() => addTextFn(ast));
+Deno.test({
+	name: "Validates Dynamo Params", 
+	// only: true,
+	fn: async () => {
+		const ast = await urlToAST({ url: jsonFeedUrl, txt: jsonFeed });
+		const addTextFn = textToVoice({
+			aws: {
+				key: "sillyExample",
+				region: "us-west-2",
+				secret: "somethingNotTooEmbarrasing",
+			},
+			config: {
+				s3: { bucket: 42, prefix: "prefix" },
+				dynamo: { 
+					table: {whoa: 'lil dogggy'} 
+				},
+			// deno-lint-ignore no-explicit-any
+			} as any,
+		});
+		assertRejects(() => addTextFn(ast));
+	}
 });
 
 Deno.test("makeKey changes for config + corpus", async () => {
@@ -345,7 +350,7 @@ Deno.test({
 
 Deno.test({
 	name: "haveEverStarted is based on breadcrumbs", 
-	// only: true,
+	only: true,
 	fn: async () => {
 		const key = "abcd";
 		const url = `https://example.com/${key}`;
@@ -410,151 +415,158 @@ Deno.test({
 	} 
 });
 
-Deno.test("isMediaFinished is based on bread crumbs", async () => {
-	const s3m = s3Mock() as unknown as S3Client;
+Deno.test({
+	name: "isMediaFinished is based on bread crumbs", 
+	only: true,
+	fn: async () => {
+		const s3m = s3Mock() as unknown as S3Client;
 
-	const itemNum = 1234;
-	const url = `https://example.com/${itemNum}`;
-	const item = {
-		title: "example",
-		url,
-		id: url,
-		authors: [{ name: "Eric", imageUri: "http://example.com" }],
-		content: {
-			text:
-				"Some Text that will end up in an S3 bucket... but their will also be a meta data object that exists in another s3 location",
-		},
-		images: { bannerImage: "", indexImage: "" },
-		links: {
-			category: "",
-			nextPost: "",
-			prevPost: "",
-			externalURLs: [],
-			tags: [],
-			relLinks: {},
-		},
-		attachments: [],
-		dates: { modified: Date.now(), published: Date.now() },
-	};
-	const status: "completed" | "failed" | "inProgress" | "scheduled" = "inProgress";
+		const itemNum = 1234;
+		const url = `https://example.com/${itemNum}`;
+		const item = {
+			title: "example",
+			url,
+			id: url,
+			authors: [{ name: "Eric", imageUri: "http://example.com" }],
+			content: {
+				text:
+					"Some Text that will end up in an S3 bucket... but their will also be a meta data object that exists in another s3 location",
+			},
+			images: { bannerImage: "", indexImage: "" },
+			links: {
+				category: "",
+				nextPost: "",
+				prevPost: "",
+				externalURLs: [],
+				tags: [],
+				relLinks: {},
+			},
+			attachments: [],
+			dates: { modified: Date.now(), published: Date.now() },
+		};
+		const status: "completed" | "failed" | "inProgress" | "scheduled" = "inProgress";
 
-	const synthTask = {
-		SynthesisTask: {
-			TaskStatus: status,
-			TaskId: "a1b2c3d4",
-			CreationTime: Date.now(),
-			OutputFormat: "mp3" as const,
-			OutputUri: "https://audio.example.com/1234",
-			Engine: "neural" as const,
-			LanguageCode: "en-US" as const,
-			LexiconNames: [""],
-			RequestCharacters: 42,
-			SampleRate: "24000",
-			SnsTopicArn: "",
-			SpeechMarkTypes: ["sentence"] as ["sentence"],
-			TaskStatusReason: "",
-			TextType: "text" as const,
-			VoiceId: "Matthew" as const,
-		},
-	};
+		const synthTask = {
+			SynthesisTask: {
+				TaskStatus: status,
+				TaskId: "a1b2c3d4",
+				CreationTime: Date.now(),
+				OutputFormat: "mp3" as const,
+				OutputUri: "https://audio.example.com/1234",
+				Engine: "neural" as const,
+				LanguageCode: "en-US" as const,
+				LexiconNames: [""],
+				RequestCharacters: 42,
+				SampleRate: "24000",
+				SnsTopicArn: "",
+				SpeechMarkTypes: ["sentence"] as ["sentence"],
+				TaskStatusReason: "",
+				TextType: "text" as const,
+				VoiceId: "Matthew" as const,
+			},
+		};
 
-	const key = await makeKey(item, item.content.text);
-	const { taskIDs, ...tcfg } = splitSynthTaskResponse(synthTask.SynthesisTask);
-	const s3Stuff = { s3c: s3m, Bucket: "MOCK", Prefix: "MOCKED_PREFIX" };
-	const breadCrumbs = await sendToCache(
-		item,
-		key,
-		tcfg.config,
-		taskIDs,
-		s3Stuff,
-	);
-	const hasStarted = await checkChache(key, s3Stuff);
+		const key = await makeKey(item, item.content.text);
+		const { taskIDs, ...tcfg } = splitSynthTaskResponse(synthTask.SynthesisTask);
+		const s3Stuff = { s3c: s3m, Bucket: "MOCK", Prefix: "MOCKED_PREFIX" };
+		const breadCrumbs = await sendToCache(
+			item,
+			key,
+			tcfg.config,
+			taskIDs,
+			s3Stuff,
+		);
+		const hasStarted = await checkChache(key, s3Stuff);
 
-	assertEquals("sk" in breadCrumbs, true);
-	assertEquals("pk" in breadCrumbs, true);
-	assertEquals("item" in breadCrumbs, true);
-	assertEquals("task" in breadCrumbs, true);
+		assertEquals("sk" in breadCrumbs, true);
+		assertEquals("pk" in breadCrumbs, true);
+		assertEquals("item" in breadCrumbs, true);
+		assertEquals("task" in breadCrumbs, true);
 
-	if (hasStarted) {
-		const isFinished = await isMediaFinished(hasStarted);
-		assertEquals(isFinished, false);
+		if (hasStarted) {
+			const isFinished = await isMediaFinished(hasStarted);
+			assertEquals(isFinished, false);
+		}
+		assertEquals(!!hasStarted, true);
 	}
-	assertEquals(!!hasStarted, true);
 });
 
 
+Deno.test({
+	name: "isMediaFinished is now complete", 
+	only: true,
+	fn: async () => {
+		const s3m = s3Mock() as unknown as S3Client;
 
-Deno.test("isMediaFinished is now complete", async () => {
-	const s3m = s3Mock() as unknown as S3Client;
+		const itemNum = 1234;
+		const url = `https://example.com/${itemNum}`;
+		const item = {
+			title: "example",
+			url,
+			id: url,
+			authors: [{ name: "Eric", imageUri: "http://example.com" }],
+			content: {
+				text:
+					"Some Text that will end up in an S3 bucket... but their will also be a meta data object that exists in another s3 location",
+			},
+			images: { bannerImage: "", indexImage: "" },
+			links: {
+				category: "",
+				nextPost: "",
+				prevPost: "",
+				externalURLs: [],
+				tags: [],
+				relLinks: {},
+			},
+			attachments: [],
+			dates: { modified: Date.now(), published: Date.now() },
+		};
+		const status: "completed" | "failed" | "inProgress" | "scheduled" = "completed";
 
-	const itemNum = 1234;
-	const url = `https://example.com/${itemNum}`;
-	const item = {
-		title: "example",
-		url,
-		id: url,
-		authors: [{ name: "Eric", imageUri: "http://example.com" }],
-		content: {
-			text:
-				"Some Text that will end up in an S3 bucket... but their will also be a meta data object that exists in another s3 location",
-		},
-		images: { bannerImage: "", indexImage: "" },
-		links: {
-			category: "",
-			nextPost: "",
-			prevPost: "",
-			externalURLs: [],
-			tags: [],
-			relLinks: {},
-		},
-		attachments: [],
-		dates: { modified: Date.now(), published: Date.now() },
-	};
-	const status: "completed" | "failed" | "inProgress" | "scheduled" = "completed";
+		const synthTask = {
+			SynthesisTask: {
+				TaskStatus: status,
+				TaskStatusReason: "",
+				TaskId: "a1b2c3d4",
+				CreationTime: Date.now(),
+				OutputFormat: "mp3" as const,
+				OutputUri: "https://audio.example.com/1234",
+				Engine: "neural" as const,
+				LanguageCode: "en-US" as const,
+				LexiconNames: [""],
+				RequestCharacters: 42,
+				SampleRate: "24000",
+				SnsTopicArn: "",
+				SpeechMarkTypes: ["sentence"] as ["sentence"],
+				TextType: "text" as const,
+				VoiceId: "Matthew" as const,
+			},
+		};
 
-	const synthTask = {
-		SynthesisTask: {
-			TaskStatus: status,
-			TaskStatusReason: "",
-			TaskId: "a1b2c3d4",
-			CreationTime: Date.now(),
-			OutputFormat: "mp3" as const,
-			OutputUri: "https://audio.example.com/1234",
-			Engine: "neural" as const,
-			LanguageCode: "en-US" as const,
-			LexiconNames: [""],
-			RequestCharacters: 42,
-			SampleRate: "24000",
-			SnsTopicArn: "",
-			SpeechMarkTypes: ["sentence"] as ["sentence"],
-			TextType: "text" as const,
-			VoiceId: "Matthew" as const,
-		},
-	};
+		const key = await makeKey(item, item.content.text);
 
-	const key = await makeKey(item, item.content.text);
+		const { taskIDs, ...tcfg } = splitSynthTaskResponse(synthTask.SynthesisTask);
+		const s3stuff = { s3c: s3m, Bucket: "MOCK", Prefix: "MOCKED_PREFIX" };
+		const breadCrumbs = await sendToCache(
+			item,
+			key,
+			tcfg.config,
+			taskIDs,
+			s3stuff,
+		);
+		const hasStarted = await checkChache(key, s3stuff);
 
-	const { taskIDs, ...tcfg } = splitSynthTaskResponse(synthTask.SynthesisTask);
-	const s3stuff = { s3c: s3m, Bucket: "MOCK", Prefix: "MOCKED_PREFIX" };
-	const breadCrumbs = await sendToCache(
-		item,
-		key,
-		tcfg.config,
-		taskIDs,
-		s3stuff,
-	);
-	const hasStarted = await checkChache(key, s3stuff);
+		assertEquals("sk" in breadCrumbs, true);
+		assertEquals("pk" in breadCrumbs, true);
+		assertEquals(breadCrumbs.pk, breadCrumbs.sk);
+		assertEquals("item" in breadCrumbs, true);
+		assertEquals("task" in breadCrumbs, true);
+		assertEquals(!!hasStarted, true); // @todo
 
-	assertEquals("sk" in breadCrumbs, true);
-	assertEquals("pk" in breadCrumbs, true);
-	assertEquals(breadCrumbs.pk, breadCrumbs.sk);
-	assertEquals("item" in breadCrumbs, true);
-	assertEquals("task" in breadCrumbs, true);
-	assertEquals(!!hasStarted, true); // @todo
-
-	if (hasStarted) {
-		const isFinished = await isMediaFinished(hasStarted);
-		assertEquals(isFinished, true);
+		if (hasStarted) {
+			const isFinished = await isMediaFinished(hasStarted);
+			assertEquals(isFinished, true);
+		}
 	}
 });
 
