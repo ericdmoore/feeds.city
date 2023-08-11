@@ -2,21 +2,22 @@
 
 ```mermaid
 ---
-title: Cache Provider
+title: Cache Provider Interface
 ---
-
 flowchart TD
-    Set -->|name, data| Inbound(To Bytes)
-    Inbound -->|named bytes| Cache{Internal Cache}
+    Set -->|name, data| InboundChange(To Bytes)
+    Del-->|name| InboundChange 
     Register[Register Byte Transform.ƒs] --> Cache{Internal Cache}
+    InboundChange -->|named bytes| Cache{Internal Cache}
     Cache --> |named bytes| Out[From Bytes]
     Out-->|name| Get
-    
+    Out-->|name| Peek
+    Out-->|name| Has    
 ```
 
 ```mermaid
 ---
-title: Cache Stack
+title: Cache Stack Interface
 ---
 
 flowchart TD
