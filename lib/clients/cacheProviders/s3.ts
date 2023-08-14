@@ -180,4 +180,4 @@ export const cache = (
 	};
 };
 
-export default s3cache;
+export default cache;
