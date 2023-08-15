@@ -186,8 +186,8 @@ export const signS3Urlsigner =
 			credentials: creds,
 		});
 
-		// deno-lint-ignore no-explicit-any
 		return getSignedUrl(
+			// deno-lint-ignore no-explicit-any
 			client as any,
 			// deno-lint-ignore no-explicit-any
 			new GetObjectCommand(input) as any,

@@ -102,7 +102,6 @@ export interface IconText {
 
 export type RecursivePartial<T> = {
 	[P in keyof T]?: T[P] extends (infer U)[] ? RecursivePartial<U>[]
-		// deno-lint-ignore ban-types
 		: T[P] extends object ? RecursivePartial<T[P]>
 		: T[P];
 };
