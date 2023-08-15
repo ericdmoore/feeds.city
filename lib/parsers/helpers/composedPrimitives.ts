@@ -83,14 +83,13 @@ export const pickCData: IPickerFn = (data?: ITextWithCData) => {
 type IPickerFn = (data?: ITextWithCData) => string | undefined;
 type PickerReducerFnPriorType = string | ITextWithCData | undefined;
 export const pickFromObject = (init: string, ...pickers: IPickerFn[]) => {
-	const usePickersOnOneData =
-		(data: ITextWithCData | undefined) => (...pickers: IPickerFn[]): string | undefined =>
-			pickers.reduce(
-				(p: PickerReducerFnPriorType, picker: IPickerFn) => {
-					return typeof p === "string" ? p : typeof picker(p) === "string" ? picker(p) : p;
-				},
-				data,
-			) as string | undefined;
+	const usePickersOnOneData = (data: ITextWithCData | undefined) => (...pickers: IPickerFn[]): string | undefined =>
+		pickers.reduce(
+			(p: PickerReducerFnPriorType, picker: IPickerFn) => {
+				return typeof p === "string" ? p : typeof picker(p) === "string" ? picker(p) : p;
+			},
+			data,
+		) as string | undefined;
 
 	return (...dataArr: (ITextWithCData | undefined)[]) => {
 		const picked: string | undefined = dataArr.reduce(

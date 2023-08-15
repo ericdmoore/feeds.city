@@ -1,10 +1,4 @@
-import { 
-	cacheStack, 
-	dynamoCache, 
-	inMem as inMemCache, 
-	s3cache,
-
-} from "$lib/clients/cache.ts";
+import { cacheStack, dynamoCache, inMem as inMemCache, s3cache } from "$lib/clients/cache.ts";
 import s3uri from "$lib/parsers/s3uri.ts";
 import envVar from "$lib/utils/vars.ts";
 
@@ -14,15 +8,19 @@ const env = await envVar(">>MISSING<<");
 
 const data = enc.encode("Hello World!");
 
-const localLayeredS3 = cacheStack( 
+const localLayeredS3 = cacheStack(
 	inMemCache(1024),
-	s3cache({
-		key: env("AWS_KEY"),
-		secret: env("AWS_SECRET"),
-		region: env("AWS_REGION"),
-		defaultBucket: env("AWS_POLLY_BUCKET"),
-		defualtPrefix: env("AWS_POLLY_PREFIX"),
-	}, {}, s3str.parse)
+	s3cache(
+		{
+			key: env("AWS_KEY"),
+			secret: env("AWS_SECRET"),
+			region: env("AWS_REGION"),
+			defaultBucket: env("AWS_POLLY_BUCKET"),
+			defualtPrefix: env("AWS_POLLY_PREFIX"),
+		},
+		{},
+		s3str.parse,
+	),
 );
 
 const dynCache = dynamoCache({
@@ -30,7 +28,7 @@ const dynCache = dynamoCache({
 	key: env("AWS_KEY"),
 	secret: env("AWS_SECRET"),
 	region: env("AWS_REGION"),
-})
+});
 
 const mem2 = inMemCache();
 

@@ -12,7 +12,7 @@ flowchart TD
     Cache --> |named bytes| Out[From Bytes]
     Out-->|name| Get
     Out-->|name| Peek
-    Out-->|name| Has    
+    Out-->|name| Has
 ```
 
 ```mermaid

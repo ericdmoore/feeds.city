@@ -241,9 +241,7 @@ export const FormTypeNewParams = (
 	props: { PREFIX: string; hasCompStr: boolean },
 ) => (
 	<fieldset class="mt-10 border-t border-gray-200">
-		{props.hasCompStr
-			? <legend>Change Feed Functions</legend>
-			: <legend>Add Feed Functions</legend>}
+		{props.hasCompStr ? <legend>Change Feed Functions</legend> : <legend>Add Feed Functions</legend>}
 
 		<div class="flex flex-col">
 			<div class="py-3">

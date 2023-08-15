@@ -1,8 +1,4 @@
-import { 
-	assert, 
-	assertEquals, 
-	assertRejects 
-} from "$std/testing/asserts.ts";
+import { assert, assertEquals, assertRejects } from "$std/testing/asserts.ts";
 
 import {
 	addError,

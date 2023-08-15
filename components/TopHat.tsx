@@ -18,9 +18,7 @@ interface TopHatProps {
 	// jsonld: JSONish
 }
 
-const toMetaTag = (key: string, val: string, prefix?: string) => (
-	<meta property={`${prefix}${key}`} content={val} />
-);
+const toMetaTag = (key: string, val: string, prefix?: string) => <meta property={`${prefix}${key}`} content={val} />;
 
 export function TopHatBlack(
 	props: Partial<TopHatProps> & { title: string },

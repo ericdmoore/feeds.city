@@ -18,8 +18,7 @@ const CONN_INFO = {
 
 console.info("\n\n ... be sure to start a dev server from another session\n\n");
 
-const sleep = (ms: number): Promise<number> =>
-	new Promise((resolve) => setTimeout(() => resolve(ms), ms));
+const sleep = (ms: number): Promise<number> => new Promise((resolve) => setTimeout(() => resolve(ms), ms));
 
 // const badTeaPotResponse = async (resp: Request, _ctx: Partial<HandlerContext<any, Record<string, unknown>>> ):Promise<Response> => {
 // 	return new Response(await resp.text(),{ status: 418 })

@@ -12,13 +12,11 @@ const [apiToken, baseId, tableName] = [
 
 const air = airtable({ apiToken, baseId, tableName });
 
-
 Deno.test(`LIST URL`, () => {
 	const u = air.LIST().url();
 	assert(u.origin === "https://api.airtable.com");
 	assert(u.pathname.includes(`/v0/${baseId}/${tableName}`));
 });
-
 
 Deno.test(`LIST REQ`, () => {
 	const req = air.LIST().req();
@@ -28,12 +26,11 @@ Deno.test(`LIST REQ`, () => {
 	assert(req.headers.get("authorization")?.includes(apiToken));
 });
 
-
 Deno.test(`LIST with query strings -REQ.1`, () => {
 	const email = "dm@ericdm.com";
-	const req = air.LIST({ 
-		filterByFormula: `{Email}="${email}"`, 
-		sort: ["Status"] 
+	const req = air.LIST({
+		filterByFormula: `{Email}="${email}"`,
+		sort: ["Status"],
 	}).req();
 	const u = new URL(req.url);
 
@@ -48,15 +45,14 @@ Deno.test(`LIST with query strings -REQ.1`, () => {
 	assert(u.searchParams.get("sort[0][field]") === "Status");
 });
 
-
 Deno.test({
 	name: "LIST with query strings -REQ.2",
 	// make changes to the test so that the filterByFormula uses a Record of Key = Value Pairs
-	fn: () =>{
+	fn: () => {
 		const email = "dm@ericdm.com";
-		const req = air.LIST({ 
-			filterByFormula: `{Email}="${email}"` , 
-			sort: ["Status"]
+		const req = air.LIST({
+			filterByFormula: `{Email}="${email}"`,
+			sort: ["Status"],
 		}).req();
 		const u = new URL(req.url);
 
@@ -70,30 +66,29 @@ Deno.test({
 		// console.log(u.searchParams.get('sort'))
 		assert(u.searchParams.get("filterByFormula") === `{Email}="${email}"`);
 		assert(u.searchParams.get("sort[0][field]") === "Status");
-	}
+	},
 });
-
 
 Deno.test(`LIST with query strings :NET`, async () => {
 	const email = "dm@ericdm.com";
-	const filterByFormula = `{Email}="${email}"`
-	const sort = [{ field: "Status", direction:'asc' as 'asc' | 'desc'}]
-	
-	const data = await air.LIST({ 
-		filterByFormula,
-		sort
-	})
-	.json()
-	.catch((e) => {
-		console.error(e);
-		return { records: [] };
-	});
+	const filterByFormula = `{Email}="${email}"`;
+	const sort = [{ field: "Status", direction: "asc" as "asc" | "desc" }];
 
-	// const u = air.LIST({ 
+	const data = await air.LIST({
+		filterByFormula,
+		sort,
+	})
+		.json()
+		.catch((e) => {
+			console.error(e);
+			return { records: [] };
+		});
+
+	// const u = air.LIST({
 	// 	filterByFormula,
 	// 	sort
 	// }).url();
-	// 
+	//
 	// console.log(u.href.slice(u.href.search("filterByFormula")), "\n", data);
 	// console.log(u, [...u.searchParams.entries()], data);
 
@@ -102,7 +97,6 @@ Deno.test(`LIST with query strings :NET`, async () => {
 	assert(data.records.length === 1);
 	assert(data.records[0].fields.Email === email);
 });
-
 
 Deno.test(`LIST NET:JSON + GET NET:JSON`, async () => {
 	const recordSet = await air.LIST().json();
@@ -126,14 +120,12 @@ Deno.test(`LIST NET:JSON + GET NET:JSON`, async () => {
 	);
 });
 
-
 Deno.test(`LIST Response`, async () => {
 	const res = await air.LIST().fetch();
 	assert(res.ok);
 	assert(res.status === 200);
 	res.body?.cancel();
 });
-
 
 const recordId = "recgyYUNY0hP3ZIgm";
 Deno.test(`GET Req`, async () => {
@@ -164,7 +156,6 @@ Deno.test(`GET NET:Dat`, async () => {
 	assert(data.createdTime);
 });
 
-
 Deno.test("CREATE 1Row Req", async () => {
 	const r = await air.CREATE(
 		{ Email: "dummyData@notReal.com", Status: "test" },
@@ -180,7 +171,6 @@ Deno.test("CREATE 1Row Req", async () => {
 	assert(r.headers.get("authorization")?.includes("Bearer"));
 	assert(r.headers.get("authorization")?.includes(apiToken));
 });
-
 
 Deno.test("CREATE Req Multi Row", async () => {
 	const r = await air.CREATE(
@@ -199,12 +189,10 @@ Deno.test("CREATE Req Multi Row", async () => {
 	assert(r.headers.get("authorization")?.includes(apiToken));
 });
 
-
 Deno.test(`CREATE URL`, async () => {
 	const u = await air.CREATE({ Email: "test1@unittest.com", Status: "test" }).url();
 	assert(u.href.includes(`https://api.airtable.com/v0/${baseId}/${tableName}`));
 });
-
 
 Deno.test({
 	name: "CREATE:Net + UPDATE:Net + DELETE:Net",
@@ -233,7 +221,6 @@ Deno.test({
 		assert(deletedData);
 	},
 });
-
 
 Deno.test("CREATE:Json + UPDATE:Json + DELETE:Json", async () => {
 	const makeThisSet = [
@@ -286,7 +273,6 @@ Deno.test("CREATE:Json + UPDATE:Json + DELETE:Json", async () => {
 	assert(deleteData.records.map((d) => d.id).includes(createData.records[2].id));
 });
 
-
 Deno.test(`UPDATE Req`, async () => {
 	const req = await air.UPDATE({
 		performUpsert: { fieldsToMergeOn: ["Email"] },
@@ -302,7 +288,6 @@ Deno.test(`UPDATE Req`, async () => {
 	assert(req.url.includes(`https://api.airtable.com/v0/${baseId}/${tableName}`));
 });
 
-
 Deno.test(`UPDATE URL`, async () => {
 	const url = await air.UPDATE(
 		{
@@ -314,7 +299,6 @@ Deno.test(`UPDATE URL`, async () => {
 	assert(url.href.includes(`https://api.airtable.com/v0/${baseId}/${tableName}`));
 });
 
-
 Deno.test(`DELETE Req`, async () => {
 	const req = await air.DELETE("abc", "def").req();
 	assert(req.method === "DELETE");
@@ -322,12 +306,10 @@ Deno.test(`DELETE Req`, async () => {
 	assert(req.url.includes(`?records=abc&records=def`));
 });
 
-
 Deno.test(`DELETE URL`, async () => {
 	const url = await air.DELETE("abc", "def").url();
 	assert(url.href.includes(`https://api.airtable.com/v0/${baseId}/${tableName}`));
 });
-
 
 Deno.test("Make AND filter By hand with trailing Underscore", () => {
 	const s = _handleNestedRecords(
@@ -336,24 +318,20 @@ Deno.test("Make AND filter By hand with trailing Underscore", () => {
 	assert(s === `AND({Status}="test",{Email}="my@eail.com")`);
 });
 
-
 Deno.test("Make OR filter By hand with trailing Underscore", () => {
 	const s = _handleNestedRecords({ OR_: { Status: "test", Email: "my@eail.com" } });
 	assert(s === `OR({Status}="test",{Email}="my@eail.com")`);
 });
-
 
 Deno.test("Make AND with nested OR using builder func", () => {
 	const s = _handleNestedRecords(AND({ Status: "waiting", OR_: { Email: "this" } }));
 	assert(s === `AND({Status}="waiting",OR({Email}="this"))`);
 });
 
-
 Deno.test("Nested  AND/OR using Build Funcs", () => {
 	const s = _handleNestedRecords(AND({ Status: "waiting", ...OR({ Email: "this" }) }));
 	assert(s === `AND({Status}="waiting",OR({Email}="this"))`);
 });
-
 
 Deno.test("Build OR filter using the function builder", () => {
 	const s = _handleNestedRecords(
@@ -365,7 +343,6 @@ Deno.test("Build OR filter using the function builder", () => {
 	assert(s === `OR({Status}="waiting",{Email}="this")`);
 });
 
-
 Deno.test("FilterByFormula Nested Builder.4", () => {
 	const s = _handleNestedRecords(
 		OR({
@@ -375,7 +352,6 @@ Deno.test("FilterByFormula Nested Builder.4", () => {
 	);
 	assert(s === `OR({Status}="waiting",{Email}="this")`);
 });
-
 
 Deno.test("FilterByFormula Nested Builder.5", () => {
 	const s = _handleNestedRecords(

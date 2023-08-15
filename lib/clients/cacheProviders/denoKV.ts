@@ -17,11 +17,11 @@ import {
 
 export const denoKVcache = (
 	config: { maxItems: number; prefix: string },
-	transforms: {
-		renamer?: RenamerFn;
-		fromBytes?: TransformFromBytes;
-		toBytes?: TransformToBytes;
-	},
+	transforms?: Partial<{
+		renamer: RenamerFn;
+		fromBytes: TransformFromBytes;
+		toBytes: TransformToBytes;
+	}>,
 ): ICacheProvider => {
 	const provider = "Deno:KV";
 	const meta = {
@@ -29,13 +29,13 @@ export const denoKVcache = (
 		...config,
 	};
 	const history = new Map<string, number>();
-	const renameForCache = transforms.renamer ?? defaultRenamer;
-	const fromBytes = transforms.fromBytes ?? defaultFromBytes;
-	const toBytes = transforms.toBytes ?? defaultToBytesWithTypeNote;
+	const renamer = transforms?.renamer ?? defaultRenamer;
+	const fromBytes = transforms?.fromBytes ?? defaultFromBytes;
+	const toBytes = transforms?.toBytes ?? defaultToBytesWithTypeNote;
 
 	const set = async (name: string, data: Uint8Array) => {
 		const kvP = Deno.openKv();
-		const renamed = await renameForCache(name);
+		const renamed = await renamer(name);
 
 		// objectHistory.push({name: renamed, ts: Date.now()})
 		history.set(renamed, Date.now());
@@ -70,7 +70,7 @@ export const denoKVcache = (
 	};
 	const get = async (name: string) => {
 		const kv = await Deno.openKv();
-		const renamed = await renameForCache(name);
+		const renamed = await renamer(name);
 		const res = await kv.get<ICacheableDataForCache>([config.prefix, renamed]);
 		history.set(renamed, Date.now());
 		kv.close();
@@ -88,7 +88,7 @@ export const denoKVcache = (
 
 	const del = async (name: string) => {
 		const kv = await Deno.openKv();
-		const renamed = await renameForCache(name);
+		const renamed = await renamer(name);
 
 		await kv.delete([config.prefix, renamed]);
 		history.delete(renamed);
@@ -104,7 +104,7 @@ export const denoKVcache = (
 	const has = (name: string) => get(name).then((r) => r !== null);
 	const peek = async (name: string) => {
 		const kv = await Deno.openKv();
-		const renamed = await renameForCache(name);
+		const renamed = await renamer(name);
 		const res = await kv.get<ICacheDataFromProvider>([config.prefix, renamed]);
 		// peek doesn't update history
 		kv.close();
@@ -120,7 +120,7 @@ export const denoKVcache = (
 		has,
 		peek,
 		transforms: {
-			renameForCache,
+			renamer,
 			fromBytes,
 			toBytes,
 		},

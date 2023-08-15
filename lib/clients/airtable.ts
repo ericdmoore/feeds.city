@@ -12,7 +12,7 @@ export interface MiddleLayerReturns<T> {
 	json: () => Promise<T>;
 }
 export type SortOptions = string | { field: string; direction?: "asc" | "desc" };
-export type toStringForQueryValues = (key:string, data: unknown) => [string, string][];
+export type toStringForQueryValues = (key: string, data: unknown) => [string, string][];
 export interface Stringable {
 	toString: () => string;
 }
@@ -109,33 +109,30 @@ const makeReturnable = <T>(state: AirtableState, req: Request) => {
 const intergratateQuerryParams = (
 	url: URL,
 	params: Record<string, unknown>,
-	mapOfOverideRules: Record<string, (key:string, data: unknown) => [string, string][]> = {},
+	mapOfOverideRules: Record<string, (key: string, data: unknown) => [string, string][]> = {},
 ): URL => {
 	return Object.entries(params).reduce((url, [key, val]) => {
 		key in mapOfOverideRules
 			? mapOfOverideRules[key](key, val).map(([newkey, newVal]) => url.searchParams.set(newkey, newVal))
 			: typeof val === "string"
-				? url.searchParams.set(key, val)
-				: url.searchParams.set(key, (val as Stringable).toString());
+			? url.searchParams.set(key, val)
+			: url.searchParams.set(key, (val as Stringable).toString());
 		// console.log([...url.searchParams.entries()])
 		return url;
 	}, new URL(url.href));
 };
 
-const overrideSortOptions = (_key:string, val: unknown) => {
+const overrideSortOptions = (_key: string, val: unknown) => {
 	return (val as SortOptions[]).reduce((acc, v, i) => {
 		return typeof v === "string"
-			?  [...acc, 
-				[`sort[${i}][field]`, v] as [string, string],
-				[`sort[${i}][direction]`, "asc"] as [string, string]
-			]
-			:  [...acc,
+			? [...acc, [`sort[${i}][field]`, v] as [string, string], [`sort[${i}][direction]`, "asc"] as [string, string]]
+			: [
+				...acc,
 				[`sort[${i}][field]`, v.field] as [string, string],
-				[`sort[${i}][direction]`, v.direction || "asc"] as [string, string]
+				[`sort[${i}][direction]`, v.direction || "asc"] as [string, string],
 			];
-		},[] as [string, string][]
-	)
-}
+	}, [] as [string, string][]);
+};
 
 export type ezStarer = { "AND_": ezObject } | { "OR_": ezObject };
 export type ezElement = { [key: string]: string | number | boolean };
@@ -143,8 +140,8 @@ export type ezObject = ezElement | ezStarer;
 export const OR = (val: ezObject): ezStarer => ({ OR_: val });
 export const AND = (val: ezObject): ezStarer => ({ AND_: val });
 
-const ANDoperator = (val: string) => `AND(${val})`
-const ORoperator = (val: string) => `OR(${val})`
+const ANDoperator = (val: string) => `AND(${val})`;
+const ORoperator = (val: string) => `OR(${val})`;
 
 const isSpecialKey = (key: string): { opr: string | false; key: string } => {
 	if (key.endsWith(">=")) return { opr: ">=", key: key.slice(0, -2) };
@@ -171,57 +168,53 @@ export const _handleNestedRecords = (obj: ezStarer, init = "") => {
 	return Object.entries(obj)
 		.reduce((acc, [key, objVal]) => {
 			// console.log({acc, key, objVal})
-			return key === "AND_"
-				? ANDoperator(_handleRecords(objVal, acc))
-				: ORoperator(_handleRecords(objVal, acc));
+			return key === "AND_" ? ANDoperator(_handleRecords(objVal, acc)) : ORoperator(_handleRecords(objVal, acc));
 		}, init);
 };
 
-const overrideFilterByFormula = ((_key:string, val: string | ezStarer) => {
+const overrideFilterByFormula = ((_key: string, val: string | ezStarer) => {
 	// console.log('overrideFilterByFormula', typeof val, val)
-	return typeof val === "string" 
-		? [['filterByFormula', val]]
-		: [['filterByFormula', _handleNestedRecords(val as ezStarer)]];
+	return typeof val === "string"
+		? [["filterByFormula", val]]
+		: [["filterByFormula", _handleNestedRecords(val as ezStarer)]];
 }) as toStringForQueryValues;
 
-const listMethod =
-	(state: AirtableState) => (opts?: ListMethodOptions): MiddleLayerReturns<ListMethodResponse> => {
-		const withDefaults: ListMethodOptions = {
-			timeZone: "America/Chicago",
-			userLocale: "en-US",
-			pageSize: 100,
-			maxRecords: 100,
-			cellFormat: "json",
-			...opts,
-		};
-
-		const urlWithQuery = intergratateQuerryParams(
-			new URL(state.baseURL),
-			withDefaults as Record<string, unknown>,
-			{
-				sort: overrideSortOptions,
-				filterByFormula: overrideFilterByFormula,
-			},
-		);
-		const req = new Request(urlWithQuery, { method: "GET" });
-
-		// console.log(opts, req)
-
-		return makeReturnable(state, req);
+const listMethod = (state: AirtableState) => (opts?: ListMethodOptions): MiddleLayerReturns<ListMethodResponse> => {
+	const withDefaults: ListMethodOptions = {
+		timeZone: "America/Chicago",
+		userLocale: "en-US",
+		pageSize: 100,
+		maxRecords: 100,
+		cellFormat: "json",
+		...opts,
 	};
 
-const getMethod =
-	(state: AirtableState) => (opts: GetMethodOptions): MiddleLayerReturns<GetMethodResponse> => {
-		const { recordId, ...others } = opts;
-		const listRecordsURL = new URL(state.baseURL + `/${recordId}`);
-		const urlWithQuery = intergratateQuerryParams(
-			listRecordsURL,
-			others as Record<string, unknown>,
-		);
+	const urlWithQuery = intergratateQuerryParams(
+		new URL(state.baseURL),
+		withDefaults as Record<string, unknown>,
+		{
+			sort: overrideSortOptions,
+			filterByFormula: overrideFilterByFormula,
+		},
+	);
+	const req = new Request(urlWithQuery, { method: "GET" });
 
-		const req = new Request(urlWithQuery);
-		return makeReturnable(state, req);
-	};
+	// console.log(opts, req)
+
+	return makeReturnable(state, req);
+};
+
+const getMethod = (state: AirtableState) => (opts: GetMethodOptions): MiddleLayerReturns<GetMethodResponse> => {
+	const { recordId, ...others } = opts;
+	const listRecordsURL = new URL(state.baseURL + `/${recordId}`);
+	const urlWithQuery = intergratateQuerryParams(
+		listRecordsURL,
+		others as Record<string, unknown>,
+	);
+
+	const req = new Request(urlWithQuery);
+	return makeReturnable(state, req);
+};
 
 /**
  * @doc https://airtable.com/developers/web/api/delete-multiple-records
@@ -229,8 +222,7 @@ const getMethod =
  * @returns
  */
 const deleteMethod =
-	(state: AirtableState) =>
-	(...records: DeleteMethodOptions[]): MiddleLayerReturns<DeleteMethodResponse> => {
+	(state: AirtableState) => (...records: DeleteMethodOptions[]): MiddleLayerReturns<DeleteMethodResponse> => {
 		const url = new URL(state.baseURL);
 		records.forEach((rec) => url.searchParams.append("records", encodeURIComponent(rec)));
 
@@ -241,8 +233,7 @@ const deleteMethod =
 	};
 
 const createMethod =
-	(state: AirtableState) =>
-	(...records: CreateMethodData[]): MiddleLayerReturns<CreateMethodResponse> => {
+	(state: AirtableState) => (...records: CreateMethodData[]): MiddleLayerReturns<CreateMethodResponse> => {
 		const url = new URL(state.baseURL);
 		const req = new Request(url, {
 			method: "POST",
@@ -250,9 +241,7 @@ const createMethod =
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify(
-				records.length === 1
-					? { fields: records[0] }
-					: { records: records.map((rec) => ({ fields: rec })) },
+				records.length === 1 ? { fields: records[0] } : { records: records.map((rec) => ({ fields: rec })) },
 			),
 		});
 		return makeReturnable(state, req);

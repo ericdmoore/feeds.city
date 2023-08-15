@@ -1,19 +1,33 @@
 import {
 	DeleteItemCommand,
+	DeleteItemCommandOutput,
 	DescribeTableCommand,
+	DescribeTableCommandOutput,
 	DescribeTimeToLiveCommand,
+	DescribeTimeToLiveCommandOutput,
 	DynamoDBClient,
 	GetItemCommand,
 	PutItemCommand,
+	QueryCommand,
+	type QueryCommandInput,
+	QueryCommandOutput,
+	ScanCommand,
+	type ScanCommandInput,
+	ScanCommandOutput,
 } from "@aws-sdk/client-dynamodb";
 
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import {
+	type CacheName,
 	defaultFromBytes,
 	defaultRenamer,
 	defaultToBytesWithTypeNote,
+	type ICacheableDataForCache,
 	type ICacheDataFromProvider,
 	type ICacheProvider,
+	type NullableProviderData,
+	type TransformFromBytes,
+	type TransformToBytes,
 } from "../cache.ts";
 
 export interface IDynamoCacheConfig {
@@ -23,14 +37,38 @@ export interface IDynamoCacheConfig {
 	table: string;
 }
 
-export const dynamoCache = (
-	dyn: IDynamoCacheConfig,
+export interface DynamoCache extends ICacheProvider {
+	provider: string;
+	meta: {
+		cloud: "AWS:Dynamo";
+		service: "Dynamo";
+		region: string;
+		describeTable: () => Promise<DescribeTableCommandOutput>;
+		describeTTL: () => Promise<DescribeTimeToLiveCommandOutput>;
+		deleteItem: (name: string) => Promise<DeleteItemCommandOutput>;
+		scan: (input: Omit<ScanCommandInput, "TableName">) => Promise<ScanCommandOutput>;
+		query: (input: Omit<QueryCommandInput, "TableName">) => Promise<QueryCommandOutput>;
+	};
 	transforms: {
-		renamer?: (originalName: string) => Promise<string>;
+		renamer(originalName: string): Promise<CacheName>;
+		toBytes: TransformToBytes;
+		fromBytes: TransformFromBytes;
+	};
+	set: (name: string, data: Uint8Array) => Promise<ICacheDataFromProvider>;
+	get: (name: string) => Promise<NullableProviderData>;
+	peek: (name: string) => Promise<NullableProviderData>;
+	del: (name: string) => Promise<NullableProviderData>;
+	has: (name: string) => Promise<boolean>;
+}
+
+export const cache = (
+	dyn: IDynamoCacheConfig,
+	transforms?: Partial<{
+		renamer: (originalName: string) => Promise<string>;
 		fromBytes: (bytes: Uint8Array) => Promise<unknown>;
 		toBytes: (d: unknown) => Promise<Uint8Array>;
-	},
-): ICacheProvider => {
+	}>,
+): DynamoCache => {
 	const dync = new DynamoDBClient({
 		region: dyn.region,
 		credentials: {
@@ -40,79 +78,80 @@ export const dynamoCache = (
 	});
 	const provider = "AWS:Dynamo";
 	const meta = {
-		cloud: "AWS:Dynamo",
-		service: "Dynamo",
+		cloud: "AWS:Dynamo" as const,
+		service: "Dynamo" as const,
 		region: dyn.region,
+		deleteItem: async (name: string) =>
+			dync.send(
+				new DeleteItemCommand({
+					TableName: dyn.table,
+					Key: marshall({ pk: await renamer(name), sk: await renamer(name) }),
+				}),
+			),
 		describeTable: () => dync.send(new DescribeTableCommand({ TableName: dyn.table })),
 		describeTTL: () => dync.send(new DescribeTimeToLiveCommand({ TableName: dyn.table })),
+		scan: (input: Omit<ScanCommandInput, "TableName">) =>
+			dync.send(new ScanCommand({ ...input, TableName: dyn.table })),
+		query: (input: Omit<QueryCommandInput, "TableName">) =>
+			dync.send(new QueryCommand({ ...input, TableName: dyn.table })),
 	};
 
-	const renameForCache = transforms.renamer ?? defaultRenamer;
+	const renamer = transforms?.renamer ?? defaultRenamer;
 	const fromBytes = defaultFromBytes;
 	const toBytes = defaultToBytesWithTypeNote;
 
 	const set = async (name: string, data: Uint8Array) => {
-		const renamed = await renameForCache(name);
+		const renamed = await renamer(name);
 		const payload = {
 			meta,
 			provider,
-			key: {
-				name,
-				renamed,
-			},
+			key: { name, renamed },
 			value: {
 				data,
 				inputType: "Uint8Array",
 				transformed: new Uint8Array(),
 			},
-		} as ICacheDataFromProvider;
+		} as ICacheDataFromProvider & ICacheableDataForCache;
 
-		const r = dync.send(
+		return dync.send(
 			new PutItemCommand({
 				TableName: dyn.table,
-				Item: marshall({
-					...payload,
-					sk: await renameForCache(name),
-					pk: await renameForCache(name),
-				}),
+				Item: marshall({ ...payload, sk: renamed, pk: renamed }),
 			}),
-		)
-			.then(() => payload)
+		).then(() => payload)
 			.catch((e: unknown) => {
 				console.error("cache.ts:412", e);
 				return payload;
 			});
-
-		return r;
 	};
 
-	const payload = (name: string, renamed: string, data: Uint8Array): ICacheDataFromProvider => ({
-		meta,
-		provider,
-		key: { name, renamed },
-		value: { data, transformed: new Uint8Array() },
-	});
-
-	const get = async (name: string) => {
-		const renamed = await renameForCache(name);
+	const get = async (name: string): Promise<NullableProviderData> => {
+		const renamed = await renamer(name);
 
 		return dync.send(
 			new GetItemCommand({
 				TableName: dyn.table,
-				Key: marshall({
-					pk: renamed,
-					sk: renamed,
-				}),
+				Key: marshall({ pk: renamed, sk: renamed }),
 			}),
-		).then((r) => {
-			const { data } = unmarshall(r?.Item ?? {}) ?? { data: null };
-			return payload(name, renamed, data) ?? null;
+		).then(async (r) => {
+			const dynData = unmarshall(r?.Item ?? {}) as ICacheableDataForCache | undefined;
+			// console.log(120,'dynamo.ts',dynData )
+			const data = dynData?.value.data;
+			return {
+				meta,
+				provider,
+				key: { name, renamed },
+				value: {
+					data,
+					transformed: await fromBytes(dynData),
+				},
+			} as ICacheDataFromProvider;
 		}).catch(() => null);
 	};
 	const peek = (name: string) => get(name);
 	const has = (name: string) => get(name).then((r) => r !== null);
 	const del = async (name: string) => {
-		const renamed = await renameForCache(name);
+		const renamed = await renamer(name);
 		return dync.send(
 			new DeleteItemCommand({
 				TableName: dyn.table,
@@ -139,9 +178,11 @@ export const dynamoCache = (
 		get,
 		set,
 		transforms: {
-			renameForCache,
+			renamer,
 			toBytes,
 			fromBytes,
 		},
 	};
 };
+
+export default cache;

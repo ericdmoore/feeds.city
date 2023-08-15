@@ -489,8 +489,7 @@ export type PromiseRequestFn = (
 // };
 
 const middleware =
-	(fns: ((r: Request | Promise<Request>) => Promise<Request>)[]) =>
-	(r: Request | Promise<Request>) => {
+	(fns: ((r: Request | Promise<Request>) => Promise<Request>)[]) => (r: Request | Promise<Request>) => {
 		return fns.reduce(async (p, f) => await f(p), Promise.resolve(r));
 	};
 
@@ -540,9 +539,7 @@ export class cloudwatchClient {
 		this.signer = signer ??
 			sigMaker(this.#key, this.#secret, this.region, this.service);
 		this.baseURL = `https://${this.service}.${this.region}.amazonaws.com`;
-		this.middlewareFns = middlewareFns
-			? middlewareFns.concat([this.signer, contentLen])
-			: [contentLen, this.signer];
+		this.middlewareFns = middlewareFns ? middlewareFns.concat([this.signer, contentLen]) : [contentLen, this.signer];
 	}
 
 	async associateKmsKey(i: AssociateKmsKeyInput) {

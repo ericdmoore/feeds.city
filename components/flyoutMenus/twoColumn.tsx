@@ -179,8 +179,7 @@ export function TwoColumn(props: MenuInterface & TwoColumn) {
 												Boost your conversion rate
 											</h4>
 											<p class="mt-1 text-sm text-gray-500">
-												Eget ullamcorper ac ut vulputate fames nec mattis pellentesque elementum.
-												Viverra tempor id mus.
+												Eget ullamcorper ac ut vulputate fames nec mattis pellentesque elementum. Viverra tempor id mus.
 											</p>
 										</div>
 									</a>
@@ -203,8 +202,7 @@ export function TwoColumn(props: MenuInterface & TwoColumn) {
 												How to use search engine optimization to drive traffic to your site
 											</h4>
 											<p class="mt-1 text-sm text-gray-500">
-												Eget ullamcorper ac ut vulputate fames nec mattis pellentesque elementum.
-												Viverra tempor id mus.
+												Eget ullamcorper ac ut vulputate fames nec mattis pellentesque elementum. Viverra tempor id mus.
 											</p>
 										</div>
 									</a>

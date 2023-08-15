@@ -18,9 +18,9 @@ export const streamToString = async (
 	rs: ReadableStream<Uint8Array>,
 	_result = "",
 ): Promise<string> => {
-	const writer = new StringWriter()
-	await copy(readerFromStreamReader(rs.getReader()), writer)
-	return writer.toString()
+	const writer = new StringWriter();
+	await copy(readerFromStreamReader(rs.getReader()), writer);
+	return writer.toString();
 };
 
 export const readStream = (

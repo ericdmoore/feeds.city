@@ -444,9 +444,7 @@ export const Rss: TypedValidator = ((
 							},
 							dates: { published: 0, modified: 0 },
 							links: {
-								category: Array.isArray(i.category)
-									? txtorCData("", i.category[0])
-									: txtorCData("", i.category),
+								category: Array.isArray(i.category) ? txtorCData("", i.category[0]) : txtorCData("", i.category),
 								nextPost: undefined,
 								prevPost: undefined,
 								tags: Array.isArray(i.category)

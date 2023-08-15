@@ -174,8 +174,7 @@ export const typedValidation = async (
 	}
 };
 
-export const parseAndValidate = (i: { url: string; txt: string }) =>
-	typedValidation(parseAndPickType(i));
+export const parseAndValidate = (i: { url: string; txt: string }) => typedValidation(parseAndPickType(i));
 
 export const fetchParseValidate = async (i: { url: string }) =>
 	typedValidation(parseAndPickType(await startFromURL(i.url)));

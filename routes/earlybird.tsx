@@ -45,8 +45,7 @@ export default function () {
 					},
 					teaser: {
 						href: "#",
-						text: () =>
-							"Learn more about our scholarship program iF you are unable to afford the offer",
+						text: () => "Learn more about our scholarship program iF you are unable to afford the offer",
 					},
 				}}
 			/>

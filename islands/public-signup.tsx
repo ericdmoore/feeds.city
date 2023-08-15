@@ -64,9 +64,7 @@ function NotificationFailure(props: NotificaitonProps) {
 	// red
 	return (
 		<div
-			class={`${
-				props.display instanceof Error ? "" : "hidden"
-			} rounded-md bg-${props.color}-50 p-4`}
+			class={`${props.display instanceof Error ? "" : "hidden"} rounded-md bg-${props.color}-50 p-4`}
 		>
 			<div class="flex">
 				<div class="flex-shrink-0">

@@ -8,8 +8,7 @@ export default function () {
 						Take control of your team.
 					</p>
 					<p class="mx-auto mt-5 max-w-xl text-xl text-gray-500">
-						Start building for free, then add a site plan to go live. Account plans unlock
-						additional features.
+						Start building for free, then add a site plan to go live. Account plans unlock additional features.
 					</p>
 				</div>
 			</div>

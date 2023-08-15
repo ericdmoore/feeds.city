@@ -17,8 +17,7 @@ export function stripHeaders(
  * If so, delete that cookie, and spin up a new refreshed cookie value
  */
 export const refreshCookieToken =
-	(v1Baker: v1AbstractToken, extendBySeconds: number) =>
-	async (headers: Headers | HeadersInit, findJwt: string) => {
+	(v1Baker: v1AbstractToken, extendBySeconds: number) => async (headers: Headers | HeadersInit, findJwt: string) => {
 		const localHeadersCopy = new Headers(headers);
 		const cookies = getCookies(localHeadersCopy);
 

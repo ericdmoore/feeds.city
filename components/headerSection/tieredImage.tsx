@@ -16,8 +16,8 @@ export default function () {
 							<div>
 								<dt class="text-sm font-medium text-gray-900">Sleek design</dt>
 								<dd class="mt-3 text-sm text-gray-500">
-									The machined kettle has a smooth black finish and contemporary shape that stands
-									apart from most plastic appliances.
+									The machined kettle has a smooth black finish and contemporary shape that stands apart from most
+									plastic appliances.
 								</dd>
 							</div>
 
@@ -35,8 +35,8 @@ export default function () {
 									One-button control
 								</dt>
 								<dd class="mt-3 text-sm text-gray-500">
-									The one button control has a digital readout for setting temperature and turning
-									the kettle on and off.
+									The one button control has a digital readout for setting temperature and turning the kettle on and
+									off.
 								</dd>
 							</div>
 

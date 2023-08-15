@@ -187,5 +187,4 @@ export type ChannelReducer<R, L, R2, L2> = (
 export const ItherMerge = <R extends Record<string, unknown>, L>(
 	A: Either<Partial<R>, L>,
 	B: Either<Partial<R>, L>,
-): Either<R, L> =>
-	A.left || B.left ? Left(A.left ?? B.left) : Right({ ...A.right, ...B.right } as R);
+): Either<R, L> => A.left || B.left ? Left(A.left ?? B.left) : Right({ ...A.right, ...B.right } as R);

@@ -373,9 +373,7 @@ export const Sitemap: TypedValidator = ((
 							},
 							_sitemap: {
 								changefreq: u.changefreq ?? ((u) => {
-									return u.lastmod?._text
-										? pickChangeFreq(new Date(u.lastmod?._text).getTime())
-										: "yearly";
+									return u.lastmod?._text ? pickChangeFreq(new Date(u.lastmod?._text).getTime()) : "yearly";
 								})(u),
 								priority: u.priority ?? 0.5,
 							},

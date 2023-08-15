@@ -18,8 +18,8 @@ export default function () {
 						Support
 					</h1>
 					<p class="mt-6 max-w-3xl text-xl text-gray-300">
-						Varius facilisi mauris sed sit. Non sed et duis dui leo, vulputate id malesuada non.
-						Cras aliquet purus dui laoreet diam sed lacus, fames. Dui, amet, nec sit pulvinar.
+						Varius facilisi mauris sed sit. Non sed et duis dui leo, vulputate id malesuada non. Cras aliquet purus dui
+						laoreet diam sed lacus, fames. Dui, amet, nec sit pulvinar.
 					</p>
 				</div>
 			</div>
@@ -53,8 +53,8 @@ export default function () {
 							</div>
 							<h3 class="text-xl font-medium text-gray-900">Sales</h3>
 							<p class="mt-4 text-base text-gray-500">
-								Varius facilisi mauris sed sit. Non sed et duis dui leo, vulputate id malesuada non.
-								Cras aliquet purus dui laoreet diam sed lacus, fames.
+								Varius facilisi mauris sed sit. Non sed et duis dui leo, vulputate id malesuada non. Cras aliquet purus
+								dui laoreet diam sed lacus, fames.
 							</p>
 						</div>
 						<div class="rounded-bl-2xl rounded-br-2xl bg-gray-50 p-6 md:px-8">
@@ -91,8 +91,8 @@ export default function () {
 								Technical Support
 							</h3>
 							<p class="mt-4 text-base text-gray-500">
-								Varius facilisi mauris sed sit. Non sed et duis dui leo, vulputate id malesuada non.
-								Cras aliquet purus dui laoreet diam sed lacus, fames.
+								Varius facilisi mauris sed sit. Non sed et duis dui leo, vulputate id malesuada non. Cras aliquet purus
+								dui laoreet diam sed lacus, fames.
 							</p>
 						</div>
 						<div class="rounded-bl-2xl rounded-br-2xl bg-gray-50 p-6 md:px-8">
@@ -127,8 +127,8 @@ export default function () {
 							</div>
 							<h3 class="text-xl font-medium text-gray-900">Media Inquiries</h3>
 							<p class="mt-4 text-base text-gray-500">
-								Varius facilisi mauris sed sit. Non sed et duis dui leo, vulputate id malesuada non.
-								Cras aliquet purus dui laoreet diam sed lacus, fames.
+								Varius facilisi mauris sed sit. Non sed et duis dui leo, vulputate id malesuada non. Cras aliquet purus
+								dui laoreet diam sed lacus, fames.
 							</p>
 						</div>
 						<div class="rounded-bl-2xl rounded-br-2xl bg-gray-50 p-6 md:px-8">

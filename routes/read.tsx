@@ -241,8 +241,7 @@ export default function Example(props: PageProps) {
 													a: {
 														current: "bg-gray-100 text-gray-900",
 														default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
-														all:
-															"group flex items-center px-2 py-2 text-base font-medium rounded-md",
+														all: "group flex items-center px-2 py-2 text-base font-medium rounded-md",
 													},
 													svg: {
 														current: "text-gray-500",

@@ -28,8 +28,8 @@ export function Pricing() {
 						The right price for you, whoever you are
 					</p>
 					<p class="mx-auto mt-3 max-w-4xl text-xl text-gray-300 sm:mt-5 sm:text-2xl">
-						Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit numquam eligendi quos
-						odit doloribus molestiae voluptatum.
+						Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit numquam eligendi quos odit doloribus
+						molestiae voluptatum.
 					</p>
 				</div>
 			</div>

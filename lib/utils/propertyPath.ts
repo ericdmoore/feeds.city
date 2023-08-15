@@ -7,8 +7,7 @@ export type JsonValue =
 	| { [key: string]: JsonValue };
 
 type Dict<T> = { [key: string]: T };
-const indexableObj = (i: unknown): i is Dict<JsonValue> =>
-	typeof i === "object" && !Array.isArray(i);
+const indexableObj = (i: unknown): i is Dict<JsonValue> => typeof i === "object" && !Array.isArray(i);
 
 /**
  * @param path - sringPath.with.dot.separators

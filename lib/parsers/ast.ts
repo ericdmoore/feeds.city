@@ -436,8 +436,7 @@ export const ASTKindComputable = object({
 });
 
 // deno-lint-ignore require-await
-export const rezVal = async <T>(i: T | ThunkType<T>) =>
-	typeof i === "function" ? (i as ThunkType<T>)() : i;
+export const rezVal = async <T>(i: T | ThunkType<T>) => typeof i === "function" ? (i as ThunkType<T>)() : i;
 
 export const isAstJson = (ast: ASTcomputable | ASTjson): ast is ASTjson => {
 	return typeof ast._meta === "function" || ast._meta._type === "computable" ? false : true;

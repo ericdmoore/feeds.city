@@ -1,8 +1,8 @@
 import { assert } from "$std/testing/asserts.ts";
-import {  
-	hex, 
-	// toAmz, 
-	// toDateStamp 
+import {
+	hex,
+	// toAmz,
+	// toDateStamp
 } from "$lib/clients/aws-url-signer.ts";
 
 // Deno.test("AWS V4 Sig", async () => {

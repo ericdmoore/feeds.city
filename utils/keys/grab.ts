@@ -1,9 +1,7 @@
 import * as dotenv from "$std/dotenv/mod.ts";
 
 export const jwKeyPair = async (): Promise<CryptoKeyPair> => {
-	await dotenv.load({ export: true }).catch(() =>
-		console.error("errored while processsing .env file")
-	);
+	await dotenv.load({ export: true }).catch(() => console.error("errored while processsing .env file"));
 	const privateKey = await crypto.subtle.importKey(
 		"jwk",
 		{

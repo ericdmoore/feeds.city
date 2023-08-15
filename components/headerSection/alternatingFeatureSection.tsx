@@ -23,9 +23,9 @@ export default function () {
 									Stay on top of customer support
 								</h2>
 								<p class="mt-4 text-lg text-gray-500">
-									Semper curabitur ullamcorper posuere nunc sed. Ornare iaculis bibendum malesuada
-									faucibus lacinia porttitor. Pulvinar laoreet sagittis viverra duis. In venenatis
-									sem arcu pretium pharetra at. Lectus viverra dui tellus ornare pharetra.
+									Semper curabitur ullamcorper posuere nunc sed. Ornare iaculis bibendum malesuada faucibus lacinia
+									porttitor. Pulvinar laoreet sagittis viverra duis. In venenatis sem arcu pretium pharetra at. Lectus
+									viverra dui tellus ornare pharetra.
 								</p>
 								<div class="mt-6">
 									<a
@@ -41,8 +41,8 @@ export default function () {
 							<blockquote>
 								<div>
 									<p class="text-base text-gray-500">
-										&ldquo;Cras velit quis eros eget rhoncus lacus ultrices sed diam. Sit orci risus
-										aenean curabitur donec aliquet. Mi venenatis in euismod ut.&rdquo;
+										&ldquo;Cras velit quis eros eget rhoncus lacus ultrices sed diam. Sit orci risus aenean curabitur
+										donec aliquet. Mi venenatis in euismod ut.&rdquo;
 									</p>
 								</div>
 								<footer class="mt-3">
@@ -93,9 +93,9 @@ export default function () {
 									Better understand your customers
 								</h2>
 								<p class="mt-4 text-lg text-gray-500">
-									Semper curabitur ullamcorper posuere nunc sed. Ornare iaculis bibendum malesuada
-									faucibus lacinia porttitor. Pulvinar laoreet sagittis viverra duis. In venenatis
-									sem arcu pretium pharetra at. Lectus viverra dui tellus ornare pharetra.
+									Semper curabitur ullamcorper posuere nunc sed. Ornare iaculis bibendum malesuada faucibus lacinia
+									porttitor. Pulvinar laoreet sagittis viverra duis. In venenatis sem arcu pretium pharetra at. Lectus
+									viverra dui tellus ornare pharetra.
 								</p>
 								<div class="mt-6">
 									<a

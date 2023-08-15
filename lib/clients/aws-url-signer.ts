@@ -4,23 +4,20 @@
  *  Ref: https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
  */
 import type { HttpRequest as IHttpRequest, RequestSigningArguments } from "@aws-sdk/types";
-import type { PromiseOr } from '$lib/types.ts'
+import type { PromiseOr } from "$lib/types.ts";
 
 import { encode as hexEnc } from "$std/encoding/hex.ts";
 
-import { SignatureV4 } from '@aws-sdk/signature-v4'
+import { SignatureV4 } from "@aws-sdk/signature-v4";
 import { Sha256 } from "@aws-crypto/sha256-js";
 import { HttpRequest } from "@aws-sdk/protocol-http";
-
 
 // const decoder = new TextDecoder()
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
 export const hex = (input: string | Uint8Array): string => {
-	return typeof input === "string"
-		? decoder.decode(hexEnc(encoder.encode(input)))
-		: decoder.decode(hexEnc(input));
+	return typeof input === "string" ? decoder.decode(hexEnc(encoder.encode(input))) : decoder.decode(hexEnc(input));
 };
 
 export async function sha256(input: string | Uint8Array): Promise<string> {
@@ -42,26 +39,20 @@ export async function hmacSha256(
 		{ name: "HMAC", hash: "SHA-256" },
 		await crypto.subtle.importKey(
 			"raw",
-			typeof key === "string" 
-				? encoder.encode(key) 
-				: key,
+			typeof key === "string" ? encoder.encode(key) : key,
 			{ name: "HMAC", hash: "SHA-256" },
 			false,
 			["sign"],
 		),
-		typeof data === "string" 
-			? encoder.encode(data) 
-			: data,
+		typeof data === "string" ? encoder.encode(data) : data,
 	);
 
 	return new Uint8Array(mac);
 }
 
-export const toAmz = (date: Date): string =>
-	`${date.toISOString().slice(0, 19).replace(/[^\dT]/g, "")}Z`;
+export const toAmz = (date: Date): string => `${date.toISOString().slice(0, 19).replace(/[^\dT]/g, "")}Z`;
 
-export const toDateStamp = (date: Date): string =>
-	date.toISOString().slice(0, 10).replace(/[^\d]/g, "");
+export const toDateStamp = (date: Date): string => date.toISOString().slice(0, 10).replace(/[^\d]/g, "");
 
 const AWS4 = new TextEncoder().encode("AWS4");
 
@@ -166,55 +157,51 @@ export interface Credentials {
 // 	};
 // };
 
+export const toRequest = async (promisedInput: PromiseOr<IHttpRequest>): Promise<Request> => {
+	const httpReq = await promisedInput;
 
-
-export const toRequest = async (promisedInput: PromiseOr<IHttpRequest>):Promise<Request> => {
-	const httpReq = await promisedInput
-	
 	const queryTuples = Object.entries(httpReq.query ?? {})
-		.reduce((acc, [key, val] ) => {
+		.reduce((acc, [key, val]) => {
 			return Array.isArray(val)
-				? [...acc, ...val.map(v => [key, v])] as string[][]
+				? [...acc, ...val.map((v) => [key, v])] as string[][]
 				: val === null
-					? acc
-					: [...acc, [key, val]] as string[][]
-		},[] as string[][])
-	
-	const query = queryTuples
-		? `?${new URLSearchParams(queryTuples).toString()}`
-		: ''
+				? acc
+				: [...acc, [key, val]] as string[][];
+		}, [] as string[][]);
 
-	const httpReqUrl = `${httpReq.protocol}//`
-	+`${httpReq.username ?? ''}${httpReq.password ? `:${httpReq.password}`:'' }`
-	+`${httpReq.hostname}${httpReq.port ? `:${httpReq.port}`:''}`
-	+`${httpReq.path}`
-	+`${query}`
-	+`${httpReq.fragment ?? ''}`
+	const query = queryTuples ? `?${new URLSearchParams(queryTuples).toString()}` : "";
 
-	const httpURL = new URL(httpReqUrl)
+	const httpReqUrl = `${httpReq.protocol}//` +
+		`${httpReq.username ?? ""}${httpReq.password ? `:${httpReq.password}` : ""}` +
+		`${httpReq.hostname}${httpReq.port ? `:${httpReq.port}` : ""}` +
+		`${httpReq.path}` +
+		`${query}` +
+		`${httpReq.fragment ?? ""}`;
 
-	return new Request(httpURL,{
-		method: httpReq.method, 
-		headers: httpReq.headers, 
-		body: httpReq.body
-	})
-}
+	const httpURL = new URL(httpReqUrl);
+
+	return new Request(httpURL, {
+		method: httpReq.method,
+		headers: httpReq.headers,
+		body: httpReq.body,
+	});
+};
 
 export const toHttpRequest = async (promisedReq: PromiseOr<Request>): Promise<HttpRequest> => {
-	const req = await promisedReq
-	const inputURL = new URL(req.url)
+	const req = await promisedReq;
+	const inputURL = new URL(req.url);
 
-	const body = await req.text()
+	const body = await req.text();
 
-	const headerEnties = [['host', inputURL.hostname ]]
+	const headerEnties = [["host", inputURL.hostname]];
 	req.headers.forEach((val, key) => {
-		headerEnties.push([key, val])
-	})
+		headerEnties.push([key, val]);
+	});
 
-	const searchEntries = [] as string[][]
+	const searchEntries = [] as string[][];
 	inputURL.searchParams.forEach((val, key) => {
-		searchEntries.push([key, val])
-	})
+		searchEntries.push([key, val]);
+	});
 
 	return new HttpRequest({
 		method: req.method,
@@ -227,9 +214,9 @@ export const toHttpRequest = async (promisedReq: PromiseOr<Request>): Promise<Ht
 		port: inputURL.port ? Number.parseInt(inputURL.port) : undefined,
 		headers: Object.fromEntries(headerEnties),
 		query: Object.fromEntries(searchEntries),
-		...(body.length > 0 ? { body } : {body: undefined}),
-	})
-}
+		...(body.length > 0 ? { body } : { body: undefined }),
+	});
+};
 
 export const sigMaker = (
 	accessKeyId: string,
@@ -237,18 +224,17 @@ export const sigMaker = (
 	region: string,
 	service: string,
 ) => {
-
 	const awsSigner = new SignatureV4({
 		service,
 		region,
 		sha256: Sha256,
 		credentials: {
-		  accessKeyId,
-		  secretAccessKey
+			accessKeyId,
+			secretAccessKey,
 		},
-	  });
+	});
 
-	return async (req: PromiseOr<Request>, signingOpts?: RequestSigningArguments ):Promise<Request> => {
-		return toRequest(awsSigner.sign(await toHttpRequest(req), signingOpts))
-	}
+	return async (req: PromiseOr<Request>, signingOpts?: RequestSigningArguments): Promise<Request> => {
+		return toRequest(awsSigner.sign(await toHttpRequest(req), signingOpts));
+	};
 };

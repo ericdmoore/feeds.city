@@ -252,8 +252,7 @@ export const functionsStruct = (() => {
 	const jsonEnc = async (obj: unknown) => enc.encode(JSON.stringify(await obj));
 	// new Uint8Array(await nodeBuffer.Buffer.from(JSON.stringify(obj), "utf8").buffer);
 
-	const bsonEnc = async (obj: unknown) =>
-		new Uint8Array(await bson.serialize(obj as bson.Document));
+	const bsonEnc = async (obj: unknown) => new Uint8Array(await bson.serialize(obj as bson.Document));
 
 	const strDec = async (data: Uint8Array) => dec.decode(data);
 	const jsonDec = async (data: Uint8Array) => JSON.parse(dec.decode(data));
@@ -323,10 +322,8 @@ export const jwkRSAtoCryptoKey = async (
 	);
 
 export const functionsEncodings = (() => {
-	const B64toURL = async (data: PromiseOr<Uint8Array>): Promise<string> =>
-		base64url.encode(await data);
-	const B64fromURL = async (URLstring: string): Promise<Uint8Array> =>
-		base64url.decode(await URLstring);
+	const B64toURL = async (data: PromiseOr<Uint8Array>): Promise<string> => base64url.encode(await data);
+	const B64fromURL = async (URLstring: string): Promise<Uint8Array> => base64url.decode(await URLstring);
 	const JWEtoURL = (pubKey: JsonWebKey) => async (data: Uint8Array) => {
 		const cryptoPubKey = await jwkRSAtoCryptoKey(pubKey, [
 			CryptoKeyUsages.encrypt,
@@ -408,13 +405,10 @@ export const legends = (() => {
 		const hasOnlyOneStrucFn = intersection(legend, Object.keys(functionsStruct.toURL)).length === 1;
 		const hasOnlyOneEnc = intersection(legend, Object.keys(functionsEncodings.toURL)).length === 1;
 		if (hasOnlyOneStrucFn && hasOnlyOneEnc) {
-			const middleFuncLetters = legend.filter((f) =>
-				!Object.keys(functionsEncodings.toURL).includes(f)
-			)
+			const middleFuncLetters = legend.filter((f) => !Object.keys(functionsEncodings.toURL).includes(f))
 				.filter((f) => !Object.keys(functionsStruct.toURL).includes(f));
 
-			const hasUnrepeatedMiddleFns =
-				middleFuncLetters.length === [...new Set(middleFuncLetters)].length;
+			const hasUnrepeatedMiddleFns = middleFuncLetters.length === [...new Set(middleFuncLetters)].length;
 			// console.warn({hasOnlyOneStrucFn, hasOnlyOneEnc, hasUnrepeatedMiddleFns})
 			return hasUnrepeatedMiddleFns;
 		} else {
@@ -423,27 +417,22 @@ export const legends = (() => {
 		}
 	};
 
-	const parse =
-		(opts: FunctionParsingOptions = defaultedOptions) => (legend: string): EITHER<string[]> => {
-			const val = legend.includes(opts.legendDelim)
-				? legend.split(opts.legendDelim)
-				: legend.split("");
-			return !val.every((f) => functionAbrevAvailable.includes(f))
-				? Left(
-					Error(
-						`Found invalid encoding functions: ${
-							val.filter((f) => !!functionAbrevAvailable.includes(f)).join(",")
-						}`,
-					),
-				)
-				: isValid(val)
-				? Right(sortValidFuncs(val))
-				: Left(
-					Error(
-						`The content encoding legend must have 1 structure & 1 encoding function, middle/ transform funcs are optional, but not repeatable`,
-					),
-				);
-		};
+	const parse = (opts: FunctionParsingOptions = defaultedOptions) => (legend: string): EITHER<string[]> => {
+		const val = legend.includes(opts.legendDelim) ? legend.split(opts.legendDelim) : legend.split("");
+		return !val.every((f) => functionAbrevAvailable.includes(f))
+			? Left(
+				Error(
+					`Found invalid encoding functions: ${val.filter((f) => !!functionAbrevAvailable.includes(f)).join(",")}`,
+				),
+			)
+			: isValid(val)
+			? Right(sortValidFuncs(val))
+			: Left(
+				Error(
+					`The content encoding legend must have 1 structure & 1 encoding function, middle/ transform funcs are optional, but not repeatable`,
+				),
+			);
+	};
 
 	/**
 	 * ## Input Types:
@@ -452,8 +441,7 @@ export const legends = (() => {
 	 * - ::{string} 			// implied default form
 	 */
 	const discover =
-		(opts: FunctionParsingOptions = defaultedOptions) =>
-		(maybeLegend?: string): EITHER<DiscoveryStruct> => {
+		(opts: FunctionParsingOptions = defaultedOptions) => (maybeLegend?: string): EITHER<DiscoveryStruct> => {
 			// console.log({maybeLegend})
 			if (maybeLegend && maybeLegend.includes(opts.legendSeperator)) {
 				const parsedLeg = parse(opts)(
@@ -550,8 +538,7 @@ export const paramElement = (() => {
 		}
 	};
 	const parse =
-		(opts: FunctionParsingOptions = defaultedOptions) =>
-		async (paramValueString: string): Promise<EITHER<unknown>> => {
+		(opts: FunctionParsingOptions = defaultedOptions) => async (paramValueString: string): Promise<EITHER<unknown>> => {
 			// console.log('parsing...', {paramValueString})
 			const legend = legends.discover(opts)(paramValueString);
 			const isValid = validate(opts, legend, {
@@ -661,9 +648,7 @@ export const paramElement = (() => {
 
 					if (opts.encryptionKeys) {
 						const ppubWebKey = opts.encryptionKeys.publicJWK;
-						const key = typeof ppubWebKey === "string"
-							? JSON.parse(ppubWebKey)
-							: ppubWebKey as JsonWebKey;
+						const key = typeof ppubWebKey === "string" ? JSON.parse(ppubWebKey) : ppubWebKey as JsonWebKey;
 
 						return Right(
 							`${legends.stringify(flist)}${opts.legendSeperator}${await encFn(
@@ -771,14 +756,10 @@ export const params = (() => {
 
 		return len > opts.legendOpts.hurdle
 			? Right(
-				`${paramName}${opts.argValueDelim}${
-					(await paramElement.stringify(legends[1], opts)(paramVal)).right
-				}`,
+				`${paramName}${opts.argValueDelim}${(await paramElement.stringify(legends[1], opts)(paramVal)).right}`,
 			)
 			: Right(
-				`${paramName}${opts.argValueDelim}${
-					(await paramElement.stringify(legends[0], opts)(paramVal)).right
-				}`,
+				`${paramName}${opts.argValueDelim}${(await paramElement.stringify(legends[0], opts)(paramVal)).right}`,
 			);
 	};
 

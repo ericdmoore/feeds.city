@@ -1,6 +1,6 @@
 import { assert, assertEquals, assertNotEquals } from "$std/testing/asserts.ts";
-import { cacheStack, inMem as inMemCache, } from "$lib/clients/cache.ts";
-import { s3, memFrontS3 } from "$lib/clients/cacheProviders/mod.ts";
+import { cacheStack, inMem as inMemCache } from "$lib/clients/cache.ts";
+import { dynamo, memFrontS3, s3 } from "$lib/clients/cacheProviders/mod.ts";
 import s3uri from "$lib/parsers/s3uri.ts";
 import envVar from "$lib/utils/vars.ts";
 
@@ -22,7 +22,6 @@ Deno.test({
 	name: "Simple Stack Orderinality",
 	// only: true,
 	fn: async () => {
-		
 		const mem1 = inMemCache();
 		const mem2 = inMemCache();
 		const mem12 = cacheStack(mem1, mem2);
@@ -46,13 +45,17 @@ Deno.test({
 		const s3str = s3uri();
 
 		const mem1 = inMemCache();
-		const s3cac = s3.cache({
-			key: env("AWS_KEY"),
-			secret: env("AWS_SECRET"),
-			region: env("AWS_REGION"),
-			defaultBucket: env("AWS_POLLY_BUCKET"),
-			defualtPrefix: env("AWS_POLLY_PREFIX"),
-		}, {}, s3str.parse);
+		const s3cac = s3.cache(
+			{
+				key: env("AWS_KEY"),
+				secret: env("AWS_SECRET"),
+				region: env("AWS_REGION"),
+				defaultBucket: env("AWS_POLLY_BUCKET"),
+				defualtPrefix: env("AWS_POLLY_PREFIX"),
+			},
+			{},
+			s3str.parse,
+		);
 
 		const localizedS3 = cacheStack(mem1, s3cac);
 		// set both cache destinations with `SET A = 123`
@@ -80,8 +83,8 @@ Deno.test({
 	name: "Simple Layered Cache Stack - inMem before S3",
 	fn: async () => {
 		const env = await envVar(">>MISSING<<");
-	
-		const localizedS3 = memFrontS3(
+
+		const localizedS3 = memFrontS3.cache(
 			// s3 params
 			{
 				params: {
@@ -89,38 +92,37 @@ Deno.test({
 					secret: env("AWS_SECRET"),
 					region: env("AWS_REGION"),
 					defaultBucket: env("AWS_POLLY_BUCKET"),
-					defualtPrefix: env("AWS_POLLY_PREFIX")
+					defualtPrefix: env("AWS_POLLY_PREFIX"),
 				},
 			},
 			// RAM
-			{ max: 256 }
-		)
+			{ max: 256 },
+		);
 		await localizedS3.set("HelloWorld", enc.encode("Hello World!"));
 		const resp = await localizedS3.get("HelloWorld");
 		assert(resp?.provider === "RAM");
 	},
 });
 
-
 Deno.test({
-	name:'Dynamo Cache Stack with repeated overrite',
-	only:false, 
-	fn: async ()=>{
+	name: "Dynamo Cache",
+	// only: true,
+	fn: async () => {
 		const env = await envVar(">>MISSING<<");
 
-		const dynCache = dynamoCache({
+		const dynCache = dynamo.cache({
 			key: env("AWS_KEY"),
 			secret: env("AWS_SECRET"),
 			region: env("AWS_REGION"),
 			table: env("AWS_DYN_TABLE_MEGA"),
-		})
+		});
 
-		await dynCache.set("HelloWorld", enc.encode("Hello World!"))
-		const r1 = await dynCache.get("HelloWorld")
-		assertEquals(r1?.data, enc.encode("Hello World!"))
-
-		await dynCache.set("HelloWorld", enc.encode("Hello World!"))
-		const r2 = await dynCache.get("HelloWorld")
-		assertEquals(r2?.data, enc.encode("Hello World!"))
-	}
-})
+		await dynCache.set("HelloWorld", enc.encode("Hello World!"));
+		const r1 = await dynCache.get("HelloWorld");
+		// const scanned = await dynCache.meta.scan({})
+		assertEquals(r1?.value.data, enc.encode("Hello World!"));
+		const r2 = await dynCache.get("HelloWorld");
+		assertEquals(r2?.value.data, enc.encode("Hello World!"));
+		console.log(await dynCache.del("HelloWorld"));
+	},
+});

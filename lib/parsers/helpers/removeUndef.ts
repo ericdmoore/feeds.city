@@ -22,9 +22,7 @@ const removeUndefinedsFromObject = (i: JSONObject): JSONObject => {
 		.filter(([_, v]) => v) // removes undefined values
 		.map(([k, v]) => {
 			return typeof v === "object"
-				? Array.isArray(v)
-					? [k, removeUndefinedsFromObjectArray(v)]
-					: [k, removeUndefinedsFromObject(v)]
+				? Array.isArray(v) ? [k, removeUndefinedsFromObjectArray(v)] : [k, removeUndefinedsFromObject(v)]
 				: [k, v];
 		});
 	return Object.fromEntries(ent) as JSONObject;

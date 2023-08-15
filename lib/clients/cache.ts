@@ -2,14 +2,14 @@
 
 import { LRUCache } from "lru-cache";
 import MurmurHash3 from "imurmurhash";
-import changeEncOf from '$lib/utils/enocdings.ts'
+import changeEncOf from "$lib/utils/enocdings.ts";
 
 //#endregion imports
 
 //#region interfaces
 
-interface CacheValueExpression <T>{
-	data: Uint8Array
+interface CacheValueExpression<T> {
+	data: Uint8Array;
 	transformed: T | null;
 }
 
@@ -26,58 +26,58 @@ interface ValueInCache {
 export interface ICacheableDataForCache {
 	provider: string;
 	meta: Record<string, unknown>;
-	key: CacheKey
-	value: { 
-		inputType: string
-		data: Uint8Array 
-	} 
+	key: CacheKey;
+	value: {
+		inputType: string;
+		data: Uint8Array;
+	};
 }
 
 export interface ICacheDataFromProvider<T = Uint8Array> {
 	provider: string;
 	meta: Record<string, unknown>;
-	key: CacheKey
-	value: CacheValueExpression<T>
+	key: CacheKey;
+	value: CacheValueExpression<T>;
 }
 
-type CacheName = string;
-type NullableProviderData = ICacheDataFromProvider | null;
+export type CacheName = string;
+export type NullableProviderData<T> = ICacheDataFromProvider<T> | null;
 
-export type RenamerFn = (s:string)=>Promise<string>
-export type TransformToBytes = (data: unknown | Uint8Array)=>Promise <ValueInCache>
-export type TransformFromBytes = <T>(retrieved?: ICacheableDataForCache)=>Promise<T | null>
+export type RenamerFn = (s: string) => Promise<string>;
+export type TransformToBytes<T = Uint8Array> = (data: T) => Promise<ValueInCache>;
+export type TransformFromBytes = <ReturnType>(retrieved?: ICacheableDataForCache) => Promise<ReturnType | null>;
 
-export interface ICacheProvider {
+export interface TransformFunctionGroup<NativeDataType = Uint8Array> {
+	renamer: RenamerFn;
+	toBytes: TransformToBytes<NativeDataType>;
+	fromBytes: TransformFromBytes;
+}
+export interface ICacheProvider<NativeDataType = Uint8Array> {
 	provider: string;
 	meta: Record<string, unknown>;
-	transforms: {
-		renameForCache(originalName: string): Promise<CacheName>;
-		toBytes: TransformToBytes
-		fromBytes: TransformFromBytes
-	}
-	set: (name: string, data: Uint8Array) => Promise<ICacheDataFromProvider>;
-	get: (name: string) => Promise<NullableProviderData>;
-	peek: (name: string) => Promise<NullableProviderData>;
-	del: (name: string) => Promise<NullableProviderData>;
+	transforms: TransformFunctionGroup<NativeDataType>;
+	set: (name: string, data: NativeDataType) => Promise<ICacheDataFromProvider<NativeDataType>>;
+	get: (name: string) => Promise<NullableProviderData<NativeDataType>>;
+	peek: (name: string) => Promise<NullableProviderData<NativeDataType>>;
+	del: (name: string) => Promise<NullableProviderData<NativeDataType>>;
 	has: (name: string) => Promise<boolean>;
 }
 
-export interface IProviderMeta {
-	set: (name: string, data: Uint8Array) => Promise<ICacheDataFromProvider[]>;
-	del: (name: string) => Promise<NullableProviderData[]>;
-	get: (name: string) => Promise<NullableProviderData>;
-	peek: (name: string) => Promise<NullableProviderData>;
+export interface IProviderMeta<NativeDataType = Uint8Array> {
+	set: (name: string, data: NativeDataType) => Promise<ICacheDataFromProvider<NativeDataType>[]>;
+	del: (name: string) => Promise<NullableProviderData<NativeDataType>[]>;
+	get: (name: string) => Promise<NullableProviderData<NativeDataType>>;
+	peek: (name: string) => Promise<NullableProviderData<NativeDataType>>;
 	has: (name: string) => Promise<boolean>;
 }
 
-export interface IProviderMetaMulti {
-	set: (name: string, data: Uint8Array) => Promise<ICacheDataFromProvider[]>;
-	get: (name: string) => Promise<NullableProviderData[]>;
-	peek: (name: string) => Promise<NullableProviderData[]>;
-	del: (name: string) => Promise<NullableProviderData[]>;
+export interface IProviderMetaMulti<NativeDataType = Uint8Array> {
+	set: (name: string, data: NativeDataType) => Promise<ICacheDataFromProvider[]>;
+	get: (name: string) => Promise<NullableProviderData<NativeDataType>[]>;
+	peek: (name: string) => Promise<NullableProviderData<NativeDataType>[]>;
+	del: (name: string) => Promise<NullableProviderData<NativeDataType>[]>;
 	has: (name: string) => Promise<boolean[]>;
 }
-
 
 //#endregion interfaces
 
@@ -90,117 +90,126 @@ const retriveFromFirstNonNull = (
 		const rezAcc = await acc;
 		return rezAcc !== null ? rezAcc : prov[action](name);
 	}, Promise.resolve(null) as Promise<ICacheDataFromProvider | boolean | null>);
-}
+};
 
 export const renamerWithMurmurHash3: RenamerFn = (s: string) => {
 	const hashState = MurmurHash3();
 	return Promise.resolve(hashState.hash(s).result().toString());
 };
 
-export const defaultRenamer: RenamerFn = (s: string)=> Promise.resolve(changeEncOf(s).from('utf8').to('base64url').string());
+export const defaultRenamer: RenamerFn = (s: string) =>
+	Promise.resolve(changeEncOf(s).from("utf8").to("base64url").string());
+
 export const defaultFromBytes: TransformFromBytes = (retrieved?: ICacheableDataForCache) => {
-	if(!retrieved?.value.data){
-		return null
-	} else if (retrieved.value.inputType !== 'Uint8Array'){
-		const dec = new TextDecoder()
-		return JSON.parse(dec.decode(retrieved.value.data))
-	} else{
-		return retrieved.value.data
+	if (!retrieved?.value.data) {
+		return null;
+	} else if (retrieved.value.inputType !== "Uint8Array") {
+		const dec = new TextDecoder();
+		return JSON.parse(dec.decode(retrieved.value.data));
+	} else {
+		return retrieved.value.data;
 	}
-}
+};
 
-export const defaultToBytesWithTypeNote: TransformToBytes = (input: unknown | Uint8Array ) => {
-	const enc = new TextEncoder()
-	return input instanceof Uint8Array 
-		? Promise.resolve({ data: input, inputType: 'Uint8Array'} as ValueInCache)
-		: Promise.resolve({ data: enc.encode(JSON.stringify(input)), inputType: 'other'} as ValueInCache)
-}
+export const defaultToBytesWithTypeNote: TransformToBytes = (input: unknown | Uint8Array) => {
+	const enc = new TextEncoder();
+	return input instanceof Uint8Array
+		? Promise.resolve({ data: input, inputType: "Uint8Array" } as ValueInCache)
+		: Promise.resolve({ data: enc.encode(JSON.stringify(input)), inputType: "other" } as ValueInCache);
+};
 
-export const makeKey = async (name: string, renamer: RenamerFn) => ({name, renamed: await renamer(name) }) as CacheKey
+export const makeKey = async (name: string, renamer: RenamerFn) => ({ name, renamed: await renamer(name) }) as CacheKey;
 
-export const inMem = (max = 1000, transform? :{renamer?: RenamerFn, fromBytes?:TransformFromBytes, toBytes?:TransformToBytes } ):ICacheProvider => {
+export const inMem = (
+	max = 1000,
+	transform?: { renamer?: RenamerFn; fromBytes?: TransformFromBytes; toBytes?: TransformToBytes },
+): ICacheProvider => {
 	const provider = "RAM";
 
 	const cache = new LRUCache<string, ICacheableDataForCache, unknown>({ updateAgeOnGet: true, max });
 	const meta = { inMemory: true, size: () => cache.size };
-    const renameForCache = transform?.renamer ?? defaultRenamer
-	const fromBytes = transform?.fromBytes ?? defaultFromBytes
-	const toBytes = transform?.toBytes ?? defaultToBytesWithTypeNote
+	const renamer = transform?.renamer ?? defaultRenamer;
+	const fromBytes = transform?.fromBytes ?? defaultFromBytes;
+	const toBytes = transform?.toBytes ?? defaultToBytesWithTypeNote;
 
-	const set = async (name: string, data: unknown | Uint8Array): Promise<ICacheDataFromProvider>=> {
+	const set = async (name: string, data: unknown | Uint8Array): Promise<ICacheDataFromProvider> => {
 		const ret = {
-			provider, meta, data,
-			key : await makeKey(name, renameForCache),
+			provider,
+			meta,
+			data,
+			key: await makeKey(name, renamer),
 			value: {
 				data,
 				transformed: new Uint8Array(),
-				inputType: data instanceof Uint8Array ? 'Uint8Array' : 'other',
-			}
-		} as ICacheableDataForCache & ICacheDataFromProvider
+				inputType: data instanceof Uint8Array ? "Uint8Array" : "other",
+			},
+		} as ICacheableDataForCache & ICacheDataFromProvider;
 
 		cache.set(ret.key.renamed, ret);
-		return ret
+		return ret;
 	};
 
 	const del = async (name: string) => {
-		const renamed = await renameForCache(name);
+		const renamed = await renamer(name);
 		cache.delete(renamed);
 		return {
-			provider, meta,
+			provider,
+			meta,
 			key: { name, renamed },
-			value: { 
-				data: new Uint8Array(), 
-				transformed: new Uint8Array() 
-			}  
+			value: {
+				data: new Uint8Array(),
+				transformed: new Uint8Array(),
+			},
 		} as ICacheDataFromProvider<Uint8Array>;
 	};
 
-	const get = async (name: string): Promise<NullableProviderData> => {
-		const retr = cache.get(await renameForCache(name))
-		if(!retr){
-			return null
-		}else{
-			return {
-				meta, provider,
-				key: await makeKey(name, renameForCache),
-				value:{
-					data: retr.value.data,
-					transformed: await fromBytes(retr) 
-				}
-			}
-		}
-	}
-	const has = async (name: string) => cache.has(await renameForCache(name));
-
-	const peek = async (name: string):Promise<NullableProviderData> => {
-		const retr = cache.peek(await renameForCache(name))
-		if(!retr){
-			return null
-		}else{
+	const get = async (name: string): Promise<NullableProviderData<Uint8Array>> => {
+		const retr = cache.get(await renamer(name));
+		if (!retr) {
+			return null;
+		} else {
 			return {
 				meta,
 				provider,
-				key: await makeKey(name, renameForCache),
-				value:{ 
-					data: retr.value.data, 
-					transformed: await fromBytes(retr) 
-				}
-			}
+				key: await makeKey(name, renamer),
+				value: {
+					data: retr.value.data,
+					transformed: await fromBytes(retr),
+				},
+			};
 		}
-	}
+	};
+	const has = async (name: string) => cache.has(await renamer(name));
+
+	const peek = async (name: string): Promise<NullableProviderData<Uint8Array>> => {
+		const retr = cache.peek(await renamer(name));
+		if (!retr) {
+			return null;
+		} else {
+			return {
+				meta,
+				provider,
+				key: await makeKey(name, renamer),
+				value: {
+					data: retr.value.data,
+					transformed: await fromBytes(retr),
+				},
+			};
+		}
+	};
 
 	return {
 		meta,
 		provider,
-		get, 
-		set, 
+		get,
+		set,
 		peek,
-		has, 
+		has,
 		del,
-		transforms:{ 
-			renameForCache, 
-			fromBytes, 
-			toBytes 
+		transforms: {
+			renamer,
+			fromBytes,
+			toBytes,
 		},
 	};
 };
@@ -211,9 +220,11 @@ export const cacheStack = (...providers: ICacheProvider[]): IProviderMeta => {
 			return prov.set(name, data);
 		}));
 	const del = (name: string) => Promise.all(providers.map((prov) => prov.del(name)));
-	const get = (name: string) => retriveFromFirstNonNull("get", name, providers) as Promise<ICacheDataFromProvider | null>;
+	const get = (name: string) =>
+		retriveFromFirstNonNull("get", name, providers) as Promise<ICacheDataFromProvider | null>;
 	const has = (name: string) => retriveFromFirstNonNull("has", name, providers) as Promise<boolean>;
-	const peek = (name: string) => retriveFromFirstNonNull("peek", name, providers) as Promise<ICacheDataFromProvider | null>;
+	const peek = (name: string) =>
+		retriveFromFirstNonNull("peek", name, providers) as Promise<ICacheDataFromProvider | null>;
 	return { get, set, del, has, peek };
 };
 

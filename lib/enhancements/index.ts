@@ -51,11 +51,10 @@ export interface EnhancementModuleInput {
 	};
 }
 
-export const composeASTChains =
-	(chain: ASTChainFunc[] = [], params: unknown[] = []) => async (ast: PromiseOr<AST>) =>
-		chain.reduce(async (ast: Promise<AST>, fn: ASTChainFunc, i) => {
-			return fn(params[i])(await ast);
-		}, Promise.resolve(ast));
+export const composeASTChains = (chain: ASTChainFunc[] = [], params: unknown[] = []) => async (ast: PromiseOr<AST>) =>
+	chain.reduce(async (ast: Promise<AST>, fn: ASTChainFunc, i) => {
+		return fn(params[i])(await ast);
+	}, Promise.resolve(ast));
 
 export const EnhancementModule = (
 	opts: EnhancementModuleInput,

@@ -134,7 +134,6 @@ export function identicon(
 		fill,
 		rects,
 		rectStr,
-		svgString:
-			`<svg viewBox="-1.5 -1.5 8 8" xmlns="http://www.w3.org/2000/svg" ${fill}">${rectStr}</svg>`,
+		svgString: `<svg viewBox="-1.5 -1.5 8 8" xmlns="http://www.w3.org/2000/svg" ${fill}">${rectStr}</svg>`,
 	};
 }

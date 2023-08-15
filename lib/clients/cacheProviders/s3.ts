@@ -12,7 +12,9 @@ import {
 	defaultFromBytes,
 	defaultRenamer,
 	defaultToBytesWithTypeNote,
-	ICacheableDataForCache,
+	// type TransformFromBytes,
+	// type TransformToBytes,
+	type ICacheableDataForCache,
 	type ICacheDataFromProvider,
 	type ICacheProvider,
 } from "../cache.ts";
@@ -25,6 +27,7 @@ export interface S3CacheConfig {
 	region: string;
 	defaultBucket: string;
 	defualtPrefix: string;
+	endpoint?: string;
 }
 
 export type S3UriParserFn = (str: string) => { Bucket: string; Key: string };
@@ -35,7 +38,7 @@ export const cache = (
 	s3c: S3CacheConfig,
 	overrides: Partial<ICacheProvider> = {
 		transforms: {
-			renameForCache: (s) => Promise.resolve(s),
+			renamer: (s) => Promise.resolve(s),
 			toBytes: defaultToBytesWithTypeNote,
 			fromBytes: defaultFromBytes,
 		},
@@ -46,17 +49,24 @@ export const cache = (
 	s3c.defualtPrefix = s3c.defualtPrefix ?? "";
 
 	const provider = "AWS:S3";
-	const meta = { cloud: "AWS", service: "S3", region: s3c.region };
+	const meta = {
+		cloud: "AWS",
+		service: "S3",
+		region: s3c.region,
+	};
 
 	const s3 = new S3Client({
 		region: s3c.region,
+		endpoint: s3c.endpoint,
 		credentials: {
 			accessKeyId: s3c.key,
 			secretAccessKey: s3c.secret,
 		},
 	});
 
-	const renameForCache = overrides.transforms?.renameForCache ?? defaultRenamer;
+	let handledItems = 0;
+
+	const renamer = overrides.transforms?.renamer ?? defaultRenamer;
 	const toBytes = overrides.transforms?.toBytes ?? defaultToBytesWithTypeNote;
 	const fromBytes = overrides.transforms?.fromBytes ?? defaultFromBytes;
 
@@ -79,27 +89,33 @@ export const cache = (
 			Bucket: s3c.defaultBucket,
 			Key: s3c.defualtPrefix,
 		});
-		const renamed = await renameForCache(Key);
+		const renamed = await renamer(Key);
 		const sendKey = `${s3c.defualtPrefix}/${renamed}`;
 
+		const dataToS3 = {
+			meta,
+			provider,
+			key: { name, renamed },
+			value: {
+				data: await toBytes(inputData),
+				inputType: "Uint8Array",
+			},
+		};
+
 		const s3r = await s3.send(
-			new PutObjectCommand({
-				Bucket,
-				Key: sendKey,
-				Body: (await toBytes(inputData)).data,
-			}),
+			new PutObjectCommand({ Bucket, Key: sendKey, Body: new Blob([JSON.stringify(dataToS3)]) }),
 		);
 
 		const ret = {
 			provider,
 			meta: { cloud: "AWS", s3resp: s3r },
-			key: { name, renamed: await renameForCache(Key) },
+			key: { name, renamed: await renamer(Key) },
 			value: {
 				data: inputData,
 				transformed: new Uint8Array(),
 			},
 		};
-
+		handledItems++;
 		return ret;
 	};
 
@@ -108,8 +124,9 @@ export const cache = (
 			Bucket: s3c.defaultBucket,
 			Key: s3c.defualtPrefix,
 		});
-		const renamed = await renameForCache(Key);
+		const renamed = await renamer(Key);
 		const sendKey = `${s3c.defualtPrefix}/${renamed}`;
+		handledItems--;
 		await s3.send(new DeleteObjectCommand({ Bucket, Key: sendKey }));
 		return {
 			meta,
@@ -127,7 +144,7 @@ export const cache = (
 			Bucket: s3c.defaultBucket,
 			Key: s3c.defualtPrefix,
 		});
-		const renamed = await renameForCache(Key);
+		const renamed = await renamer(Key);
 		const sendKey = `${s3c.defualtPrefix}/${renamed}`;
 		const s3r = await s3.send(new GetObjectCommand({ Bucket, Key: sendKey }));
 
@@ -157,7 +174,7 @@ export const cache = (
 			Bucket: s3c.defaultBucket,
 			Key: s3c.defualtPrefix,
 		});
-		const renamed = await renameForCache(Key);
+		const renamed = await renamer(Key);
 		const sendKey = `${s3c.defualtPrefix}/${renamed}`;
 
 		return s3.send(new HeadObjectCommand({ Bucket, Key: sendKey }))
@@ -175,7 +192,7 @@ export const cache = (
 		get,
 		del,
 		set,
-		transforms: { renameForCache, fromBytes, toBytes },
+		transforms: { renamer, fromBytes, toBytes },
 		...overrides,
 	};
 };

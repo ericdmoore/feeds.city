@@ -2,8 +2,8 @@
 
 // mod.ts audit: OK
 import { stringify as qsStringify } from "https://deno.land/x/querystring@v1.0.2/mod.js";
-import { sigMaker } from '$lib/clients/aws-url-signer.ts'
-import type { PromiseOr } from '$lib/types.ts'
+import { sigMaker } from "$lib/clients/aws-url-signer.ts";
+import type { PromiseOr } from "$lib/types.ts";
 
 // #region types
 export type Engine = "neural" | "standard";
@@ -296,7 +296,6 @@ export interface PollyClientInterface {
 
 const encoder = new TextEncoder();
 
-
 const middleware = async (r: PromiseOr<Request>) => {
 	// @todo
 	// 1.add content-length for POST
@@ -316,7 +315,6 @@ const final = <T>(r: PromiseOr<Request>) => {
 		__mockedResponse: async (testingResponse: unknown) => await testingResponse,
 	};
 };
-
 
 export const pollyClient = (
 	awsKey: string,

@@ -1,19 +1,7 @@
 // deno-lint-ignore-file require-await
-import type {
-	IValidationData,
-	LocalValidatorFns,
-	v1AbstractTokenFactory,
-	VersionedPayload,
-} from "./tokenType.ts";
+import type { IValidationData, LocalValidatorFns, v1AbstractTokenFactory, VersionedPayload } from "./tokenType.ts";
 
-import {
-	create,
-	decode,
-	type Header,
-	Payload,
-	validate as djwtValidate,
-	verify as djwtVerify,
-} from "djwt";
+import { create, decode, type Header, Payload, validate as djwtValidate, verify as djwtVerify } from "djwt";
 
 const ISSUER = "https://feeds.city";
 
@@ -33,10 +21,7 @@ export const isFromMe: LocalValidatorFns = async (
 
 export const notTooSoon: LocalValidatorFns = async (
 	data: { headers: Header; payload: VersionedPayload; signature: Uint8Array },
-) =>
-	"nbf" in data.headers && data.headers.nbf
-		? Math.floor(Date.now() / 1000) > (data.headers.nbf as number)
-		: true;
+) => "nbf" in data.headers && data.headers.nbf ? Math.floor(Date.now() / 1000) > (data.headers.nbf as number) : true;
 
 export const validIssuanceDate: LocalValidatorFns = async (
 	data: { headers: Header; payload: VersionedPayload; signature: Uint8Array },

@@ -40,3 +40,33 @@ jobs:
 
       - name: Run tests
         run: deno test -A
+        env:
+          AWS_DYN_TABLE_MEGA: ${{ vars.AWS_DYN_TABLE_MEGA }}
+          AWS_POLLY_BUCKET: ${{ vars.AWS_POLLY_BUCKET }}
+          AWS_POLLY_PREFIX: ${{ vars.AWS_POLLY_PREFIX }}
+          AWS_REGION: ${{ vars.AWS_REGION }}
+          JWT_KEY_EXT: ${{ vars.JWT_KEY_EXT }}
+          JWT_KEY_OPS_PRIVATE: ${{ vars.JWT_KEY_OPS_PRIVATE }}
+          JWT_KEY_OPS_PUBLIC: ${{ vars.JWT_KEY_OPS_PUBLIC }}
+          RSA_KEY_E: ${{ vars.RSA_KEY_E }}
+          AES_GCM_K: ${{ secrets.AES_GCM_K }}
+          AIRTABLE_BASE: ${{ secrets.AIRTABLE_BASE }}
+          AIRTABLE_TABLE: ${{ secrets.AIRTABLE_TABLE }}
+          AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
+          AWS_KEY: ${{ secrets.AWS_KEY }}
+          AWS_SECRET: ${{ secrets.AWS_SECRET }}
+          CLOUDFLARE_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT }}
+          CLOUDFLARE_FEEDCITY_ACCESS_KEY: ${{ secrets.CLOUDFLARE_FEEDCITY_ACCESS_KEY }}
+          CLOUDFLARE_FEEDCITY_ACCESS_SECRET: ${{ secrets.CLOUDFLARE_FEEDCITY_ACCESS_SECRET }}
+          CLOUDFLARE_FEEDCITY_TOKEN: ${{ secrets.CLOUDFLARE_FEEDCITY_TOKEN }}
+          JWT_KEY_D_PRIVATE: ${{ secrets.JWT_KEY_D_PRIVATE }}
+          JWT_KEY_ID: ${{ secrets.JWT_KEY_ID }}
+          JWT_KEY_X: ${{ secrets.JWT_KEY_X }}
+          JWT_KEY_Y: ${{ secrets.JWT_KEY_Y }}
+          RSA_KEY_N: ${{ secrets.RSA_KEY_N }}
+          RSA_KEY_PRIVATE_D: ${{ secrets.RSA_KEY_PRIVATE_D }}
+          RSA_KEY_PRIVATE_DP: ${{ secrets.RSA_KEY_PRIVATE_DP }}
+          RSA_KEY_PRIVATE_DQ: ${{ secrets.RSA_KEY_PRIVATE_DQ }}
+          RSA_KEY_PRIVATE_P: ${{ secrets.RSA_KEY_PRIVATE_P }}
+          RSA_KEY_PRIVATE_Q: ${{ secrets.RSA_KEY_PRIVATE_Q }}
+          RSA_KEY_PRIVATE_QI: ${{ secrets.RSA_KEY_PRIVATE_QI }}

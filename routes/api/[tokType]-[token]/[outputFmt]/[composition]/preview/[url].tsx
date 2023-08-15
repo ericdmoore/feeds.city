@@ -9,8 +9,7 @@ import { defaultedOptions, functions } from "$lib/parsers/enhancementFunctions.t
 import NavPanels from "$components/navigation/panels.tsx";
 
 export const config: RouteConfig = {
-	routeOverride:
-		"/api/:tokType(u|t)-:token/:outputFmt(ast|json|html)/:composition/preview/:url(http.*)",
+	routeOverride: "/api/:tokType(u|t)-:token/:outputFmt(ast|json|html)/:composition/preview/:url(http.*)",
 };
 
 const H1 = (

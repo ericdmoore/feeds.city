@@ -51,8 +51,7 @@ const Icon = (props: { icon: Icon; class: string }) => {
 // assume that it wont be used
 // add it when I need it
 export const StringOrThunk =
-	(myClass: string, Tag: keyof JSX.IntrinsicElements = "p") =>
-	(props: { text: string | (() => JSX.Element) }) => {
+	(myClass: string, Tag: keyof JSX.IntrinsicElements = "p") => (props: { text: string | (() => JSX.Element) }) => {
 		return typeof props.text === "string" ? <Tag class={myClass}>{props.text}</Tag> : props.text();
 	};
 

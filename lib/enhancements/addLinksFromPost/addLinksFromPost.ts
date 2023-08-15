@@ -9,9 +9,7 @@ type Node = DenoDom.Node;
 
 const nodeToPath = (initURL: string) => (n: Node & { attributes?: { href: string } }) => {
 	return n.attributes?.href
-		? n.attributes?.href.startsWith("http")
-			? n.attributes?.href
-			: path.join(initURL, n.attributes?.href)
+		? n.attributes?.href.startsWith("http") ? n.attributes?.href : path.join(initURL, n.attributes?.href)
 		: initURL;
 };
 
@@ -37,38 +35,39 @@ const loadUrlAndPluckCssPath = async (
 	};
 };
 
-export const addPostLinks =
-	((input: { nextPost: string; prevPost: string }) =>
-	async (_ast: PromiseOr<ASTComputable>): Promise<ASTComputable> => {
-		const ast = await _ast;
-		input.nextPost = atob(input.nextPost);
-		input.prevPost = atob(input.prevPost);
-		return {
-			...ast,
-			item: {
-				...ast.item,
-				list: async () => {
-					const list = await rezVal(ast.item.list);
-					return Promise.all(list.map(async (i) => {
-						const c = await rezVal(i.content);
-						const l = await rezVal(i.links);
+export const addPostLinks = ((input: { nextPost: string; prevPost: string }) =>
+async (
+	_ast: PromiseOr<ASTComputable>,
+): Promise<ASTComputable> => {
+	const ast = await _ast;
+	input.nextPost = atob(input.nextPost);
+	input.prevPost = atob(input.prevPost);
+	return {
+		...ast,
+		item: {
+			...ast.item,
+			list: async () => {
+				const list = await rezVal(ast.item.list);
+				return Promise.all(list.map(async (i) => {
+					const c = await rezVal(i.content);
+					const l = await rezVal(i.links);
 
-						const { raw, nextPost, prevPost } = await loadUrlAndPluckCssPath(
-							await rezVal(i.url),
-							c.raw,
-							input,
-						);
+					const { raw, nextPost, prevPost } = await loadUrlAndPluckCssPath(
+						await rezVal(i.url),
+						c.raw,
+						input,
+					);
 
-						return {
-							...i,
-							content: { ...c, raw },
-							links: { ...l, nextPost, prevPost },
-						};
-					}));
-				},
+					return {
+						...i,
+						content: { ...c, raw },
+						links: { ...l, nextPost, prevPost },
+					};
+				}));
 			},
-		};
-	}) as ASTChainFunc;
+		},
+	};
+}) as ASTChainFunc;
 
 export const paramSchema = {
 	type: "object",

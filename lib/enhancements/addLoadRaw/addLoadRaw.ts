@@ -18,8 +18,7 @@ const pickArticle = async (
 };
 
 export const addLoadRawAndArticle =
-	(input: { articleCss: string }) =>
-	async (ast_: PromiseOr<ASTComputable>): Promise<ASTComputable> => {
+	(input: { articleCss: string }) => async (ast_: PromiseOr<ASTComputable>): Promise<ASTComputable> => {
 		input.articleCss = atob(input.articleCss);
 		const ast = await ast_;
 		return {

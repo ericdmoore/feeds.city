@@ -28,12 +28,7 @@ import v1token, { validatiorsAvailable as availVals } from "../utils/tokens/v1.t
 
 import { Adjustments_horizontal, Bookmark } from "../components/heroicons/outline.tsx";
 
-import {
-	Building_storefront,
-	Magnifying_glass,
-	Scissors,
-	User_group,
-} from "../components/heroicons/solid.tsx";
+import { Building_storefront, Magnifying_glass, Scissors, User_group } from "../components/heroicons/solid.tsx";
 
 // import { DynamoDBClient, PutItemCommand , type AttributeValue} from "@aws-sdk/client-dynamodb";
 // import { string, number } from '../utils/dyn/mod.ts'
@@ -51,8 +46,7 @@ interface AirtableSideEffectRequestBase {
 	tableName: string;
 }
 
-interface AirtableSideEffectRequestDataInput
-	extends Record<string, string | number | null | boolean> {
+interface AirtableSideEffectRequestDataInput extends Record<string, string | number | null | boolean> {
 	Email: string;
 	Status: string;
 }
@@ -111,10 +105,9 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
 				p={() => (
 					<>
 						<span class="text-indigo-600">feeds.city</span>
-						offers the world's 1<sup>st</sup>{"  "}
-						<a class="font-bold" href="#">subscription proxy</a>
-						that transforms your content on the fly. Enabled by an open marketplace, backed by a
-						collective of developers, inspired by the quirky indie web.
+						offers the world's 1<sup>st</sup>{"  "}<a class="font-bold" href="#">subscription proxy</a>
+						that transforms your content on the fly. Enabled by an open marketplace, backed by a collective of
+						developers, inspired by the quirky indie web.
 					</>
 				)}
 				cta={{
@@ -275,9 +268,7 @@ export const handler: Handlers = {
 		const keyID = _keyID ? decodeURIComponent(_keyID) : null;
 
 		const status = new URL(req.url).searchParams.get("status");
-		const Status = status === "test" && keyID === env("KEY_D_PRIVATE")
-			? "test"
-			: "WaitingToVerifyAddress";
+		const Status = status === "test" && keyID === env("KEY_D_PRIVATE") ? "test" : "WaitingToVerifyAddress";
 
 		const token = new URL(req.url).searchParams.get("token") ||
 			getCookies(req.headers)?.sessionID || null as string | null;

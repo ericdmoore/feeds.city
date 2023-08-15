@@ -1,22 +1,20 @@
 // mod.ts audit: OK
 //
 import { hmac } from "https://deno.land/x/hmac@v2.0.1/mod.ts";
-import {
-	GetObjectCommand,
-	HeadObjectCommand,
-	PutObjectCommand,
-} from "@aws-sdk/client-s3";
+import { GetObjectCommand, HeadObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { streamToString } from "$lib/utils/pumpReader.ts";
 
 const encoder = new TextEncoder();
 export class Body {
-	Body: ReadableStream<Uint8Array>
-	constructor(input: Uint8Array){
-		this.Body = new Response(input).body!
+	Body: ReadableStream<Uint8Array>;
+	constructor(input: Uint8Array) {
+		this.Body = new Response(input).body!;
 	}
-	valueOf(){return this.Body}
+	valueOf() {
+		return this.Body;
+	}
 	transformToString() {
-		return streamToString(this.Body)
+		return streamToString(this.Body);
 	}
 }
 
@@ -47,28 +45,26 @@ export const s3Mock = (
 			versionId: undefined,
 			websiteRedirectLocation: undefined,
 		};
-	}
-	const putObject=  (
+	};
+	const putObject = (
 		key: string,
 		data: unknown | string | Uint8Array,
 	): Promise<Uint8Array> => {
 		const val = typeof data === "string"
 			? encoder.encode(data)
 			: data instanceof Uint8Array
-				? data
-				: encoder.encode(JSON.stringify(data));
+			? data
+			: encoder.encode(JSON.stringify(data));
 		state.set(key, val);
 		return Promise.resolve(val);
-	}
-	const getObject=  (key: string) => {
+	};
+	const getObject = (key: string) => {
 		const data = state.get(key);
 
-		return data
-			? new Body(data)
-			: Promise.reject({ err: "Object Not Found", code: 404 });
-	}
-	const send =  (command: PutObjectCommand | HeadObjectCommand | GetObjectCommand) => {
-		if ('Body' in command.input) {
+		return data ? new Body(data) : Promise.reject({ err: "Object Not Found", code: 404 });
+	};
+	const send = (command: PutObjectCommand | HeadObjectCommand | GetObjectCommand) => {
+		if ("Body" in command.input) {
 			// console.log(63,'put', command.input);
 			return putObject(`${command.input.Bucket}/${command.input.Key}`, (command as PutObjectCommand).input.Body);
 		} else if (command instanceof HeadObjectCommand) {
@@ -78,12 +74,12 @@ export const s3Mock = (
 			// console.log(67, 'get', command.input);
 			return getObject(`${command.input.Bucket}/${command.input.Key}`);
 		}
-	}
+	};
 
 	return {
 		send,
 		getObject,
 		putObject,
-		headObject
-	}
+		headObject,
+	};
 };
