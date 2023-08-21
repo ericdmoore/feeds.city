@@ -11,7 +11,8 @@
 	},
 	"fmt": {
 		"useTabs": true,
-		"lineWidth": 120
+		"lineWidth": 120,
+		"exclude": ["vendor/", "/.cov", "/.fsCache"]
 	},
 	"imports": {
 		"$std/": "https://deno.land/std@0.181.0/",
@@ -84,5 +85,6 @@
 		"https://denopkg.com/ericdmoore/s3_deno@main/mod.ts": {
 			"https://denopkg.com/ericdmoore/feedBarber@main/src/lib/clients/aws-url-signer.ts": "./lib/clients/aws-url-signer.ts"
 		}
-	}
+	},
+	"importMap": "./vendor/import_map.json"
 }

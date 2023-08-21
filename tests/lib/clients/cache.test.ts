@@ -1,6 +1,7 @@
+import { skip } from "../helpers.ts";
 import { assert, assertEquals, assertNotEquals } from "$std/testing/asserts.ts";
-import { cacheStack, inMem as inMemCache } from "$lib/clients/cache.ts";
-import { dynamo, memFrontS3, s3 } from "$lib/clients/cacheProviders/mod.ts";
+import { cacheStack, encodingWith, inMem as inMemCache } from "$lib/clients/cache.ts";
+import { dynamo, fsCache, memFrontS3, s3 } from "$lib/clients/cacheProviders/mod.ts";
 import s3uri from "$lib/parsers/s3uri.ts";
 import envVar from "$lib/utils/vars.ts";
 
@@ -126,3 +127,59 @@ Deno.test({
 		console.log(await dynCache.del("HelloWorld"));
 	},
 });
+
+Deno.test({
+	name: "Fs Cache",
+	// only: true,
+	fn: async () => {
+		const fscache = await fsCache.cache({ relativeDir: "./.fsCache", maxItems: 256 });
+
+		await fscache.set("HelloWorld", enc.encode("Hello World!"));
+		const r1 = await fscache.get("HelloWorld");
+
+		assertEquals(r1?.value.data, enc.encode("Hello World!"));
+		const r2 = await fscache.get("HelloWorld");
+		assertEquals(r2?.value.data, enc.encode("Hello World!"));
+		console.log(await fscache.del("HelloWorld"));
+	},
+});
+
+Deno.test({
+	name: "Use ID Encoding",
+	fn: async () => {
+		const coder = await encodingWith();
+		const res = await coder.encode(["id"], enc.encode("Hello World!"));
+
+		assert(res["content-encoding"] === "id");
+		assert(res["content-type"] === "Uint8Array");
+		assert(res.data instanceof Uint8Array);
+		assertEquals(res.data, enc.encode("Hello World!"));
+	},
+});
+
+Deno.test({
+	name: "Use BR Encoding",
+	only: true,
+	fn: async () => {
+		const coder = await encodingWith();
+		const res = await coder.encode(["br", "id"], enc.encode("Hello World!"));
+
+		console.log(res);
+
+		assert(res["content-encoding"]);
+		assert(res["content-type"] === "Uint8Array");
+		assert(res.data instanceof Uint8Array);
+		assertEquals(res.data, enc.encode("Hello World!"));
+	},
+});
+
+Deno.test(skip("Use zstd Encoding", async () => {}));
+Deno.test(skip("Use gzip Encoding", async () => {}));
+Deno.test(skip("Use base64url Encoding", async () => {}));
+Deno.test(skip("Use id Encoding", async () => {}));
+Deno.test(skip("Encoding Is Bijective", async () => {
+	// make test data
+	// encode the test Data
+	// ensure the encoded data is not the same as the initiakl data
+	// ensure you have equivalent data when decoded
+}));

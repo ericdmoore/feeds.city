@@ -153,7 +153,8 @@ export const cache = (
 			meta: { ...s3r, cloud: "AWS" } as Record<string, unknown>,
 			key: { name, renamed },
 			value: {
-				inputType: "Uint8Array",
+				"content-encoding": "id",
+				"content-type": "Uint8Array",
 				data: await s3r.Body?.transformToByteArray(),
 			},
 		} as ICacheableDataForCache;

@@ -1,0 +1,3 @@
+/* esm.sh - esbuild bundle(preact@10.15.1/jsx-runtime) denonext production */
+import{options as e}from"/stable/preact@10.15.1/denonext/preact.mjs";import{Fragment as x}from"/stable/preact@10.15.1/denonext/preact.mjs";var i=0;function v(n,s,f,a,l,u){var r,o,_={};for(o in s)o=="ref"?r=s[o]:_[o]=s[o];var t={type:n,props:_,key:f,ref:r,__k:null,__:null,__b:0,__e:null,__d:void 0,__c:null,__h:null,constructor:void 0,__v:--i,__source:l,__self:u};if(typeof n=="function"&&(r=n.defaultProps))for(o in r)_[o]===void 0&&(_[o]=r[o]);return e.vnode&&e.vnode(t),t}export{x as Fragment,v as jsx,v as jsxDEV,v as jsxs};
+//# sourceMappingURL=jsx-runtime.js.map

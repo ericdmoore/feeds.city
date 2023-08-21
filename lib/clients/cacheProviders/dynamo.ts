@@ -25,6 +25,7 @@ import {
 	type ICacheableDataForCache,
 	type ICacheDataFromProvider,
 	type ICacheProvider,
+	makeBytes,
 	type NullableProviderData,
 	type TransformFromBytes,
 	type TransformToBytes,
@@ -37,7 +38,7 @@ export interface IDynamoCacheConfig {
 	table: string;
 }
 
-export interface DynamoCache extends ICacheProvider {
+export interface DynamoCache extends ICacheProvider<Uint8Array> {
 	provider: string;
 	meta: {
 		cloud: "AWS:Dynamo";
@@ -55,9 +56,9 @@ export interface DynamoCache extends ICacheProvider {
 		fromBytes: TransformFromBytes;
 	};
 	set: (name: string, data: Uint8Array) => Promise<ICacheDataFromProvider>;
-	get: (name: string) => Promise<NullableProviderData>;
-	peek: (name: string) => Promise<NullableProviderData>;
-	del: (name: string) => Promise<NullableProviderData>;
+	get: (name: string) => Promise<NullableProviderData<Uint8Array>>;
+	peek: (name: string) => Promise<NullableProviderData<Uint8Array>>;
+	del: (name: string) => Promise<NullableProviderData<Uint8Array>>;
 	has: (name: string) => Promise<boolean>;
 }
 
@@ -107,9 +108,10 @@ export const cache = (
 			provider,
 			key: { name, renamed },
 			value: {
-				data,
-				inputType: "Uint8Array",
+				data: makeBytes(data),
 				transformed: new Uint8Array(),
+				"content-encoding": "id",
+				"content-type": "Uint8Array",
 			},
 		} as ICacheDataFromProvider & ICacheableDataForCache;
 
@@ -125,7 +127,7 @@ export const cache = (
 			});
 	};
 
-	const get = async (name: string): Promise<NullableProviderData> => {
+	const get = async (name: string): Promise<NullableProviderData<Uint8Array>> => {
 		const renamed = await renamer(name);
 
 		return dync.send(

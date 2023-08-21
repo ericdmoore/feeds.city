@@ -1,0 +1,18 @@
+{
+	"provider": "Local Filesystem",
+	"meta": {
+		"input": {
+			"relativeDir": "./.fsCache",
+			"maxItems": 256
+		}
+	},
+	"key": {
+		"name": "HelloWorld",
+		"renamed": "SGVsbG9Xb3JsZA"
+	},
+	"value": {
+		"data": "U0dWc2JHOGdWMjl5YkdRaA==",
+		"content-type": "Uint8Array",
+		"content-encoding": "base64"
+	}
+}

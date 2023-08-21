@@ -44,11 +44,7 @@ export const denoKVcache = (
 			meta,
 			provider,
 			key: { name, renamed },
-			value: {
-				data,
-				inputType: "Uint8Array",
-				transformed: new Uint8Array(),
-			},
+			value: { data, "content-encoding": "id", "content-type": "Uint8Array", transformed: new Uint8Array() },
 		} as ICacheableDataForCache & ICacheDataFromProvider;
 
 		const kv = await kvP;

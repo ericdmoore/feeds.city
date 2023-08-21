@@ -40,7 +40,7 @@ jobs:
         run: deno lint
 
       - name: Run tests
-        run: deno test -A
+        run: deno test -A --import-map=vendor/import_map.json
         env:
           AWS_DYN_TABLE_MEGA: ${{ vars.AWS_DYN_TABLE_MEGA }}
           AWS_POLLY_BUCKET: ${{ vars.AWS_POLLY_BUCKET }}
