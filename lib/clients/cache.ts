@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-unused-vars
 /**
  * Eviction Types:
  *
@@ -549,7 +550,7 @@ const addEventFunctionsToProviders = <T>(inputProvider: ICacheProvider<T>): IEve
 			},
 			// catchers catch the kicked down, and kicked up
 			onYourEvictions: (item: ICacheableDataForCache, ...otherRdyEvictions: ICacheableDataForCache[]) => {
-				let acceptitem: boolean = false;
+				let acceptitem = false;
 				let othersAccepted = 0;
 
 				if (item.value.data.byteLength <= availableSpaceInBytes) {

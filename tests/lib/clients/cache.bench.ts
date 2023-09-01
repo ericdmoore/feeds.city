@@ -1,4 +1,5 @@
-import { cacheStack, inMem as inMemCache, encodingWith } from "$lib/clients/cache.ts";
+import { cacheStack, inMem as inMemCache } from "$lib/clients/cache.ts";
+import { encodingWith } from '$lib/clients/cacheProviders/encoders/mod.ts'
 import { dynamo, s3 } from "$lib/clients/cacheProviders/mod.ts";
 import s3uri from "$lib/parsers/s3uri.ts";
 import envVar from "$lib/utils/vars.ts";
@@ -14,7 +15,7 @@ const data = await Deno.readFile(thisFileURL)
 
 const localLayeredS3 = cacheStack(
 	inMemCache(1024),
-	s3.cache(
+	await s3.cache(
 		{
 			key: env("AWS_KEY"),
 			secret: env("AWS_SECRET"),
@@ -27,9 +28,9 @@ const localLayeredS3 = cacheStack(
 	),
 );
 
-const localizedDyn = cacheStack(
+const _localizedDyn = cacheStack(
 	inMemCache(1024),
-	dynamo.cache({
+	await dynamo.cache({
 		table: env("AWS_KEY"),
 		key: env("AWS_KEY"),
 		secret: env("AWS_SECRET"),
@@ -37,7 +38,7 @@ const localizedDyn = cacheStack(
 	})
 );
 
-const dynCache = dynamo.cache({
+const _dynCache = await dynamo.cache({
 	table: env("AWS_KEY"),
 	key: env("AWS_KEY"),
 	secret: env("AWS_SECRET"),
