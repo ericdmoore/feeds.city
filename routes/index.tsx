@@ -230,7 +230,7 @@ export const handler: Handlers = {
 				privateKey: keys.key.ecdsa.sign,
 				publicKey: keys.key.ecdsa.verify,
 			},
-			env("KEY_ID")!,
+			env("JWT_KEY_ID")!,
 			[
 				availVals.isFromMe,
 				availVals.isV1Token,
@@ -268,7 +268,7 @@ export const handler: Handlers = {
 		const keyID = _keyID ? decodeURIComponent(_keyID) : null;
 
 		const status = new URL(req.url).searchParams.get("status");
-		const Status = status === "test" && keyID === env("KEY_D_PRIVATE") ? "test" : "WaitingToVerifyAddress";
+		const Status = status === "test" && keyID === env("JWT_KEY_D_PRIVATE") ? "test" : "WaitingToVerifyAddress";
 
 		const token = new URL(req.url).searchParams.get("token") ||
 			getCookies(req.headers)?.sessionID || null as string | null;
