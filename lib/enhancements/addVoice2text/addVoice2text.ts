@@ -319,7 +319,7 @@ export const checkChache = async (
 	// console.log(332, {itemKey, s3, dyn})
 
 	if (dyn) {
-		console.log("using dynamo - not s3");
+		// console.log("using dynamo - not s3");
 		const GetItemCmd = new GetItemCommand({
 			TableName: dyn.Table,
 			Key: marshall({ pk: itemKey, sk: itemKey }),
@@ -371,16 +371,16 @@ export const sendToCache = async (
 ): Promise<CachedStatusData & { taskIDs: SynthesisTaskIdentifiers }> => {
 	const icon = identicon(itemKey);
 
-	console.log(386, {
-		item,
-		itemKey,
-		taskConfig,
-		taskIDs,
-		s3,
-		dyn,
-		meta,
-		icon,
-	});
+	// console.log(386, {
+	// 	item,
+	// 	itemKey,
+	// 	taskConfig,
+	// 	taskIDs,
+	// 	s3,
+	// 	dyn,
+	// 	meta,
+	// 	icon,
+	// });
 
 	const saved = {
 		sk: itemKey,
@@ -399,7 +399,7 @@ export const sendToCache = async (
 		},
 	} as CachedStatusData & { taskIDs: SynthesisTaskIdentifiers };
 
-	console.log(395, { saved });
+	// console.log(395, { saved });
 
 	if (dyn?.dyc) {
 		await dyn.dyc.send(
@@ -449,7 +449,7 @@ async (
 		dyn,
 	);
 
-	console.log(452, { cacheItem });
+	// console.log(452, { cacheItem });
 
 	if (cacheItem) {
 		if (isMediaFinished(cacheItem)) {
@@ -478,7 +478,7 @@ async (
 					"Content-Encoding": s3r?.ContentEncoding,
 				} as BreadCrumbCacheMeta;
 
-				console.log(494, { s3r, meta });
+				// console.log(494, { s3r, meta });
 
 				const breadcrumbs = await sendToCache(
 					item,
@@ -519,8 +519,8 @@ async (
 				};
 			}
 		} else {
-			console.log(495, "...update the cache >> ", cacheItem);
-			console.log({ taskID: cacheItem.taskIDs.TaskId });
+			// console.log(495, "...update the cache >> ", cacheItem);
+			// console.log({ taskID: cacheItem.taskIDs.TaskId });
 
 			const resp = await pc.GetSpeechSynthesisTask(cacheItem.taskIDs.TaskId).json();
 			const { taskIDs, ...tcfg } = splitSynthTaskResponse(resp.SynthesisTask);
@@ -532,7 +532,7 @@ async (
 				s3,
 				dyn,
 			);
-			console.log(537, { breadcrumbs });
+			// console.log(537, { breadcrumbs });
 
 			return {
 				...item,
@@ -566,7 +566,7 @@ async (
 			taskCommandOpts,
 		).json();
 
-		console.log(434, { commandResponse });
+		// console.log(434, { commandResponse });
 
 		const { taskIDs, ...tcfg } = splitSynthTaskResponse(
 			commandResponse.SynthesisTask,
@@ -581,7 +581,7 @@ async (
 			dyn,
 		);
 
-		console.log(561, { breadcrumbs });
+		// console.log(561, { breadcrumbs });
 
 		return {
 			...item,
