@@ -100,19 +100,19 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
 			/>
 			<PublicHero
 				logo={{ src: "/feedcitylogo.svg", alt: "Feeds.City" }}
-				h1="Know Your Scroll"
+				h1="Choose Your Own Algorithm"
 				h1span=" with feeds.city "
 				p={() => (
 					<>
 						<span class="text-indigo-600">feeds.city</span>
-						offers the world's 1<sup>st</sup>{"  "}<a class="font-bold" href="#">subscription proxy</a>
+						offers the world's 1<sup>st</sup>{"  "}<a class="font-bold" href="#">subscription manager</a>
 						that transforms your content on the fly. Enabled by an open marketplace, backed by a collective of
 						developers, inspired by the quirky indie web.
 					</>
 				)}
 				cta={{
 					left: {
-						text: "Subscription Proxy Wha?",
+						text: "Subscription Manager?",
 						href: "#",
 						color: { bg: "indigo" as const, text: "white" as const },
 					},

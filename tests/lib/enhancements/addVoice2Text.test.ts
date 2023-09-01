@@ -239,7 +239,7 @@ Deno.test({ // @todo
 			.use(enhancementAdapter(addVoice2text), await cfg())
 			.toCity();
 
-		console.log("test:220", { ast });
+		// console.log("test:220", { ast });
 		const [err, data] = ASTKindJson.validate(ast);
 		runAssertions()(
 			testItemsThatHaveAttachments(
