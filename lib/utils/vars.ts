@@ -2,13 +2,15 @@ import { resolve } from "$std/path/mod.ts";
 import { parse } from "$std/dotenv/mod.ts";
 
 export const envVar = async (defaultVal: string, path = "../../../.env") => {
+	// const envfileURL = new URL()
 	const p = resolve(import.meta.url, path).split(":")[1]; // crazy `file:` prefix after import.meta.url
 	console.log(`envVar: ${p}`);
 
 	const stat = await Deno.stat(p)
 		.then((s) => s, () => ({ isFile: false }))
 		.catch(() => ({ isFile: false }));
-	console.log(`envVar: ${stat}`);
+
+	// console.log(`envVar: ${stat}`);
 
 	if (stat.isFile) {
 		const encFileBytes = await Deno.readFile(p);

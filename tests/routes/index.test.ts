@@ -1,10 +1,10 @@
-import type { ConnInfo } from "$std/http/server.ts";
-
 import { assert, assertEquals } from "$std/testing/asserts.ts";
 import { getSetCookies } from "$std/http/cookie.ts";
-import { ServerContext } from "$fresh/server.ts";
+import { createHandler, ServeHandlerInfo } from "$fresh/server.ts";
 import { envVar } from "$lib/utils/vars.ts";
 import MANIFEST from "../../fresh.gen.ts";
+import { sleep } from '$lib/index.ts'
+
 
 const host = "http://localhost";
 const port = 8000;
@@ -12,13 +12,12 @@ const port = 8000;
 const urlPath = (path: string) => `${host}:${port}${path}`;
 
 const CONN_INFO = {
-	localAddr: { transport: "tcp", hostname: "127.0.0.1", port: 80 },
-	remoteAddr: { transport: "tcp", hostname: "192.168.1.2", port: 80 },
-} as ConnInfo;
+	remoteAddr: { transport: "tcp", hostname: "192.168.1.2", port: 80 } as Deno.Addr,
+	// localAddr: { transport: "tcp", hostname: "127.0.0.1", port: 80 },
+} as ServeHandlerInfo
+
 
 console.info("\n\n ... be sure to start a dev server from another session\n\n");
-
-const sleep = (ms: number): Promise<number> => new Promise((resolve) => setTimeout(() => resolve(ms), ms));
 
 // const badTeaPotResponse = async (resp: Request, _ctx: Partial<HandlerContext<any, Record<string, unknown>>> ):Promise<Response> => {
 // 	return new Response(await resp.text(),{ status: 418 })
@@ -26,8 +25,9 @@ const sleep = (ms: number): Promise<number> => new Promise((resolve) => setTimeo
 
 Deno.test("GET Root (Frontpage)", async () => {
 	const req = new Request(urlPath("/"), { method: "GET" });
-	const ctx = await ServerContext.fromManifest(MANIFEST, { plugins: [] });
-	const resp = await ctx.handler()(req, CONN_INFO);
+	const handler = await createHandler(MANIFEST, { plugins: [] });
+	const resp = await handler(req, CONN_INFO);
+
 
 	// verifies a set-cookie response header
 	const cookies = getSetCookies(resp.headers);
@@ -51,8 +51,9 @@ Deno.test("GET Root (Frontpage)", async () => {
 Deno.test("POST the root to Join waitlist ", async () => {
 	const env = await envVar("MISSING");
 	const req1 = new Request(urlPath("/"), { method: "GET" });
-	const ctx = await ServerContext.fromManifest(MANIFEST, { plugins: [] });
-	const getResp = await ctx.handler()(req1, CONN_INFO);
+
+	const handler = await createHandler(MANIFEST, { plugins: [] });
+	const getResp = await handler(req1, CONN_INFO);
 
 	const respCookies = getSetCookies(getResp.headers);
 	const sessionIDtoken = respCookies.filter((v) => v.name === "sessionID")[0] ??
@@ -78,7 +79,7 @@ Deno.test("POST the root to Join waitlist ", async () => {
 
 	console.log({ url });
 	const req2 = new Request(url, { method: "POST" });
-	const postResp = await ctx.handler()(req2, CONN_INFO);
+	const postResp = await handler(req2, CONN_INFO);
 
 	// const jssonResp = await postResp.json()
 	// console.log(jssonResp)
@@ -95,8 +96,8 @@ Deno.test({
 
 		//initial front page
 		const req1 = new Request(urlPath("/"), { method: "GET" });
-		const ctx = await ServerContext.fromManifest(MANIFEST, { plugins: [] });
-		const getResp = await ctx.handler()(req1, CONN_INFO);
+		const handler = await createHandler(MANIFEST, { plugins: [] });
+		const getResp = await handler(req1, CONN_INFO);
 
 		const respCookies = getSetCookies(getResp.headers);
 		const sessionIDtoken = respCookies.filter((v) => v.name === "sessionID")[0] ?? null;
@@ -110,9 +111,9 @@ Deno.test({
 		postURL.searchParams.append("keyID", encodeURIComponent(!env("KEY_D_PRIVATE")));
 		// using keyID as a secret  in order to pass in the test cases
 
-		const firstpostResp = await ctx.handler()(new Request(postURL, { method: "POST" }), CONN_INFO);
+		const firstpostResp = await handler(new Request(postURL, { method: "POST" }), CONN_INFO);
 		await sleep(1000);
-		const secondpostResp = await ctx.handler()(new Request(postURL, { method: "POST" }), CONN_INFO);
+		const secondpostResp = await handler(new Request(postURL, { method: "POST" }), CONN_INFO);
 
 		assert(firstpostResp.json() !== secondpostResp.json());
 	},

@@ -1,52 +1,52 @@
-import existing from "../../import_map.json" assert { type: "json" };
+// import existing from "../../import_map.json" assert { type: "json" };
 
-const sortedImportData = Object.fromEntries(
-	[
-		//
-		// ...Object.entries(imports),
-		...Object.entries(existing.imports),
-	].sort((
-		a,
-		z,
-	) => a[0] < z[0] ? -1 : 1),
-);
+// const sortedImportData = Object.fromEntries(
+// 	[
+// 		//
+// 		// ...Object.entries(imports),
+// 		...Object.entries(existing.imports),
+// 	].sort((
+// 		a,
+// 		z,
+// 	) => a[0] < z[0] ? -1 : 1),
+// );
 
-const stdVersionID = new URL(sortedImportData["$std/"]).pathname.split("@")[1]
-	.slice(0, -1);
+// const stdVersionID = new URL(sortedImportData["$std/"]).pathname.split("@")[1]
+// 	.slice(0, -1);
 
-const sortedVersioned = Object.fromEntries(
-	Object.entries(sortedImportData)
-		.map(([specifier, importURL]) => {
-			if (specifier.endsWith("/") || specifier.startsWith("./")) {
-				return [specifier, importURL];
-			} else {
-				const u = new URL(importURL);
-				if (u.host === "esm.sh") {
-					if (!u.searchParams.has("deno-std")) {
-						u.searchParams.set("deno-std", stdVersionID);
-					}
+// const sortedVersioned = Object.fromEntries(
+// 	Object.entries(sortedImportData)
+// 		.map(([specifier, importURL]) => {
+// 			if (specifier.endsWith("/") || specifier.startsWith("./")) {
+// 				return [specifier, importURL];
+// 			} else {
+// 				const u = new URL(importURL);
+// 				if (u.host === "esm.sh") {
+// 					if (!u.searchParams.has("deno-std")) {
+// 						u.searchParams.set("deno-std", stdVersionID);
+// 					}
 
-					if (!u.searchParams.has("no-dts")) {
-						u.searchParams.set("dts", "1");
-					}
-					return [specifier, u.href];
-				} else {
-					return [specifier, u.href];
-				}
-			}
-		}),
-);
+// 					if (!u.searchParams.has("no-dts")) {
+// 						u.searchParams.set("dts", "1");
+// 					}
+// 					return [specifier, u.href];
+// 				} else {
+// 					return [specifier, u.href];
+// 				}
+// 			}
+// 		}),
+// );
 
-console.log(
-	JSON.stringify(
-		{
-			imports: sortedVersioned,
-			scopes: existing.scopes,
-		},
-		null,
-		2,
-	),
-);
+// console.log(
+// 	JSON.stringify(
+// 		{
+// 			imports: sortedVersioned,
+// 			scopes: existing.scopes,
+// 		},
+// 		null,
+// 		2,
+// 	),
+// );
 
 /** Backup value
  *

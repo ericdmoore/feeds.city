@@ -19,10 +19,12 @@ export const compareDocSimilarity = (
 	return Promise.resolve({ d1, d2, score: d1.jaccard(d2) as number });
 };
 
-const d1 = "minhash is a probabilistic data structure for estimating the similarity between datasets";
-const d2 = "minhash is a probability data structure for estimating the similarity between documents";
-(async () => {
-	console.log(d1);
-	console.log(d2);
-	console.log(await compareDocSimilarity(d1, d2));
-})();
+const _d1 = "minhash is a probabilistic data structure for estimating the similarity between datasets";
+const _d2 = "minhash is a probability data structure for estimating the similarity between documents";
+
+// (async () => {
+
+// 	console.log(d1);
+// 	console.log(d2);
+// 	console.log(await compareDocSimilarity(d1, d2));
+// })();

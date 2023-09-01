@@ -1,10 +1,53 @@
-//#region imports
+/**
+ * Eviction Types:
+ *
+ * Least Recently Used (LRU)
+ * LRU strategy, the least recently used items are removed first.
+ * This strategy assumes that items that have been used recently will continue to be used in the near future.
+ * For example, in a memory cache, you might use a doubly-linked list to keep track of the usage order of items.
+ * When you need to evict an item, you remove the item at the tail of the list.
+ *
+ * First In, First Out (FIFO)
+ * In FIFO, the oldest items in the cache are removed first.
+ * This is simpler to implement than LRU but may not be as effective in terms of cache hit rate.
+ *
+ * Time to Live (TTL)
+ * Items are given a time-to-live when they're inserted into the cache, and they're removed once their TTL expires.
+ * This is useful for items that become stale after a certain period.
+ *
+ * Least Frequently Used (LFU)
+ * In LFU, the items that are used the least often are the first to be removed.
+ * This strategy can be effective for workloads where some items are accessed more frequently than others over the long term.
+ *
+ * Balanced Cost-Benefit (Balanced)
+ * Determine Costs:
+ * 	- Storage Cost $/mo
+ *  - Resource constraint
+ * 		- Wallet / Disk Space
+ *
+ * Determine Benefits:
+ * - latency saved benefits $/ GB
+ * - determie layer speed delta over layer below
+ *
+ * Maximize Benefit (Saved Latecny) / Minimize Costs (Stroage Costs)
+ *
+ * ^ Presupposes a Predictive Model of the future
+ *
+ * THUS we need a promotion strategy
+ *
+ * 1. Real Time Reaction - (Pull to Top)
+ * 1. Ahead of Time
+ * 		- Evented
+ * 		- Scheduled
+ * 		- ML based
+ * 1. Ensemble Approach
+ */
 
+//#region imports
 import { type PromiseOr } from "$lib/types.ts";
 import { LRUCache } from "lru-cache";
-import MurmurHash3 from "imurmurhash";
 import changeEncOf from "$lib/utils/enocdings.ts";
-import { assert } from "$std/testing/asserts.ts";
+import { makeBytes } from "./cacheProviders/encoders/mod.ts";
 
 //#endregion imports
 
@@ -19,17 +62,16 @@ interface CacheKey {
 	name: string;
 	renamed: string;
 }
-
 interface ValueInCache {
 	data: Uint8Array;
 	inputType: string;
 }
 
-export type AvailableEncodings = "id" | "base64url" | "hex" | "utf8" | "br" | "gzip" | "zstd" | string;
-interface ValueForCacheInternals {
+export type AvailableEncodings = "id" | "base64url" | "hex" | "utf8" | "br" | "gzip" | "zstd";
+export interface ValueForCacheInternals {
 	data: Uint8Array;
 	"content-type": "Uint8Array" | "string";
-	"content-encoding": AvailableEncodings;
+	"content-encoding": AvailableEncodings | string;
 }
 type AbstractDecodeFunction = (value: ValueForCacheInternals) => Promise<ValueForCacheInternals>;
 export interface ICacheableDataForCache {
@@ -50,7 +92,7 @@ export type CacheName = string;
 export type NullableProviderData<T> = ICacheDataFromProvider<T> | null;
 
 export type RenamerFn = (s: string) => Promise<string>;
-export type TransformToBytes<T = Uint8Array> = (data: T) => Promise<ValueInCache>;
+export type TransformToBytes<T = Uint8Array> = (data: T) => Promise<ValueForCacheInternals>;
 export type TransformFromBytes = <ReturnType>(retrieved?: ICacheableDataForCache) => Promise<ReturnType | null>;
 
 export interface TransformFunctionGroup<NativeDataType = Uint8Array> {
@@ -62,12 +104,65 @@ export interface ICacheProvider<NativeDataType = Uint8Array> {
 	provider: string;
 	meta: Record<string, unknown>;
 	transforms: TransformFunctionGroup<NativeDataType>;
-	set: (name: string, data: NativeDataType) => Promise<ICacheDataFromProvider<NativeDataType>>;
+	set: (name: string, data: NativeDataType | string) => Promise<ICacheDataFromProvider<NativeDataType>>;
 	get: (name: string) => Promise<NullableProviderData<NativeDataType>>;
 	peek: (name: string) => Promise<NullableProviderData<NativeDataType>>;
 	del: (name: string) => Promise<NullableProviderData<NativeDataType>>;
 	has: (name: string) => Promise<boolean>;
 }
+
+interface IntraCacheNotifications {
+	confirmed: { item: boolean; other: number };
+	spaceAvailAfter: { B: number };
+}
+
+type EvictionNotifictionFunction = (
+	item: ICacheableDataForCache,
+	...others: ICacheableDataForCache[]
+) => Promise<ICacheEvictionNotification>;
+type PromotionNotifictionFunction = (
+	item: ICacheableDataForCache,
+	...others: ICacheableDataForCache[]
+) => Promise<ICachePromotionNotification>;
+
+interface ICachePromotionNotification extends IntraCacheNotifications {
+	evictionsRdy: ICacheableDataForCache[];
+}
+
+interface ICacheEvictionNotification extends IntraCacheNotifications {
+	promotionsRdy: ICacheableDataForCache[];
+}
+
+type CancelRegistration = () => void;
+
+// @todo
+export interface IEventedCacheProvider<NativeDataType = Uint8Array> {
+	provider: string;
+	meta: Record<string, unknown>;
+	transforms: TransformFunctionGroup<NativeDataType>;
+	set: (name: string, data: NativeDataType) => Promise<ICacheDataFromProvider<NativeDataType>>;
+	get: (name: string) => Promise<NullableProviderData<NativeDataType>>;
+	peek: (name: string) => Promise<NullableProviderData<NativeDataType>>;
+	del: (name: string) => Promise<NullableProviderData<NativeDataType>>;
+	has: (name: string) => Promise<boolean>;
+	events: {
+		// @todo
+		queues: {
+			evictionOutbound: ICacheableDataForCache[];
+			promotionInboundn: ICacheableDataForCache[];
+		};
+		register: {
+			forEvictions: (fns: EvictionNotifictionFunction) => CancelRegistration;
+			forPromotions: (fns: PromotionNotifictionFunction) => CancelRegistration;
+		};
+		// these are MY fucntions that I register with others
+		// catchers catch the kicked down, and kicked up
+		onYourEvictions: EvictionNotifictionFunction;
+		onYourPromotions: PromotionNotifictionFunction;
+	};
+}
+
+/** */
 
 export interface IProviderMeta<NativeDataType = Uint8Array> {
 	set: (name: string, data: NativeDataType) => Promise<ICacheDataFromProvider<NativeDataType>[]>;
@@ -95,276 +190,6 @@ interface EncModuleRet {
 
 //#endregion interfaces
 
-export const makeBytes = (input: Uint8Array | string) => {
-	const enc = new TextEncoder();
-	return typeof input === "string" ? enc.encode(input) : input;
-};
-
-export const makeString = (input: Uint8Array | string) => {
-	const dec = new TextDecoder();
-	return typeof input === "string" ? input : dec.decode(input);
-};
-
-export const id: EncModule = () => {
-	const to = (input: Uint8Array | string, contentEncoding = ["id"] as string[]) => {
-		return Promise.resolve({
-			data: makeBytes(input),
-			"content-encoding": contentEncoding.join(";"),
-			"content-type": typeof input === "string" ? "string" : "Uint8Array",
-		} as ValueForCacheInternals);
-	};
-
-	const recode = async (value: PromiseOr<ValueForCacheInternals>): Promise<ValueForCacheInternals> => {
-		const v = await value;
-		const contentEncoding = v["content-encoding"].split(";");
-		return Promise.resolve({
-			data: makeBytes(v.data),
-			"content-encoding": ["id", ...contentEncoding].join(";"),
-			"content-type": "Uint8Array",
-		} as ValueForCacheInternals);
-	};
-
-	const from = (value: ValueForCacheInternals): Promise<ValueForCacheInternals> => {
-		const contentEncoding = value["content-encoding"].split(";");
-		const encoding = contentEncoding.shift();
-
-		if (encoding !== "id") {
-			return Promise.reject(new Error("id encoding not found"));
-		}
-
-		return Promise.resolve({
-			data: makeBytes(value.data),
-			"content-encoding": contentEncoding.join(";"),
-			"content-type": value["content-type"],
-		} as ValueForCacheInternals);
-	};
-
-	return Promise.resolve({ to, recode, from });
-};
-
-export const gzip: EncModule = async (compressThreshold = 512) => {
-	const { gzipEncode, gzipDecode } = await import("gzip_wasm");
-
-	const to = async (input: Uint8Array | string, contentEncoding = ["id"] as string[]) => {
-		const bytes = makeBytes(input);
-
-		if (bytes.length > (compressThreshold as number)) {
-			return {
-				data: await gzipEncode(bytes),
-				"content-encoding": ["gzip", ...contentEncoding].join(";"),
-				"content-type": typeof input === "string" ? "string" : "Uint8Array",
-			} as ValueForCacheInternals;
-		} else {
-			return {
-				data: bytes,
-				"content-encoding": contentEncoding.join(";"),
-				"content-type": typeof input === "string" ? "string" : "Uint8Array",
-			} as ValueForCacheInternals;
-		}
-	};
-
-	const recode = async (value: PromiseOr<ValueForCacheInternals>): Promise<ValueForCacheInternals> => {
-		const v = await value;
-		const contentEncoding = v["content-encoding"].split(";");
-		return Promise.resolve({
-			data: gzipEncode(makeBytes(v.data)),
-			"content-encoding": ["gzip", ...contentEncoding].join(";"),
-			"content-type": "Uint8Array",
-		} as ValueForCacheInternals);
-	};
-
-	const from = (value: ValueForCacheInternals): Promise<ValueForCacheInternals> => {
-		const contentEncoding = value["content-encoding"].split(";");
-		const encoding = contentEncoding.shift();
-
-		if (encoding !== "base64url") {
-			return Promise.reject(new Error("base64url encoding not found"));
-		}
-
-		return Promise.resolve({
-			data: gzipDecode(makeBytes(value.data)),
-			"content-encoding": contentEncoding.join(";"),
-			"content-type": typeof value.data === "string" ? "string" : "Uint8Array",
-		} as ValueForCacheInternals);
-	};
-
-	return { to, recode, from };
-};
-
-export const br = async (compressThreshold = 512) => {
-	const { compress: brCompress, decompress: brDecompress } = await import("brotli");
-
-	const to = async (input: Uint8Array | string, contentEncoding = ["id"] as string[]) => {
-		const bytes = makeBytes(input);
-		if (bytes.length > (compressThreshold as number)) {
-			return {
-				data: await brCompress(bytes),
-				"content-encoding": ["br", ...contentEncoding].join(";"),
-				"content-type": typeof input === "string" ? "string" : "Uint8Array",
-			};
-		} else {
-			return {
-				data: bytes,
-				"content-encoding": contentEncoding.join(";"),
-				"content-type": typeof input === "string" ? "string" : "Uint8Array",
-			};
-		}
-	};
-
-	const from = async (retData: ValueForCacheInternals) => {
-		const contentEncodings = retData["content-encoding"].split(";");
-		const enc = contentEncodings.shift();
-
-		assert(enc === "br");
-
-		return {
-			data: await brDecompress(makeBytes(retData.data)),
-			"content-encoding": contentEncodings.join(";"),
-			"content-type": retData["content-type"],
-		};
-	};
-
-	const recode = async (value: PromiseOr<ValueForCacheInternals>) => {
-		const v = await value;
-		const contentEncoding = v["content-encoding"].split(";");
-
-		return {
-			data: await brCompress(makeBytes(v.data)),
-			"content-encoding": ["br", ...contentEncoding].join(";"),
-			"content-type": v["content-type"],
-		};
-	};
-
-	return { to, from, recode };
-};
-
-export const zstd = async (compressThreshold = 512) => {
-	const {
-		compress: zstdCompress,
-		decompress: zstdDecompress,
-	} = await import("zstd_wasm");
-
-	const to = async (input: Uint8Array | string, contentEncoding = "id" as string) => {
-		const bytes = makeBytes(input);
-		if (bytes.length > (compressThreshold as number)) {
-			return {
-				data: await zstdCompress(makeBytes(input)),
-				"content-encoding": ["zstd", contentEncoding].join(";"),
-				"content-type": typeof input === "string" ? "string" : "Uint8Array",
-			};
-		} else {
-			return {
-				data: bytes,
-				"content-encoding": contentEncoding,
-				"content-type": typeof input === "string" ? "string" : "Uint8Array",
-			};
-		}
-	};
-
-	const recode = async (value: PromiseOr<ValueForCacheInternals>): Promise<ValueForCacheInternals> => {
-		const v = await value;
-		const contentEncoding = v["content-encoding"].split(";");
-		const bytes = makeBytes(v.data);
-
-		if (bytes.length > (compressThreshold as number)) {
-			return Promise.resolve({
-				data: await zstdCompress(bytes),
-				"content-encoding": ["zstd", ...contentEncoding].join(";"),
-				"content-type": "Uint8Array",
-			} as ValueForCacheInternals);
-		} else {
-			return Promise.resolve({
-				data: bytes,
-				"content-encoding": contentEncoding.join(";"),
-				"content-type": "Uint8Array",
-			} as ValueForCacheInternals);
-		}
-	};
-
-	const from = async (value: ValueForCacheInternals): Promise<ValueForCacheInternals> => {
-		const contentEncoding = value["content-encoding"].split(";");
-		const encoding = contentEncoding.shift();
-		assert(encoding === "zstd");
-
-		return Promise.resolve({
-			data: await zstdDecompress(makeBytes(value.data)),
-			"content-encoding": contentEncoding.join(";"),
-			"content-type": value["content-type"],
-		} as ValueForCacheInternals);
-	};
-
-	return { to, from, recode };
-};
-
-export const base64url = async () => {
-	const { encode, decode } = await import("$std/encoding/base64url.ts");
-
-	const to = (input: Uint8Array | string, contentEncoding = "id" as string): Promise<ValueForCacheInternals> => {
-		return Promise.resolve({
-			data: makeBytes(encode(makeBytes(input))),
-			"content-encoding": ["base64url", ...contentEncoding].join(";"),
-			"content-type": typeof input === "string" ? "string" : "Uint8Array",
-		} as ValueForCacheInternals);
-	};
-
-	const recode = async (value: PromiseOr<ValueForCacheInternals>): Promise<ValueForCacheInternals> => {
-		const v = await value;
-		const contentEncoding = v["content-encoding"].split(";");
-
-		return Promise.resolve({
-			data: makeBytes(encode(makeBytes(v.data))),
-			"content-encoding": ["base64url", ...contentEncoding].join(";"),
-			"content-type": v["content-type"],
-		} as ValueForCacheInternals);
-	};
-
-	const from = (value: ValueForCacheInternals): Promise<ValueForCacheInternals> => {
-		const contentEncoding = value["content-encoding"].split(";");
-		const encoding = contentEncoding.shift();
-
-		if (encoding !== "base64url") {
-			return Promise.reject(new Error("base64url encoding not found"));
-		}
-
-		return Promise.resolve({
-			data: makeBytes(decode(makeString(value.data))),
-			"content-encoding": contentEncoding.join(";"),
-			"content-type": value["content-type"],
-		} as ValueForCacheInternals);
-	};
-
-	return { to, from, recode };
-};
-
-const encoderMap = async () => ({
-	br: await br(),
-	id: await id(),
-	gzip: await gzip(),
-	zstd: await zstd(),
-	base64url: await base64url(),
-} as Record<AvailableEncodings, EncModuleRet>);
-
-export const encodingWith = async (encodingmap?: PromiseOr<Record<string, EncModuleRet>>) => {
-	const encMap = encodingmap ? await encodingmap : await encoderMap();
-
-	const encode = (encodingWith: string[], data: Uint8Array) => {
-		const en = encodingWith.shift()!;
-		return encodingWith.reduce((cacheVal, enNext) => encMap[enNext].recode(cacheVal), encMap[en].to(data));
-	};
-
-	const decode = (valInCache: ValueForCacheInternals) => {
-		const encodings = valInCache["content-encoding"].split(";");
-		const en = encodings.shift()!;
-
-		return encodings.reduce(
-			async (cacheVal, enNext) => encMap[enNext].from(await cacheVal),
-			encMap[en].from(valInCache),
-		);
-	};
-
-	return { encode, decode };
-};
-
 const retriveFromFirstNonNull = (
 	action: "get" | "has" | "peek",
 	name: string,
@@ -376,9 +201,10 @@ const retriveFromFirstNonNull = (
 	}, Promise.resolve(null) as Promise<ICacheDataFromProvider | boolean | null>);
 };
 
-export const renamerWithMurmurHash3: RenamerFn = (s: string) => {
-	const hashState = MurmurHash3();
-	return Promise.resolve(hashState.hash(s).result().toString());
+export const renamerWithSha1: RenamerFn = async (s: string) => {
+	const enc = new TextEncoder();
+	const hash = new Uint8Array(await crypto.subtle.digest("sha-1", enc.encode(s)));
+	return Promise.resolve(changeEncOf(hash).from("utf8").to("base64url").string());
 };
 
 export const defaultRenamer: RenamerFn = (s: string) =>
@@ -401,20 +227,30 @@ export const bytestoJsonWithTypeNote: TransformToBytes = (input: unknown | Uint8
 	const enc = new TextEncoder();
 	return input instanceof Uint8Array
 		? Promise.resolve({
-			data: enc.encode(changeEncOf(input).from("utf8").to("base64").string()),
-			inputType: "Uint8Array",
-		} as ValueInCache)
+			data: changeEncOf(input).from("utf8").to("base64url").array(),
+			"content-type": "Uint8Array",
+			"content-encoding": "base64url;id",
+		})
 		: Promise.resolve({
 			data: enc.encode(JSON.stringify(input)),
-			inputType: "other",
-		} as ValueInCache);
+			"content-type": "string",
+			"content-encoding": "id",
+		});
 };
 
 export const defaultToBytesWithTypeNote: TransformToBytes = (input: unknown | Uint8Array) => {
 	const enc = new TextEncoder();
 	return input instanceof Uint8Array
-		? Promise.resolve({ data: input, inputType: "Uint8Array" } as ValueInCache)
-		: Promise.resolve({ data: enc.encode(JSON.stringify(input)), inputType: "other" } as ValueInCache);
+		? Promise.resolve({
+			data: changeEncOf(input).from("utf8").to("base64url").array(),
+			"content-type": "Uint8Array",
+			"content-encoding": "base64url;id",
+		})
+		: Promise.resolve({
+			data: enc.encode(JSON.stringify(input)),
+			"content-type": "string",
+			"content-encoding": "id",
+		});
 };
 
 export const makeKey = async (name: string, renamer: RenamerFn) => ({ name, renamed: await renamer(name) }) as CacheKey;
@@ -440,7 +276,7 @@ export const inMem = (
 			value: {
 				data,
 				"content-type": data instanceof Uint8Array ? "Uint8Array" : "other",
-				"content-encoding": "base64",
+				"content-encoding": "base64" as AvailableEncodings,
 				transformed: new Uint8Array(),
 			},
 		} as ICacheableDataForCache & ICacheDataFromProvider;
@@ -515,7 +351,7 @@ export const inMem = (
 };
 
 export const cacheStack = (...providers: ICacheProvider[]): IProviderMeta => {
-	const set = (name: string, data: Uint8Array) =>
+	const set = (name: string, data: string | Uint8Array) =>
 		Promise.all(providers.map((prov) => {
 			return prov.set(name, data);
 		}));
@@ -549,16 +385,220 @@ export const cacheRace = (...providers: ICacheProvider[]): IProviderMeta => {
 /**
  * # Tiered Cache
  * Given a set of Cache Providers
+ * @todo lots of work needed here
+ * is it just a pull to top, and spills down, with age?
+ *    would you ever not pull to top?
+ *
  * @param providers
- * @returns
  */
 export const tiered = (...providers: ICacheProvider[]): IProviderMeta => {
-	const get = (name: string) => Promise.race(providers.map((prov) => prov.get(name)));
-	const set = (name: string, data: Uint8Array) => Promise.all(providers.map((prov) => prov.set(name, data)));
-	const del = (name: string) => Promise.all(providers.map((prov) => prov.del(name)));
-	const has = (name: string) => Promise.race(providers.map((prov) => prov.has(name)));
-	const peek = (name: string) => Promise.race(providers.map((prov) => prov.peek(name)));
+	const meta = {
+		findWithinTiers: (_name: string) => 0,
+	};
+
+	const get = (_name: string) => {
+		// get -> provider[0]
+		// 	  found -> return
+		// 	  null -> go to next (provider[1] )
+		//
+		// OK GREAT -- found it - BUT!!!
+		// how to we make sure the mostRecentItem is promoted to the fastest/top provider?
+		// so that its slow ONCE and subsequent
+		//
+		// onItemSqueezeOut
+		// onSideChannelAddItem
+		// respondWithAvailableSpace
+		//
+
+		return Promise.resolve(null);
+	};
+	const set = (name: string, data: Uint8Array) => {
+		return Promise.resolve([{
+			provider: "",
+			meta: {},
+			key: { name, renamed: name },
+			value: {
+				data,
+				transformed: data,
+			},
+		}]);
+	};
+	const del = (name: string) => {
+		return Promise.resolve([{
+			provider: "",
+			meta: {},
+			key: { name, renamed: name },
+			value: {
+				data: new Uint8Array(),
+				transformed: new Uint8Array(),
+			},
+		}]);
+	};
+	const has = (_name: string) => {
+		return Promise.resolve(false);
+	};
+	const peek = (_name: string) => {
+		return Promise.resolve(null);
+	};
 	return { get, set, del, has, peek };
+};
+
+/**
+ * @param fastProvider
+ * @param slowProvider
+ *
+ *       		  Promotions
+ * 		     	  ^
+ * 		     	  |
+ * 		     	  |
+ * 	+-----------------------+
+ *  |  Fast Expensive Cache |
+ *  +-----------------------+
+ * 	     |        ^
+ *  Evictions	  |
+ *       |        Promotions
+ *       |        |
+ *       v        |
+ *  +-----------------------+
+ *  |  Slow + Cheap Cache   |
+ *  +-----------------------+
+ *       |
+ *       |
+ *       v
+ *  Evictions
+ */
+const connectProviderEvents = <T>(fastProvider: IEventedCacheProvider<T>, slowProvider: IEventedCacheProvider<T>) => {
+	fastProvider.events.register.forEvictions(slowProvider.events.onYourEvictions);
+	slowProvider.events.register.forPromotions(fastProvider.events.onYourPromotions);
+	// fastProvider promotions are unconnected
+	// slow provider evictions are are unconnected
+	//
+	//
+	//
+	//
+
+	return {};
+};
+
+const addEventFunctionsToProviders = <T>(inputProvider: ICacheProvider<T>): IEventedCacheProvider<T> => {
+	/**
+	 * Type '{ get: (name: string) => Promise<NullableProviderData<T>>;
+	 * has: (name: string) => Promise<boolean>;
+	 * peek: (name: string) => Promise<NullableProviderData<T>>;
+	 * del: (name: string) => Promise<...>;
+	 * set: (name: string, data: T) => Promise<...>;
+	 * events: { ...; }; }' is missing the following properties from type 'IEventedCacheProvider<T>':
+	 * provider, meta, transforms
+	 */
+
+	const notifyListForEvictions = {} as Record<symbol, EvictionNotifictionFunction>;
+	const notifyListForPromotions = {} as Record<symbol, PromotionNotifictionFunction>;
+
+	let availableSpaceInBytes = 0;
+	let availableSpaceInItems = 0;
+
+	const _evict = () => {};
+
+	const _promote = () => {};
+
+	return {
+		provider: inputProvider.provider,
+		meta: inputProvider.meta,
+		transforms: inputProvider.transforms,
+		get: (name: string) => {
+			return inputProvider.get(name);
+		},
+		has: inputProvider.has,
+		peek: inputProvider.peek,
+		del: async (name: string) => {
+			const ret = await inputProvider.del(name);
+			availableSpaceInBytes += ret?.value.data.byteLength ?? 0;
+			availableSpaceInItems++;
+
+			return ret;
+		},
+		set: async (name: string, data: T) => {
+			const d = await inputProvider.transforms.toBytes(data);
+			const ret = await inputProvider.set(name, data);
+
+			availableSpaceInBytes -= d.data.byteLength ?? 0;
+			availableSpaceInItems--;
+
+			return ret;
+		},
+		events: {
+			queues: {
+				evictionOutbound: [],
+				promotionInboundn: [],
+			},
+			register: {
+				forEvictions: (fn: EvictionNotifictionFunction) => {
+					const sym = Symbol();
+					notifyListForEvictions[sym] = fn;
+					return () => {
+						delete notifyListForEvictions[sym];
+					};
+				},
+				forPromotions: (fn: PromotionNotifictionFunction) => {
+					const sym = Symbol();
+					notifyListForPromotions[sym] = fn;
+					return () => {
+						delete notifyListForPromotions[sym];
+					};
+				},
+			},
+			// catchers catch the kicked down, and kicked up
+			onYourEvictions: (item: ICacheableDataForCache, ...otherRdyEvictions: ICacheableDataForCache[]) => {
+				let acceptitem: boolean = false;
+				let othersAccepted = 0;
+
+				if (item.value.data.byteLength <= availableSpaceInBytes) {
+					acceptitem = true;
+					const [sumOtherEvicReq, accumulatedItemList] = otherRdyEvictions
+						.map((evic) => evic.value.data.byteLength)
+						.reduce((acc, curBytes, i) => {
+							const [totalBytes, accArr] = acc;
+							return [
+								totalBytes + curBytes,
+								accArr.concat([i + 1, totalBytes + curBytes]),
+							] as [number, Array<[number, number]>];
+						}, [0, [[0, 0]]] as [number, Array<[number, number]>]);
+
+					let sizeToOccupy = 0;
+					if (item.value.data.byteLength + sumOtherEvicReq <= availableSpaceInBytes) {
+						othersAccepted = accumulatedItemList.length - 1; // because of the 0,0 element added
+						sizeToOccupy = sumOtherEvicReq;
+					} else {
+						othersAccepted = 0;
+
+						accumulatedItemList.forEach(([itemCount, totalSizeForThisItemCount]) => {
+							if ((availableSpaceInBytes - item.value.data.byteLength) >= totalSizeForThisItemCount) {
+								othersAccepted = itemCount;
+								sizeToOccupy = totalSizeForThisItemCount;
+							}
+						});
+					}
+					availableSpaceInBytes -= item.value.data.byteLength;
+					availableSpaceInBytes -= sizeToOccupy;
+				} else {
+					acceptitem = false;
+					othersAccepted = 0;
+				}
+
+				return Promise.resolve({
+					confirmed: { item: acceptitem, other: othersAccepted },
+					spaceAvailAfter: { B: availableSpaceInBytes },
+					promotionsRdy: [],
+				});
+			},
+			onYourPromotions: (_item: ICacheableDataForCache, ..._otherRdyPromotions: ICacheableDataForCache[]) =>
+				Promise.resolve({
+					confirmed: { item: false, other: 0 },
+					spaceAvailAfter: { B: 0 },
+					evictionsRdy: [],
+				}),
+		},
+	};
 };
 
 export default { cacheArray, cacheStack, cacheRace, inMem };

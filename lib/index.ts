@@ -3,3 +3,5 @@ export * as clients from "./clients/index.ts";
 export * as enhancements from "./enhancements/index.ts";
 export * as parsers from "./parsers/index.ts";
 export * as utils from "./utils/index.ts";
+
+export const sleep = (ms: number): Promise<number> => new Promise((resolve) => setTimeout(() => resolve(ms), ms));

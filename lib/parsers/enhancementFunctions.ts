@@ -19,7 +19,10 @@ import { type PromiseOr } from "../types.ts";
 import * as bson from "bson_deno";
 import * as base64url from "$std/encoding/base64url.ts";
 
-import { compress as zstdCompress, decompress as zstdDecompress } from "zstd_wasm";
+// where to put init?
+
+// deno-lint-ignore no-unused-vars
+import { compress as zstdCompress, decompress as zstdDecompress, init } from "zstd_wasm";
 import { gzipDecode, gzipEncode } from "gzip_wasm";
 import { compress as brCompress, decompress as brDecompress } from "brotli";
 

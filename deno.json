@@ -1,47 +1,64 @@
 {
-	"tasks": {
-		"bundle": "deno bundle main.ts",
-		"test": "deno test tests/ --allow-net --allow-env --allow-read --coverage=.cov/",
-		"cov": "deno coverage --lcov --output=cov.lcov .cov/ ; genhtml -o ./.cov/html_cov cov.lcov ; open .cov/html_cov/index.html",
-		"start": "deno run -Ar --watch=static/,routes/ dev.ts"
-	},
-	"compilerOptions": {
-		"jsx": "react-jsx",
-		"jsxImportSource": "preact"
-	},
-	"fmt": {
-		"useTabs": true,
-		"lineWidth": 120,
-		"exclude": ["vendor/", "/.cov", "/.fsCache"]
-	},
-	"imports": {
-		"$std/": "https://deno.land/std@0.181.0/",
-		"$lib/": "./lib/",
-		"$static/": "./static/",
+  "tasks": {
+    "bundle": "deno bundle main.ts",
+    "test": "deno test tests/ --allow-net --allow-env --allow-read --coverage=.cov/",
+    "cov": "deno coverage --lcov --output=cov.lcov .cov/ ; genhtml -o ./.cov/html_cov cov.lcov ; open .cov/html_cov/index.html",
+    "start": "deno run -Ar --watch=static/,routes/ dev.ts",
+    "build": "deno run -A dev.ts build",
+    "preview": "deno run -A main.ts"
+  },
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact"
+  },
+  "fmt": {
+    "useTabs": true,
+    "lineWidth": 120,
+    "exclude": [ "vendor/", "/.cov", "/.fsCache", "_fresh" ]
+  },
+  "lint": {
+    "rules": {
+      "tags": [ "fresh", "recommended" ]
+    },
+    "exclude": [ "_fresh", ".cov", ".fsCache", "vendor/" ]
+  },
+  "imports": {
+    "$lib/": "./lib/",
 		"$routes/": "./routes/",
 		"$components/": "./components/",
 		"$islands/": "./islands/",
-		"$fresh/": "https://deno.land/x/fresh@1.2.0/",
+
+    "$std/": "https://deno.land/std@0.181.0/",
+    "$fresh/": "https://deno.land/x/fresh@1.4.2/",
+
+    "preact/": "https://esm.sh/preact@10.15.1/",
+    "preact": "https://esm.sh/preact@10.15.1?deno-std=0.181.0&dts",
+    
+    "preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.2.1?deno-std=0.181.0&dts",
+    "@preact/signals": "https://esm.sh/*@preact/signals@1.1.3?deno-std=0.181.0&dts",
+    "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.2.3?deno-std=0.181.0&dts",
+
 		"@aws-sdk/s3-request-presigner": "https://esm.sh/@aws-sdk/s3-request-presigner@3.375.0?deno-std=0.181.0&dts",
-		"@aws-sdk/client-dynamodb/": "https://esm.sh/@aws-sdk/client-dynamodb@3.370.0?deno-std=0.181.0/",
+		"@aws-sdk/client-dynamodb/": "https://esm.sh/@aws-sdk/client-dynamodb@3.370.0/",
 		"@aws-sdk/client-dynamodb": "https://esm.sh/@aws-sdk/client-dynamodb@3.370.0?deno-std=0.181.0&dts",
-		"@aws-sdk/client-polly/": "https://esm.sh/@aws-sdk/client-polly@3.370.0?deno-std=0.181.0&dts/",
+		"@aws-sdk/client-polly/": "https://esm.sh/@aws-sdk/client-polly@3.370.0/",
 		"@aws-sdk/client-polly": "https://esm.sh/@aws-sdk/client-polly@3.370.0?deno-std=0.181.0&dts",
-		"@aws-sdk/client-s3/": "https://esm.sh/@aws-sdk/client-s3@3.374.0?deno-std=0.181.0&dts/",
+		"@aws-sdk/client-s3/": "https://esm.sh/@aws-sdk/client-s3@3.374.0/",
 		"@aws-sdk/client-s3": "https://esm.sh/@aws-sdk/client-s3@3.374.0?deno-std=0.181.0&dts",
 		"@aws-sdk/util-dynamodb": "https://esm.sh/@aws-sdk/util-dynamodb@3.329.0?deno-std=0.172.0&dts",
 		"@aws-sdk/signature-v4": "https://esm.sh/@aws-sdk/signature-v4@3.370.0?deno-std=0.181.0&dts",
 		"@aws-sdk/protocol-http": "https://esm.sh/@aws-sdk/protocol-http@3.370.0?deno-std=0.181.0&dts",
 		"@aws-crypto/sha256-js": "https://esm.sh/@aws-crypto/sha256-js@5.0.0?deno-std=0.181.0&dts",
 		"@aws-sdk/types": "https://esm.sh/@aws-sdk/types@3.370.0?deno-std=0.181.0&dts",
-		"@preact/signals": "https://esm.sh/*@preact/signals@1.1.3",
-		"--@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.2.3",
-		"@preact/signals-core": "./vendor/esm.sh/preact@10.15.1/jsx-runtime.js",
-		"@twind/": "https://esm.sh/@twind/",
-		"@twind/aspect-ratio": "https://esm.sh/@twind/aspect-ratio@0.1.4?deno-std=0.181.0&dts",
+		
+    	"@twind/": "https://esm.sh/@twind/",
+	
 		"@twind/aspect-ratio/": "https://esm.sh/@twind/aspect-ratio@0.1.4/",
-		"@twind/forms": "https://esm.sh/@twind/forms@0.1.4?deno-std=0.181.0&dts",
+	    "@twind/aspect-ratio": "https://esm.sh/@twind/aspect-ratio@0.1.4?deno-std=0.181.0&dts",
+	
 		"@twind/forms/": "https://esm.sh/@twind/forms@0.1.4/",
+	    "@twind/forms": "https://esm.sh/@twind/forms@0.1.4?deno-std=0.181.0&dts",
+	
 		"VFile": "https://esm.sh/vfile@main/mod.ts?deno-std=0.181.0&dts",
 		"brotli": "https://deno.land/x/brotli@v0.1.4/mod.ts",
 		"bson_deno": "https://deno.land/x/deno_bson@v0.0.2/mod.ts",
@@ -52,6 +69,7 @@
 		"gzip_wasm": "https://deno.land/x/wasm_gzip@v1.0.0/mod.ts",
 		"imurmurhash": "https://esm.sh/imurmurhash@0.1.4?deno-std=0.181.0&dts",
 		"jsonSchema": "https://deno.land/x/json_schema_typed@v8.0.0/draft_latest.ts",
+		"JSONC": "https://deno.land/x/jsonc_parser@v0.0.0/mod.ts",
 		"lodash.get": "https://esm.sh/lodash.get@4.4.2?deno-std=0.181.0&dts",
 		"lodash.merge": "https://esm.sh/lodash.merge@4.6.2?deno-std=0.181.0&dts",
 		"lodash.set": "https://esm.sh/lodash.set@4.3.2?deno-std=0.181.0&dts",
@@ -61,19 +79,17 @@
 		"mu-forms/": "https://esm.sh/mu-forms@1.0.7/",
 		"multiformats": "https://esm.sh/multiformats@9.6.4?deno-std=0.181.0&dts",
 		"mustache": "https://deno.land/x/mustache@v0.3.0/mod.ts",
-		"preact": "https://esm.sh/preact@10.15.1",
-		"preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.1.0",
-		"preact/": "https://esm.sh/preact@10.15.1/",
 		"superstruct": "https://deno.land/x/deno_superstruct@0.0.0/mod.ts",
 		"toXml": "https://deno.land/x/js2xml@1.0.2/mod.ts",
 		"twind": "https://esm.sh/twind@0.16.19",
 		"twind/": "https://esm.sh/twind@0.16.19/",
 		"unionfs": "https://esm.sh/unionfs@4.5.1?deno-std=0.181.0&dts",
 		"quick-lru": "https://esm.sh/quick-lru@6.1.1?deno-std=0.181.0&dts",
-		"zstd_wasm": "https://deno.land/x/zstd_wasm@0.0.16/deno/zstd.ts"
-	},
-	"scopes": {
-		"https://esm.sh/v128/@types/node@18.16.19/stream.d.ts": {
+		"zstd_wasm":"https://deno.land/x/zstd_wasm@0.0.20/deno/zstd.ts"
+
+  },
+  "scopes": {
+    "https://esm.sh/v128/@types/node@18.16.19/stream.d.ts": {
 			"https://esm.sh/v128/@types/node@18.16.19/stream.d.ts": "node:stream"
 		},
 		"https://deno.land/x/aws_s3_presign@1.3.0/mod.ts": {
@@ -86,6 +102,5 @@
 		"https://denopkg.com/ericdmoore/s3_deno@main/mod.ts": {
 			"https://denopkg.com/ericdmoore/feedBarber@main/src/lib/clients/aws-url-signer.ts": "./lib/clients/aws-url-signer.ts"
 		}
-	},
-	"importMap": "./vendor/import_map.json"
+  }
 }

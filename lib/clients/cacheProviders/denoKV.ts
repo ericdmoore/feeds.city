@@ -12,28 +12,30 @@ import {
 	type TransformFromBytes,
 	type TransformToBytes,
 } from "../cache.ts";
+import { encodingWith } from "./encoders/mod.ts";
 
 //#endregion imports
 
-export const denoKVcache = (
+export const denoKVcache = async (
 	config: { maxItems: number; prefix: string },
 	transforms?: Partial<{
 		renamer: RenamerFn;
 		fromBytes: TransformFromBytes;
 		toBytes: TransformToBytes;
 	}>,
-): ICacheProvider => {
+): Promise<ICacheProvider> => {
 	const provider = "Deno:KV";
 	const meta = {
 		cloud: "Deno Deploy",
 		...config,
 	};
+	const coder = await encodingWith();
 	const history = new Map<string, number>();
 	const renamer = transforms?.renamer ?? defaultRenamer;
 	const fromBytes = transforms?.fromBytes ?? defaultFromBytes;
 	const toBytes = transforms?.toBytes ?? defaultToBytesWithTypeNote;
 
-	const set = async (name: string, data: Uint8Array) => {
+	const set = async (name: string, data: Uint8Array | string) => {
 		const kvP = Deno.openKv();
 		const renamed = await renamer(name);
 
@@ -44,8 +46,10 @@ export const denoKVcache = (
 			meta,
 			provider,
 			key: { name, renamed },
-			value: { data, "content-encoding": "id", "content-type": "Uint8Array", transformed: new Uint8Array() },
-		} as ICacheableDataForCache & ICacheDataFromProvider;
+			value: {
+				...await coder.encode(["id", "br", "base64url"], data),
+			},
+		} as ICacheableDataForCache;
 
 		const kv = await kvP;
 		await kv.set([config.prefix, renamed], payload);
@@ -62,26 +66,34 @@ export const denoKVcache = (
 		}
 
 		kv.close();
-		return payload;
+		return {
+			...payload,
+			value: {
+				...payload.value,
+				transformed: await fromBytes(payload),
+			},
+		} as ICacheDataFromProvider;
 	};
 	const get = async (name: string) => {
 		const kv = await Deno.openKv();
 		const renamed = await renamer(name);
+
 		const res = await kv.get<ICacheableDataForCache>([config.prefix, renamed]);
-		history.set(renamed, Date.now());
 		kv.close();
 
-		return res.value
-			? {
+		if (res.value) {
+			history.set(renamed, Date.now());
+			return {
 				...res.value,
 				value: {
-					...res.value.value,
+					...await coder.decode(res.value.value),
 					transformed: await fromBytes(res.value),
 				},
-			} as ICacheDataFromProvider
-			: null;
+			} as ICacheDataFromProvider;
+		} else {
+			return null;
+		}
 	};
-
 	const del = async (name: string) => {
 		const kv = await Deno.openKv();
 		const renamed = await renamer(name);

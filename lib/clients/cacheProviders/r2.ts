@@ -11,24 +11,35 @@
 //
 //
 
-import { type ICacheProvider } from "../cache.ts";
+import {
+	type ICacheDataFromProvider,
+	type ICacheProvider,
+	type NullableProviderData,
+	type TransformFunctionGroup,
+} from "../cache.ts";
 import { cache as S3Cache, type S3CacheConfig } from "./s3.ts";
 
 interface ICloudflareCacheConfig extends Omit<S3CacheConfig, "endpoint" | "region"> {
 	accountId: string;
 }
 
-interface CloudflareR2Cache extends ICacheProvider {
+interface CloudflareR2Cache<NativeDataType = Uint8Array> extends ICacheProvider<NativeDataType> {
 	meta: {
 		cloud: string;
 		service: string;
 		region: string;
-		itemHandledCount: () => number;
+		size: () => number;
 	};
+	transforms: TransformFunctionGroup<NativeDataType>;
+	set: (name: string, data: NativeDataType | string) => Promise<ICacheDataFromProvider<NativeDataType>>;
+	get: (name: string) => Promise<NullableProviderData<NativeDataType>>;
+	peek: (name: string) => Promise<NullableProviderData<NativeDataType>>;
+	del: (name: string) => Promise<NullableProviderData<NativeDataType>>;
+	has: (name: string) => Promise<boolean>;
 }
 
-export const cache = (s3c: ICloudflareCacheConfig): CloudflareR2Cache => {
-	const cache = S3Cache({
+export const cache = async (s3c: ICloudflareCacheConfig): Promise<CloudflareR2Cache> => {
+	const cache = await S3Cache({
 		...s3c,
 		region: "auto",
 		endpoint: `https://${s3c.accountId}.r2.cloudflarestorage.com/${s3c.defaultBucket}`,
@@ -36,18 +47,18 @@ export const cache = (s3c: ICloudflareCacheConfig): CloudflareR2Cache => {
 
 	let handledItems = 0;
 
-	const meta = {
+	const meta = await {
 		cloud: "Cloudflare",
 		service: "R2",
 		region: "auto",
-		itemHandledCount: () => handledItems,
+		size: () => handledItems,
 	};
 
 	return {
 		meta,
 		provider: "Cloudflare:R2",
 		get: cache.get,
-		set: (name: string, data: Uint8Array) =>
+		set: (name: string, data: Uint8Array | string) =>
 			cache.set(name, data).finally(() => {
 				handledItems++;
 			}),
@@ -62,7 +73,7 @@ export const cache = (s3c: ICloudflareCacheConfig): CloudflareR2Cache => {
 			fromBytes: cache.transforms.fromBytes,
 			toBytes: cache.transforms.toBytes,
 		},
-	};
+	} as CloudflareR2Cache;
 };
 
 export default cache;

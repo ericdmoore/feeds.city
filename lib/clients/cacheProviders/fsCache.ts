@@ -30,49 +30,59 @@ import {
 	defaultRenamer,
 	type ICacheableDataForCache,
 	type ICacheDataFromProvider,
-	type ICacheProvider,
+	// type ICacheProvider,
 	type TransformFunctionGroup,
 } from "../cache.ts";
 
 import { join } from "$std/path/mod.ts";
-import { promisify } from "node:util";
-import { type IFS, Union } from "unionfs";
-import changeEnc from "$lib/utils/enocdings.ts";
+import { JSONC } from "JSONC";
+// import changeEnc from "$lib/utils/enocdings.ts";
+import { encodingWith } from "./encoders/mod.ts";
+
+// import { promisify } from "node:util";
+// import { type IFS, Union } from "unionfs";
 
 export type NamedNumber = [string, number];
 export type FsCacheConfig = {
 	relativeDir: string;
-	mountables?: IFS[];
+	// mountables?: IFS[];
+	usingExtention?: string | null;
 	maxItems?: number;
 };
 
 export const cache = async (
 	input: FsCacheConfig,
 	transforms?: Partial<TransformFunctionGroup>,
-): Promise<ICacheProvider> => {
+) => {
+	// ): Promise<ICacheProvider> => {
 	const provider = "Local Filesystem";
 	const withInput = {
 		maxItems: Infinity,
 		mountables: [],
+		usingExtention: "",
 		...input,
 	} as Required<FsCacheConfig>;
 
 	let size = 0;
-	const withMountables = withInput.mountables.length > 0;
+	// const withMountables = withInput.mountables.length > 0;
 	const itemHistory = {} as { [name: string]: number };
 
 	await Deno.mkdir(withInput.relativeDir, { recursive: true });
+	const coder = await encodingWith();
 
 	const meta = {
 		input,
-		cacheItemSize: () => size,
+		cacheItemSize: () => Object.freeze(size),
+		showHistory: () => Object.freeze(itemHistory),
 		youngestItem: () => {
-			const data = Object.entries(itemHistory);
-			return data.sort(([_, valA], [__, valZ]) => valZ - valA)[0];
+			return Object
+				.entries(itemHistory)
+				.sort(([_, valA], [__, valZ]) => valZ - valA)[0];
 		},
 		oldestItem: () => {
-			const data = Object.entries(itemHistory);
-			return data.sort(([_, valA], [__, valZ]) => valA - valZ)[0];
+			return Object
+				.entries(itemHistory)
+				.sort(([_, valA], [__, valZ]) => valA - valZ)[0];
 		},
 	};
 
@@ -82,34 +92,30 @@ export const cache = async (
 	const fromBytes = transforms?.fromBytes ?? defaultFromBytes;
 	const toBytes = transforms?.toBytes ?? bytestoJsonWithTypeNote;
 
-	let unionFs = new Union();
-	for (const fs of withInput.mountables) {
-		unionFs = unionFs.use(fs);
-	}
+	// let unionFs = new Union();
+	// for (const fs of withInput.mountables) {
+	// 	unionFs = unionFs.use(fs);
+	// }
 
 	const get = (updateHistory: boolean) => async (name: string) => {
 		const renamed = await renamer(name);
-		const path = join(withInput.relativeDir, renamed);
+		const cacehDataString = await Deno.readTextFile(join(withInput.relativeDir, `${renamed}.jsonc`)).catch(() => null);
 
-		const cacehDataBytees = await Deno.readFile(path).catch(async () => {
-			if (withMountables) {
-				const globalBuffer = await promisify(unionFs.readFile)(path);
-				return new Uint8Array(globalBuffer.buffer);
-			} else {
-				return null;
-			}
-		});
-
-		if (!cacehDataBytees) {
+		if (!cacehDataString) {
 			return null;
 		} else {
-			const cachedData = JSON.parse(dec.decode(cacehDataBytees));
+			const encodedCachedData = JSONC.parse(cacehDataString) as ICacheableDataForCache;
+			const value = await coder.decode(encodedCachedData.value);
+			const unencodedValueInCache: ICacheableDataForCache = { ...encodedCachedData, value };
 
 			const payload = {
 				provider,
 				meta,
 				key: { name, renamed },
-				value: await fromBytes(cachedData),
+				value: {
+					...value,
+					transformed: await fromBytes(unencodedValueInCache),
+				},
 			} as ICacheDataFromProvider;
 
 			if (updateHistory) {
@@ -120,57 +126,70 @@ export const cache = async (
 		}
 	};
 
-	const set = async (name: string, data: Uint8Array) => {
+	const set = async (name: string, data: Uint8Array | string) => {
 		const renamed = await renamer(name);
-		const path = join(withInput.relativeDir, renamed);
 
-		const payload = {
+		const payloadForCache = {
 			provider,
 			meta,
 			key: { name, renamed },
 			value: {
-				"content-type": "Uint8Array",
-				"content-encoding": "id",
-				...await toBytes(data),
+				...await coder.encode(["id", "br", "base64url"], data),
 				transformed: new Uint8Array(),
 			},
 		} as ICacheableDataForCache & ICacheDataFromProvider;
 
 		const dataToWrite = JSON.stringify(
 			{
-				...payload,
+				...payloadForCache,
 				value: {
-					data: changeEnc(payload.value.data).from("utf8").to("base64").string(),
-					"content-type": "Uint8Array",
-					"content-encoding": "base64",
+					...payloadForCache.value,
+					data: dec.decode(payloadForCache.value.data),
 				},
 			},
-			null,
-			2,
 		);
 
-		console.log({ payload });
-		console.log(dataToWrite);
+		// console.log(dataToWrite);
 
-		await Deno.writeTextFile(path + ".json", dataToWrite);
-		withMountables && await promisify(unionFs.writeFile)(path + ".json", JSON.stringify(dataToWrite));
+		await Deno.writeTextFile(join(withInput.relativeDir, `${renamed}.jsonc`), dataToWrite);
+		// withMountables && await promisify(unionFs.writeFile)(path + ".json", JSON.stringify(dataToWrite));
 
 		// udpate history
-		itemHistory[renamed] = Date.now();
-		if (!(renamed in itemHistory)) size++;
+		if (!(renamed in itemHistory)) {
+			size++;
+			itemHistory[renamed] = Date.now();
+		}
 
 		// constrain queue if needed
 		if (size > withInput.maxItems) {
 			const [nameKey] = meta.oldestItem();
-			await del(nameKey);
+			console.warn(`>> Cache is full, attempting to remove: ${nameKey}`);
+
+			// THIS IS WHERE YOU CAN DO MORE INTERESTING COORDINATIONS
+			// Give this to another cache to hold
+			// but are they ready for it?
+			// What would you need from the other cache before you send it?
+
+			// @Me(Upper): @Lower, Please make space, im going to evict this item, I'd like you to have it
+			// @Lower: Thats nice, give me a sec
+			// @Me(Upper): Eneueue Item, try again later
+			// WHEN is later???
+			//
+			// - OR -
+			// @UperTier:
+			// send it over
+			// I have X space going forward,
+			// I have Y items that you should likely grab from me
+
+			await del(nameKey, false);
 		}
 
-		return payload;
+		return payloadForCache;
 	};
 	const has = (name: string) => get(true)(name).then((data) => !!data).catch(() => false);
-	const del = async (name: string) => {
-		const renamed = await renamer(name);
-		const path = join(withInput.relativeDir, renamed);
+	const del = async (name: string, renameMe = true) => {
+		const renamed = renameMe ? await renamer(name) : name;
+		const path = join(withInput.relativeDir, `${renamed}.jsonc`);
 		await Deno.remove(path);
 
 		delete itemHistory[renamed];
