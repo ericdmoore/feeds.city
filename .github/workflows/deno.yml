@@ -20,6 +20,7 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
+    environment: Production # Dev | Red | Orange | Yellow | Green | Blue | Violet 
 
     steps:
       - name: Setup repo
@@ -33,23 +34,23 @@ jobs:
           deno-version: "~1.36.0"
 
       # Uncomment this step to verify the use of 'deno fmt' on each commit.
-      # - name: Verify formatting
-      #   run: deno fmt --check
+      - name: Verify formatting
+        run: deno fmt
 
       - name: Run linter
         run: deno lint
 
       - name: Run tests
-        run: echo $AWS_REGION; echo $AIRTABLE_TABLE; deno test tests/ -A
+        run: echo ${{ env.AWS_REGION }}; echo ${{ vars.AWS_REGION }}; echo $AIRTABLE_TABLE; deno test tests/ -A
         env:
-          AWS_DYN_TABLE_MEGA: ${{ vars.AWS_DYN_TABLE_MEGA }}
-          AWS_POLLY_BUCKET: ${{ vars.AWS_POLLY_BUCKET }}
-          AWS_POLLY_PREFIX: ${{ vars.AWS_POLLY_PREFIX }}
-          AWS_REGION: ${{ vars.AWS_REGION }}
-          JWT_KEY_EXT: ${{ vars.JWT_KEY_EXT }}
-          JWT_KEY_OPS_PRIVATE: ${{ vars.JWT_KEY_OPS_PRIVATE }}
-          JWT_KEY_OPS_PUBLIC: ${{ vars.JWT_KEY_OPS_PUBLIC }}
-          RSA_KEY_E: ${{ vars.RSA_KEY_E }}
+          AWS_DYN_TABLE_MEGA: ${{ env.AWS_DYN_TABLE_MEGA }}
+          AWS_POLLY_BUCKET: ${{ env.AWS_POLLY_BUCKET }}
+          AWS_POLLY_PREFIX: ${{ env.AWS_POLLY_PREFIX }}
+          AWS_REGION: ${{ env.AWS_REGION }}
+          JWT_KEY_EXT: ${{ env.JWT_KEY_EXT }}
+          JWT_KEY_OPS_PRIVATE: ${{ env.JWT_KEY_OPS_PRIVATE }}
+          JWT_KEY_OPS_PUBLIC: ${{ env.JWT_KEY_OPS_PUBLIC }}
+          RSA_KEY_E: ${{ env.RSA_KEY_E }}
           AES_GCM_K: ${{ secrets.AES_GCM_K }}
           AIRTABLE_BASE: ${{ secrets.AIRTABLE_BASE }}
           AIRTABLE_TABLE: ${{ secrets.AIRTABLE_TABLE }}
