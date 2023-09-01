@@ -35,9 +35,6 @@ jobs:
       # Uncomment this step to verify the use of 'deno fmt' on each commit.
       # - name: Verify formatting
       #   run: deno fmt --check
-      
-      - name: Deno Cache
-        run: deno cache --reload
 
       - name: Run linter
         run: deno lint
