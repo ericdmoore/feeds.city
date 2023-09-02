@@ -13,7 +13,6 @@ const urlPath = (path: string) => `${host}:${port}${path}`;
 
 const CONN_INFO = {
 	remoteAddr: { transport: "tcp", hostname: "192.168.1.2", port: 80 } as Deno.Addr,
-	// localAddr: { transport: "tcp", hostname: "127.0.0.1", port: 80 },
 } as ServeHandlerInfo
 
 
@@ -80,9 +79,9 @@ Deno.test({
 		url.searchParams.append("status", encodeURIComponent("test"));
 		url.searchParams.append(
 			"keyID",
-			encodeURIComponent(env("KEY_D_PRIVATE")),
+			encodeURIComponent(env("JWT_KEY_ID")),
 		);
-		// using keyID as a secret  in order to pass in the test cases
+		// using keyID as a secret in order to pass in the test cases
 
 		console.log({ url });
 		const req2 = new Request(url, { method: "POST" });
