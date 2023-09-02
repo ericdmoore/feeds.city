@@ -100,19 +100,19 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
 			/>
 			<PublicHero
 				logo={{ src: "/feedcitylogo.svg", alt: "Feeds.City" }}
-				h1="Choose Your Own Algorithm"
+				h1="Own Your Algorithm"
 				h1span=" with feeds.city "
 				p={() => (
 					<>
-						<span class="text-indigo-600">feeds.city</span>
-						offers the world's 1<sup>st</sup>{"  "}<a class="font-bold" href="#">subscription manager</a>
+						<span class="text-indigo-600">feeds.city </span>
+						is the world's 1<sup>st</sup>{"  "}<a class="font-bold" href="#">subscription manager </a>
 						that transforms your content on the fly. Enabled by an open marketplace, backed by a collective of
 						developers, inspired by the quirky indie web.
 					</>
 				)}
 				cta={{
 					left: {
-						text: "Subscription Manager?",
+						text: "A Subscription What?",
 						href: "#",
 						color: { bg: "indigo" as const, text: "white" as const },
 					},
@@ -133,7 +133,7 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
 				exp={props.data.exp ?? -1}
 			/>
 			<PublicFeatures
-				h2="Take Back Your Feed"
+				h2="Take Back Your Feeds"
 				tagline="A Better Way To Scroll Your Feed"
 				supportingTagline="It matters how your feed is optimized. Is your feed actually yours? Now it really can be with feeds.city"
 				featureList={[
