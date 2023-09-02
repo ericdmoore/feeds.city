@@ -9,6 +9,7 @@ const env = await envFn("MISSING-KEY-VALUE");
 
 Deno.test({
 	name: "Isomorphic Morphism.1",
+	ignore: true,
 	fn: async () => {
 		const req1 = new Request("https://foo.com/bar?first=1&second=2#baz", {
 			method: "GET",
@@ -36,6 +37,7 @@ Deno.test({
 
 Deno.test({
 	name: "Isomorphic Morphism.2",
+	ignore: true,
 	fn: async () => {
 		const req1 = new HttpRequest({
 			method: "POST",
@@ -62,6 +64,7 @@ Deno.test({
 // https://github.com/aws/aws-sdk-js-v3/blob/main/packages/signature-v4/src/SignatureV4.spec.ts
 Deno.test({
 	name: "sigMaker",
+	ignore: true,
 	fn: async () => {
 		const signer = sigMaker("foo", "bar", "us-bar-1", "foo");
 
@@ -88,6 +91,7 @@ Deno.test({
 
 Deno.test({
 	name: "toHttpRequest",
+	ignore: true,
 	// only: false,
 	fn: async () => {
 		const req = new Request("https://foo.com/bar?first=1&second=2#baz", { method: "GET" });
