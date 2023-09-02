@@ -27,4 +27,4 @@ Here's a breakdown:
 - Data Type: JSON and text are highly compressible, so if your application frequently sends these types of payloads, you could see a significant reduction in size.
 
 Given these factors, it might be worthwhile to consider compression for payloads on the order of 5-10 KB or larger when you're dealing with modern mobile phones on relatively good network conditions. This range is just a rule of thumb and can vary based on the specifics of your application and user base. For example, if you know that a significant portion of your user base is on slower 3G networks, you might opt to lower that threshold.
-`
+`;

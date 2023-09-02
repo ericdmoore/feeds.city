@@ -36,8 +36,10 @@ import { s3Mock } from "../mocks/s3/s3Mock.ts";
 import { jsonFeed, jsonFeedUrl } from "../mocks/jsonFeed/daringFireball.elon.ts";
 import { S3Client } from "@aws-sdk/client-s3";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import envVarReader from "$lib/utils/vars.ts";
 
-import mkEnvVar from "$lib/utils/vars.ts";
+const envVar = await envVarReader();
+const env = await envVar("MISSING-KEY-VALUE");
 
 type AST = ASTjson | ASTcomputable;
 type ASTItem = typeof ASTFeedItemJson.TYPE;
@@ -51,9 +53,7 @@ console.warn("WARNING: This Test Runs Against Production Resources");
 const _encoder = new TextEncoder();
 const _s3stateGlobal = new Map<string, Uint8Array>();
 
-const cfg = async (i?: { s3?: S3Client; dyn?: DynamoDBClient; pc?: PollyClientInterface }) => {
-	const env = await mkEnvVar("MISSING-KEY-VALUE");
-
+const cfg = (i?: { s3?: S3Client; dyn?: DynamoDBClient; pc?: PollyClientInterface }) => {
 	const aws = {
 		key: env("AWS_KEY"),
 		secret: env("AWS_SECRET"),

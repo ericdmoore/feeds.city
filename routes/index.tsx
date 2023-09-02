@@ -2,7 +2,8 @@
 import type { Handlers, PageProps } from "$fresh/server.ts";
 
 import keys from "$lib/utils/keys.ts";
-import envVars from "$lib/utils/vars.ts";
+
+import envVarReader from "$lib/utils/vars.ts";
 import sendJson from "$lib/responder/sendjson.ts";
 import airtable from "$lib/clients/airtable.ts";
 
@@ -77,6 +78,7 @@ const sendToAirtable = async (
 	return returnVal;
 };
 
+const envVar = await envVarReader();
 export default function Home(props: PageProps<Partial<HomeProps>>) {
 	return (
 		<>
@@ -104,8 +106,8 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
 				h1span=" with feeds.city "
 				p={() => (
 					<>
-						<span class="text-indigo-600">feeds.city </span>
-						is the world's 1<sup>st</sup>{"  "}<a class="font-bold" href="#">subscription manager </a>
+						<span class="text-indigo-600">feeds.city</span>
+						is the world's 1<sup>st</sup>{"  "}<a class="font-bold" href="#">subscription manager</a>
 						that transforms your content on the fly. Enabled by an open marketplace, backed by a collective of
 						developers, inspired by the quirky indie web.
 					</>
@@ -224,7 +226,7 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
  */
 export const handler: Handlers = {
 	GET: async (req, ctx) => {
-		const env = await envVars("<< MISSING >>");
+		const env = envVar(">> MISSING <<");
 		const v1 = v1token(
 			{
 				privateKey: keys.key.ecdsa.sign,
@@ -259,7 +261,7 @@ export const handler: Handlers = {
 	},
 
 	POST: async (req) => {
-		const env = await envVars("<< MISSING >>");
+		const env = await envVar("<< MISSING >>");
 
 		const _email = new URL(req.url).searchParams.get("email");
 		const Email = _email ? decodeURIComponent(_email) : null;

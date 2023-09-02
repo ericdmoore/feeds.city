@@ -1,10 +1,12 @@
 import { assert, assertEquals } from "$std/testing/asserts.ts";
 import { getSetCookies } from "$std/http/cookie.ts";
 import { createHandler, ServeHandlerInfo } from "$fresh/server.ts";
-import { envVar } from "$lib/utils/vars.ts";
 import MANIFEST from "../../fresh.gen.ts";
-import { sleep } from '$lib/index.ts'
+import { sleep } from "$lib/index.ts";
 
+import envVarReader from "$lib/utils/vars.ts";
+const envVars = await envVarReader();
+const env = await envVars("MISSING");
 
 const host = "http://localhost";
 const port = 8000;
@@ -13,8 +15,7 @@ const urlPath = (path: string) => `${host}:${port}${path}`;
 
 const CONN_INFO = {
 	remoteAddr: { transport: "tcp", hostname: "192.168.1.2", port: 80 } as Deno.Addr,
-} as ServeHandlerInfo
-
+} as ServeHandlerInfo;
 
 console.info("\n\n ... be sure to start a dev server from another session\n\n");
 
@@ -23,13 +24,12 @@ console.info("\n\n ... be sure to start a dev server from another session\n\n");
 // }
 
 Deno.test({
-	name: "GET Root (Frontpage)", 
+	name: "GET Root (Frontpage)",
 	ignore: true,
 	fn: async () => {
 		const req = new Request(urlPath("/"), { method: "GET" });
 		const handler = await createHandler(MANIFEST, { plugins: [] });
 		const resp = await handler(req, CONN_INFO);
-
 
 		// verifies a set-cookie response header
 		const cookies = getSetCookies(resp.headers);
@@ -48,14 +48,13 @@ Deno.test({
 		*/
 
 		resp.body?.cancel();
-	}
+	},
 });
 
 Deno.test({
-	name: "POST the root to Join waitlist ", 
+	name: "POST the root to Join waitlist ",
 	ignore: true,
 	fn: async () => {
-		const env = await envVar("MISSING");
 		const req1 = new Request(urlPath("/"), { method: "GET" });
 
 		const handler = await createHandler(MANIFEST, { plugins: [] });
@@ -92,15 +91,13 @@ Deno.test({
 
 		assertEquals(postResp.status, 200);
 		postResp.body?.cancel();
-	}
+	},
 });
 
 Deno.test({
 	name: "Repeat Join Requests",
 	ignore: true,
 	fn: async () => {
-		const env = await envVar("MISSING");
-
 		//initial front page
 		const req1 = new Request(urlPath("/"), { method: "GET" });
 		const handler = await createHandler(MANIFEST, { plugins: [] });

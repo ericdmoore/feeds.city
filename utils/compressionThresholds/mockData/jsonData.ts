@@ -1,4 +1,4 @@
-export const mockJSON =`
+export const mockJSON = `
 {
     "status": "OK",
     "code": 200,
@@ -235,4 +235,4 @@ export const mockJSON =`
         "image": "http://placeimg.com/640/480/people"
       }
     ]
-  }`
+  }`;

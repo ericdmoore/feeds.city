@@ -4,8 +4,9 @@ import { sigMaker, toHttpRequest, toRequest } from "$lib/clients/aws-url-signer.
 import { HttpRequest } from "@aws-sdk/protocol-http";
 import { assert, assertEquals } from "$std/testing/asserts.ts";
 
-import envFn from "$lib/utils/vars.ts";
-const env = await envFn("MISSING-KEY-VALUE");
+import envVarReader from "$lib/utils/vars.ts";
+const envVar = await envVarReader();
+const env = await envVar("MISSING");
 
 Deno.test({
 	name: "Isomorphic Morphism.1",

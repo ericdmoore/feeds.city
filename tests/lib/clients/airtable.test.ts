@@ -1,8 +1,9 @@
 import { assert } from "$std/testing/asserts.ts";
 import { _handleNestedRecords, _handleRecords, airtable, AND, OR } from "$lib/clients/airtable.ts";
-import envVars from "$lib/utils/vars.ts";
 
-const env = await envVars("MISSING");
+import envVarReader from "$lib/utils/vars.ts";
+const envVar = await envVarReader();
+const env = await envVar("MISSING");
 
 const [apiToken, baseId, tableName] = [
 	env("AIRTABLE_TOKEN"),

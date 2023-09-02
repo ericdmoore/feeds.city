@@ -2,8 +2,9 @@
 // exports JWK + cryptoKeys from the JWK
 // using ENV data
 
-import { envVar } from "./vars.ts";
-const env = await envVar(">> MISSING <<");
+import envVarReader from "./vars.ts";
+const envVar = await envVarReader();
+const env = envVar(">> MISSING <<");
 
 const jwkRsaPub = {
 	kty: "RSA",
