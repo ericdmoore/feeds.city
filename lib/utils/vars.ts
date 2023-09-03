@@ -10,7 +10,7 @@ export const envVar = async (path = "../../../.env") => {
 	const u = new URL(import.meta.url).pathname;
 	const p = resolve(u, path); // crazy `file:` prefix after import.meta.url
 
-	console.log(`>> found dot env file: ${p}`);
+	console.log(`>> using envFile: ${p}`);
 
 	const stat = await Deno.stat(p)
 		.then((s) => s, () => ({ isFile: false }))
@@ -32,20 +32,21 @@ export const envVar = async (path = "../../../.env") => {
 			if (state[key]) {
 				return state[key];
 			} else {
-				console.error(`NO ENVAR EXISTS for: ${key}`);
+				console.error(`NO VARENV EXISTS for: ${key}`);
 				console.error(`USING given defuaultVal: ${defaultVal}`);
 				return defaultVal;
 			}
 		};
 	}else{
+		
+		console.error(`NO .env FILE FOUND at: ${p}`)
+		console.error(`falling back to "Deno.env.get"`);
 		return (defaultVal: string) => (key: string) => {
-			console.error(`NO .env FILE FOUND at: ${p}`);
-			console.error(`falling back to "Deno.env.get" + the good ol default: ${defaultVal}`);
 			const ret = Deno.env.get(key);
 			if (ret) {
 				return ret;
 			} else {
-				console.error(`NO ENVAR EXISTS for: ${key}`);
+				console.error(`>> NO ENVAR EXISTS for: ${key}`);
 				console.error(`USING given defuaultVal: ${defaultVal}`);
 				return defaultVal;
 			}

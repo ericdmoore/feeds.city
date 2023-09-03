@@ -57,6 +57,9 @@ interface AirtableSideEffectResponse {
 	createdTime?: string;
 }
 
+const envVar = await envVarReader();
+const env = envVar(">> MISSING <<");
+
 const sendToAirtable = async (
 	client: AirtableSideEffectRequestBase,
 	input: AirtableSideEffectRequestDataInput,
@@ -78,7 +81,8 @@ const sendToAirtable = async (
 	return returnVal;
 };
 
-const envVar = await envVarReader();
+
+
 export default function Home(props: PageProps<Partial<HomeProps>>) {
 	return (
 		<>
@@ -226,7 +230,6 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
  */
 export const handler: Handlers = {
 	GET: async (req, ctx) => {
-		const env = envVar(">> MISSING <<");
 		const v1 = v1token(
 			{
 				privateKey: keys.key.ecdsa.sign,
@@ -261,8 +264,6 @@ export const handler: Handlers = {
 	},
 
 	POST: async (req) => {
-		const env = await envVar("<< MISSING >>");
-
 		const _email = new URL(req.url).searchParams.get("email");
 		const Email = _email ? decodeURIComponent(_email) : null;
 
@@ -278,7 +279,7 @@ export const handler: Handlers = {
 		const v1tok = v1token({
 			privateKey: keys.key.ecdsa.sign,
 			publicKey: keys.key.ecdsa.verify,
-		}, env("KEY_ID")!);
+		}, env("JWT_KEY_ID")!);
 
 		if (token && Email) {
 			const { payload } = await v1tok.parse(token);
