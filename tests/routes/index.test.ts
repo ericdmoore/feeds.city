@@ -112,7 +112,7 @@ Deno.test({
 		postURL.searchParams.append("email", encodeURIComponent(`testID_${randNum}@test.com`));
 		postURL.searchParams.append("token", sessionIDtoken.value);
 		postURL.searchParams.append("status", encodeURIComponent("test"));
-		postURL.searchParams.append("keyID", encodeURIComponent(!env("KEY_D_PRIVATE")));
+		postURL.searchParams.append("keyID", encodeURIComponent(!env("JWT_KEY_D_PRIVATE")));
 		// using keyID as a secret  in order to pass in the test cases
 
 		const firstpostResp = await handler(new Request(postURL, { method: "POST" }), CONN_INFO);
