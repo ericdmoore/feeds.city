@@ -27,7 +27,7 @@ import CtaPanel from "$components/cta-panel.tsx";
 // import { Color } from "../types.ts";
 import v1token, { validatiorsAvailable as availVals } from "../utils/tokens/v1.ts";
 
-import { Adjustments_horizontal, Bookmark } from "../components/heroicons/outline.tsx";
+import { Light_bulb, Bookmark } from "../components/heroicons/outline.tsx";
 
 import { Building_storefront, Magnifying_glass, Scissors, User_group } from "../components/heroicons/solid.tsx";
 
@@ -110,8 +110,8 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
 				h1span=" with feeds.city "
 				p={() => (
 					<>
-						<span class="text-indigo-600">feeds.city</span>
-						is the world's 1<sup>st</sup>{"  "}<a class="font-bold" href="#">subscription manager</a>
+						<span class="text-indigo-600">feeds.city </span>
+						is the world's 1<sup>st</sup>{"  "}<a class="font-bold" href="#">subscription manager </a>
 						that transforms your content on the fly. Enabled by an open marketplace, backed by a collective of
 						developers, inspired by the quirky indie web.
 					</>
@@ -140,8 +140,8 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
 			/>
 			<PublicFeatures
 				h2="Take Back Your Feeds"
-				tagline="A Better Way To Scroll Your Feed"
-				supportingTagline="It matters how your feed is optimized. Is your feed actually yours? Now it really can be with feeds.city"
+				tagline="End Doom Scrolling Once and For All"
+				supportingTagline="It matters how your feed is organized. You can actually own your feed with `feeds.city`"
 				featureList={[
 					{
 						title: "Distraction Free Reading",
@@ -150,10 +150,10 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
 						icon: () => <Magnifying_glass class="h-6 w-6" />,
 					},
 					{
-						title: "On The Fly Transforms",
+						title: "Ask Your Feeds Questions with AI",
 						subtitle:
-							"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
-						icon: () => <Adjustments_horizontal class="h-6 w-6" />,
+							"Research Assistants have long been only available to substantive journalists. `feeds.city` exists to unlock use cases like citing sources from all over your trusted web.",
+						icon: () => <Light_bulb class="h-6 w-6" />,
 					},
 					{
 						title: "Emerging Marketplace",
@@ -162,9 +162,9 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
 						icon: () => <Building_storefront class="h-6 w-6" />,
 					},
 					{
-						title: "Listening for Everything",
+						title: "Listen To Anything",
 						subtitle:
-							"The web is full of vibrant text. But some of us are auditory learners. Some people like to listen to everything. Now anything is listenable",
+							"The web is full of vibrant text, but some of us have almost endless appetite for listening. `feeds.city` can transform anything to make it listenable",
 						icon: () => <Scissors class="h-6 w-6" />,
 					},
 					{

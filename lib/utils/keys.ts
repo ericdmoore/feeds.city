@@ -52,6 +52,7 @@ const jwkEcdsaPrivate = {
 	kty: "EC",
 	crv: "P-384",
 	alg: "ES384",
+	// kid: env("JWT_KEY_ID"),
 	x: env("JWT_KEY_X"),
 	y: env("JWT_KEY_Y"),
 	d: env("JWT_KEY_D_PRIVATE"),
@@ -76,6 +77,7 @@ const jwkEcdsaPub = {
 	"key_ops": ["verify"],
 	"ext": true,
 } as JsonWebKey;
+
 const ecdsaPubKey = await crypto.subtle.importKey(
 	"jwk",
 	jwkEcdsaPub,
@@ -92,7 +94,7 @@ const jwkAesGcm = {
 	key_ops: ["encrypt", "decrypt"],
 } as JsonWebKey;
 
-const aesGcmKey = crypto.subtle.importKey(
+const aesGcmKey = await crypto.subtle.importKey(
 	"jwk",
 	jwkAesGcm,
 	{ name: "AES-GCM", length: 256 },
