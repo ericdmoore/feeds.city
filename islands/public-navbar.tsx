@@ -260,8 +260,12 @@ function FlyOutMenu(props: FlyOutMenuProps) {
   --> */
 	return (
 		<div class="relative">
-			<button
-				type="button"
+			<button type="button"
+				onClick={() => {
+					props.activeMenuName === props.menuStateName 
+						? props.setMenuName(null)
+						: props.setMenuName(props.menuStateName);
+				}}
 				onFocus={() => {
 					props.setMenuName(props.menuStateName);
 				}}
