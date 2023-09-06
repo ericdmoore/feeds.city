@@ -201,23 +201,7 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
 			/>
 			{/* <Pricing /> */}
 			<CtaPanel />
-			<Footer
-				nav={{
-					About: "/about",
-					Blog: "/blog",
-					Jobs: "/jobs",
-					Press: "/press",
-					Market: "/market",
-				}}
-				social={{
-					Twitter: { alias: "twitter", href: "https://twitter.com" },
-					Discord: { alias: "discord", href: "https://discord.com" },
-					YouTube: { alias: "youtube", href: "https://youtube.com" },
-					Twitch: { alias: "twitch", href: "https://twitch.com" },
-					Reddit: { alias: "reddit", href: "https://reddit.com" },
-					GitHub: { alias: "github", href: "https://github.com" },
-				}}
-			/>
+			<Footer />
 		</>
 	);
 }
