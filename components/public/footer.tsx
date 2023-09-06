@@ -1,15 +1,18 @@
+import dallasSkyline from "./dallasSkyline.tsx";
+import {type RecursivePartial} from '$lib/types.ts'
+
 interface FooterProps {
 	nav: Record<string, string>;
 	social: Record<
 		string,
 		{ href: string; svg: string } | { href: string; src: string } | {
 			href: string;
-			alias: keyof typeof SocilaSvgs;
+			alias: keyof typeof SocialSvgs;
 		}
 	>;
 }
 
-const SocilaSvgs = {
+const SocialSvgs = {
 	facebook: (
 		<svg
 			class="h-6 w-6"
@@ -181,7 +184,27 @@ const SocilaSvgs = {
 	),
 } as const;
 
-export function Footer(props: FooterProps) {
+export function Footer(props: RecursivePartial<FooterProps>) {
+	const defaultedProps = {
+		nav: props.nav 
+			? props.nav 
+			:{
+				About: "/about",
+				Blog: "/blog",
+				Jobs: "/jobs",
+				Press: "/press",
+				Market: "/market",
+			},
+		social: props.social ? props.social : {
+			Twitter: { alias: "twitter", href: "https://twitter.com/feedsCity" },
+			Discord: { alias: "discord", href: "https://discord.com/feedsCity" },
+			YouTube: { alias: "youtube", href: "https://youtube.com/feedsCity" },
+			Twitch: { alias: "twitch", href: "https://twitch.com/feedsCity" },
+			Reddit: { alias: "reddit", href: "https://reddit.com/u/feedsCity" },
+			GitHub: { alias: "github", href: "https://github.com/feedsCity" },
+		}
+	} as FooterProps
+
 	return (
 		<footer class="bg-white">
 			<div class="mx-auto max-w-7xl overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
@@ -189,7 +212,7 @@ export function Footer(props: FooterProps) {
 					class="-mx-5 -my-2 flex flex-wrap justify-center"
 					aria-label="Footer"
 				>
-					{Object.entries(props.nav).map(([text, href]) => (
+					{Object.entries(defaultedProps.nav).map(([text, href]) => (
 						<div class="px-5 py-2">
 							<a
 								href={href}
@@ -202,7 +225,7 @@ export function Footer(props: FooterProps) {
 				</nav>
 
 				<div class="flex mt-8 justify-center space-x-6">
-					{Object.entries(props.social).map(([name, imglink]) => (
+					{Object.entries(defaultedProps.social).map(([name, imglink]) => (
 						"alias" in imglink
 							? (
 								<a
@@ -211,7 +234,7 @@ export function Footer(props: FooterProps) {
 									rel="nofollow noreferrer noopener"
 								>
 									<span class="sr-only">{name}</span>
-									{SocilaSvgs[imglink.alias]}
+									{SocialSvgs[imglink.alias]}
 								</a>
 							)
 							: "svg" in imglink
@@ -237,24 +260,35 @@ export function Footer(props: FooterProps) {
 							)
 					))}
 				</div>
-				<p class="mt-8 text-center text-base text-gray-400">
-					&copy; 2020 Feeds.City, LLC. All rights reserved.
-				</p>
+
+				<div class="flex flex-row mt-8 items-center justify-center space-x-6">
+					{dallasSkyline()}
+				</div>
 
 				{/* Badge */}
+			
 				<div class="flex flex-row mt-8 items-center justify-center space-x-6">
 					<a href="https://fresh.deno.dev">
 						<img
 							width="197"
 							height="37"
 							src="/fresh/fresh-badge.svg"
-							alt="Made with Fresh"
+							alt="Made with Fresh in Dallas, TX"
 						/>
 					</a>
 				</div>
+				<p class="mt-8 text-center text-base text-gray-400">
+					feeds.city LLC. All rights reserved.
+				</p>
+				<p class="text-center text-base text-gray-400">
+					&copy; 2023
+				</p>
+				
 			</div>
 		</footer>
 	);
 }
 
+
 export default Footer;
+

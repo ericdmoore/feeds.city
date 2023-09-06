@@ -2,6 +2,7 @@ import NavBar from "../islands/public-navbar.tsx";
 import CtaPanel from "../components/cta-panel.tsx";
 import Pricing from "../components/public/pricing.tsx";
 import SimplePricing from "../components/simple-pricing.tsx";
+import Footer from "$components/public/footer.tsx";
 
 export default function () {
 	return (
@@ -18,14 +19,14 @@ export default function () {
 			/>
 			<SimplePricing
 				title={{
-					h2: "Get Access To The Earlybird Offer",
-					p: "Only Available During Beta Development",
+					h2: ()=> "Get Access To The Earlybird Offer",
+					p: ()=> "Only Available During Beta Development",
 				}}
 				lBox={{
-					h3: "Lifetime Access",
-					p: "The Earlybird Beta Offer Grants Lifetime Access to Feeds.City",
-					dividerText: `What's Included`,
-					greenCheckText: [
+					h3: ()=> "Lifetime Access",
+					p: ()=> "The Earlybird Beta Offer Grants Lifetime Access to Feeds.City",
+					dividerText: ()=> `What's Included`,
+					greenCheckText: ()=> [
 						"Beta Development Infleunce",
 						"Bonus Marketplace Tokens",
 						"Early Access To Beta Features",
@@ -33,33 +34,34 @@ export default function () {
 					],
 				}}
 				rBox={{
-					top: "Pay Once For Lifetime Access",
-					price: { amt: "$129", unit: "USD" },
+					top: () => "Pay Once For Lifetime Access",
+					price: { amt: ()=> "$129", unit: ()=> "USD"  },
 					ctaBtn: {
-						href: "#",
 						text: () => "Buy CHARTER MEMEBR  Lifetime Access",
+						href: "#",
 					},
 					clarification: {
-						href: "#",
 						text: () => "Learn Details of the Earlybird Lifetime Access",
+						href: "#",
 					},
 					teaser: {
-						href: "#",
 						text: () => "Learn more about our scholarship program iF you are unable to afford the offer",
+						href: "#",
 					},
 				}}
 			/>
-			<SimplePricing />
+			{/* <SimplePricing /> */}
 			{
 				/*
-            Private forum access
-            Member resources
-            Entry to annual conference
-            Official member t-shirt
-        */
+					Private forum access
+					Member resources
+					Entry to annual conference
+					Official member t-shirt
+				*/
 			}
-			<Pricing />
+			{/* <Pricing /> */}
 			<CtaPanel />
+			<Footer />
 		</>
 	);
 }
