@@ -52,7 +52,6 @@ const jwkEcdsaPrivate = {
 	kty: "EC",
 	crv: "P-384",
 	alg: "ES384",
-	// kid: env("JWT_KEY_ID"),
 	x: env("JWT_KEY_X"),
 	y: env("JWT_KEY_Y"),
 	d: env("JWT_KEY_D_PRIVATE"),
@@ -67,7 +66,29 @@ const ecdsaPrivKey = await crypto.subtle.importKey(
 	{ name: "ECDSA", namedCurve: "P-384" },
 	true,
 	["sign"],
-).finally(()=>{})
+).then((data)=>{
+	console.log("ecdsaPrivKey:", data)
+	return data
+}).catch(()=>{
+	const priv: JsonWebKey = {
+		kty: "EC",
+		crv: "P-384",
+		alg: "ES384",
+		x: env("JWT_KEY_X"),
+		y: env("JWT_KEY_Y"),
+		d: env("JWT_KEY_D_PRIVATE"),
+		key_ops: ["sign"],
+		ext: true,
+	}
+	// causes errors in GHA
+	return crypto.subtle.importKey(
+		"jwk", priv, { name: "ECDSA", namedCurve: "P-384" },
+		true, ["sign"],
+	)
+})
+.finally(()=>{
+	console.log("ecdsaPrivKey imported")
+})
 
 const jwkEcdsaPub = {
 	"kty": "EC",

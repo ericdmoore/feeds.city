@@ -5,7 +5,7 @@ import MANIFEST from "../../fresh.gen.ts";
 import { sleep } from "$lib/index.ts";
 
 import envVarReader from "$lib/utils/vars.ts";
-const envVars = await envVarReader();
+const envVars = await envVarReader(); 
 const env = await envVars("MISSING");
 
 const host = "http://localhost";
