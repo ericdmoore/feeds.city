@@ -1,45 +1,35 @@
-import { ComponentChildren } from "preact";
-import { useLayoutEffect, useState } from "preact/hooks";
-import { AppShellMenuBar } from "../islands/AppShellMenuBar.tsx";
+import { type ComponentChildren } from "preact";
 
-interface AppShellProps {
+import {
+	AppShellMenuBar,
+	type AppShellMenuBarProps
+} from "$islands/AppShellMenuBar.tsx"
+
+export interface AppShellProps extends AppShellMenuBarProps{
 	children: ComponentChildren;
 }
 
-// AppShell Should embed a menu bar comppnent and expose the props to callers
-//
-
 export function AppShell(props: AppShellProps) {
-	const [isOpen, setIsOpen] = useState(false);
-	const [listOfMenuItems] = useState([
-		{ href: "#/", name: "Feed" },
-		{ href: "#/team", name: "Team" },
-		{ href: "#/create", name: "Create" },
-	]);
-	// <MenuBar />
-	// <UserMenu isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
-
-	const [isProfileOpen, setProfileIsOpen] = useState(false);
-
 	return (
 		<div class="min-h-full">
-			<AppShellMenuBar activeSection="home" />
-			{/* Current Page Dashboard */}
+			<AppShellMenuBar menu={props.menu} 
+				profile={{
+				...props.profile,
+				avatarURL: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+			}}/>
 			<div class="py-10">
 				<header>
-					<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+					<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 md:pb-6">
 						<h1 class="text-3xl font-bold leading-tight tracking-tight text-gray-900">
-							Dashboard
+							{props.menu.activeSection}
 						</h1>
 					</div>
 				</header>
 				<main>
-					<div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-						{/* <!-- Replace with your content --> */}
-						<div class="px-4 py-8 sm:px-0">
+					<div class="mx-auto max-w-7xl sm:px-4 lg:px-8">
+						<div class="px-2 py-8 sm:px-0 bg-red-200">
 							{props.children}
 						</div>
-						{/* <!-- /End replace --> */}
 					</div>
 				</main>
 			</div>

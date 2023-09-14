@@ -2,15 +2,23 @@
 Key Initiaitive: Get Feedback Now
 
 [x] Signup Form to populate Airtable Waitlist
-[ ] Explain Value Prop
-[ ] Provide Messaging about Earlybird Pricing
-[ ] Bring Your OPML to 'the City'
-[ ] Live With Issues no longer
+[ ] Hammer Out a V1 Pricing Model
+    [ ] Explain "The One Time Purchase" Value Prop
+[ ] Update Pages with Compelling Messaging 
+    [ ] about the problem of doing nothing
+    [ ] about Earlybird Pricing
+    [ ] about service broadly
+    [ ] about how feed functions work
 [ ] Teach Your Feeds a new song and dance
+[ ] Bring Your OPML 'into the City'
 
 Fundamental Assumptions
 [ ] People want to fix their feeds
-[ ] People will pay to fix their feeds 
+[ ] People will pay to fix their feeds
+[ ] People who fix feeds might share their fix friends, who might give them a tip.
+
+
+------------------------------------
 
 ## Messaging Ideas:
 
@@ -42,6 +50,7 @@ See a Problem, Fix a Problem
 - Follow Not Just Feeds
 
 3. User Empowerment
+- User's Own Their Feeds
 
 ---------------------------------------------------------------------------
 

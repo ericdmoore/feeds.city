@@ -18,29 +18,31 @@ import * as $12 from "./routes/app/actions/index.tsx";
 import * as $13 from "./routes/app/data/index.tsx";
 import * as $14 from "./routes/app/feeds/add.tsx";
 import * as $15 from "./routes/app/feeds/index.tsx";
-import * as $16 from "./routes/app/functions/index.tsx";
-import * as $17 from "./routes/app/index.tsx";
-import * as $18 from "./routes/app/organizations/index.tsx";
-import * as $19 from "./routes/app/reader/index.tsx";
-import * as $20 from "./routes/app/team/index.tsx";
-import * as $21 from "./routes/ast/[composition]/[...url].tsx";
-import * as $22 from "./routes/ast/[composition]/index.tsx";
-import * as $23 from "./routes/ast/[url].tsx";
-import * as $24 from "./routes/ast/index.tsx";
-import * as $25 from "./routes/earlybird.tsx";
-import * as $26 from "./routes/feeds.tsx";
-import * as $27 from "./routes/hero.tsx";
-import * as $28 from "./routes/home.tsx";
-import * as $29 from "./routes/index.tsx";
-import * as $30 from "./routes/login.tsx";
-import * as $31 from "./routes/logout.tsx";
-import * as $32 from "./routes/profile.tsx";
-import * as $33 from "./routes/read.tsx";
-import * as $34 from "./routes/settings.tsx";
-import * as $35 from "./routes/team.tsx";
-import * as $36 from "./routes/testing.tsx";
-import * as $37 from "./routes/user/index.ts";
-import * as $38 from "./routes/user/register.tsx";
+import * as $16 from "./routes/app/following.ts";
+import * as $17 from "./routes/app/functions/index.tsx";
+import * as $18 from "./routes/app/index.tsx";
+import * as $19 from "./routes/app/organizations/index.tsx";
+import * as $20 from "./routes/app/reader/index.tsx";
+import * as $21 from "./routes/app/team/index.tsx";
+import * as $22 from "./routes/ast/[composition]/[...url].tsx";
+import * as $23 from "./routes/ast/[composition]/index.tsx";
+import * as $24 from "./routes/ast/[url].tsx";
+import * as $25 from "./routes/ast/index.tsx";
+import * as $26 from "./routes/earlybird.tsx";
+import * as $27 from "./routes/following.tsx";
+import * as $28 from "./routes/hero.tsx";
+import * as $29 from "./routes/home.tsx";
+import * as $30 from "./routes/homey.tsx";
+import * as $31 from "./routes/index.tsx";
+import * as $32 from "./routes/login.tsx";
+import * as $33 from "./routes/logout.tsx";
+import * as $34 from "./routes/profile.tsx";
+import * as $35 from "./routes/read.tsx";
+import * as $36 from "./routes/settings.tsx";
+import * as $37 from "./routes/team.tsx";
+import * as $38 from "./routes/testing.tsx";
+import * as $39 from "./routes/user/index.ts";
+import * as $40 from "./routes/user/register.tsx";
 import * as $$0 from "./islands/AppShellMenuBar.tsx";
 import * as $$1 from "./islands/Counter.tsx";
 import * as $$2 from "./islands/compositionForm.tsx";
@@ -69,29 +71,31 @@ const manifest = {
 		"./routes/app/data/index.tsx": $13,
 		"./routes/app/feeds/add.tsx": $14,
 		"./routes/app/feeds/index.tsx": $15,
-		"./routes/app/functions/index.tsx": $16,
-		"./routes/app/index.tsx": $17,
-		"./routes/app/organizations/index.tsx": $18,
-		"./routes/app/reader/index.tsx": $19,
-		"./routes/app/team/index.tsx": $20,
-		"./routes/ast/[composition]/[...url].tsx": $21,
-		"./routes/ast/[composition]/index.tsx": $22,
-		"./routes/ast/[url].tsx": $23,
-		"./routes/ast/index.tsx": $24,
-		"./routes/earlybird.tsx": $25,
-		"./routes/feeds.tsx": $26,
-		"./routes/hero.tsx": $27,
-		"./routes/home.tsx": $28,
-		"./routes/index.tsx": $29,
-		"./routes/login.tsx": $30,
-		"./routes/logout.tsx": $31,
-		"./routes/profile.tsx": $32,
-		"./routes/read.tsx": $33,
-		"./routes/settings.tsx": $34,
-		"./routes/team.tsx": $35,
-		"./routes/testing.tsx": $36,
-		"./routes/user/index.ts": $37,
-		"./routes/user/register.tsx": $38,
+		"./routes/app/following.ts": $16,
+		"./routes/app/functions/index.tsx": $17,
+		"./routes/app/index.tsx": $18,
+		"./routes/app/organizations/index.tsx": $19,
+		"./routes/app/reader/index.tsx": $20,
+		"./routes/app/team/index.tsx": $21,
+		"./routes/ast/[composition]/[...url].tsx": $22,
+		"./routes/ast/[composition]/index.tsx": $23,
+		"./routes/ast/[url].tsx": $24,
+		"./routes/ast/index.tsx": $25,
+		"./routes/earlybird.tsx": $26,
+		"./routes/following.tsx": $27,
+		"./routes/hero.tsx": $28,
+		"./routes/home.tsx": $29,
+		"./routes/homey.tsx": $30,
+		"./routes/index.tsx": $31,
+		"./routes/login.tsx": $32,
+		"./routes/logout.tsx": $33,
+		"./routes/profile.tsx": $34,
+		"./routes/read.tsx": $35,
+		"./routes/settings.tsx": $36,
+		"./routes/team.tsx": $37,
+		"./routes/testing.tsx": $38,
+		"./routes/user/index.ts": $39,
+		"./routes/user/register.tsx": $40,
 	},
 	islands: {
 		"./islands/AppShellMenuBar.tsx": $$0,

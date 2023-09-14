@@ -2,13 +2,16 @@ import type { Handlers } from "$fresh/server.ts";
 import Counter from "../islands/Counter.tsx";
 
 import { TopHatBlack } from "../components/TopHat.tsx";
-import AppShell from "../components/AppShell.tsx";
+import AppShell from "$components/AppShell.tsx";
 
 // Evnatually this is a public marketing page
 
 export default function Home() {
 	return (
-		<AppShell>
+		<AppShell 
+			menu={{activeSection: "Team"}}
+			profile={{name: "Eric Moore", avatarURL:''}}>
+				
 			<TopHatBlack
 				title="Federa"
 				description="Descrbes federa"

@@ -2,13 +2,17 @@ import type { Handlers } from "$fresh/server.ts";
 import Counter from "../islands/Counter.tsx";
 
 import { TopHatBlack } from "../components/TopHat.tsx";
-import AppShell from "../components/AppShell.tsx";
+import AppShell from "$components/AppShell.tsx";
 
 // Evnatually this is a public marketing page
 
 export default function Home() {
+	const profile = { name: "Eric Moore", avatarURL: "" };
 	return (
-		<AppShell>
+		<AppShell 
+			menu={{activeSection: "Home"}}
+			profile={{name: "Eric Moore", avatarURL:''}}>
+
 			<TopHatBlack
 				title="Federa"
 				description="Descrbes federa"
@@ -16,7 +20,7 @@ export default function Home() {
 			>
 				<meta name="og:title" content="Federa" />
 			</TopHatBlack>
-			<div class="p-4 mx-auto max-w-screen-md">
+			<div class="py-4 px-10 mx-auto max-w-screen-l">
 				<ul>
 					<li>
 						<a href="/ast">ast</a>

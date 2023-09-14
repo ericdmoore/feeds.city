@@ -1,7 +1,7 @@
 {
 	"tasks": {
 		"bundle": "deno bundle main.ts",
-		"test": "deno test tests/ --allow-net --allow-env --allow-read --coverage=.cov/",
+		"test": "deno test tests/ --allow-net --allow-env --allow-read --allow-write --coverage=.cov/",
 		"cov": "deno coverage --lcov --output=cov.lcov .cov/ ; genhtml -o ./.cov/html_cov cov.lcov ; open .cov/html_cov/index.html",
 		"start": "deno run -Ar --watch=static/,routes/ dev.ts",
 		"build": "deno run -A dev.ts build",
@@ -80,6 +80,7 @@
 		"multiformats": "https://esm.sh/multiformats@9.6.4?deno-std=0.181.0&dts",
 		"mustache": "https://deno.land/x/mustache@v0.3.0/mod.ts",
 		"superstruct": "https://deno.land/x/deno_superstruct@0.0.0/mod.ts",
+		"stripe":"https://esm.sh/stripe@13.5.0?deno-std=0.181.0&dts",
 		"toXml": "https://deno.land/x/js2xml@1.0.2/mod.ts",
 		"twind": "https://esm.sh/twind@0.16.19",
 		"twind/": "https://esm.sh/twind@0.16.19/",

@@ -1,24 +1,24 @@
-import type { Handlers } from "$fresh/server.ts";
-import Counter from "../islands/Counter.tsx";
+import type { Handlers, PageProps, RouteConfig } from "$fresh/server.ts";
 
 import { TopHatBlack } from "../components/TopHat.tsx";
 import AppShell from "$components/AppShell.tsx";
 
-// Evnatually this is a public marketing page
 
 export default function Home() {
 	return (
 		<AppShell 
-			menu={{activeSection: "Settings"}}
+			menu={{activeSection: "Following"}}
 			profile={{name: "Eric Moore", avatarURL:''}}>
 			<TopHatBlack
 				title="Federa"
 				description="Descrbes federa"
-				icon={[{ href: "/feedCityRingDropsLogo.svg", type: "image/svg+xml" }]}
+				icon={[{ 
+					href: "/feedCityRingDropsLogo.svg", type: "image/svg+xml" 
+				}]}
 			>
 				<meta name="og:title" content="Federa" />
 			</TopHatBlack>
-			<div class="p-4 mx-auto max-w-screen-md">
+			<div class="p-4 mx-auto max-w-screen-l">
 				<ul>
 					<li>
 						<a href="/ast">ast</a>
@@ -48,3 +48,22 @@ export default function Home() {
 		</AppShell>
 	);
 }
+
+
+export const handler: Handlers = {
+	GET: async (req, ctx) => {
+
+		const u = new URL(req.url)
+		console.log('url: ',u)
+		const rendered = await ctx.render({ activeMenu: 'Home'});
+
+		return new Response(rendered.body, {
+			status: 200,
+			statusText: "OK",
+		});
+	}
+}
+// redirect to login if not logged in
+// list of feeds
+// add feed
+// edit / remove feed

@@ -453,8 +453,8 @@ const LargeMenu = (props: LargeMenuProps) => {
 
 export function NavBar(props: NavBarProps) {
 	const [activeMenu, setActiveMenuGroup] = useState(null as string | null);
-	const signUpHref = "/register";
-	const signInHref = "/signin";
+	const signUpHref = "/user/register";
+	const signInHref = "/login";
 
 	return (
 		<div class="relative bg-gray-50">

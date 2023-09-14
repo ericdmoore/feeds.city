@@ -61,12 +61,13 @@ const jwkEcdsaPrivate = {
 } as JsonWebKey;
 
 const ecdsaPrivKey = await crypto.subtle.importKey(
+	// causes errors in GHA
 	"jwk",
 	jwkEcdsaPrivate,
 	{ name: "ECDSA", namedCurve: "P-384" },
 	true,
 	["sign"],
-);
+).finally(()=>{})
 
 const jwkEcdsaPub = {
 	"kty": "EC",

@@ -29,7 +29,16 @@ import v1token, { validatiorsAvailable as availVals } from "../utils/tokens/v1.t
 
 import { Light_bulb, Bookmark } from "../components/heroicons/outline.tsx";
 
-import { Building_storefront, Magnifying_glass, Scissors, User_group } from "../components/heroicons/solid.tsx";
+import { 
+	Building_storefront,
+	Cursor_arrow_ripple, 
+	Magnifying_glass, 
+	Play_pause, 
+	User_group,
+	Rectangle_group,
+	Question_mark_circle,
+	Sparkles
+} from "../components/heroicons/solid.tsx";
 
 // import { DynamoDBClient, PutItemCommand , type AttributeValue} from "@aws-sdk/client-dynamodb";
 // import { string, number } from '../utils/dyn/mod.ts'
@@ -139,42 +148,62 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
 				exp={props.data.exp ?? -1}
 			/>
 			<PublicFeatures
-				h2="Take Back Your Feeds"
-				tagline="End Doom Scrolling Once and For All"
+				h2="Take Back Your Feeds with Feed Functions"
+				tagline="Only Read Clean Feeds"
 				supportingTagline="It matters how your feed is organized. You can actually own your feed with `feeds.city`"
 				featureList={[
+					// trusted, cleaned, contextualized feeds
 					{
-						title: "Distraction Free Reading",
+						title: "Remove Annoying Elements",
+						subtitle:
+							`Reading requires focus and attention. That's the thing, so many things fight for your attention on some pages. 
+							It is a constant battle to focus your attention. So clean up your reading and clean up your mind.`,
+						icon: () => <Cursor_arrow_ripple class="h-6 w-6" />,
+					},
+					{
+						title: "Scan Articles with AI Summaries",
 						subtitle:
 							"Reading requires focus. Focus requires concentration. Concentration is in constant battle by other interests. Clean up your reading, and it will clean up your mind.",
 						icon: () => <Magnifying_glass class="h-6 w-6" />,
 					},
 					{
+						title: "Contextualize Articles with other articles from ",
+						subtitle:
+							"Reading requires focus. Focus requires concentration. Concentration is in constant battle by other interests. Clean up your reading, and it will clean up your mind.",
+						icon: () => <Rectangle_group class="h-6 w-6" />,
+					},
+					{
+						title: "Distraction Free Reading",
+						subtitle:
+							"Reading requires focus. Focus requires concentration. Concentration is in constant battle by other interests. Clean up your reading, and it will clean up your mind.",
+						icon: () => <Sparkles class="h-6 w-6" />,
+					},
+					{
 						title: "Ask Your Feeds Questions with AI",
 						subtitle:
 							"Research Assistants have long been only available to substantive journalists. `feeds.city` exists to unlock use cases like citing sources from all over your trusted web.",
-						icon: () => <Light_bulb class="h-6 w-6" />,
+						icon: () => <Question_mark_circle class="h-6 w-6" />,
 					},
+					// {
+					// 	title: "Emerging Marketplace",
+					// 	subtitle:
+					// 		"Get in on the ground level withj a new developer marketplace. There are developers who want to hear what you are looking for, and their are FeedFunctions (like an app) that improves your feed quality.",
+					// 	icon: () => <Building_storefront class="h-6 w-6" />,
+					// },
 					{
-						title: "Emerging Marketplace",
-						subtitle:
-							"Get in on the ground level withj a new developer marketplace. There are developers who want to hear what you are looking for, and their are FeedFunctions (like an app) that improves your feed quality.",
-						icon: () => <Building_storefront class="h-6 w-6" />,
-					},
-					{
-						title: "Listen To Anything",
+						title: "Make Anything Listenable",
 						subtitle:
 							"The web is full of vibrant text, but some of us have almost endless appetite for listening. `feeds.city` can transform anything to make it listenable",
-						icon: () => <Scissors class="h-6 w-6" />,
+						icon: () => <Play_pause class="h-6 w-6" />,
 					},
 					{
-						title: "Longform Reading Discovery",
+						title: "Recommendations from Your AI",
 						subtitle:
 							"Not all information is created equal. Skip out on bloated 'news' about things that won't matter in 10 minutes let alone 10 days. Start digging into longform ideas that make you are more interesting person",
 						icon: () => <Bookmark class="h-6 w-6" />,
 					},
 					{
-						title: "Integrated Social Signal",
+						title: "Read what is popular with your friends",
 						subtitle:
 							"Just because you dont want to be advertised to all the time, You should understand the goal of what is shown to you. Is it to make an advertiser happy, or is it to engage your own brain.  how what you are being Read things for you that are lighly influenced by the things you follow",
 						icon: () => <User_group class="h-6 w-6" />,
@@ -182,12 +211,13 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
 				]}
 			/>
 			<Testimonial
-				author={{ name: "Marie Chilvers", title: "CEO, Workcation" }}
+				author={{ name: "Melinda Moore", title: "Business Development, Suse" }}
 				bgImg={{
 					src: "https://tailwindui.com/img/logos/workcation-logo-white.svg",
 					alt: "Workstation Marketing background Image",
 				}}
-				testimonial={`This app has completely transformed how we interact with customers. We've seen record bookings, higher customer satisfaction, and reduced churn.`}
+				testimonial={`This app has completely transformed how much information I can understand. 
+							  I can't believe I used to read anything in its original form.`}
 			/>
 			{/* Sausage:'99.999%' */}
 			<Stats

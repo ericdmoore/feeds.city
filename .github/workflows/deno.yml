@@ -41,7 +41,7 @@ jobs:
         run: deno lint
 
       - name: Run tests
-        run: deno test tests/ -A
+        run: deno task test
         env:
           AWS_DYN_TABLE_MEGA: ${{ vars.AWS_DYN_TABLE_MEGA }}
           AWS_POLLY_BUCKET: ${{ vars.AWS_POLLY_BUCKET }}
@@ -50,7 +50,7 @@ jobs:
           JWT_KEY_EXT: ${{ vars.JWT_KEY_EXT }}
           JWT_KEY_OPS_PRIVATE: ${{ vars.JWT_KEY_OPS_PRIVATE }}
           JWT_KEY_OPS_PUBLIC: ${{ vars.JWT_KEY_OPS_PUBLIC }}
-          RSA_KEY_E: ${{ vars.RSA_KEY_E }}
+          RSA_KEY_E: ${{ vars.RSA_KEY_E }} # AQAB
           AES_GCM_K: ${{ secrets.AES_GCM_K }}
           AIRTABLE_BASE: ${{ secrets.AIRTABLE_BASE }}
           AIRTABLE_TABLE: ${{ secrets.AIRTABLE_TABLE }}

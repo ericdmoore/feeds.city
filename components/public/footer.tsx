@@ -262,7 +262,13 @@ export function Footer(props: RecursivePartial<FooterProps>) {
 				</div>
 
 				<div class="flex flex-row mt-8 items-center justify-center space-x-6">
-					{dallasSkyline()}
+					{/* {dallasSkyline()} */}
+					<img
+						width="640"
+						height="100"
+						src='/dallas/skyline.svg'
+						alt='Dallas Skyline'
+					/>
 				</div>
 
 				{/* Badge */}

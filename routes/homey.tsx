@@ -1,18 +1,25 @@
-import type { Handlers } from "$fresh/server.ts";
-import Counter from "../islands/Counter.tsx";
+import type { Handlers, PageProps, RouteConfig } from "$fresh/server.ts";
 
 import { TopHatBlack } from "../components/TopHat.tsx";
-import AppShell from "../components/AppShell.tsx";
+import AppShell from "$components/AppShell.tsx";
 
 // Evnatually this is a public marketing page
 
+// export const config: RouteConfig = {
+// 	routeOverride: "/feeds*"
+// };
+
 export default function Home() {
 	return (
-		<AppShell>
+		<AppShell 
+			menu={{activeSection: "Home"}}
+			profile={{name: "Eric Moore", avatarURL:''}}>
 			<TopHatBlack
 				title="Federa"
 				description="Descrbes federa"
-				icon={[{ href: "/feedCityRingDropsLogo.svg", type: "image/svg+xml" }]}
+				icon={[{ 
+					href: "/feedCityRingDropsLogo.svg", type: "image/svg+xml" 
+				}]}
 			>
 				<meta name="og:title" content="Federa" />
 			</TopHatBlack>
@@ -47,6 +54,20 @@ export default function Home() {
 	);
 }
 
+
+export const handler: Handlers = {
+	GET: async (req, ctx) => {
+
+		const u = new URL(req.url)
+		console.log('url: ',u)
+		const rendered = await ctx.render({ activeMenu: 'Home'});
+
+		return new Response(rendered.body, {
+			status: 200,
+			statusText: "OK",
+		});
+	}
+}
 // redirect to login if not logged in
 // list of feeds
 // add feed

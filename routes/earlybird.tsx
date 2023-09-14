@@ -13,7 +13,7 @@ export default function () {
 				nav={{
 					_: {
 						"Sign In": { text: "Login", href: "/login" },
-						"Sign Up": { text: "Logout", href: "/register" },
+						"Sign Up": { text: "Logout", href: "/user/register" },
 					},
 				}}
 			/>
