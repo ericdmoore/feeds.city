@@ -72,7 +72,7 @@ const ecdsaPrivKey = await crypto.subtle.importKey(
 }).catch((er)=>{
 	
 	console.error(er)
-	
+
 	const priv: JsonWebKey = {
 		kty: "EC",
 		crv: "P-384",
@@ -90,7 +90,7 @@ const ecdsaPrivKey = await crypto.subtle.importKey(
 	)
 })
 .finally(()=>{
-	console.log("ecdsaPrivKey imported")
+	console.log("ecdsaPrivKey import attempt ended")
 })
 
 const jwkEcdsaPub = {

@@ -14,12 +14,13 @@ export default function Home() {
 			profile={{name: "Eric Moore", avatarURL:''}}>
 
 			<TopHatBlack
-				title="Federa"
-				description="Descrbes federa"
-				icon={[{ href: "/feedCityRingDropsLogo.svg", type: "image/svg+xml" }]}
-			>
-				<meta name="og:title" content="Federa" />
-			</TopHatBlack>
+				title="feeds.city"
+				description="feeds.city"
+				icon={[
+					{type: "image/svg+xml", href: "/feedCityRingDropsLogo.svg"},
+					{type:'image/png', href:'/feedcitylogo@1x.png'},
+				]}
+			/>
 			<div class="py-4 px-10 mx-auto max-w-screen-l">
 				<ul>
 					<li>

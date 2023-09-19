@@ -25,14 +25,14 @@ export function TopHatBlack(
 ) {
 	return (
 		<Head>
-			<title>{props.title}</title>
+			<title>{props.title ?? 'feeds.city'}</title>
 			{props.meta && props.meta.map((m) => <meta {...m} />)}
 			{props.description && <meta name="description" content={props.description} />}
 			{props.keywords && <meta name="keywords" content={props.keywords} />}
 			{props.canonical && <meta name="canonical" content={props.canonical} />}
 			{props.icon && typeof props.icon === "string" && <link rel="icon" href={props.icon} />}
 			{props.icon && typeof props.icon !== "string" &&
-				props.icon.map((i) => <link {...i} />)}
+				props.icon.map((i) => <link rel="icon" {...i} />)}
 			{props.og &&
 				Object.entries(props.og).map(([key, val]) => toMetaTag(key, val, "og:"))}
 			{props.children}

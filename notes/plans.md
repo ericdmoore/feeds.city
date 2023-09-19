@@ -1,3 +1,28 @@
+Open vs Premium Feeds
+- Most Basic
+    - Free 
+    - Ad Supported
+    - Ads not removable
+    - Composition is Always Exapnded
+
+
+- Most Premium
+    - Is a Saleable Feed
+    - User can swap ads ?? 
+    - BYOA / Ad Rev Share / 
+    - Composition is Always Exapnded
+    -
+
+
+
+
+- AnonToken
+    - Only Most Basic
+
+- UserToken
+    - 
+
+
 Easy Composition Systems:
 
 - alias and variable expansion

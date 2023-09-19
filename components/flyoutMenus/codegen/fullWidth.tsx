@@ -1,51 +1,47 @@
 import { Fragment } from "preact";
 import { Popover, Transition } from "npm:@headlessui/react";
-import { ChevronDownIcon } from "npm:@heroicons/react/20/solid";
+import { Chevron_down } from "$components/heroicons/solid.tsx";
 import {
-	ChartBarIcon,
-	CheckCircleIcon,
-	CursorArrowRaysIcon,
-	PhoneIcon,
-	PlayIcon,
-	ShieldCheckIcon,
-	Squares2X2Icon,
-} from "npm:@heroicons/react/24/outline";
-
-function classNames(...classes: string[]) {
-	return classes.filter(Boolean).join(" ");
-}
+	Chart_bar,
+	Check_circle,
+	Cursor_arrow_rays,
+	Phone,
+	Play,
+	Shield_check,
+	Squares_2x2,
+} from "$components/heroicons/outline.tsx";
 
 const solutions = [
 	{
 		name: "Analytics",
 		description: "Get a better understanding of where your traffic is coming from.",
 		href: "#",
-		icon: ChartBarIcon,
+		icon: Chart_bar,
 	},
 	{
 		name: "Engagement",
 		description: "Speak directly to your customers in a more meaningful way.",
 		href: "#",
-		icon: CursorArrowRaysIcon,
+		icon: Cursor_arrow_rays,
 	},
 	{
 		name: "Security",
 		description: "Your customers' data will be safe and secure.",
 		href: "#",
-		icon: ShieldCheckIcon,
+		icon: Shield_check,
 	},
 	{
 		name: "Integrations",
 		description: "Connect with third-party tools that you're already using.",
 		href: "#",
-		icon: Squares2X2Icon,
+		icon: Squares_2x2,
 	},
 ];
 
 const callsToAction = [
-	{ name: "Watch Demo", href: "#", icon: PlayIcon },
-	{ name: "View All Products", href: "#", icon: CheckCircleIcon },
-	{ name: "Contact Sales", href: "#", icon: PhoneIcon },
+	{ name: "Watch Demo", href: "#", icon: Play },
+	{ name: "View All Products", href: "#", icon: Check_circle },
+	{ name: "Contact Sales", href: "#", icon: Phone },
 ];
 
 export function FullWidth() {
@@ -56,17 +52,14 @@ export function FullWidth() {
 					<div class="relative z-10 bg-white shadow">
 						<div class="mx-auto flex max-w-7xl p-6 lg:px-8">
 							<Popover.Button
-								class={classNames(
-									open ? "text-gray-900" : "text-gray-500",
-									"group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2",
-								)}
+								class={`
+									${open ? "text-gray-900" : "text-gray-500"}
+									group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`
+								}
 							>
 								<span>Solutions</span>
-								<ChevronDownIcon
-									class={classNames(
-										open ? "text-gray-600" : "text-gray-400",
-										"ml-2 h-5 w-5 group-hover:text-gray-500",
-									)}
+								<Chevron_down
+									class={`${open ? "text-gray-600" : "text-gray-400"} ml-2 h-5 w-5 group-hover:text-gray-500`}
 									aria-hidden="true"
 								/>
 							</Popover.Button>

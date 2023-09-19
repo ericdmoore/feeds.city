@@ -1,6 +1,7 @@
 import type { Options } from "$fresh/plugins/twind.ts";
 import { forms } from "@twind/forms";
-// import { aspectRatio } from "@twind/aspect-ratio";
+import HeadlessUI from 'npm:@headlessui/tailwindcss'
+import aspectRatio from "npm:@twind/aspect-ratio";
 // import {lineClamp} from "@twind/line-clamp@0.1.1"
 
 export default {
@@ -8,6 +9,7 @@ export default {
 	plugins: {
 		// lineClamp
 		forms,
-		// aspectRatio,
+		HeadlessUI,
+		aspectRatio,
 	},
 } as Options;

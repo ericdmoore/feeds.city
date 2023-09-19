@@ -1,5 +1,6 @@
 import { useState } from "preact/hooks";
 import {Bell, Bars_3, X_mark} from '$components/heroicons/outline.tsx'
+import TopHat from '$components/TopHat.tsx'
 
 
 const defaultMenuList = {
@@ -13,7 +14,7 @@ export type MenuItemName = string
 export type MenuItemHref = string
 export type MenuListURLMapping = Record<MenuItemName, MenuItemHref>
 
-export type DefaultMenuOptions = keyof typeof defaultMenuList;
+export type DefaultMenuOptions = keyof typeof defaultMenuList
 
 export interface Profile{
 	name: string
@@ -21,7 +22,8 @@ export interface Profile{
 }
 export interface AppShellMenuBarProps {
 	menu:{
-		activeSection: MenuItemName | DefaultMenuOptions;
+		// deno-lint-ignore ban-types
+		activeSection: DefaultMenuOptions | (string & {})
 		options?: MenuListURLMapping
 	}
 	profile: Profile
@@ -129,7 +131,10 @@ export function AppShellMenuBar(props: AppShellMenuBarProps) {
             --> */
 							}
 							<div
-								class={`${isProfileOpen ? "" : "hidden"} absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
+								class={`${isProfileOpen ? "" : "hidden"} 
+									absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 
+									shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none
+									`}
 								role="menu"
 								aria-orientation="vertical"
 								aria-labelledby="user-menu-button"
