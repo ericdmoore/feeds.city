@@ -1,15 +1,15 @@
-import { ChevronDownIcon } from "npm:@heroicons/react/20/solid";
+import { Chevron_down } from "$components/heroicons/solid.tsx";
 import {
-	BookmarkSquareIcon,
-	BreifcaseIcon,
-	BuildingOfficeIcon,
-	ComputerDesktopIcon,
-	GlobeAltIcon,
-	InformationCircleIcon,
-	NewspaperIcon,
-	SheildCheckIcon,
-	UserGroupIcon,
-} from "npm:@heroicons/react/20/outline";
+	Bookmark_square,
+	Briefcase,
+	Building_office,
+	Computer_desktop,
+	Globe_alt,
+	Information_circle,
+	Newspaper,
+	Shield_check,
+	User_group,
+} from "$components/heroicons/outline.tsx";
 
 interface MenuInterface {
 	open: boolean;
@@ -31,7 +31,7 @@ export function TwoColumn(props: MenuInterface & TwoColumn) {
 						aria-expanded="false"
 					>
 						<span>Solutions</span>
-						<ChevronDownIcon />
+						<Chevron_down />
 					</button>
 				</div>
 			</div>
@@ -66,7 +66,7 @@ export function TwoColumn(props: MenuInterface & TwoColumn) {
 										href="#"
 										class="-m-3 flex items-center rounded-md p-3 text-base font-medium text-gray-900 transition duration-150 ease-in-out hover:bg-gray-50"
 									>
-										<InformationCircleIcon />
+										<Information_circle />
 										<span class="ml-4">About</span>
 									</a>
 								</li>
@@ -76,7 +76,7 @@ export function TwoColumn(props: MenuInterface & TwoColumn) {
 										href="#"
 										class="-m-3 flex items-center rounded-md p-3 text-base font-medium text-gray-900 transition duration-150 ease-in-out hover:bg-gray-50"
 									>
-										<BuildingOfficeIcon />
+										<Building_office />
 										<span class="ml-4">Customers</span>
 									</a>
 								</li>
@@ -86,7 +86,7 @@ export function TwoColumn(props: MenuInterface & TwoColumn) {
 										href="#"
 										class="-m-3 flex items-center rounded-md p-3 text-base font-medium text-gray-900 transition duration-150 ease-in-out hover:bg-gray-50"
 									>
-										<NewspaperIcon />
+										<Newspaper />
 										<span class="ml-4">Press</span>
 									</a>
 								</li>
@@ -96,7 +96,7 @@ export function TwoColumn(props: MenuInterface & TwoColumn) {
 										href="#"
 										class="-m-3 flex items-center rounded-md p-3 text-base font-medium text-gray-900 transition duration-150 ease-in-out hover:bg-gray-50"
 									>
-										<BreifcaseIcon />
+										<Briefcase />
 										<span class="ml-4">Careers</span>
 									</a>
 								</li>
@@ -106,7 +106,7 @@ export function TwoColumn(props: MenuInterface & TwoColumn) {
 										href="#"
 										class="-m-3 flex items-center rounded-md p-3 text-base font-medium text-gray-900 transition duration-150 ease-in-out hover:bg-gray-50"
 									>
-										<SheildCheckIcon />
+										<Shield_check />
 										<span class="ml-4">Privacy</span>
 									</a>
 								</li>
@@ -120,7 +120,7 @@ export function TwoColumn(props: MenuInterface & TwoColumn) {
 										href="#"
 										class="-m-3 flex items-center rounded-md p-3 text-base font-medium text-gray-900 transition duration-150 ease-in-out hover:bg-gray-50"
 									>
-										<UserGroupIcon />
+										<User_group />
 										<span class="ml-4">Community</span>
 									</a>
 								</li>
@@ -130,7 +130,7 @@ export function TwoColumn(props: MenuInterface & TwoColumn) {
 										href="#"
 										class="-m-3 flex items-center rounded-md p-3 text-base font-medium text-gray-900 transition duration-150 ease-in-out hover:bg-gray-50"
 									>
-										<GlobeAltIcon />
+										<Globe_alt />
 
 										<span class="ml-4">Partners</span>
 									</a>
@@ -141,7 +141,7 @@ export function TwoColumn(props: MenuInterface & TwoColumn) {
 										href="#"
 										class="-m-3 flex items-center rounded-md p-3 text-base font-medium text-gray-900 transition duration-150 ease-in-out hover:bg-gray-50"
 									>
-										<BookmarkSquareIcon />
+										<Bookmark_square />
 										<span class="ml-4">Guides</span>
 									</a>
 								</li>
@@ -151,7 +151,7 @@ export function TwoColumn(props: MenuInterface & TwoColumn) {
 										href="#"
 										class="-m-3 flex items-center rounded-md p-3 text-base font-medium text-gray-900 transition duration-150 ease-in-out hover:bg-gray-50"
 									>
-										<ComputerDesktopIcon />
+										<Computer_desktop />
 										<span class="ml-4">Webinars</span>
 									</a>
 								</li>

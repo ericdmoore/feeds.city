@@ -1,6 +1,8 @@
-export interface heroProps {
-	class?: string;
+export interface IHeroProps {
+	class: string;
 }
+export type heroProps = Partial<IHeroProps>;
+
 export const Academic_cap = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"

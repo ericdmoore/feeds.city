@@ -27,6 +27,7 @@
 		"$routes/": "./routes/",
 		"$components/": "./components/",
 		"$islands/": "./islands/",
+		"$utils/": "./utils/",
 
 		"$std/": "https://deno.land/std@0.181.0/",
 		"$fresh/": "https://deno.land/x/fresh@1.4.2/",
@@ -80,7 +81,7 @@
 		"multiformats": "https://esm.sh/multiformats@9.6.4?deno-std=0.181.0&dts",
 		"mustache": "https://deno.land/x/mustache@v0.3.0/mod.ts",
 		"superstruct": "https://deno.land/x/deno_superstruct@0.0.0/mod.ts",
-		"stripe":"https://esm.sh/stripe@13.5.0?deno-std=0.181.0&dts",
+		"stripe": "https://esm.sh/stripe@13.5.0?deno-std=0.181.0&dts",
 		"toXml": "https://deno.land/x/js2xml@1.0.2/mod.ts",
 		"twind": "https://esm.sh/twind@0.16.19",
 		"twind/": "https://esm.sh/twind@0.16.19/",

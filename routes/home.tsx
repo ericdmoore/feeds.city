@@ -9,16 +9,16 @@ import AppShell from "$components/AppShell.tsx";
 export default function Home() {
 	const profile = { name: "Eric Moore", avatarURL: "" };
 	return (
-		<AppShell 
-			menu={{activeSection: "Home"}}
-			profile={{name: "Eric Moore", avatarURL:''}}>
-
+		<AppShell
+			menu={{ activeSection: "Home" }}
+			profile={{ name: "Eric Moore", avatarURL: "" }}
+		>
 			<TopHatBlack
 				title="feeds.city"
 				description="feeds.city"
 				icon={[
-					{type: "image/svg+xml", href: "/feedCityRingDropsLogo.svg"},
-					{type:'image/png', href:'/feedcitylogo@1x.png'},
+					{ type: "image/svg+xml", href: "/feedCityRingDropsLogo.svg" },
+					{ type: "image/png", href: "/feedcitylogo@1x.png" },
 				]}
 			/>
 			<div class="py-4 px-10 mx-auto max-w-screen-l">

@@ -1,5 +1,4 @@
 import { Fragment } from "preact";
-import { Popover, Transition } from "npm:@headlessui/react";
 import { Chevron_down } from "$components/heroicons/solid.tsx";
 import {
 	Bookmark_square,
@@ -45,27 +44,24 @@ const blogPosts = [
 	},
 ];
 
-
-
 export function TwoColumns() {
 	return (
-		<Popover class="relative z-0">
+		<div class="relative z-0">
 			<>
 				<div class="relative z-10 bg-white shadow">
 					<div class="mx-auto flex max-w-7xl p-6 lg:px-8">
-						<Popover.Button
-							class="ui-open:text-gray-900 ui-not-open:text-gray-500 group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"								
-						>
+						<button class="ui-open:text-gray-900 ui-not-open:text-gray-500 group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
 							<span>Solutions</span>
 							<Chevron_down
 								class="ui-open:text-gray-600 ui-not-open:text-gray-400 ml-2 h-5 w-5 group-hover:text-gray-500"
 								aria-hidden="true"
 							/>
-						</Popover.Button>
+						</button>
 					</div>
 				</div>
 
-				<Transition
+				{
+					/* <Transition
 					as={Fragment}
 					enter="transition ease-out duration-200"
 					enterFrom="opacity-0 -translate-y-1"
@@ -73,108 +69,109 @@ export function TwoColumns() {
 					leave="transition ease-in duration-150"
 					leaveFrom="opacity-100 translate-y-0"
 					leaveTo="opacity-0 -translate-y-1"
-				>
-					<Popover.Panel class="absolute inset-x-0 z-10 transform shadow-lg">
-						<div class="absolute inset-0 flex" aria-hidden="true">
-							<div class="w-1/2 bg-white" />
-							<div class="w-1/2 bg-gray-50" />
-						</div>
-						<div class="relative mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2">
-							<nav
-								class="grid gap-y-10 bg-white py-8 px-6 sm:grid-cols-2 sm:gap-x-8 sm:py-12 lg:px-8 xl:pr-12"
-								aria-labelledby="solutions-heading"
-							>
-								<h2 id="solutions-heading" class="sr-only">
-									Solutions menu
-								</h2>
-								<div>
-									<h3 class="text-base font-medium text-gray-500">Company</h3>
-									<ul role="list" class="mt-5 space-y-6">
-										{company.map((item) => (
-											<li key={item.name} class="flow-root">
-												<a
-													href={item.href}
-													class="-m-3 flex items-center rounded-md p-3 text-base font-medium text-gray-900 transition duration-150 ease-in-out hover:bg-gray-50"
-												>
-													<item.icon
-														class="h-6 w-6 flex-shrink-0 text-gray-400"
-														aria-hidden="true"
+				> */
+				}
+				<div class="absolute inset-x-0 z-10 transform shadow-lg">
+					<div class="absolute inset-0 flex" aria-hidden="true">
+						<div class="w-1/2 bg-white" />
+						<div class="w-1/2 bg-gray-50" />
+					</div>
+					<div class="relative mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2">
+						<nav
+							class="grid gap-y-10 bg-white py-8 px-6 sm:grid-cols-2 sm:gap-x-8 sm:py-12 lg:px-8 xl:pr-12"
+							aria-labelledby="solutions-heading"
+						>
+							<h2 id="solutions-heading" class="sr-only">
+								Solutions menu
+							</h2>
+							<div>
+								<h3 class="text-base font-medium text-gray-500">Company</h3>
+								<ul role="list" class="mt-5 space-y-6">
+									{company.map((item) => (
+										<li key={item.name} class="flow-root">
+											<a
+												href={item.href}
+												class="-m-3 flex items-center rounded-md p-3 text-base font-medium text-gray-900 transition duration-150 ease-in-out hover:bg-gray-50"
+											>
+												<item.icon
+													class="h-6 w-6 flex-shrink-0 text-gray-400"
+													aria-hidden="true"
+												/>
+												<span class="ml-4">{item.name}</span>
+											</a>
+										</li>
+									))}
+								</ul>
+							</div>
+							<div>
+								<h3 class="text-base font-medium text-gray-500">
+									Resources
+								</h3>
+								<ul role="list" class="mt-5 space-y-6">
+									{resources.map((item) => (
+										<li key={item.name} class="flow-root">
+											<a
+												href={item.href}
+												class="-m-3 flex items-center rounded-md p-3 text-base font-medium text-gray-900 transition duration-150 ease-in-out hover:bg-gray-50"
+											>
+												<item.icon
+													class="h-6 w-6 flex-shrink-0 text-gray-400"
+													aria-hidden="true"
+												/>
+												<span class="ml-4">{item.name}</span>
+											</a>
+										</li>
+									))}
+								</ul>
+							</div>
+						</nav>
+						<div class="bg-gray-50 py-8 px-6 sm:py-12 lg:px-8 xl:pl-12">
+							<div>
+								<h3 class="text-base font-medium text-gray-500">
+									From the blog
+								</h3>
+								<ul role="list" class="mt-6 space-y-6">
+									{blogPosts.map((post) => (
+										<li key={post.id} class="flow-root">
+											<a
+												href={post.href}
+												class="-m-3 flex rounded-lg p-3 transition duration-150 ease-in-out hover:bg-gray-100"
+											>
+												<div class="hidden flex-shrink-0 sm:block">
+													<img
+														class="h-20 w-32 rounded-md object-cover"
+														src={post.imageUrl}
+														alt=""
 													/>
-													<span class="ml-4">{item.name}</span>
-												</a>
-											</li>
-										))}
-									</ul>
-								</div>
-								<div>
-									<h3 class="text-base font-medium text-gray-500">
-										Resources
-									</h3>
-									<ul role="list" class="mt-5 space-y-6">
-										{resources.map((item) => (
-											<li key={item.name} class="flow-root">
-												<a
-													href={item.href}
-													class="-m-3 flex items-center rounded-md p-3 text-base font-medium text-gray-900 transition duration-150 ease-in-out hover:bg-gray-50"
-												>
-													<item.icon
-														class="h-6 w-6 flex-shrink-0 text-gray-400"
-														aria-hidden="true"
-													/>
-													<span class="ml-4">{item.name}</span>
-												</a>
-											</li>
-										))}
-									</ul>
-								</div>
-							</nav>
-							<div class="bg-gray-50 py-8 px-6 sm:py-12 lg:px-8 xl:pl-12">
-								<div>
-									<h3 class="text-base font-medium text-gray-500">
-										From the blog
-									</h3>
-									<ul role="list" class="mt-6 space-y-6">
-										{blogPosts.map((post) => (
-											<li key={post.id} class="flow-root">
-												<a
-													href={post.href}
-													class="-m-3 flex rounded-lg p-3 transition duration-150 ease-in-out hover:bg-gray-100"
-												>
-													<div class="hidden flex-shrink-0 sm:block">
-														<img
-															class="h-20 w-32 rounded-md object-cover"
-															src={post.imageUrl}
-															alt=""
-														/>
-													</div>
-													<div class="min-w-0 flex-1 sm:ml-8">
-														<h4 class="truncate text-base font-medium text-gray-900">
-															{post.name}
-														</h4>
-														<p class="mt-1 text-sm text-gray-500">
-															{post.preview}
-														</p>
-													</div>
-												</a>
-											</li>
-										))}
-									</ul>
-								</div>
-								<div class="mt-6 text-sm font-medium">
-									<a
-										href="#"
-										class="text-indigo-600 transition duration-150 ease-in-out hover:text-indigo-500"
-									>
-										View all posts
-										<span aria-hidden="true">&rarr;</span>
-									</a>
-								</div>
+												</div>
+												<div class="min-w-0 flex-1 sm:ml-8">
+													<h4 class="truncate text-base font-medium text-gray-900">
+														{post.name}
+													</h4>
+													<p class="mt-1 text-sm text-gray-500">
+														{post.preview}
+													</p>
+												</div>
+											</a>
+										</li>
+									))}
+								</ul>
+							</div>
+							<div class="mt-6 text-sm font-medium">
+								<a
+									href="#"
+									class="text-indigo-600 transition duration-150 ease-in-out hover:text-indigo-500"
+								>
+									View all posts
+									<span aria-hidden="true">&rarr;</span>
+								</a>
 							</div>
 						</div>
-					</Popover.Panel>
-				</Transition>
+					</div>
+				</div>
+				{/* </Transition> */}
 			</>
-		</Popover>
+		</div>
 	);
 }
 export default TwoColumns;

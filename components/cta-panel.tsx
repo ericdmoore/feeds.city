@@ -1,10 +1,16 @@
-import { JSX } from "preact";
-interface CTAPanel {
+import type { JSX } from "preact";
+
+export interface CTAPanel {
 	h1: string | JSX.Element;
 	p: string | JSX.Element;
-	ctaLink: {
+	ctaLinkLeft: {
 		href: string;
 		text: string;
+	};
+	ctaLinkRight?: {
+		href: string;
+		text: string;
+		class?: string;
 	};
 }
 
@@ -19,13 +25,21 @@ export default function (props: Partial<CTAPanel>) {
 			</>
 		),
 		p: "Ac euismod vel sit maecenas id pellentesque eu sed consectetur. Malesuada adipiscing sagittis vel nulla nec.",
-		ctaLink: {
+		ctaLinkLeft: {
 			href: "/earlybird",
 			text: "See the Earlybird Offer",
-			...props.ctaLink,
+			...props.ctaLinkLeft,
 		},
+		// ctaLinkRight: {
+		// 	href: "/earlybird",
+		// 	text: "See the Earlybird Offer",
+		// 	...props.ctaLinkRight,
+		// },
 		...props,
 	};
+
+	// console.log({p})
+
 	return (
 		<section class="bg-white">
 			<div class="mx-auto max-w-7xl py-16 px-4 sm:px-6 lg:px-8">
@@ -37,11 +51,25 @@ export default function (props: Partial<CTAPanel>) {
 							</h2>
 							<p class="mt-4 text-lg leading-6 text-indigo-200">{p.p}</p>
 							<a
-								href={p.ctaLink.href}
+								href={p.ctaLinkLeft.href}
 								class="mt-8 inline-flex items-center rounded-md border border-transparent bg-white px-5 py-3 text-base font-medium text-indigo-600 shadow hover:bg-indigo-50"
 							>
-								{p.ctaLink.text}
+								{p.ctaLinkLeft.text}
 							</a>
+
+							{p?.ctaLinkRight?.text
+								? (
+									<a
+										href={p.ctaLinkRight.href ?? "#"}
+										class={`${
+											p.ctaLinkRight.class ??
+												`inline-flex items-center rounded-md border border-transparent bg-indigo-900 mt-8 ml-4 px-5 py-3 text-base font-medium shadow text-indigo-100 hover:bg-indigo-800`
+										}`}
+									>
+										{p.ctaLinkRight.text}
+									</a>
+								)
+								: <></>}
 						</div>
 					</div>
 					<div class={`${aspectCSss}`}>

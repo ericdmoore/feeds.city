@@ -11,14 +11,16 @@ import AppShell from "$components/AppShell.tsx";
 
 export default function Home() {
 	return (
-		<AppShell 
-			menu={{activeSection: "Home"}}
-			profile={{name: "Eric Moore", avatarURL:''}}>
+		<AppShell
+			menu={{ activeSection: "Home" }}
+			profile={{ name: "Eric Moore", avatarURL: "" }}
+		>
 			<TopHatBlack
 				title="Federa"
 				description="Descrbes federa"
-				icon={[{ 
-					href: "/feedCityRingDropsLogo.svg", type: "image/svg+xml" 
+				icon={[{
+					href: "/feedCityRingDropsLogo.svg",
+					type: "image/svg+xml",
 				}]}
 			>
 				<meta name="og:title" content="Federa" />
@@ -54,20 +56,18 @@ export default function Home() {
 	);
 }
 
-
 export const handler: Handlers = {
 	GET: async (req, ctx) => {
-
-		const u = new URL(req.url)
-		console.log('url: ',u)
-		const rendered = await ctx.render({ activeMenu: 'Home'});
+		const u = new URL(req.url);
+		console.log("url: ", u);
+		const rendered = await ctx.render({ activeMenu: "Home" });
 
 		return new Response(rendered.body, {
 			status: 200,
 			statusText: "OK",
 		});
-	}
-}
+	},
+};
 // redirect to login if not logged in
 // list of feeds
 // add feed

@@ -1,4 +1,4 @@
-// list of data elements 
+// list of data elements
 // that exist in the user's account
 
 // Home | Work | Current LOCATION

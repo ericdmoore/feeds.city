@@ -1,37 +1,36 @@
 import { useState } from "preact/hooks";
-import {Bell, Bars_3, X_mark} from '$components/heroicons/outline.tsx'
-import TopHat from '$components/TopHat.tsx'
-
+import { Bars_3, Bell, X_mark } from "$components/heroicons/outline.tsx";
+import TopHat from "$components/TopHat.tsx";
 
 const defaultMenuList = {
-	Home:"/home",
-	Following:"/following",
-	Feeds:"/feeds",
-	Functions:"/functions",
+	Home: "/home",
+	Following: "/following",
+	Feeds: "/feeds",
+	Functions: "/functions",
 };
 
-export type MenuItemName = string
-export type MenuItemHref = string
-export type MenuListURLMapping = Record<MenuItemName, MenuItemHref>
+export type MenuItemName = string;
+export type MenuItemHref = string;
+export type MenuListURLMapping = Record<MenuItemName, MenuItemHref>;
 
-export type DefaultMenuOptions = keyof typeof defaultMenuList
+export type DefaultMenuOptions = keyof typeof defaultMenuList;
 
-export interface Profile{
-	name: string
-	avatarURL: string
+export interface Profile {
+	name: string;
+	avatarURL: string;
 }
 export interface AppShellMenuBarProps {
-	menu:{
+	menu: {
 		// deno-lint-ignore ban-types
-		activeSection: DefaultMenuOptions | (string & {})
-		options?: MenuListURLMapping
-	}
-	profile: Profile
+		activeSection: DefaultMenuOptions | (string & {});
+		options?: MenuListURLMapping;
+	};
+	profile: Profile;
 }
 
 export function AppShellMenuBar(props: AppShellMenuBarProps) {
 	// setState based on Request?
-	const menuList = props.menu.options ?? defaultMenuList
+	const menuList = props.menu.options ?? defaultMenuList;
 	const [isProfileOpen, setProfileOpen] = useState(false);
 	// const [activeMenu, setActiveMenu] = useState('Home' as keyof typeof menuList | string);
 
@@ -70,21 +69,19 @@ export function AppShellMenuBar(props: AppShellMenuBarProps) {
 							</a>
 						</div>
 
-						<div id="amIDesktopMenu" class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8" >
+						<div id="amIDesktopMenu" class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
 							{/* Menu Bar Items */}
-							{ Object.entries(menuList).map(([iterMenuName, href]) => 
-										<a
-											{...{href}}
-											class={`${css.nonMobile.common} ${
-												iterMenuName === props.menu.activeSection 
-													? css.nonMobile.active 
-													: css.nonMobile.inactive
-											}`}
-											aria-current={iterMenuName === props.menu.activeSection  ? 'page' : undefined}
-											>
-											{iterMenuName}
-										</a>
-							)}
+							{Object.entries(menuList).map(([iterMenuName, href]) => (
+								<a
+									{...{ href }}
+									class={`${css.nonMobile.common} ${
+										iterMenuName === props.menu.activeSection ? css.nonMobile.active : css.nonMobile.inactive
+									}`}
+									aria-current={iterMenuName === props.menu.activeSection ? "page" : undefined}
+								>
+									{iterMenuName}
+								</a>
+							))}
 						</div>
 					</div>
 					<div class="hidden sm:ml-6 sm:flex sm:items-center">
@@ -93,7 +90,7 @@ export function AppShellMenuBar(props: AppShellMenuBarProps) {
 							class="rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 						>
 							<span class="sr-only">View notifications</span>
-							<Bell class="h-6 w-6" /> 
+							<Bell class="h-6 w-6" />
 						</button>
 
 						{/* <!-- Profile dropdown --> */}
@@ -102,8 +99,12 @@ export function AppShellMenuBar(props: AppShellMenuBarProps) {
 								<button
 									id="user-menu-button"
 									type="button"
-									onClick={() => {setProfileOpen(!isProfileOpen);}}
-									onBlur={() => {setProfileOpen(false);}}
+									onClick={() => {
+										setProfileOpen(!isProfileOpen);
+									}}
+									onBlur={() => {
+										setProfileOpen(false);
+									}}
 									// onFocus={() => {setProfileOpen(true);}}
 									aria-expanded={isProfileOpen}
 									aria-haspopup="true"
@@ -142,7 +143,9 @@ export function AppShellMenuBar(props: AppShellMenuBarProps) {
 							>
 								<a
 									href="/profile"
-									class={`block px-4 py-2 text-sm text-gray-700 ${props.menu.activeSection === "Profile" ? 'bg-gray-100' : ''}`}
+									class={`block px-4 py-2 text-sm text-gray-700 ${
+										props.menu.activeSection === "Profile" ? "bg-gray-100" : ""
+									}`}
 									role="menuitem"
 									tabIndex={-1}
 									id="user-menu-item-0"
@@ -151,7 +154,9 @@ export function AppShellMenuBar(props: AppShellMenuBarProps) {
 								</a>
 								<a
 									href="/settings"
-									class={`block px-4 py-2 text-sm text-gray-700 ${props.menu.activeSection === "Settings" ? 'bg-gray-100' : ''}`}
+									class={`block px-4 py-2 text-sm text-gray-700 ${
+										props.menu.activeSection === "Settings" ? "bg-gray-100" : ""
+									}`}
 									role="menuitem"
 									tabIndex={-1}
 									id="user-menu-item-1"
@@ -160,8 +165,10 @@ export function AppShellMenuBar(props: AppShellMenuBarProps) {
 								</a>
 								<a
 									href="/logout"
-									// not used since there is no logout UI - but a side-effect route 
-									class={`block px-4 py-2 text-sm text-gray-700 ${props.menu.activeSection === "Logout" ? 'bg-gray-100' : ''}`}
+									// not used since there is no logout UI - but a side-effect route
+									class={`block px-4 py-2 text-sm text-gray-700 ${
+										props.menu.activeSection === "Logout" ? "bg-gray-100" : ""
+									}`}
 									role="menuitem"
 									tabIndex={-1}
 									id="user-menu-item-2"
@@ -203,19 +210,17 @@ export function AppShellMenuBar(props: AppShellMenuBarProps) {
 
 			<div class={`${isProfileOpen ? "" : "hidden"} sm:hidden`} id="mobile-menu">
 				<div class="space-y-1 pt-2 pb-3">
-					{ Object.entries(menuList).map(([iterMenuName, href]) => 
+					{Object.entries(menuList).map(([iterMenuName, href]) => (
 						<a
-							{...{href}}
+							{...{ href }}
 							class={`${css.mobile.common} ${
-								iterMenuName === props.menu.activeSection 
-									? css.mobile.active 
-									: css.mobile.inactive
+								iterMenuName === props.menu.activeSection ? css.mobile.active : css.mobile.inactive
 							}`}
-							aria-current={iterMenuName === props.menu.activeSection  ? 'page' : undefined}
-							>
+							aria-current={iterMenuName === props.menu.activeSection ? "page" : undefined}
+						>
 							{iterMenuName}
-						</a>) 
-					}
+						</a>
+					))}
 				</div>
 				{/* Mobile Profile */}
 				<div class="border-t border-gray-200 pt-4 pb-3">
@@ -233,12 +238,12 @@ export function AppShellMenuBar(props: AppShellMenuBarProps) {
 								{props.profile.name}
 							</div>
 						</div>
-						<button type="button"
+						<button
+							type="button"
 							class="ml-auto flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 						>
 							<span class="sr-only">View notifications</span>
-							<Bell class="h-6 w-6" /> 
-
+							<Bell class="h-6 w-6" />
 						</button>
 					</div>
 					<div class="mt-3 space-y-1">

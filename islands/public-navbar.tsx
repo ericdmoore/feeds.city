@@ -1,7 +1,7 @@
 import type { Icon } from "../lib/types.ts";
 import type { JSX } from "preact";
 
-import { useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 
 import {
 	Arrow_path,
@@ -248,6 +248,35 @@ function BlogRollContainer(
 }
 
 function FlyOutMenu(props: FlyOutMenuProps) {
+	const menuBtnRef = useRef(null as HTMLButtonElement | null);
+
+	useEffect(() => {
+		// SAFARI STUPIDNESS
+		// BUTTONS dont focus
+		//
+		// setup
+		const buttons = document.querySelectorAll("button");
+		for (let i = 0; i <= buttons.length - 1; i++) {
+			((index) => {
+				const button = buttons[index];
+				button.addEventListener("click", function () {
+					button.focus();
+				});
+			})(i);
+		}
+		// cleanup fn
+		return () => {
+			for (let i = 0; i <= buttons.length - 1; i++) {
+				((index) => {
+					const button = buttons[index];
+					button.removeEventListener("click", function () {
+						button.focus();
+					});
+				})(i);
+			}
+		};
+	}, [props.activeMenuName]);
+
 	/* <!--
   'Solutions' flyout menu, show/hide based on flyout menu state.
 
@@ -260,18 +289,23 @@ function FlyOutMenu(props: FlyOutMenuProps) {
   --> */
 	return (
 		<div class="relative">
-			<button type="button"
-				onClick={() => {
-					props.activeMenuName === props.menuStateName 
-						? props.setMenuName(null)
-						: props.setMenuName(props.menuStateName);
-				}}
-				onFocus={() => {
+			<button
+				type="button"
+				ref={menuBtnRef}
+				// onClick={(e: MouseEvent) => {
+				// 	// e.target?
+				// 	props.activeMenuName === props.menuStateName
+				// 		? props.setMenuName(props.menuStateName)
+				// 		: props.setMenuName(null)
+				// }}
+				onfocusin={(e: FocusEvent) => {
 					props.setMenuName(props.menuStateName);
 				}}
-				onBlur={() => {
+				onfocusout={(e: FocusEvent) => {
 					props.setMenuName(null);
 				}}
+				onFocus={() => {}}
+				onBlur={() => {}}
 				class={`
       ${props.activeMenuName === props.menuStateName ? "text-gray-900" : "text-gray-500"}
       group 

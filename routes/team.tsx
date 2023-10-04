@@ -8,10 +8,10 @@ import AppShell from "$components/AppShell.tsx";
 
 export default function Home() {
 	return (
-		<AppShell 
-			menu={{activeSection: "Team"}}
-			profile={{name: "Eric Moore", avatarURL:''}}>
-				
+		<AppShell
+			menu={{ activeSection: "Team" }}
+			profile={{ name: "Eric Moore", avatarURL: "" }}
+		>
 			<TopHatBlack
 				title="Federa"
 				description="Descrbes federa"

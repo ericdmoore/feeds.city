@@ -19,14 +19,14 @@ export default function () {
 			/>
 			<SimplePricing
 				title={{
-					h2: ()=> "Get Access To The Earlybird Offer",
-					p: ()=> "Only Available During Beta Development",
+					h2: () => "Get Access To The Earlybird Offer",
+					p: () => "Only Available During Beta Development",
 				}}
 				lBox={{
-					h3: ()=> "Lifetime Access",
-					p: ()=> "The Earlybird Beta Offer Grants Lifetime Access to Feeds.City",
-					dividerText: ()=> `What's Included`,
-					greenCheckText: ()=> [
+					h3: () => "Lifetime Access",
+					p: () => "The Earlybird Beta Offer Grants Lifetime Access to Feeds.City",
+					dividerText: () => `What's Included`,
+					greenCheckText: () => [
 						"Beta Development Infleunce",
 						"Bonus Marketplace Tokens",
 						"Early Access To Beta Features",
@@ -35,7 +35,7 @@ export default function () {
 				}}
 				rBox={{
 					top: () => "Pay Once For Lifetime Access",
-					price: { amt: ()=> "$129", unit: ()=> "USD"  },
+					price: { amt: () => "$129", unit: () => "USD" },
 					ctaBtn: {
 						text: () => "Buy CHARTER MEMEBR  Lifetime Access",
 						href: "#",

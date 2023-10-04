@@ -27,17 +27,17 @@ import CtaPanel from "$components/cta-panel.tsx";
 // import { Color } from "../types.ts";
 import v1token, { validatiorsAvailable as availVals } from "../utils/tokens/v1.ts";
 
-import { Light_bulb, Bookmark } from "../components/heroicons/outline.tsx";
+import { Bookmark, Light_bulb } from "../components/heroicons/outline.tsx";
 
-import { 
+import {
 	Building_storefront,
-	Cursor_arrow_ripple, 
-	Magnifying_glass, 
-	Play_pause, 
-	User_group,
-	Rectangle_group,
+	Cursor_arrow_ripple,
+	Magnifying_glass,
+	Play_pause,
 	Question_mark_circle,
-	Sparkles
+	Rectangle_group,
+	Sparkles,
+	User_group,
 } from "../components/heroicons/solid.tsx";
 
 // import { DynamoDBClient, PutItemCommand , type AttributeValue} from "@aws-sdk/client-dynamodb";
@@ -90,8 +90,6 @@ const sendToAirtable = async (
 	return returnVal;
 };
 
-
-
 export default function Home(props: PageProps<Partial<HomeProps>>) {
 	return (
 		<>
@@ -119,8 +117,8 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
 				h1span=" with feeds.city "
 				p={() => (
 					<>
-						<span class="text-indigo-600">feeds.city </span>
-						is the world's 1<sup>st</sup>{"  "}<a class="font-bold" href="#">subscription manager </a>
+						<span class="text-indigo-600">feeds.city</span>
+						is the world's 1<sup>st</sup>{"  "}<a class="font-bold" href="#">subscription manager</a>
 						that transforms your content on the fly. Enabled by an open marketplace, backed by a collective of
 						developers, inspired by the quirky indie web.
 					</>
@@ -230,7 +228,7 @@ export default function Home(props: PageProps<Partial<HomeProps>>) {
 				}}
 			/>
 			{/* <Pricing /> */}
-			<CtaPanel />
+			<CtaPanel ctaLinkRight={{ text: "See Live Demo", href: "#" }} />
 			<Footer />
 		</>
 	);

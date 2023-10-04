@@ -8,22 +8,23 @@ interface SimplePricingProps {
 		p: () => string | JSX.Element;
 	};
 	lBox: {
-		h3: () => string | JSX.Element
-		p: () => string | JSX.Element
-		dividerText: () => string | JSX.Element
-		greenCheckText: () => (string | JSX.Element)[]
+		h3: () => string | JSX.Element;
+		p: () => string | JSX.Element;
+		dividerText: () => string | JSX.Element;
+		greenCheckText: () => (string | JSX.Element)[];
 	};
 	rBox: {
-		top: () => string | JSX.Element
-		price: { 
-			amt: () => string | JSX.Element; 
-			unit: () => string | JSX.Element 
+		top: () => string | JSX.Element;
+		price: {
+			amt: () => string | JSX.Element;
+			unit: () => string | JSX.Element;
 		};
 		clarification: {
-			href: string,
-			text: () => string | JSX.Element };
-		ctaBtn: { text: () => string | JSX.Element, href: string; };
-		teaser: { text: () => string | JSX.Element , href: string; };
+			href: string;
+			text: () => string | JSX.Element;
+		};
+		ctaBtn: { text: () => string | JSX.Element; href: string };
+		teaser: { text: () => string | JSX.Element; href: string };
 	};
 }
 
@@ -33,12 +34,13 @@ export default function SimplePricing(
 	const p = {
 		title: {
 			h2: () => "Simple no-tricks pricing",
-			p: ()=> `If you're not satisfied, contact us within the first 14 days and we'll send you a full refund.`,
+			p: () => `If you're not satisfied, contact us within the first 14 days and we'll send you a full refund.`,
 			...props.title,
 		},
 		lBox: {
 			h3: () => "Lifetime Membership",
-			p: () => "Lorem ipsum dolor sit amet consect etur adipisicing elit. Itaque amet indis perferendis blanditiis repellendus etur quidem assumenda.",
+			p: () =>
+				"Lorem ipsum dolor sit amet consect etur adipisicing elit. Itaque amet indis perferendis blanditiis repellendus etur quidem assumenda.",
 			dividerText: () => `What's included`,
 			greenCheckText: () => [
 				"Private forum access",
@@ -49,10 +51,10 @@ export default function SimplePricing(
 			...props.lBox,
 		},
 		rBox: {
-			top: ()=> "Pay once, own it forever",
-			price: { 
-				amt: ()=>"$349", 
-				unit: ()=>"USD" 
+			top: () => "Pay once, own it forever",
+			price: {
+				amt: () => "$349",
+				unit: () => "USD",
 			},
 			clarification: {
 				href: "#",
@@ -73,7 +75,7 @@ export default function SimplePricing(
 
 	// console.log({ p });
 
-	const GreenCheckText = (greenCheckText: string | JSX.Element, i:number, arr: (string | JSX.Element)[]) => (
+	const GreenCheckText = (greenCheckText: string | JSX.Element, i: number, arr: (string | JSX.Element)[]) => (
 		<li class="flex items-start lg:col-span-1">
 			<div class="flex-shrink-0">
 				<Check_circle class="h-5 w-5 text-green-400" />
@@ -81,7 +83,6 @@ export default function SimplePricing(
 			<p class="ml-3 text-sm text-gray-700">{greenCheckText}</p>
 		</li>
 	);
-
 
 	return (
 		<div class="bg-gray-100">
@@ -120,7 +121,7 @@ export default function SimplePricing(
 										role="list"
 										class="mt-8 space-y-5 lg:grid lg:grid-cols-2 lg:gap-x-8 lg:gap-y-5 lg:space-y-0"
 									>
-										{ p.lBox.greenCheckText().map(GreenCheckText) }
+										{p.lBox.greenCheckText().map(GreenCheckText)}
 									</ul>
 								</div>
 							</div>

@@ -15,11 +15,11 @@ import solidHeroIncons from "../components/heroicons/solid.tsx";
 export function Menu() {
 	const solidEntries = Object.entries(solidHeroIncons) as [
 		string,
-		(props: heroProps | undefined) => JSX.Element,
+		(props?: heroProps) => JSX.Element,
 	][];
 	const outlineEntries = Object.entries(outlineHeroIncons) as [
 		string,
-		(props: heroProps | undefined) => JSX.Element,
+		(props?: heroProps) => JSX.Element,
 	][];
 
 	// console.log(solidEntries)

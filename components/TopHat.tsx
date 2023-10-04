@@ -25,7 +25,7 @@ export function TopHatBlack(
 ) {
 	return (
 		<Head>
-			<title>{props.title ?? 'feeds.city'}</title>
+			<title>{props.title ?? "feeds.city"}</title>
 			{props.meta && props.meta.map((m) => <meta {...m} />)}
 			{props.description && <meta name="description" content={props.description} />}
 			{props.keywords && <meta name="keywords" content={props.keywords} />}

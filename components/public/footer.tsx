@@ -1,5 +1,5 @@
 import dallasSkyline from "./dallasSkyline.tsx";
-import {type RecursivePartial} from '$lib/types.ts'
+import { type RecursivePartial } from "$lib/types.ts";
 
 interface FooterProps {
 	nav: Record<string, string>;
@@ -186,15 +186,13 @@ const SocialSvgs = {
 
 export function Footer(props: RecursivePartial<FooterProps>) {
 	const defaultedProps = {
-		nav: props.nav 
-			? props.nav 
-			:{
-				About: "/about",
-				Blog: "/blog",
-				Jobs: "/jobs",
-				Press: "/press",
-				Market: "/market",
-			},
+		nav: props.nav ? props.nav : {
+			About: "/about",
+			Blog: "/blog",
+			Jobs: "/jobs",
+			Press: "/press",
+			Market: "/market",
+		},
 		social: props.social ? props.social : {
 			Twitter: { alias: "twitter", href: "https://twitter.com/feedsCity" },
 			Discord: { alias: "discord", href: "https://discord.com/feedsCity" },
@@ -202,8 +200,8 @@ export function Footer(props: RecursivePartial<FooterProps>) {
 			Twitch: { alias: "twitch", href: "https://twitch.com/feedsCity" },
 			Reddit: { alias: "reddit", href: "https://reddit.com/u/feedsCity" },
 			GitHub: { alias: "github", href: "https://github.com/feedsCity" },
-		}
-	} as FooterProps
+		},
+	} as FooterProps;
 
 	return (
 		<footer class="bg-white">
@@ -266,13 +264,13 @@ export function Footer(props: RecursivePartial<FooterProps>) {
 					<img
 						width="640"
 						height="100"
-						src='/dallas/skyline.svg'
-						alt='Dallas Skyline'
+						src="/dallas/skyline.svg"
+						alt="Dallas Skyline"
 					/>
 				</div>
 
 				{/* Badge */}
-			
+
 				<div class="flex flex-row mt-8 items-center justify-center space-x-6">
 					<a href="https://fresh.deno.dev">
 						<img
@@ -289,12 +287,9 @@ export function Footer(props: RecursivePartial<FooterProps>) {
 				<p class="text-center text-base text-gray-400">
 					&copy; 2023
 				</p>
-				
 			</div>
 		</footer>
 	);
 }
 
-
 export default Footer;
-
