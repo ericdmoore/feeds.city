@@ -1,5 +1,5 @@
 import { assertEquals } from "$std/testing/asserts.ts";
-import flipColor from "../../utils/colors/flipColorNumber.ts";
+import flipColor from "$lib/utils/colors/flipColorNumber.ts";
 
 Deno.test("flip 50", () => {
 	const pairs = [

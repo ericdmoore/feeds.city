@@ -8,7 +8,7 @@ export const envVar = async (path = "../../../.env") => {
 	const u = new URL(import.meta.url).pathname;
 	const p = resolve(u, path); // crazy `file:` prefix after import.meta.url
 
-	console.log(`>> using envFile: ${p}`);
+	// console.log(`>> using envFile: ${p}`);
 
 	const stat = await Deno.stat(p)
 		.then((s) => s, () => ({ isFile: false }))
