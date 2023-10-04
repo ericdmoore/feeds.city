@@ -39,9 +39,6 @@ import { JSONC } from "JSONC";
 // import changeEnc from "$lib/utils/enocdings.ts";
 import { encodingWith } from "./encoders/mod.ts";
 
-// import { promisify } from "node:util";
-// import { type IFS, Union } from "unionfs";
-
 export type NamedNumber = [string, number];
 export type FsCacheConfig = {
 	relativeDir: string;

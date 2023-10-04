@@ -31,7 +31,7 @@ jobs:
         # uses: denoland/setup-deno@9db7f66e8e16b5699a514448ce994936c63f0d54
         uses: denoland/setup-deno@v1
         with:
-          deno-version: "~1.36.0"
+          deno-version: "~1.37.0"
 
       # Uncomment this step to verify the use of 'deno fmt' on each commit.
       - name: Verify formatting
