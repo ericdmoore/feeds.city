@@ -253,6 +253,8 @@ function FlyOutMenu(props: FlyOutMenuProps) {
 	useEffect(() => {
 		// SAFARI STUPIDNESS
 		// BUTTONS dont focus
+		// https://itnext.io/fixing-focus-for-safari-b5916fef1064
+		// https://stackoverflow.com/questions/42758815/safari-focus-event-doesnt-work-on-button-element
 		//
 		// setup
 		const buttons = document.querySelectorAll("button");

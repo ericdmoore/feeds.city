@@ -1,5 +1,6 @@
-import { Chevron_down } from "../heroicons/solid.tsx";
-import { JSX } from "preact";
+import type { JSX } from "preact";
+import { Fragment } from "preact";
+
 import {
 	type FocusableMenu,
 	type SelfOpeningName,
@@ -8,6 +9,8 @@ import {
 	StringOrThunk,
 	truncate,
 } from "./menuTypes.tsx";
+
+import { Chevron_down } from "../heroicons/solid.tsx";
 
 const trunc100 = truncate(100);
 const PtagOrThunk = StringOrThunk("text-base font-medium text-gray-900");
@@ -25,29 +28,29 @@ export function SimpleMenu(props: SimpleMenuProps) {
 				{...onFocus}
 				{...onBlur}
 				class={`
-          ${open ? "text-gray-900" : "text-gray-500"}
-          text-gray-500 
-          group 
-          inline-flex 
-          items-center 
-          rounded-md bg-white 
-          text-base 
-          font-medium 
-          hover:text-gray-900 
-          focus:outline-none 
-          focus:ring-2 
-          focus:ring-indigo-500 
-          focus:ring-offset-2`}
-			>
-				<span>{props.name}</span>
-				<Chevron_down />
+					${open ? "text-gray-900" : "text-gray-500"}
+					text-gray-500 
+					group 
+					inline-flex 
+					items-center 
+					rounded-md bg-white 
+					text-base 
+					font-medium 
+					hover:text-gray-900 
+					focus:outline-none 
+					focus:ring-2 
+					focus:ring-indigo-500 
+					focus:ring-offset-2`}
+				>
+					<span>{props.name}</span> 
+					<Chevron_down />
 			</button>
 			<div
 				class={`${open ? "" : "hidden"} 
-        ${open ? "transition ease-out duration-200" : "transition ease-in duration-150"}
-    ${open ? "opacity-100 translate-y-0" : "opacity-0 translate-y-1"}
-    absolute left-1/2 z-10 mt-3 w-screen max-w-xs -translate-x-1/2 transform px-2 sm:px-0
-    `}
+        		${open ? "transition ease-out duration-200" : "transition ease-in duration-150"}
+				${open ? "opacity-100 translate-y-0" : "opacity-0 translate-y-1"}
+				absolute left-1/2 z-10 mt-3 w-screen max-w-xs -translate-x-1/2 transform px-2 sm:px-0
+				`}
 			>
 				<div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
 					<div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">

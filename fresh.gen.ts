@@ -47,11 +47,12 @@ import * as $$0 from "./islands/AppShellMenuBar.tsx";
 import * as $$1 from "./islands/Counter.tsx";
 import * as $$2 from "./islands/compositionForm.tsx";
 import * as $$3 from "./islands/heroicon-menu.tsx";
-import * as $$4 from "./islands/navbar.tsx";
-import * as $$5 from "./islands/public-about-hero.tsx";
-import * as $$6 from "./islands/public-navbar.tsx";
-import * as $$7 from "./islands/public-signup.tsx";
-import * as $$8 from "./islands/textArea-previewable.tsx";
+import * as $$4 from "./islands/hooks/useFocusedButtons.tsx";
+import * as $$5 from "./islands/navbar.tsx";
+import * as $$6 from "./islands/public-about-hero.tsx";
+import * as $$7 from "./islands/public-navbar.tsx";
+import * as $$8 from "./islands/public-signup.tsx";
+import * as $$9 from "./islands/textArea-previewable.tsx";
 
 const manifest = {
 	routes: {
@@ -102,11 +103,12 @@ const manifest = {
 		"./islands/Counter.tsx": $$1,
 		"./islands/compositionForm.tsx": $$2,
 		"./islands/heroicon-menu.tsx": $$3,
-		"./islands/navbar.tsx": $$4,
-		"./islands/public-about-hero.tsx": $$5,
-		"./islands/public-navbar.tsx": $$6,
-		"./islands/public-signup.tsx": $$7,
-		"./islands/textArea-previewable.tsx": $$8,
+		"./islands/hooks/useFocusedButtons.tsx": $$4,
+		"./islands/navbar.tsx": $$5,
+		"./islands/public-about-hero.tsx": $$6,
+		"./islands/public-navbar.tsx": $$7,
+		"./islands/public-signup.tsx": $$8,
+		"./islands/textArea-previewable.tsx": $$9,
 	},
 	baseUrl: import.meta.url,
 };

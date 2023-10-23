@@ -1,3 +1,4 @@
+import {JSX} from 'preact'
 export interface IHeroProps {
 	class: string;
 }
@@ -15,7 +16,9 @@ export const Academic_cap = (props: heroProps = { class: "" }) => (
 		<path d="M13.06 15.473a48.45 48.45 0 017.666-3.282c.134 1.414.22 2.843.255 4.285a.75.75 0 01-.46.71 47.878 47.878 0 00-8.105 4.342.75.75 0 01-.832 0 47.877 47.877 0 00-8.104-4.342.75.75 0 01-.461-.71c.035-1.442.121-2.87.255-4.286A48.4 48.4 0 016 13.18v1.27a1.5 1.5 0 00-.14 2.508c-.09.38-.222.753-.397 1.11.452.213.901.434 1.346.661a6.729 6.729 0 00.551-1.608 1.5 1.5 0 00.14-2.67v-.645a48.549 48.549 0 013.44 1.668 2.25 2.25 0 002.12 0z" />
 		<path d="M4.462 19.462c.42-.419.753-.89 1-1.394.453.213.902.434 1.347.661a6.743 6.743 0 01-1.286 1.794.75.75 0 11-1.06-1.06z" />
 	</svg>
-);
+) as JSX.Element;
+
+
 export const Adjustments_horizontal = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +29,9 @@ export const Adjustments_horizontal = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M18.75 12.75h1.5a.75.75 0 000-1.5h-1.5a.75.75 0 000 1.5zM12 6a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5A.75.75 0 0112 6zM12 18a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5A.75.75 0 0112 18zM3.75 6.75h1.5a.75.75 0 100-1.5h-1.5a.75.75 0 000 1.5zM5.25 18.75h-1.5a.75.75 0 010-1.5h1.5a.75.75 0 010 1.5zM3 12a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5A.75.75 0 013 12zM9 3.75a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5zM12.75 12a2.25 2.25 0 114.5 0 2.25 2.25 0 01-4.5 0zM9 15.75a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5z" />
 	</svg>
-);
+) as JSX.Element;
+
+
 export const Adjustments_vertical = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +42,9 @@ export const Adjustments_vertical = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M6 12a.75.75 0 01-.75-.75v-7.5a.75.75 0 111.5 0v7.5A.75.75 0 016 12zM18 12a.75.75 0 01-.75-.75v-7.5a.75.75 0 011.5 0v7.5A.75.75 0 0118 12zM6.75 20.25v-1.5a.75.75 0 00-1.5 0v1.5a.75.75 0 001.5 0zM18.75 18.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 011.5 0zM12.75 5.25v-1.5a.75.75 0 00-1.5 0v1.5a.75.75 0 001.5 0zM12 21a.75.75 0 01-.75-.75v-7.5a.75.75 0 011.5 0v7.5A.75.75 0 0112 21zM3.75 15a2.25 2.25 0 104.5 0 2.25 2.25 0 00-4.5 0zM12 11.25a2.25 2.25 0 110-4.5 2.25 2.25 0 010 4.5zM15.75 15a2.25 2.25 0 104.5 0 2.25 2.25 0 00-4.5 0z" />
 	</svg>
-);
+) as JSX.Element;
+
+
 export const Archive_box_arrow_down = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +60,8 @@ export const Archive_box_arrow_down = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Archive_box_x_mark = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +77,8 @@ export const Archive_box_x_mark = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Archive_box = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +94,8 @@ export const Archive_box = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_down_circle = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -100,7 +110,8 @@ export const Arrow_down_circle = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_down_left = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -115,7 +126,8 @@ export const Arrow_down_left = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_down_on_square_stack = (
 	props: heroProps = { class: "" },
 ) => (
@@ -133,7 +145,8 @@ export const Arrow_down_on_square_stack = (
 		/>
 		<path d="M7.151 21.75a2.999 2.999 0 002.599 1.5h7.5a3 3 0 003-3v-7.5c0-1.11-.603-2.08-1.5-2.599v7.099a4.5 4.5 0 01-4.5 4.5H7.151z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_down_on_square = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +157,8 @@ export const Arrow_down_on_square = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M12 1.5a.75.75 0 01.75.75V7.5h-1.5V2.25A.75.75 0 0112 1.5zM11.25 7.5v5.69l-1.72-1.72a.75.75 0 00-1.06 1.06l3 3a.75.75 0 001.06 0l3-3a.75.75 0 10-1.06-1.06l-1.72 1.72V7.5h3.75a3 3 0 013 3v9a3 3 0 01-3 3h-9a3 3 0 01-3-3v-9a3 3 0 013-3h3.75z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_down_right = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -159,7 +173,8 @@ export const Arrow_down_right = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_down_tray = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -174,7 +189,9 @@ export const Arrow_down_tray = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
+
 export const Arrow_down = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -189,7 +206,9 @@ export const Arrow_down = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
+
 export const Arrow_left_circle = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -204,7 +223,9 @@ export const Arrow_left_circle = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
+
 export const Arrow_left_on_rectangle = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -219,7 +240,9 @@ export const Arrow_left_on_rectangle = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
+
 export const Arrow_left = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -234,7 +257,8 @@ export const Arrow_left = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_long_down = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -249,7 +273,8 @@ export const Arrow_long_down = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_long_left = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -264,7 +289,8 @@ export const Arrow_long_left = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_long_right = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -279,7 +305,8 @@ export const Arrow_long_right = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_long_up = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -294,7 +321,8 @@ export const Arrow_long_up = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_path_rounded_square = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -309,7 +337,8 @@ export const Arrow_path_rounded_square = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_path = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -324,7 +353,8 @@ export const Arrow_path = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_right_circle = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -339,7 +369,8 @@ export const Arrow_right_circle = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_right_on_rectangle = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -354,7 +385,8 @@ export const Arrow_right_on_rectangle = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_right = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -369,7 +401,8 @@ export const Arrow_right = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_small_down = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -384,7 +417,8 @@ export const Arrow_small_down = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_small_left = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -399,7 +433,8 @@ export const Arrow_small_left = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_small_right = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -414,7 +449,8 @@ export const Arrow_small_right = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_small_up = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -429,7 +465,8 @@ export const Arrow_small_up = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_top_right_on_square = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -444,7 +481,8 @@ export const Arrow_top_right_on_square = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_trending_down = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -459,7 +497,8 @@ export const Arrow_trending_down = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_trending_up = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -474,7 +513,8 @@ export const Arrow_trending_up = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_up_circle = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -489,7 +529,8 @@ export const Arrow_up_circle = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_up_left = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -504,7 +545,8 @@ export const Arrow_up_left = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_up_on_square_stack = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -516,7 +558,8 @@ export const Arrow_up_on_square_stack = (props: heroProps = { class: "" }) => (
 		<path d="M9.97.97a.75.75 0 011.06 0l3 3a.75.75 0 01-1.06 1.06l-1.72-1.72v3.44h-1.5V3.31L8.03 5.03a.75.75 0 01-1.06-1.06l3-3zM9.75 6.75v6a.75.75 0 001.5 0v-6h3a3 3 0 013 3v7.5a3 3 0 01-3 3h-7.5a3 3 0 01-3-3v-7.5a3 3 0 013-3h3z" />
 		<path d="M7.151 21.75a2.999 2.999 0 002.599 1.5h7.5a3 3 0 003-3v-7.5c0-1.11-.603-2.08-1.5-2.599v7.099a4.5 4.5 0 01-4.5 4.5H7.151z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_up_on_square = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -527,7 +570,8 @@ export const Arrow_up_on_square = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M11.47 1.72a.75.75 0 011.06 0l3 3a.75.75 0 01-1.06 1.06l-1.72-1.72V7.5h-1.5V4.06L9.53 5.78a.75.75 0 01-1.06-1.06l3-3zM11.25 7.5V15a.75.75 0 001.5 0V7.5h3.75a3 3 0 013 3v9a3 3 0 01-3 3h-9a3 3 0 01-3-3v-9a3 3 0 013-3h3.75z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_up_right = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -542,7 +586,8 @@ export const Arrow_up_right = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_up_tray = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -557,7 +602,8 @@ export const Arrow_up_tray = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_up = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -572,7 +618,8 @@ export const Arrow_up = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_uturn_down = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -587,7 +634,8 @@ export const Arrow_uturn_down = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_uturn_left = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -602,7 +650,8 @@ export const Arrow_uturn_left = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_uturn_right = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -617,7 +666,8 @@ export const Arrow_uturn_right = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrow_uturn_up = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -632,7 +682,8 @@ export const Arrow_uturn_up = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrows_pointing_in = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -647,7 +698,8 @@ export const Arrows_pointing_in = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrows_pointing_out = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -662,7 +714,8 @@ export const Arrows_pointing_out = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrows_right_left = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -677,7 +730,8 @@ export const Arrows_right_left = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Arrows_up_down = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -692,7 +746,8 @@ export const Arrows_up_down = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const At_symbol = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -707,7 +762,8 @@ export const At_symbol = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Backspace = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -722,7 +778,8 @@ export const Backspace = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Backward = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -733,7 +790,8 @@ export const Backward = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M9.195 18.44c1.25.713 2.805-.19 2.805-1.629v-2.34l6.945 3.968c1.25.714 2.805-.188 2.805-1.628V8.688c0-1.44-1.555-2.342-2.805-1.628L12 11.03v-2.34c0-1.44-1.555-2.343-2.805-1.629l-7.108 4.062c-1.26.72-1.26 2.536 0 3.256l7.108 4.061z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Banknotes = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -750,7 +808,8 @@ export const Banknotes = (props: heroProps = { class: "" }) => (
 		/>
 		<path d="M2.25 18a.75.75 0 000 1.5c5.4 0 10.63.722 15.6 2.075 1.19.324 2.4-.558 2.4-1.82V18.75a.75.75 0 00-.75-.75H2.25z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Bars_2 = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -765,7 +824,8 @@ export const Bars_2 = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Bars_3_bottom_left = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -780,7 +840,8 @@ export const Bars_3_bottom_left = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Bars_3_bottom_right = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -795,7 +856,8 @@ export const Bars_3_bottom_right = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Bars_3_center_left = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -810,7 +872,8 @@ export const Bars_3_center_left = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Bars_3 = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -825,7 +888,8 @@ export const Bars_3 = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Bars_4 = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -840,7 +904,8 @@ export const Bars_4 = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Bars_arrow_down = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -855,7 +920,8 @@ export const Bars_arrow_down = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Bars_arrow_up = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -870,7 +936,8 @@ export const Bars_arrow_up = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Battery_0 = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -885,7 +952,8 @@ export const Battery_0 = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Battery_100 = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -900,7 +968,8 @@ export const Battery_100 = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Battery_50 = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -916,7 +985,8 @@ export const Battery_50 = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Beaker = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -931,7 +1001,8 @@ export const Beaker = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Bell_alert = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -947,7 +1018,8 @@ export const Bell_alert = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Bell_slash = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -963,7 +1035,8 @@ export const Bell_slash = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Bell_snooze = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -978,7 +1051,8 @@ export const Bell_snooze = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Bell = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -993,7 +1067,8 @@ export const Bell = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Bolt_slash = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1004,7 +1079,8 @@ export const Bolt_slash = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M20.798 11.012l-3.188 3.416L9.462 6.28l4.24-4.542a.75.75 0 011.272.71L12.982 9.75h7.268a.75.75 0 01.548 1.262zM3.202 12.988L6.39 9.572l8.148 8.148-4.24 4.542a.75.75 0 01-1.272-.71l1.992-7.302H3.75a.75.75 0 01-.548-1.262zM3.53 2.47a.75.75 0 00-1.06 1.06l18 18a.75.75 0 101.06-1.06l-18-18z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Bolt = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1019,7 +1095,8 @@ export const Bolt = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Book_open = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1030,7 +1107,8 @@ export const Book_open = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M11.25 4.533A9.707 9.707 0 006 3a9.735 9.735 0 00-3.25.555.75.75 0 00-.5.707v14.25a.75.75 0 001 .707A8.237 8.237 0 016 18.75c1.995 0 3.823.707 5.25 1.886V4.533zM12.75 20.636A8.214 8.214 0 0118 18.75c.966 0 1.89.166 2.75.47a.75.75 0 001-.708V4.262a.75.75 0 00-.5-.707A9.735 9.735 0 0018 3a9.707 9.707 0 00-5.25 1.533v16.103z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Bookmark_slash = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1041,7 +1119,8 @@ export const Bookmark_slash = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M3.53 2.47a.75.75 0 00-1.06 1.06l18 18a.75.75 0 101.06-1.06l-18-18zM20.25 5.507v11.561L5.853 2.671c.15-.043.306-.075.467-.094a49.255 49.255 0 0111.36 0c1.497.174 2.57 1.46 2.57 2.93zM3.75 21V6.932l14.063 14.063L12 18.088l-7.165 3.583A.75.75 0 013.75 21z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Bookmark_square = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1056,7 +1135,8 @@ export const Bookmark_square = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Bookmark = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1071,7 +1151,8 @@ export const Bookmark = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Briefcase = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1087,7 +1168,8 @@ export const Briefcase = (props: heroProps = { class: "" }) => (
 		/>
 		<path d="M3 18.4v-2.796a4.3 4.3 0 00.713.31A26.226 26.226 0 0012 17.25c2.892 0 5.68-.468 8.287-1.335.252-.084.49-.189.713-.311V18.4c0 1.452-1.047 2.728-2.523 2.923-2.12.282-4.282.427-6.477.427a49.19 49.19 0 01-6.477-.427C4.047 21.128 3 19.852 3 18.4z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Bug_ant = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1102,7 +1184,8 @@ export const Bug_ant = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Building_library = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1119,7 +1202,8 @@ export const Building_library = (props: heroProps = { class: "" }) => (
 		/>
 		<path d="M12 7.875a1.125 1.125 0 100-2.25 1.125 1.125 0 000 2.25z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Building_office_2 = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1134,7 +1218,8 @@ export const Building_office_2 = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Building_office = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1149,7 +1234,8 @@ export const Building_office = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Building_storefront = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1165,7 +1251,8 @@ export const Building_storefront = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Cake = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1176,7 +1263,8 @@ export const Cake = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M15 1.784l-.796.796a1.125 1.125 0 101.591 0L15 1.784zM12 1.784l-.796.796a1.125 1.125 0 101.591 0L12 1.784zM9 1.784l-.796.796a1.125 1.125 0 101.591 0L9 1.784zM9.75 7.547c.498-.02.998-.035 1.5-.042V6.75a.75.75 0 011.5 0v.755c.502.007 1.002.021 1.5.042V6.75a.75.75 0 011.5 0v.88l.307.022c1.55.117 2.693 1.427 2.693 2.946v1.018a62.182 62.182 0 00-13.5 0v-1.018c0-1.519 1.143-2.829 2.693-2.946l.307-.022v-.88a.75.75 0 011.5 0v.797zM12 12.75c-2.472 0-4.9.184-7.274.54-1.454.217-2.476 1.482-2.476 2.916v.384a4.104 4.104 0 012.585.364 2.605 2.605 0 002.33 0 4.104 4.104 0 013.67 0 2.605 2.605 0 002.33 0 4.104 4.104 0 013.67 0 2.605 2.605 0 002.33 0 4.104 4.104 0 012.585-.364v-.384c0-1.434-1.022-2.7-2.476-2.917A49.138 49.138 0 0012 12.75zM21.75 18.131a2.604 2.604 0 00-1.915.165 4.104 4.104 0 01-3.67 0 2.604 2.604 0 00-2.33 0 4.104 4.104 0 01-3.67 0 2.604 2.604 0 00-2.33 0 4.104 4.104 0 01-3.67 0 2.604 2.604 0 00-1.915-.165v2.494c0 1.036.84 1.875 1.875 1.875h15.75c1.035 0 1.875-.84 1.875-1.875v-2.494z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Calculator = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1191,7 +1279,8 @@ export const Calculator = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Calendar_days = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1207,7 +1296,8 @@ export const Calendar_days = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Calendar = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1222,7 +1312,8 @@ export const Calendar = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Camera = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1238,7 +1329,8 @@ export const Camera = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Chart_bar_square = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1253,7 +1345,8 @@ export const Chart_bar_square = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Chart_bar = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1264,7 +1357,8 @@ export const Chart_bar = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75zM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 01-1.875-1.875V8.625zM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 013 19.875v-6.75z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Chart_pie = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1284,7 +1378,8 @@ export const Chart_pie = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Chat_bubble_bottom_center_text = (
 	props: heroProps = { class: "" },
 ) => (
@@ -1301,7 +1396,8 @@ export const Chat_bubble_bottom_center_text = (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Chat_bubble_bottom_center = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1316,7 +1412,8 @@ export const Chat_bubble_bottom_center = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Chat_bubble_left_ellipsis = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1331,7 +1428,8 @@ export const Chat_bubble_left_ellipsis = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Chat_bubble_left_right = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1343,7 +1441,8 @@ export const Chat_bubble_left_right = (props: heroProps = { class: "" }) => (
 		<path d="M4.913 2.658c2.075-.27 4.19-.408 6.337-.408 2.147 0 4.262.139 6.337.408 1.922.25 3.291 1.861 3.405 3.727a4.403 4.403 0 00-1.032-.211 50.89 50.89 0 00-8.42 0c-2.358.196-4.04 2.19-4.04 4.434v4.286a4.47 4.47 0 002.433 3.984L7.28 21.53A.75.75 0 016 21v-4.03a48.527 48.527 0 01-1.087-.128C2.905 16.58 1.5 14.833 1.5 12.862V6.638c0-1.97 1.405-3.718 3.413-3.979z" />
 		<path d="M15.75 7.5c-1.376 0-2.739.057-4.086.169C10.124 7.797 9 9.103 9 10.609v4.285c0 1.507 1.128 2.814 2.67 2.94 1.243.102 2.5.157 3.768.165l2.782 2.781a.75.75 0 001.28-.53v-2.39l.33-.026c1.542-.125 2.67-1.433 2.67-2.94v-4.286c0-1.505-1.125-2.811-2.664-2.94A49.392 49.392 0 0015.75 7.5z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Chat_bubble_left = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1358,7 +1457,8 @@ export const Chat_bubble_left = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Chat_bubble_oval_left_ellipsis = (
 	props: heroProps = { class: "" },
 ) => (
@@ -1375,7 +1475,8 @@ export const Chat_bubble_oval_left_ellipsis = (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Chat_bubble_oval_left = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1390,7 +1491,8 @@ export const Chat_bubble_oval_left = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Check_badge = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1405,7 +1507,8 @@ export const Check_badge = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Check_circle = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1420,7 +1523,8 @@ export const Check_circle = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Check = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1435,7 +1539,8 @@ export const Check = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Chevron_double_down = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1450,7 +1555,8 @@ export const Chevron_double_down = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Chevron_double_left = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1465,7 +1571,8 @@ export const Chevron_double_left = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Chevron_double_right = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1480,7 +1587,8 @@ export const Chevron_double_right = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Chevron_double_up = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1495,7 +1603,8 @@ export const Chevron_double_up = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Chevron_down = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1510,7 +1619,8 @@ export const Chevron_down = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Chevron_left = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1525,7 +1635,8 @@ export const Chevron_left = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Chevron_right = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1540,7 +1651,8 @@ export const Chevron_right = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Chevron_up_down = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1555,7 +1667,8 @@ export const Chevron_up_down = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Chevron_up = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1570,7 +1683,8 @@ export const Chevron_up = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Circle_stack = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1584,7 +1698,8 @@ export const Circle_stack = (props: heroProps = { class: "" }) => (
 		<path d="M12 16.5c2.685 0 5.19-.586 7.078-1.609a8.282 8.282 0 001.897-1.384c.016.121.025.244.025.368 0 2.692-4.03 4.875-9 4.875s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.284 8.284 0 001.897 1.384C6.809 15.914 9.315 16.5 12 16.5z" />
 		<path d="M12 20.25c2.685 0 5.19-.586 7.078-1.609a8.282 8.282 0 001.897-1.384c.016.121.025.244.025.368 0 2.692-4.03 4.875-9 4.875s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.284 8.284 0 001.897 1.384C6.809 19.664 9.315 20.25 12 20.25z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Clipboard_document_check = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1604,7 +1719,8 @@ export const Clipboard_document_check = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Clipboard_document_list = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1624,7 +1740,8 @@ export const Clipboard_document_list = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Clipboard_document = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1641,7 +1758,8 @@ export const Clipboard_document = (props: heroProps = { class: "" }) => (
 		<path d="M3 8.625c0-1.036.84-1.875 1.875-1.875h.375A3.75 3.75 0 019 10.5v1.875c0 1.036.84 1.875 1.875 1.875h1.875A3.75 3.75 0 0116.5 18v2.625c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 013 20.625v-12z" />
 		<path d="M10.5 10.5a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963 5.23 5.23 0 00-3.434-1.279h-1.875a.375.375 0 01-.375-.375V10.5z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Clipboard = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1656,7 +1774,8 @@ export const Clipboard = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Clock = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1671,7 +1790,8 @@ export const Clock = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Cloud_arrow_down = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1686,7 +1806,8 @@ export const Cloud_arrow_down = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Cloud_arrow_up = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1701,7 +1822,8 @@ export const Cloud_arrow_up = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Cloud = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1716,7 +1838,8 @@ export const Cloud = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Code_bracket_square = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1731,7 +1854,8 @@ export const Code_bracket_square = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Code_bracket = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1746,7 +1870,8 @@ export const Code_bracket = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Cog_6_tooth = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1761,7 +1886,8 @@ export const Cog_6_tooth = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Cog_8_tooth = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1776,7 +1902,8 @@ export const Cog_8_tooth = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Cog = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1792,7 +1919,8 @@ export const Cog = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Command_line = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1807,7 +1935,8 @@ export const Command_line = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Computer_desktop = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1822,7 +1951,8 @@ export const Computer_desktop = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Cpu_chip = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1838,7 +1968,8 @@ export const Cpu_chip = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Credit_card = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1854,7 +1985,8 @@ export const Credit_card = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Cube_transparent = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1869,7 +2001,8 @@ export const Cube_transparent = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Cube = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1880,7 +2013,8 @@ export const Cube = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M12.378 1.602a.75.75 0 00-.756 0L3 6.632l9 5.25 9-5.25-8.622-5.03zM21.75 7.93l-9 5.25v9l8.628-5.032a.75.75 0 00.372-.648V7.93zM11.25 22.18v-9l-9-5.25v8.57a.75.75 0 00.372.648l8.628 5.033z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Currency_bangladeshi = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1895,7 +2029,8 @@ export const Currency_bangladeshi = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Currency_dollar = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1911,7 +2046,8 @@ export const Currency_dollar = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Currency_euro = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1926,7 +2062,8 @@ export const Currency_euro = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Currency_pound = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1941,7 +2078,8 @@ export const Currency_pound = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Currency_rupee = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1956,7 +2094,8 @@ export const Currency_rupee = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Currency_yen = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1971,7 +2110,8 @@ export const Currency_yen = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Cursor_arrow_rays = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -1986,7 +2126,8 @@ export const Cursor_arrow_rays = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Cursor_arrow_ripple = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2001,7 +2142,8 @@ export const Cursor_arrow_ripple = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Device_phone_mobile = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2017,7 +2159,8 @@ export const Device_phone_mobile = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Device_tablet = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2033,7 +2176,8 @@ export const Device_tablet = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Document_arrow_down = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2049,7 +2193,8 @@ export const Document_arrow_down = (props: heroProps = { class: "" }) => (
 		/>
 		<path d="M14.25 5.25a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963A5.23 5.23 0 0016.5 7.5h-1.875a.375.375 0 01-.375-.375V5.25z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Document_arrow_up = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2065,7 +2210,8 @@ export const Document_arrow_up = (props: heroProps = { class: "" }) => (
 		/>
 		<path d="M14.25 5.25a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963A5.23 5.23 0 0016.5 7.5h-1.875a.375.375 0 01-.375-.375V5.25z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Document_chart_bar = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2081,7 +2227,8 @@ export const Document_chart_bar = (props: heroProps = { class: "" }) => (
 		/>
 		<path d="M14.25 5.25a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963A5.23 5.23 0 0016.5 7.5h-1.875a.375.375 0 01-.375-.375V5.25z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Document_check = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2097,7 +2244,8 @@ export const Document_check = (props: heroProps = { class: "" }) => (
 		/>
 		<path d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Document_duplicate = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2109,7 +2257,8 @@ export const Document_duplicate = (props: heroProps = { class: "" }) => (
 		<path d="M7.5 3.375c0-1.036.84-1.875 1.875-1.875h.375a3.75 3.75 0 013.75 3.75v1.875C13.5 8.161 14.34 9 15.375 9h1.875A3.75 3.75 0 0121 12.75v3.375C21 17.16 20.16 18 19.125 18h-9.75A1.875 1.875 0 017.5 16.125V3.375z" />
 		<path d="M15 5.25a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963A5.23 5.23 0 0017.25 7.5h-1.875A.375.375 0 0115 7.125V5.25zM4.875 6H6v10.125A3.375 3.375 0 009.375 19.5H16.5v1.125c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 013 20.625V7.875C3 6.839 3.84 6 4.875 6z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Document_magnifying_glass = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2126,7 +2275,8 @@ export const Document_magnifying_glass = (props: heroProps = { class: "" }) => (
 		/>
 		<path d="M14.25 5.25a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963A5.23 5.23 0 0016.5 7.5h-1.875a.375.375 0 01-.375-.375V5.25z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Document_minus = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2142,7 +2292,8 @@ export const Document_minus = (props: heroProps = { class: "" }) => (
 		/>
 		<path d="M14.25 5.25a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963A5.23 5.23 0 0016.5 7.5h-1.875a.375.375 0 01-.375-.375V5.25z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Document_plus = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2158,7 +2309,8 @@ export const Document_plus = (props: heroProps = { class: "" }) => (
 		/>
 		<path d="M14.25 5.25a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963A5.23 5.23 0 0016.5 7.5h-1.875a.375.375 0 01-.375-.375V5.25z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Document_text = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2174,7 +2326,8 @@ export const Document_text = (props: heroProps = { class: "" }) => (
 		/>
 		<path d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Document = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2186,7 +2339,8 @@ export const Document = (props: heroProps = { class: "" }) => (
 		<path d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0016.5 9h-1.875a1.875 1.875 0 01-1.875-1.875V5.25A3.75 3.75 0 009 1.5H5.625z" />
 		<path d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Ellipsis_horizontal_circle = (
 	props: heroProps = { class: "" },
 ) => (
@@ -2203,7 +2357,8 @@ export const Ellipsis_horizontal_circle = (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Ellipsis_horizontal = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2218,7 +2373,8 @@ export const Ellipsis_horizontal = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Ellipsis_vertical = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2233,7 +2389,8 @@ export const Ellipsis_vertical = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Envelope_open = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2245,7 +2402,8 @@ export const Envelope_open = (props: heroProps = { class: "" }) => (
 		<path d="M19.5 22.5a3 3 0 003-3v-8.174l-6.879 4.022 3.485 1.876a.75.75 0 01-.712 1.321l-5.683-3.06a1.5 1.5 0 00-1.422 0l-5.683 3.06a.75.75 0 01-.712-1.32l3.485-1.877L1.5 11.326V19.5a3 3 0 003 3h15z" />
 		<path d="M1.5 9.589v-.745a3 3 0 011.578-2.641l7.5-4.039a3 3 0 012.844 0l7.5 4.039A3 3 0 0122.5 8.844v.745l-8.426 4.926-.652-.35a3 3 0 00-2.844 0l-.652.35L1.5 9.59z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Envelope = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2257,7 +2415,8 @@ export const Envelope = (props: heroProps = { class: "" }) => (
 		<path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z" />
 		<path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Exclamation_circle = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2272,7 +2431,8 @@ export const Exclamation_circle = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Exclamation_triangle = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2287,7 +2447,8 @@ export const Exclamation_triangle = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Eye_dropper = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2302,7 +2463,8 @@ export const Eye_dropper = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Eye_slash = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2315,7 +2477,8 @@ export const Eye_slash = (props: heroProps = { class: "" }) => (
 		<path d="M15.75 12c0 .18-.013.357-.037.53l-4.244-4.243A3.75 3.75 0 0115.75 12zM12.53 15.713l-4.243-4.244a3.75 3.75 0 004.243 4.243z" />
 		<path d="M6.75 12c0-.619.107-1.213.304-1.764l-3.1-3.1a11.25 11.25 0 00-2.63 4.31c-.12.362-.12.752 0 1.114 1.489 4.467 5.704 7.69 10.675 7.69 1.5 0 2.933-.294 4.242-.827l-2.477-2.477A5.25 5.25 0 016.75 12z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Eye = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2331,7 +2494,8 @@ export const Eye = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Face_frown = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2346,7 +2510,8 @@ export const Face_frown = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Face_smile = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2361,7 +2526,8 @@ export const Face_smile = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Film = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2376,7 +2542,8 @@ export const Film = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Finger_print = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2391,7 +2558,8 @@ export const Finger_print = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Fire = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2406,7 +2574,8 @@ export const Fire = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Flag = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2421,7 +2590,8 @@ export const Flag = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Folder_arrow_down = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2436,7 +2606,8 @@ export const Folder_arrow_down = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Folder_minus = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2451,7 +2622,8 @@ export const Folder_minus = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Folder_open = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2462,7 +2634,8 @@ export const Folder_open = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M19.906 9c.382 0 .749.057 1.094.162V9a3 3 0 00-3-3h-3.879a.75.75 0 01-.53-.22L11.47 3.66A2.25 2.25 0 009.879 3H6a3 3 0 00-3 3v3.162A3.756 3.756 0 014.094 9h15.812zM4.094 10.5a2.25 2.25 0 00-2.227 2.568l.857 6A2.25 2.25 0 004.951 21H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-2.227-2.568H4.094z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Folder_plus = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2477,7 +2650,8 @@ export const Folder_plus = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Folder = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2488,7 +2662,8 @@ export const Folder = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M19.5 21a3 3 0 003-3v-4.5a3 3 0 00-3-3h-15a3 3 0 00-3 3V18a3 3 0 003 3h15zM1.5 10.146V6a3 3 0 013-3h5.379a2.25 2.25 0 011.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 013 3v1.146A4.483 4.483 0 0019.5 9h-15a4.483 4.483 0 00-3 1.146z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Forward = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2499,7 +2674,8 @@ export const Forward = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M5.055 7.06c-1.25-.714-2.805.189-2.805 1.628v8.123c0 1.44 1.555 2.342 2.805 1.628L12 14.471v2.34c0 1.44 1.555 2.342 2.805 1.628l7.108-4.061c1.26-.72 1.26-2.536 0-3.256L14.805 7.06C13.555 6.346 12 7.25 12 8.688v2.34L5.055 7.06z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Funnel = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2514,7 +2690,8 @@ export const Funnel = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Gif = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2529,7 +2706,8 @@ export const Gif = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Gift_top = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2541,7 +2719,8 @@ export const Gift_top = (props: heroProps = { class: "" }) => (
 		<path d="M11.25 3v4.046a3 3 0 00-4.277 4.204H1.5v-6A2.25 2.25 0 013.75 3h7.5zM12.75 3v4.011a3 3 0 014.239 4.239H22.5v-6A2.25 2.25 0 0020.25 3h-7.5zM22.5 12.75h-8.983a4.125 4.125 0 004.108 3.75.75.75 0 010 1.5 5.623 5.623 0 01-4.875-2.817V21h7.5a2.25 2.25 0 002.25-2.25v-6zM11.25 21v-5.817A5.623 5.623 0 016.375 18a.75.75 0 010-1.5 4.126 4.126 0 004.108-3.75H1.5v6A2.25 2.25 0 003.75 21h7.5z" />
 		<path d="M11.085 10.354c.03.297.038.575.036.805a7.484 7.484 0 01-.805-.036c-.833-.084-1.677-.325-2.195-.843a1.5 1.5 0 012.122-2.12c.517.517.759 1.36.842 2.194zM12.877 10.354c-.03.297-.038.575-.036.805.23.002.508-.006.805-.036.833-.084 1.677-.325 2.195-.843A1.5 1.5 0 0013.72 8.16c-.518.518-.76 1.362-.843 2.194z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Gift = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2552,7 +2731,8 @@ export const Gift = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M9.375 3a1.875 1.875 0 000 3.75h1.875v4.5H3.375A1.875 1.875 0 011.5 9.375v-.75c0-1.036.84-1.875 1.875-1.875h3.193A3.375 3.375 0 0112 2.753a3.375 3.375 0 015.432 3.997h3.943c1.035 0 1.875.84 1.875 1.875v.75c0 1.036-.84 1.875-1.875 1.875H12.75v-4.5h1.875a1.875 1.875 0 10-1.875-1.875V6.75h-1.5V4.875C11.25 3.839 10.41 3 9.375 3zM11.25 12.75H3v6.75a2.25 2.25 0 002.25 2.25h6v-9zM12.75 12.75v9h6.75a2.25 2.25 0 002.25-2.25v-6.75h-9z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Globe_alt = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2563,7 +2743,8 @@ export const Globe_alt = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M21.721 12.752a9.711 9.711 0 00-.945-5.003 12.754 12.754 0 01-4.339 2.708 18.991 18.991 0 01-.214 4.772 17.165 17.165 0 005.498-2.477zM14.634 15.55a17.324 17.324 0 00.332-4.647c-.952.227-1.945.347-2.966.347-1.021 0-2.014-.12-2.966-.347a17.515 17.515 0 00.332 4.647 17.385 17.385 0 005.268 0zM9.772 17.119a18.963 18.963 0 004.456 0A17.182 17.182 0 0112 21.724a17.18 17.18 0 01-2.228-4.605zM7.777 15.23a18.87 18.87 0 01-.214-4.774 12.753 12.753 0 01-4.34-2.708 9.711 9.711 0 00-.944 5.004 17.165 17.165 0 005.498 2.477zM21.356 14.752a9.765 9.765 0 01-7.478 6.817 18.64 18.64 0 001.988-4.718 18.627 18.627 0 005.49-2.098zM2.644 14.752c1.682.971 3.53 1.688 5.49 2.099a18.64 18.64 0 001.988 4.718 9.765 9.765 0 01-7.478-6.816zM13.878 2.43a9.755 9.755 0 016.116 3.986 11.267 11.267 0 01-3.746 2.504 18.63 18.63 0 00-2.37-6.49zM12 2.276a17.152 17.152 0 012.805 7.121c-.897.23-1.837.353-2.805.353-.968 0-1.908-.122-2.805-.353A17.151 17.151 0 0112 2.276zM10.122 2.43a18.629 18.629 0 00-2.37 6.49 11.266 11.266 0 01-3.746-2.504 9.754 9.754 0 016.116-3.985z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Globe_americas = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2578,7 +2759,8 @@ export const Globe_americas = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Globe_asia_australia = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2594,7 +2776,8 @@ export const Globe_asia_australia = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Globe_europe_africa = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2609,7 +2792,8 @@ export const Globe_europe_africa = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Hand_raised = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2620,7 +2804,8 @@ export const Hand_raised = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M10.5 1.875a1.125 1.125 0 012.25 0v8.219c.517.162 1.02.382 1.5.659V3.375a1.125 1.125 0 012.25 0v10.937a4.505 4.505 0 00-3.25 2.373 8.963 8.963 0 014-.935A.75.75 0 0018 15v-2.266a3.368 3.368 0 01.988-2.37 1.125 1.125 0 011.591 1.59 1.118 1.118 0 00-.329.79v3.006h-.005a6 6 0 01-1.752 4.007l-1.736 1.736a6 6 0 01-4.242 1.757H10.5a7.5 7.5 0 01-7.5-7.5V6.375a1.125 1.125 0 012.25 0v5.519c.46-.452.965-.832 1.5-1.141V3.375a1.125 1.125 0 012.25 0v6.526c.495-.1.997-.151 1.5-.151V1.875z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Hand_thumb_down = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2631,7 +2816,8 @@ export const Hand_thumb_down = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M15.73 5.25h1.035A7.465 7.465 0 0118 9.375a7.465 7.465 0 01-1.235 4.125h-.148c-.806 0-1.534.446-2.031 1.08a9.04 9.04 0 01-2.861 2.4c-.723.384-1.35.956-1.653 1.715a4.498 4.498 0 00-.322 1.672V21a.75.75 0 01-.75.75 2.25 2.25 0 01-2.25-2.25c0-1.152.26-2.243.723-3.218C7.74 15.724 7.366 15 6.748 15H3.622c-1.026 0-1.945-.694-2.054-1.715A12.134 12.134 0 011.5 12c0-2.848.992-5.464 2.649-7.521.388-.482.987-.729 1.605-.729H9.77a4.5 4.5 0 011.423.23l3.114 1.04a4.5 4.5 0 001.423.23zM21.669 13.773c.536-1.362.831-2.845.831-4.398 0-1.22-.182-2.398-.52-3.507-.26-.85-1.084-1.368-1.973-1.368H19.1c-.445 0-.72.498-.523.898.591 1.2.924 2.55.924 3.977a8.959 8.959 0 01-1.302 4.666c-.245.403.028.959.5.959h1.053c.832 0 1.612-.453 1.918-1.227z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Hand_thumb_up = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2642,7 +2828,8 @@ export const Hand_thumb_up = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M7.493 18.75c-.425 0-.82-.236-.975-.632A7.48 7.48 0 016 15.375c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75 2.25 2.25 0 012.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23h-.777zM2.331 10.977a11.969 11.969 0 00-.831 4.398 12 12 0 00.52 3.507c.26.85 1.084 1.368 1.973 1.368H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 01-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Hashtag = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2657,7 +2844,8 @@ export const Hashtag = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Heart = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2668,7 +2856,8 @@ export const Heart = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Home_modern = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2684,7 +2873,8 @@ export const Home_modern = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Home = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2696,7 +2886,8 @@ export const Home = (props: heroProps = { class: "" }) => (
 		<path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
 		<path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Identification = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2711,7 +2902,8 @@ export const Identification = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Inbox_arrow_down = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2731,7 +2923,8 @@ export const Inbox_arrow_down = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Inbox_stack = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2747,7 +2940,8 @@ export const Inbox_stack = (props: heroProps = { class: "" }) => (
 		/>
 		<path d="M2.813 15c-.725 0-1.313.588-1.313 1.313V18a3 3 0 003 3h15a3 3 0 003-3v-1.688c0-.724-.588-1.312-1.313-1.312h-4.233a3 3 0 00-2.496 1.336l-.164.246a1.5 1.5 0 01-1.248.668h-2.092a1.5 1.5 0 01-1.248-.668l-.164-.246A3 3 0 007.046 15H2.812z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Inbox = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2762,7 +2956,8 @@ export const Inbox = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Information_circle = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2777,7 +2972,8 @@ export const Information_circle = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Key = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2792,7 +2988,8 @@ export const Key = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Language = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2807,7 +3004,8 @@ export const Language = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Lifebuoy = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2822,7 +3020,8 @@ export const Lifebuoy = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Light_bulb = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2838,7 +3037,8 @@ export const Light_bulb = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Link = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2853,7 +3053,8 @@ export const Link = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const List_bullet = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2868,7 +3069,8 @@ export const List_bullet = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Lock_closed = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2883,7 +3085,8 @@ export const Lock_closed = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Lock_open = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2894,7 +3097,8 @@ export const Lock_open = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M18 1.5c2.9 0 5.25 2.35 5.25 5.25v3.75a.75.75 0 01-1.5 0V6.75a3.75 3.75 0 10-7.5 0v3a3 3 0 013 3v6.75a3 3 0 01-3 3H3.75a3 3 0 01-3-3v-6.75a3 3 0 013-3h9v-3c0-2.9 2.35-5.25 5.25-5.25z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Magnifying_glass_circle = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2910,7 +3114,8 @@ export const Magnifying_glass_circle = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Magnifying_glass_minus = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2925,7 +3130,8 @@ export const Magnifying_glass_minus = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Magnifying_glass_plus = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2940,7 +3146,8 @@ export const Magnifying_glass_plus = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Magnifying_glass = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2955,7 +3162,8 @@ export const Magnifying_glass = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Map_pin = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2970,7 +3178,8 @@ export const Map_pin = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Map = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2985,7 +3194,8 @@ export const Map = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Megaphone = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -2996,7 +3206,8 @@ export const Megaphone = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M16.881 4.346A23.112 23.112 0 018.25 6H7.5a5.25 5.25 0 00-.88 10.427 21.593 21.593 0 001.378 3.94c.464 1.004 1.674 1.32 2.582.796l.657-.379c.88-.508 1.165-1.592.772-2.468a17.116 17.116 0 01-.628-1.607c1.918.258 3.76.75 5.5 1.446A21.727 21.727 0 0018 11.25c0-2.413-.393-4.735-1.119-6.904zM18.26 3.74a23.22 23.22 0 011.24 7.51 23.22 23.22 0 01-1.24 7.51c-.055.161-.111.322-.17.482a.75.75 0 101.409.516 24.555 24.555 0 001.415-6.43 2.992 2.992 0 00.836-2.078c0-.806-.319-1.54-.836-2.078a24.65 24.65 0 00-1.415-6.43.75.75 0 10-1.409.516c.059.16.116.321.17.483z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Microphone = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3008,7 +3219,8 @@ export const Microphone = (props: heroProps = { class: "" }) => (
 		<path d="M8.25 4.5a3.75 3.75 0 117.5 0v8.25a3.75 3.75 0 11-7.5 0V4.5z" />
 		<path d="M6 10.5a.75.75 0 01.75.75v1.5a5.25 5.25 0 1010.5 0v-1.5a.75.75 0 011.5 0v1.5a6.751 6.751 0 01-6 6.709v2.291h3a.75.75 0 010 1.5h-7.5a.75.75 0 010-1.5h3v-2.291a6.751 6.751 0 01-6-6.709v-1.5A.75.75 0 016 10.5z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Minus_circle = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3023,7 +3235,8 @@ export const Minus_circle = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Minus_small = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3038,7 +3251,8 @@ export const Minus_small = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Minus = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3053,7 +3267,8 @@ export const Minus = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Moon = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3068,7 +3283,8 @@ export const Moon = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Musical_note = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3083,7 +3299,8 @@ export const Musical_note = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Newspaper = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3099,7 +3316,8 @@ export const Newspaper = (props: heroProps = { class: "" }) => (
 		/>
 		<path d="M18.75 6.75h1.875c.621 0 1.125.504 1.125 1.125V18a1.5 1.5 0 01-3 0V6.75z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const No_symbol = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3114,7 +3332,8 @@ export const No_symbol = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Paint_brush = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3129,7 +3348,8 @@ export const Paint_brush = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Paper_airplane = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3140,7 +3360,8 @@ export const Paper_airplane = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Paper_clip = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3155,7 +3376,8 @@ export const Paper_clip = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Pause_circle = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3170,7 +3392,8 @@ export const Pause_circle = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Pause = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3185,7 +3408,8 @@ export const Pause = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Pencil_square = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3197,7 +3421,8 @@ export const Pencil_square = (props: heroProps = { class: "" }) => (
 		<path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
 		<path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Pencil = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3208,7 +3433,8 @@ export const Pencil = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Phone_arrow_down_left = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3228,7 +3454,8 @@ export const Phone_arrow_down_left = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Phone_arrow_up_right = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3248,7 +3475,8 @@ export const Phone_arrow_up_right = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Phone_x_mark = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3263,7 +3491,8 @@ export const Phone_x_mark = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Phone = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3278,7 +3507,8 @@ export const Phone = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Photo = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3293,7 +3523,8 @@ export const Photo = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Play_circle = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3308,7 +3539,8 @@ export const Play_circle = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Play_pause = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3319,7 +3551,8 @@ export const Play_pause = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M15 6.75a.75.75 0 00-.75.75V18a.75.75 0 00.75.75h.75a.75.75 0 00.75-.75V7.5a.75.75 0 00-.75-.75H15zM20.25 6.75a.75.75 0 00-.75.75V18c0 .414.336.75.75.75H21a.75.75 0 00.75-.75V7.5a.75.75 0 00-.75-.75h-.75zM5.055 7.06C3.805 6.347 2.25 7.25 2.25 8.69v8.122c0 1.44 1.555 2.343 2.805 1.628l7.108-4.061c1.26-.72 1.26-2.536 0-3.256L5.055 7.061z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Play = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3334,7 +3567,8 @@ export const Play = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Plus_circle = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3349,7 +3583,8 @@ export const Plus_circle = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Plus_small = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3364,7 +3599,8 @@ export const Plus_small = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Plus = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3379,7 +3615,8 @@ export const Plus = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Power = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3394,7 +3631,8 @@ export const Power = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Presentation_chart_bar = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3409,7 +3647,8 @@ export const Presentation_chart_bar = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Presentation_chart_line = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3424,7 +3663,8 @@ export const Presentation_chart_line = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Printer = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3439,7 +3679,8 @@ export const Printer = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Puzzle_piece = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3450,7 +3691,8 @@ export const Puzzle_piece = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M11.25 5.337c0-.355-.186-.676-.401-.959a1.647 1.647 0 01-.349-1.003c0-1.036 1.007-1.875 2.25-1.875S15 2.34 15 3.375c0 .369-.128.713-.349 1.003-.215.283-.401.604-.401.959 0 .332.278.598.61.578 1.91-.114 3.79-.342 5.632-.676a.75.75 0 01.878.645 49.17 49.17 0 01.376 5.452.657.657 0 01-.66.664c-.354 0-.675-.186-.958-.401a1.647 1.647 0 00-1.003-.349c-1.035 0-1.875 1.007-1.875 2.25s.84 2.25 1.875 2.25c.369 0 .713-.128 1.003-.349.283-.215.604-.401.959-.401.31 0 .557.262.534.571a48.774 48.774 0 01-.595 4.845.75.75 0 01-.61.61c-1.82.317-3.673.533-5.555.642a.58.58 0 01-.611-.581c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.035-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959a.641.641 0 01-.658.643 49.118 49.118 0 01-4.708-.36.75.75 0 01-.645-.878c.293-1.614.504-3.257.629-4.924A.53.53 0 005.337 15c-.355 0-.676.186-.959.401-.29.221-.634.349-1.003.349-1.036 0-1.875-1.007-1.875-2.25s.84-2.25 1.875-2.25c.369 0 .713.128 1.003.349.283.215.604.401.959.401a.656.656 0 00.659-.663 47.703 47.703 0 00-.31-4.82.75.75 0 01.83-.832c1.343.155 2.703.254 4.077.294a.64.64 0 00.657-.642z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Qr_code = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3465,7 +3707,8 @@ export const Qr_code = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Question_mark_circle = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3480,7 +3723,8 @@ export const Question_mark_circle = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Queue_list = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3491,7 +3735,8 @@ export const Queue_list = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M5.625 3.75a2.625 2.625 0 100 5.25h12.75a2.625 2.625 0 000-5.25H5.625zM3.75 11.25a.75.75 0 000 1.5h16.5a.75.75 0 000-1.5H3.75zM3 15.75a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75zM3.75 18.75a.75.75 0 000 1.5h16.5a.75.75 0 000-1.5H3.75z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Radio = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3506,7 +3751,8 @@ export const Radio = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Receipt_percent = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3521,7 +3767,8 @@ export const Receipt_percent = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Receipt_refund = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3536,7 +3783,8 @@ export const Receipt_refund = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Rectangle_group = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3551,7 +3799,8 @@ export const Rectangle_group = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Rectangle_stack = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3562,7 +3811,8 @@ export const Rectangle_stack = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M5.566 4.657A4.505 4.505 0 016.75 4.5h10.5c.41 0 .806.055 1.183.157A3 3 0 0015.75 3h-7.5a3 3 0 00-2.684 1.657zM2.25 12a3 3 0 013-3h13.5a3 3 0 013 3v6a3 3 0 01-3 3H5.25a3 3 0 01-3-3v-6zM5.25 7.5c-.41 0-.806.055-1.184.157A3 3 0 016.75 6h10.5a3 3 0 012.683 1.657A4.505 4.505 0 0018.75 7.5H5.25z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Rocket_launch = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3578,7 +3828,8 @@ export const Rocket_launch = (props: heroProps = { class: "" }) => (
 		/>
 		<path d="M5.26 17.242a.75.75 0 10-.897-1.203 5.243 5.243 0 00-2.05 5.022.75.75 0 00.625.627 5.243 5.243 0 005.022-2.051.75.75 0 10-1.202-.897 3.744 3.744 0 01-3.008 1.51c0-1.23.592-2.323 1.51-3.008z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Rss = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3593,7 +3844,8 @@ export const Rss = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Scale = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3608,7 +3860,8 @@ export const Scale = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Scissors = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3624,7 +3877,8 @@ export const Scissors = (props: heroProps = { class: "" }) => (
 		/>
 		<path d="M16.372 12.615a.75.75 0 01.75 0l5.43 3.135a.75.75 0 01-.182 1.374l-.802.215a5.25 5.25 0 01-2.894-.051l-5.147-1.574a.75.75 0 01-.156-1.367l3-1.732z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Server_stack = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3640,7 +3894,8 @@ export const Server_stack = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Server = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3656,7 +3911,8 @@ export const Server = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Share = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3671,7 +3927,8 @@ export const Share = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Shield_check = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3686,7 +3943,8 @@ export const Shield_check = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Shield_exclamation = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3701,7 +3959,8 @@ export const Shield_exclamation = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Shopping_bag = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3716,7 +3975,8 @@ export const Shopping_bag = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Shopping_cart = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3727,7 +3987,8 @@ export const Shopping_cart = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M2.25 2.25a.75.75 0 000 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 00-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 000-1.5H5.378A2.25 2.25 0 017.5 15h11.218a.75.75 0 00.674-.421 60.358 60.358 0 002.96-7.228.75.75 0 00-.525-.965A60.864 60.864 0 005.68 4.509l-.232-.867A1.875 1.875 0 003.636 2.25H2.25zM3.75 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM16.5 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Signal_slash = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3742,7 +4003,8 @@ export const Signal_slash = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Signal = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3757,7 +4019,8 @@ export const Signal = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Sparkles = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3772,7 +4035,8 @@ export const Sparkles = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Speaker_wave = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3784,7 +4048,8 @@ export const Speaker_wave = (props: heroProps = { class: "" }) => (
 		<path d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 001.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06zM18.584 5.106a.75.75 0 011.06 0c3.808 3.807 3.808 9.98 0 13.788a.75.75 0 11-1.06-1.06 8.25 8.25 0 000-11.668.75.75 0 010-1.06z" />
 		<path d="M15.932 7.757a.75.75 0 011.061 0 6 6 0 010 8.486.75.75 0 01-1.06-1.061 4.5 4.5 0 000-6.364.75.75 0 010-1.06z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Speaker_x_mark = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3795,7 +4060,8 @@ export const Speaker_x_mark = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 001.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06zM17.78 9.22a.75.75 0 10-1.06 1.06L18.44 12l-1.72 1.72a.75.75 0 001.06 1.06l1.72-1.72 1.72 1.72a.75.75 0 101.06-1.06L20.56 12l1.72-1.72a.75.75 0 00-1.06-1.06l-1.72 1.72-1.72-1.72z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Square_2_stack = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3807,7 +4073,8 @@ export const Square_2_stack = (props: heroProps = { class: "" }) => (
 		<path d="M16.5 6a3 3 0 00-3-3H6a3 3 0 00-3 3v7.5a3 3 0 003 3v-6A4.5 4.5 0 0110.5 6h6z" />
 		<path d="M18 7.5a3 3 0 013 3V18a3 3 0 01-3 3h-7.5a3 3 0 01-3-3v-7.5a3 3 0 013-3H18z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Square_3_stack_3d = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3820,7 +4087,8 @@ export const Square_3_stack_3d = (props: heroProps = { class: "" }) => (
 		<path d="M3.265 10.602l7.668 4.129a2.25 2.25 0 002.134 0l7.668-4.13 1.37.739a.75.75 0 010 1.32l-9.75 5.25a.75.75 0 01-.71 0l-9.75-5.25a.75.75 0 010-1.32l1.37-.738z" />
 		<path d="M10.933 19.231l-7.668-4.13-1.37.739a.75.75 0 000 1.32l9.75 5.25c.221.12.489.12.71 0l9.75-5.25a.75.75 0 000-1.32l-1.37-.738-7.668 4.13a2.25 2.25 0 01-2.134-.001z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Squares_2x2 = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3835,7 +4103,8 @@ export const Squares_2x2 = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Squares_plus = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3846,7 +4115,8 @@ export const Squares_plus = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M6 3a3 3 0 00-3 3v2.25a3 3 0 003 3h2.25a3 3 0 003-3V6a3 3 0 00-3-3H6zM15.75 3a3 3 0 00-3 3v2.25a3 3 0 003 3H18a3 3 0 003-3V6a3 3 0 00-3-3h-2.25zM6 12.75a3 3 0 00-3 3V18a3 3 0 003 3h2.25a3 3 0 003-3v-2.25a3 3 0 00-3-3H6zM17.625 13.5a.75.75 0 00-1.5 0v2.625H13.5a.75.75 0 000 1.5h2.625v2.625a.75.75 0 001.5 0v-2.625h2.625a.75.75 0 000-1.5h-2.625V13.5z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Star = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3861,7 +4131,8 @@ export const Star = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Stop_circle = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3876,7 +4147,8 @@ export const Stop_circle = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Stop = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3891,7 +4163,8 @@ export const Stop = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Sun = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3902,7 +4175,8 @@ export const Sun = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Swatch = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3918,7 +4192,8 @@ export const Swatch = (props: heroProps = { class: "" }) => (
 		/>
 		<path d="M10.719 21.75h9.156c1.036 0 1.875-.84 1.875-1.875v-5.25c0-1.036-.84-1.875-1.875-1.875h-.14l-8.742 8.743c-.09.089-.18.175-.274.257zM12.738 17.625l6.474-6.474a1.875 1.875 0 000-2.651L15.5 4.787a1.875 1.875 0 00-2.651 0l-.1.099V17.25c0 .126-.003.251-.01.375z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Table_cells = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3933,7 +4208,8 @@ export const Table_cells = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Tag = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3948,7 +4224,8 @@ export const Tag = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Ticket = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3963,7 +4240,8 @@ export const Ticket = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Trash = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3978,7 +4256,8 @@ export const Trash = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Trophy = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -3993,7 +4272,8 @@ export const Trophy = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Truck = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -4006,7 +4286,8 @@ export const Truck = (props: heroProps = { class: "" }) => (
 		<path d="M8.25 19.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0zM15.75 6.75a.75.75 0 00-.75.75v11.25c0 .087.015.17.042.248a3 3 0 015.958.464c.853-.175 1.522-.935 1.464-1.883a18.659 18.659 0 00-3.732-10.104 1.837 1.837 0 00-1.47-.725H15.75z" />
 		<path d="M19.5 19.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Tv = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -4022,7 +4303,8 @@ export const Tv = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const User_circle = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -4037,7 +4319,8 @@ export const User_circle = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const User_group = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -4053,7 +4336,8 @@ export const User_group = (props: heroProps = { class: "" }) => (
 		/>
 		<path d="M5.082 14.254a8.287 8.287 0 00-1.308 5.135 9.687 9.687 0 01-1.764-.44l-.115-.04a.563.563 0 01-.373-.487l-.01-.121a3.75 3.75 0 013.57-4.047zM20.226 19.389a8.287 8.287 0 00-1.308-5.135 3.75 3.75 0 013.57 4.047l-.01.121a.563.563 0 01-.373.486l-.115.04c-.567.2-1.156.349-1.764.441z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const User_minus = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -4064,7 +4348,8 @@ export const User_minus = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M10.375 2.25a4.125 4.125 0 100 8.25 4.125 4.125 0 000-8.25zM10.375 12a7.125 7.125 0 00-7.124 7.247.75.75 0 00.363.63 13.067 13.067 0 006.761 1.873c2.472 0 4.786-.684 6.76-1.873a.75.75 0 00.364-.63l.001-.12v-.002A7.125 7.125 0 0010.375 12zM16 9.75a.75.75 0 000 1.5h6a.75.75 0 000-1.5h-6z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const User_plus = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -4075,7 +4360,8 @@ export const User_plus = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M6.25 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM3.25 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM19.75 7.5a.75.75 0 00-1.5 0v2.25H16a.75.75 0 000 1.5h2.25v2.25a.75.75 0 001.5 0v-2.25H22a.75.75 0 000-1.5h-2.25V7.5z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const User = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -4090,7 +4376,8 @@ export const User = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Users = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -4101,7 +4388,8 @@ export const Users = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 005.06-1.01.75.75 0 00.42-.643 4.875 4.875 0 00-6.957-4.611 8.586 8.586 0 011.71 5.157v.003z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Variable = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -4116,7 +4404,8 @@ export const Variable = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Video_camera_slash = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -4127,7 +4416,8 @@ export const Video_camera_slash = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M3.53 2.47a.75.75 0 00-1.06 1.06l18 18a.75.75 0 101.06-1.06l-18-18zM22.5 17.69c0 .471-.202.86-.504 1.124l-4.746-4.746V7.939l2.69-2.689c.944-.945 2.56-.276 2.56 1.06v11.38zM15.75 7.5v5.068L7.682 4.5h5.068a3 3 0 013 3zM1.5 7.5c0-.782.3-1.494.79-2.028l12.846 12.846A2.995 2.995 0 0112.75 19.5H4.5a3 3 0 01-3-3v-9z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Video_camera = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -4138,7 +4428,8 @@ export const Video_camera = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M4.5 4.5a3 3 0 00-3 3v9a3 3 0 003 3h8.25a3 3 0 003-3v-9a3 3 0 00-3-3H4.5zM19.94 18.75l-2.69-2.69V7.94l2.69-2.69c.944-.945 2.56-.276 2.56 1.06v11.38c0 1.336-1.616 2.005-2.56 1.06z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const View_columns = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -4149,7 +4440,8 @@ export const View_columns = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M15 3.75H9v16.5h6V3.75zM16.5 20.25h3.375c1.035 0 1.875-.84 1.875-1.875V5.625c0-1.036-.84-1.875-1.875-1.875H16.5v16.5zM4.125 3.75H7.5v16.5H4.125a1.875 1.875 0 01-1.875-1.875V5.625c0-1.036.84-1.875 1.875-1.875z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Viewfinder_circle = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -4160,7 +4452,8 @@ export const Viewfinder_circle = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M6 3a3 3 0 00-3 3v1.5a.75.75 0 001.5 0V6A1.5 1.5 0 016 4.5h1.5a.75.75 0 000-1.5H6zM16.5 3a.75.75 0 000 1.5H18A1.5 1.5 0 0119.5 6v1.5a.75.75 0 001.5 0V6a3 3 0 00-3-3h-1.5zM12 8.25a3.75 3.75 0 100 7.5 3.75 3.75 0 000-7.5zM4.5 16.5a.75.75 0 00-1.5 0V18a3 3 0 003 3h1.5a.75.75 0 000-1.5H6A1.5 1.5 0 014.5 18v-1.5zM21 16.5a.75.75 0 00-1.5 0V18a1.5 1.5 0 01-1.5 1.5h-1.5a.75.75 0 000 1.5H18a3 3 0 003-3v-1.5z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Wallet = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -4171,7 +4464,8 @@ export const Wallet = (props: heroProps = { class: "" }) => (
 	>
 		<path d="M2.273 5.625A4.483 4.483 0 015.25 4.5h13.5c1.141 0 2.183.425 2.977 1.125A3 3 0 0018.75 3H5.25a3 3 0 00-2.977 2.625zM2.273 8.625A4.483 4.483 0 015.25 7.5h13.5c1.141 0 2.183.425 2.977 1.125A3 3 0 0018.75 6H5.25a3 3 0 00-2.977 2.625zM5.25 9a3 3 0 00-3 3v6a3 3 0 003 3h13.5a3 3 0 003-3v-6a3 3 0 00-3-3H15a.75.75 0 00-.75.75 2.25 2.25 0 01-4.5 0A.75.75 0 009 9H5.25z" />
 	</svg>
-);
+) as JSX.Element;
+
 export const Wifi = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -4186,7 +4480,8 @@ export const Wifi = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Window = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -4201,7 +4496,8 @@ export const Window = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Wrench_screwdriver = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -4222,7 +4518,8 @@ export const Wrench_screwdriver = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const Wrench = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -4237,7 +4534,8 @@ export const Wrench = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const X_circle = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -4252,7 +4550,8 @@ export const X_circle = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 export const X_mark = (props: heroProps = { class: "" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -4267,7 +4566,8 @@ export const X_mark = (props: heroProps = { class: "" }) => (
 			clip-rule="evenodd"
 		/>
 	</svg>
-);
+) as JSX.Element;
+
 
 export default {
 	Academic_cap,
