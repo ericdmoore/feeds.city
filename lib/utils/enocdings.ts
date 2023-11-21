@@ -1,16 +1,20 @@
 import { decode as hexDecode, encode as hexEncode } from "$std/encoding/hex.ts";
 
 import { decode as b64Decode, encode as b64Encode } from "$std/encoding/base64.ts";
+import { decode as b58Decode, encode as b58Encode } from "$std/encoding/base58.ts";
 
 import { decode as b64urlDecode, encode as b64urlEncode } from "$std/encoding/base64url.ts";
 
-export type EncodingFormatOptions = "hex" | "base64" | "base64url" | "utf8";
+export type EncodingFormatOptions = "hex" | "base64" | "base58" | "base64url" | "utf8";
 
 export const changeEnc = (input: string | Uint8Array) => {
 	const enc = new TextEncoder();
 	const dec = new TextDecoder();
 
-	const string = (state: Uint8Array | string) => () => typeof state === "string" ? state : dec.decode(state);
+	const string = (state: Uint8Array | string) => ():string => 
+		typeof state === "string"
+			? state
+			: dec.decode(state);
 
 	const to = (normArr: Uint8Array) => (toEnc: EncodingFormatOptions = "utf8") => {
 		switch (toEnc) {
@@ -23,6 +27,11 @@ export const changeEnc = (input: string | Uint8Array) => {
 				return {
 					string: string(b64Encode(normArr)),
 					array: () => enc.encode(b64Encode(normArr)),
+				};
+			case "base58":
+				return {
+					string: string(b58Encode(normArr)),
+					array: () => enc.encode(b58Encode(normArr)),
 				};
 			case "base64url":
 				return {
@@ -48,6 +57,8 @@ export const changeEnc = (input: string | Uint8Array) => {
 				return { to: to(hexDecode(inputArr)) };
 			case "base64":
 				return { to: to(b64Decode(inputStr)) };
+			case "base58":
+				return { to: to(b58Decode(inputStr)) };				
 			case "base64url":
 				return { to: to(b64urlDecode(inputStr)) };
 			case "utf8":

@@ -36,13 +36,18 @@ import * as $30 from "./routes/homey.tsx";
 import * as $31 from "./routes/index.tsx";
 import * as $32 from "./routes/login.tsx";
 import * as $33 from "./routes/logout.tsx";
-import * as $34 from "./routes/profile.tsx";
-import * as $35 from "./routes/read.tsx";
-import * as $36 from "./routes/settings.tsx";
-import * as $37 from "./routes/team.tsx";
-import * as $38 from "./routes/testing.tsx";
-import * as $39 from "./routes/user/index.ts";
-import * as $40 from "./routes/user/register.tsx";
+import * as $34 from "./routes/posts/[year]/[slug].tsx";
+import * as $35 from "./routes/posts/[year]/index.tsx";
+import * as $36 from "./routes/posts/components.tsx";
+import * as $37 from "./routes/posts/index.tsx";
+import * as $38 from "./routes/posts/tags/[tag].tsx";
+import * as $39 from "./routes/profile.tsx";
+import * as $40 from "./routes/read.tsx";
+import * as $41 from "./routes/settings.tsx";
+import * as $42 from "./routes/team.tsx";
+import * as $43 from "./routes/testing.tsx";
+import * as $44 from "./routes/user/index.ts";
+import * as $45 from "./routes/user/register.tsx";
 import * as $$0 from "./islands/AppShellMenuBar.tsx";
 import * as $$1 from "./islands/Counter.tsx";
 import * as $$2 from "./islands/compositionForm.tsx";
@@ -90,13 +95,18 @@ const manifest = {
 		"./routes/index.tsx": $31,
 		"./routes/login.tsx": $32,
 		"./routes/logout.tsx": $33,
-		"./routes/profile.tsx": $34,
-		"./routes/read.tsx": $35,
-		"./routes/settings.tsx": $36,
-		"./routes/team.tsx": $37,
-		"./routes/testing.tsx": $38,
-		"./routes/user/index.ts": $39,
-		"./routes/user/register.tsx": $40,
+		"./routes/posts/[year]/[slug].tsx": $34,
+		"./routes/posts/[year]/index.tsx": $35,
+		"./routes/posts/components.tsx": $36,
+		"./routes/posts/index.tsx": $37,
+		"./routes/posts/tags/[tag].tsx": $38,
+		"./routes/profile.tsx": $39,
+		"./routes/read.tsx": $40,
+		"./routes/settings.tsx": $41,
+		"./routes/team.tsx": $42,
+		"./routes/testing.tsx": $43,
+		"./routes/user/index.ts": $44,
+		"./routes/user/register.tsx": $45,
 	},
 	islands: {
 		"./islands/AppShellMenuBar.tsx": $$0,

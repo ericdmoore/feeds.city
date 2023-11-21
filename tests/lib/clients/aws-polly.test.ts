@@ -9,15 +9,16 @@ const envVar = await envVarReader();
 const env = await envVar("MISSING");
 
 Deno.test({
-	name: "Isomorphic Morphism.1",
-	ignore: true,
+	name: "Isomorphism.1",
+	// ignore: true,
 	fn: async () => {
+		
 		const req1 = new Request("https://foo.com/bar?first=1&second=2#baz", {
 			method: "GET",
 			headers: { host: "foo.com" },
 		});
+		
 		const req2 = await toRequest(toHttpRequest(req1));
-
 		assert(req1.cache === req2.cache);
 		assert(req2.credentials === req1.credentials);
 		assert(req2.destination === req1.destination);
@@ -29,27 +30,29 @@ Deno.test({
 		assert(req2.referrer === req1.referrer);
 		assert(req2.referrerPolicy === req1.referrerPolicy);
 		assert(req1.url === req2.url);
-
+			
 		assertEquals(req2.body, req1.body);
-		assertEquals(req2.headers, req1.headers);
 		assertEquals(req2.signal, req1.signal);
+		
+		// console.log({h2: req2.headers, h1: req1.headers})
+		assertEquals(req2.headers.entries(), req1.headers.entries());
 	},
 });
 
 Deno.test({
-	name: "Isomorphic Morphism.2",
-	ignore: true,
+	name: "Isomorphism.2",
+	// ignore: true,
 	fn: async () => {
 		const req1 = new HttpRequest({
 			method: "POST",
 			protocol: "https:",
 			path: "/v1/polly/speech",
 			fragment: "#baz",
+			hostname: "foo.us-bar-1.amazonaws.com",
 			headers: {
 				authorization: "HMAC-SHA256",
 				host: "foo.us-bar-1.amazonaws.com",
 			},
-			hostname: "foo.us-bar-1.amazonaws.com",
 		});
 		const req2 = await toHttpRequest(toRequest(req1));
 		assertEquals(req2, req1);
@@ -65,7 +68,7 @@ Deno.test({
 // https://github.com/aws/aws-sdk-js-v3/blob/main/packages/signature-v4/src/SignatureV4.spec.ts
 Deno.test({
 	name: "sigMaker",
-	ignore: true,
+	// ignore: true,
 	fn: async () => {
 		const signer = sigMaker("foo", "bar", "us-bar-1", "foo");
 
@@ -92,7 +95,7 @@ Deno.test({
 
 Deno.test({
 	name: "toHttpRequest",
-	ignore: true,
+	// ignore: true,
 	// only: false,
 	fn: async () => {
 		const req = new Request("https://foo.com/bar?first=1&second=2#baz", { method: "GET" });

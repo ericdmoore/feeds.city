@@ -31,7 +31,7 @@
 
 		"$std/": "https://deno.land/std@0.181.0/",
 		"$fresh/": "https://deno.land/x/fresh@1.4.2/",
-
+		
 		"preact/": "https://esm.sh/preact@10.15.1/",
 		"preact": "https://esm.sh/preact@10.15.1?deno-std=0.181.0&dts",
 		
@@ -68,6 +68,7 @@
 		"fluentSchema": "https://esm.sh/fluent-json-schema@3.1.0",
 		"fromXml": "https://deno.land/x/xml2js@1.0.0/mod.ts",
 		"gzip_wasm": "https://deno.land/x/wasm_gzip@v1.0.0/mod.ts",
+		"gfm": "https://deno.land/x/gfm@0.2.3/mod.ts",
 		"imurmurhash": "https://esm.sh/imurmurhash@0.1.4?deno-std=0.181.0&dts",
 		"jsonSchema": "https://deno.land/x/json_schema_typed@v8.0.0/draft_latest.ts",
 		"JSONC": "https://deno.land/x/jsonc_parser@v0.0.0/mod.ts",
@@ -76,6 +77,13 @@
 		"lodash.set": "https://esm.sh/lodash.set@4.3.2?deno-std=0.181.0&dts",
 		"lodash.groupby": "https://esm.sh/lodash.groupby@4.6.0?deno-std=0.181.0&dts",
 		"lru-cache": "https://esm.sh/lru-cache@10.0.0?deno-std=0.181.0&dts",
+		"micromark": "https://esm.sh/micromark@3.2.0",
+		"@mdx-js/preact":"https://esm.sh/@mdx-js/preact@3.0.0",
+		"micromark-extension-directive":"https://esm.sh/micromark-extension-directive@3.0.0",
+		"micromark-extension-gfm" : "https://esm.sh/micromark-extension-gfm@3.0.0",
+		"micromark-extension-frontmatter":"https://esm.sh/micromark-extension-frontmatter@2.0.0",
+		"micromark-extension-mdxjs":"https://esm.sh/micromark-extension-mdxjs@2.0.0",
+		"micromark-util-types":"https://esm.sh/micromark-util-types@2.0.0",
 		"minhash": "https://esm.sh/minhash@0.0.9?deno-std=0.181.0&dts",
 		"mu-forms/": "https://esm.sh/mu-forms@1.0.7/",
 		"multiformats": "https://esm.sh/multiformats@9.6.4?deno-std=0.181.0&dts",
