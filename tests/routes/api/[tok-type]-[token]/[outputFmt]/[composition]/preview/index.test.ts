@@ -1,5 +1,5 @@
 import { assert } from "$std/testing/asserts.ts";
-import { CONN_INFO, urlPath, isValidHTML} from "$tests/common.ts"
+import { CONN_INFO, urlPath, isValidHTML as _} from "$tests/common.ts"
 import { createHandler  } from "$fresh/server.ts";
 import MANIFEST from "$/fresh.gen.ts";
 import envVarReader from "$lib/utils/vars.ts";
