@@ -1,5 +1,5 @@
 // import { DenoDom, path } from "dom_deno";
-import * as DenoDom from "dom_deno";
+import * as DenoDom from "deno_dom";
 import { join } from "$std/path/mod.ts";
 import disocverFeedLocal from "./discoverFeedLocale.ts";
 

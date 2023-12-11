@@ -1,7 +1,7 @@
 import { ASTComputable, PromiseOr } from "../../types.ts";
 import { rezVal } from "$lib/parsers/ast.ts";
 import * as path from "$std/path/mod.ts";
-import * as DenoDom from "dom_deno";
+import * as DenoDom from "deno_dom";
 import * as S from "superstruct";
 
 const { DOMParser } = DenoDom;

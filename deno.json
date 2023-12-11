@@ -23,7 +23,9 @@
 		"exclude": ["_fresh", ".cov", ".fsCache", "vendor/"]
 	},
 	"imports": {
+		"$/": "./",
 		"$lib/": "./lib/",
+		"$tests/": "./tests/",
 		"$routes/": "./routes/",
 		"$components/": "./components/",
 		"$islands/": "./islands/",
@@ -64,7 +66,7 @@
 		"brotli": "https://deno.land/x/brotli@v0.1.4/mod.ts",
 		"bson_deno": "https://deno.land/x/deno_bson@v0.0.2/mod.ts",
 		"djwt": "https://deno.land/x/djwt@v2.7/mod.ts",
-		"dom_deno": "https://deno.land/x/deno_dom@v0.1.21-alpha/deno-dom-wasm.ts",
+		"deno_dom": "https://deno.land/x/deno_dom@v0.1.21-alpha/deno-dom-wasm.ts",
 		"fluentSchema": "https://esm.sh/fluent-json-schema@3.1.0",
 		"fromXml": "https://deno.land/x/xml2js@1.0.0/mod.ts",
 		"gzip_wasm": "https://deno.land/x/wasm_gzip@v1.0.0/mod.ts",

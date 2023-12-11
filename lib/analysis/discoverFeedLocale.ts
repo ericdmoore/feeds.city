@@ -1,4 +1,4 @@
-import * as DenoDom from "dom_deno";
+import * as DenoDom from "deno_dom";
 import { join } from "$std/path/mod.ts";
 
 // import puppeteer from "https://deno.land/x/puppeteer@9.0.2/mod.ts";

@@ -17,8 +17,7 @@ const CONN_INFO = {
 	remoteAddr: { transport: "tcp", hostname: "192.168.1.2", port: 80 } as Deno.Addr,
 } as ServeHandlerInfo;
 
-console.info("\n\n ... be sure to start a dev server from another session\n\n");
-
+// console.info("\n\n ... be sure to start a dev server from another session\n\n");
 // const badTeaPotResponse = async (resp: Request, _ctx: Partial<HandlerContext<any, Record<string, unknown>>> ):Promise<Response> => {
 // 	return new Response(await resp.text(),{ status: 418 })
 // }
