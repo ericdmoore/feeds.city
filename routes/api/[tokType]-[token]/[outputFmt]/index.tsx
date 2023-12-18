@@ -17,7 +17,7 @@ import { Status } from "$std/http/http_status.ts";
 import NavPanels from "$components/navigation/panels.tsx";
 
 export const config: RouteConfig = {
-	routeOverride: "/api/:tokType(u|t)-:token/:outputFmt(json|html|atom|rss)",
+	routeOverride: "/api/:tokType(u|t)-:token/:outputFmt(json|html|atom|rss|ast)",
 };
 
 const H1 = (

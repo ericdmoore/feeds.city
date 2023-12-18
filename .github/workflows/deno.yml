@@ -42,29 +42,37 @@ jobs:
 
       - name: Run tests
         run: deno task test
-        env:
-          AWS_DYN_TABLE_MEGA: ${{ vars.AWS_DYN_TABLE_MEGA }}
-          AWS_POLLY_BUCKET: ${{ vars.AWS_POLLY_BUCKET }}
-          AWS_POLLY_PREFIX: ${{ vars.AWS_POLLY_PREFIX }}
-          AWS_REGION: ${{ vars.AWS_REGION }}
-          JWT_KEY_EXT: ${{ vars.JWT_KEY_EXT }}
-          JWT_KEY_OPS_PRIVATE: ${{ vars.JWT_KEY_OPS_PRIVATE }}
-          JWT_KEY_OPS_PUBLIC: ${{ vars.JWT_KEY_OPS_PUBLIC }}
-          RSA_KEY_E: ${{ vars.RSA_KEY_E }} # AQAB
+        env:          
           AES_GCM_K: ${{ secrets.AES_GCM_K }}
           AIRTABLE_BASE: ${{ secrets.AIRTABLE_BASE }}
           AIRTABLE_TABLE: ${{ secrets.AIRTABLE_TABLE }}
           AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
+          AWS_DYN_TABLE_MEGA: ${{ vars.AWS_DYN_TABLE_MEGA }}
+          AWS_DYN_TABLE_SESSION: ${{ secrets.AWS_DYN_TABLE_SESSION }}
           AWS_KEY: ${{ secrets.AWS_KEY }}
+          AWS_POLLY_BUCKET: ${{ vars.AWS_POLLY_BUCKET }}
+          AWS_POLLY_PREFIX: ${{ vars.AWS_POLLY_PREFIX }}
+          AWS_REGION: ${{ vars.AWS_REGION }}
           AWS_SECRET: ${{ secrets.AWS_SECRET }}
           CLOUDFLARE_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT }}
           CLOUDFLARE_FEEDCITY_ACCESS_KEY: ${{ secrets.CLOUDFLARE_FEEDCITY_ACCESS_KEY }}
           CLOUDFLARE_FEEDCITY_ACCESS_SECRET: ${{ secrets.CLOUDFLARE_FEEDCITY_ACCESS_SECRET }}
           CLOUDFLARE_FEEDCITY_TOKEN: ${{ secrets.CLOUDFLARE_FEEDCITY_TOKEN }}
+          CLOUDFLARE_ZONEID: ${{ secrets.CLOUDFLARE_ZONEID }}
+          JWT_KEY_ALG: ${{ secrets.JWT_KEY_ALG }}
+          JWT_KEY_CRV: ${{ secrets.JWT_KEY_CRV }}
           JWT_KEY_D_PRIVATE: ${{ secrets.JWT_KEY_D_PRIVATE }}
+          JWT_KEY_EXT: ${{ vars.JWT_KEY_EXT }}
           JWT_KEY_ID: ${{ secrets.JWT_KEY_ID }}
+          JWT_KEY_KTY: ${{ secrets.JWT_KEY_KTY }}
+          JWT_KEY_OPS_PRIVATE: ${{ vars.JWT_KEY_OPS_PRIVATE }}
+          JWT_KEY_OPS_PUBLIC: ${{ vars.JWT_KEY_OPS_PUBLIC }}
           JWT_KEY_X: ${{ secrets.JWT_KEY_X }}
           JWT_KEY_Y: ${{ secrets.JWT_KEY_Y }}
+          OPENAI_ORGID: ${{ secrets.OPENAI_ORGID }}
+          OPENAI_PROD_KEY: ${{ secrets.OPENAI_PROD_KEY }}
+          OPENAI_TEST_KEY: ${{ secrets.OPENAI_TEST_KEY }}
+          RSA_KEY_E: ${{ secrets.RSA_KEY_E }}
           RSA_KEY_N: ${{ secrets.RSA_KEY_N }}
           RSA_KEY_PRIVATE_D: ${{ secrets.RSA_KEY_PRIVATE_D }}
           RSA_KEY_PRIVATE_DP: ${{ secrets.RSA_KEY_PRIVATE_DP }}
@@ -72,3 +80,8 @@ jobs:
           RSA_KEY_PRIVATE_P: ${{ secrets.RSA_KEY_PRIVATE_P }}
           RSA_KEY_PRIVATE_Q: ${{ secrets.RSA_KEY_PRIVATE_Q }}
           RSA_KEY_PRIVATE_QI: ${{ secrets.RSA_KEY_PRIVATE_QI }}
+          STRIPE_ACCT_ID: ${{ secrets.STRIPE_ACCT_ID }}
+          STRIPE_PUBLISHED_TOKEN: ${{ secrets.STRIPE_PUBLISHED_TOKEN }}
+          STRIPE_SECRET_TOKEN: ${{ secrets.STRIPE_SECRET_TOKEN }}
+          STRIPE_TEST_PUBLISHED_TOKEN: ${{ secrets.STRIPE_TEST_PUBLISHED_TOKEN }}
+          STRIPE_TEST_SECRET_TOKEN: ${{ secrets.STRIPE_TEST_SECRET_TOKEN }}
