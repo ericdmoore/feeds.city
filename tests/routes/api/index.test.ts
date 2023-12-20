@@ -1,6 +1,6 @@
 import { assert } from "$std/testing/asserts.ts";
-import { CONN_INFO, urlPath, isValidHTML } from "$tests/common.ts"
-import { createHandler  } from "$fresh/server.ts";
+import { CONN_INFO, isValidHTML, urlPath } from "$tests/common.ts";
+import { createHandler } from "$fresh/server.ts";
 import MANIFEST from "$/fresh.gen.ts";
 import envVarReader from "$lib/utils/vars.ts";
 // import CONFIG from "$/fresh.config.ts";
@@ -12,20 +12,19 @@ const _env = await envVars("MISSING");
 const path = urlPath("http://localhost", 8080);
 
 Deno.test({
-    name:'GET /api',
-    ignore: false, 
-    fn: async () => {
+	name: "GET /api",
+	ignore: false,
+	fn: async () => {
+		const handler = await createHandler(MANIFEST, { plugins: [] });
+		const getResp = await handler(
+			new Request(path("/api"), { method: "GET" }),
+			CONN_INFO,
+		);
 
-        const handler = await createHandler(MANIFEST, { plugins: [] });
-        const getResp = await handler(
-            new Request(path("/api"), { method: "GET" }),
-            CONN_INFO
-        );
-        
-        const body = await getResp.text();
-        assert(getResp.status === 200);
-        assert(body.startsWith("<!DOCTYPE html>"));
-        assert(body.endsWith("</html>"));
-        assert(await isValidHTML(body));
-    }
+		const body = await getResp.text();
+		assert(getResp.status === 200);
+		assert(body.startsWith("<!DOCTYPE html>"));
+		assert(body.endsWith("</html>"));
+		assert(await isValidHTML(body));
+	},
 });

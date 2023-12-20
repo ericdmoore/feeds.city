@@ -8,16 +8,15 @@ const keypair = await crypto.subtle.generateKey(
 
 const kid = Date.now();
 
-
-const privJwkKey = await crypto.subtle.exportKey("jwk", keypair.privateKey)
-const pubJwkKey = await crypto.subtle.exportKey("jwk", keypair.publicKey)
+const privJwkKey = await crypto.subtle.exportKey("jwk", keypair.privateKey);
+const pubJwkKey = await crypto.subtle.exportKey("jwk", keypair.publicKey);
 
 console.log(
 	"export const privateECDSA = ",
 	JSON.stringify(
 		{
 			kid,
-			...privJwkKey
+			...privJwkKey,
 		},
 		null,
 		2,
@@ -29,15 +28,14 @@ console.log(
 	JSON.stringify(
 		{
 			kid,
-			...pubJwkKey
+			...pubJwkKey,
 		},
 		null,
 		2,
 	),
 );
 
-
-console.log('\n\nCopy paste this section into the .env file\n\n\n')
+console.log("\n\nCopy paste this section into the .env file\n\n\n");
 console.log(`## JWT
 # $> deno run utils/keys/gen-ecdsa.ts
 JWT_KEY_ALG=${privJwkKey.alg}
@@ -50,4 +48,4 @@ JWT_KEY_OPS_PRIVATE=${privJwkKey.key_ops}
 JWT_KEY_OPS_PUBLIC=${pubJwkKey.key_ops}
 JWT_KEY_X=${privJwkKey.x}
 JWT_KEY_Y=${privJwkKey.y}
-`)
+`);

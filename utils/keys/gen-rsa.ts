@@ -24,7 +24,7 @@ export const privateRSA = await crypto.subtle.exportKey(
 console.log("const publicRSA = ", JSON.stringify(publicRSA, null, 2));
 console.log("const privateRSA = ", JSON.stringify(privateRSA, null, 2));
 
-console.log('\n\nCopy paste this section into the .env file\n\n\n')
+console.log("\n\nCopy paste this section into the .env file\n\n\n");
 console.log(`## RSA
 #
 # $> deno run utils/keys/gen-rsa.ts
@@ -36,4 +36,4 @@ RSA_KEY_PRIVATE_DQ="${privateRSA.dq}"
 RSA_KEY_PRIVATE_P="${privateRSA.p}"
 RSA_KEY_PRIVATE_Q="${privateRSA.q}"
 RSA_KEY_PRIVATE_QI="${privateRSA.qi}"
-`)
+`);

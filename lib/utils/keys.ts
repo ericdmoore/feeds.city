@@ -66,7 +66,7 @@ const ecdsaPrivKey = await crypto.subtle.importKey(
 	{ name: "ECDSA", namedCurve: "P-384" },
 	true,
 	["sign"],
-)
+);
 // .then((data) => {
 // 	console.log("ecdsaPrivKey:", data);
 // 	return data;

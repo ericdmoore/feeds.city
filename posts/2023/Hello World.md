@@ -20,8 +20,7 @@ and this is the first picture
 
 ![]()
 
-::figure
-    class
+::figure class
 
 <!-- <figure class="mt-16">
     <img
@@ -33,6 +32,6 @@ and this is the first picture
         < !-- <Information_circle class="mt-0.5 h-5 w-5 flex-none text-gray-300" aria-hidden="true" /> -- >
         Faucibus commodo massa rhoncus, volutpat.
     </figcaption>
-</figure> 
+</figure>
 
 -->

@@ -41,9 +41,9 @@ export function SimpleMenu(props: SimpleMenuProps) {
 					focus:ring-2 
 					focus:ring-indigo-500 
 					focus:ring-offset-2`}
-				>
-					<span>{props.name}</span> 
-					<Chevron_down />
+			>
+				<span>{props.name}</span>
+				<Chevron_down />
 			</button>
 			<div
 				class={`${open ? "" : "hidden"} 

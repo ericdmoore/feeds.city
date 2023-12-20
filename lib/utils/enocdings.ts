@@ -11,10 +11,7 @@ export const changeEnc = (input: string | Uint8Array) => {
 	const enc = new TextEncoder();
 	const dec = new TextDecoder();
 
-	const string = (state: Uint8Array | string) => ():string => 
-		typeof state === "string"
-			? state
-			: dec.decode(state);
+	const string = (state: Uint8Array | string) => (): string => typeof state === "string" ? state : dec.decode(state);
 
 	const to = (normArr: Uint8Array) => (toEnc: EncodingFormatOptions = "utf8") => {
 		switch (toEnc) {
@@ -58,7 +55,7 @@ export const changeEnc = (input: string | Uint8Array) => {
 			case "base64":
 				return { to: to(b64Decode(inputStr)) };
 			case "base58":
-				return { to: to(b58Decode(inputStr)) };				
+				return { to: to(b58Decode(inputStr)) };
 			case "base64url":
 				return { to: to(b64urlDecode(inputStr)) };
 			case "utf8":

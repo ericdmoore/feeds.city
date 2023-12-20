@@ -18,10 +18,11 @@ const realEnvText = await Deno.readTextFile(filePath);
 
 // console.log("\n\n\n");
 
-console.log(realEnvText
-	.replace(/=[\w._+-]+/g, `="EXAMPLE_VALUE__"`)
-	.replace(/="[\w._+-]+"/g, `="EXAMPLE_VALUE__"`)
-	.replace(/='[\w._+-]+'/g, `="EXAMPLE_VALUE__"`)
+console.log(
+	realEnvText
+		.replace(/=[\w._+-]+/g, `="EXAMPLE_VALUE__"`)
+		.replace(/="[\w._+-]+"/g, `="EXAMPLE_VALUE__"`)
+		.replace(/='[\w._+-]+'/g, `="EXAMPLE_VALUE__"`),
 );
 
-console.log('Always double-check the data to not expose secrets before checking in an example')
+console.log("Always double-check the data to not expose secrets before checking in an example");

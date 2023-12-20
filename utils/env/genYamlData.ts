@@ -9,26 +9,26 @@ const filePath = path.resolve(u.pathname, "../../../.env");
 const realEnvText = await Deno.readTextFile(filePath);
 const ENVS = parse(realEnvText);
 
-console.log('Copy paste this to the env: section of deno.yml \n\n\n')
+console.log("Copy paste this to the env: section of deno.yml \n\n\n");
 
 const vars = {
-    AWS_DYN_TABLE_MEGA: true,
-    AWS_POLLY_BUCKET: true,
-    AWS_POLLY_PREFIX: true,
-    AWS_REGION: true,
-    JWT_KEY_EXT: true,
-    JWT_KEY_OPS_PRIVATE: true,
-    JWT_KEY_OPS_PUBLIC: true,
-}
+	AWS_DYN_TABLE_MEGA: true,
+	AWS_POLLY_BUCKET: true,
+	AWS_POLLY_PREFIX: true,
+	AWS_REGION: true,
+	JWT_KEY_EXT: true,
+	JWT_KEY_OPS_PRIVATE: true,
+	JWT_KEY_OPS_PUBLIC: true,
+};
 
 Object.entries(ENVS)
 	.sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
 	.forEach(([key, _]) => {
-        if(key in vars) {
-            console.log(`${key}: \${{ vars.${key} }}`)
-        } else {
-            console.log(`${key}: \${{ secrets.${key} }}`)
-        }
+		if (key in vars) {
+			console.log(`${key}: \${{ vars.${key} }}`);
+		} else {
+			console.log(`${key}: \${{ secrets.${key} }}`);
+		}
 	});
 
-console.log('\n\n\n')
+console.log("\n\n\n");

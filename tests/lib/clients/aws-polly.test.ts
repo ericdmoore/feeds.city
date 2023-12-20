@@ -12,12 +12,11 @@ Deno.test({
 	name: "Isomorphism.1",
 	// ignore: true,
 	fn: async () => {
-		
 		const req1 = new Request("https://foo.com/bar?first=1&second=2#baz", {
 			method: "GET",
 			headers: { host: "foo.com" },
 		});
-		
+
 		const req2 = await toRequest(toHttpRequest(req1));
 		assert(req1.cache === req2.cache);
 		assert(req2.credentials === req1.credentials);
@@ -30,10 +29,10 @@ Deno.test({
 		assert(req2.referrer === req1.referrer);
 		assert(req2.referrerPolicy === req1.referrerPolicy);
 		assert(req1.url === req2.url);
-			
+
 		assertEquals(req2.body, req1.body);
 		assertEquals(req2.signal, req1.signal);
-		
+
 		// console.log({h2: req2.headers, h1: req1.headers})
 		assertEquals(req2.headers.entries(), req1.headers.entries());
 	},

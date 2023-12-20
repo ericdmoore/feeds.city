@@ -233,7 +233,7 @@ Deno.test("Load Enhancement from URL", async () => {
 
 	resp.ast.items.forEach((item) => {
 		// console.log('item:', item)
-		if(item.content.source){
+		if (item.content.source) {
 			assert(item.content.source.from);
 			assert(item.content.source.url);
 			assert(item.content.source.t);
