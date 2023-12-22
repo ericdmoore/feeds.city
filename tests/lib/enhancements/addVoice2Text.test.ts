@@ -210,8 +210,8 @@ Deno.test({
 
 		// const astWithAttachments = await computableToJson(enhanced.ast);
 		console.log(
-			"test>>",
-			222,
+			214,
+			"enhanced.ast.items.length:",
 			enhanced.ast.items.length,
 			enhanced.ast.items.filter((i) => i.attachments.length > 0).length,
 		);
