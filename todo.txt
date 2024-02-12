@@ -2,13 +2,21 @@
 Key Initiaitive: Get Feedback Now
 
 [x] Signup Form to populate Airtable Waitlist
-[ ] Hammer Out a V1 Pricing Model
-    [ ] Explain "The One Time Purchase" Value Prop
+[ ] Demo - the feed builder
+    - Select the feed-functions to be available in the demo
+        - transcribe
+        - vocalize
+        - findArticle
+    - 
+
+
 [ ] Update Pages with Compelling Messaging 
     [ ] about the problem of doing nothing
     [ ] about Earlybird Pricing
     [ ] about service broadly
     [ ] about how feed functions work
+[ ] Hammer Out a V1 Pricing Model
+    [ ] Explain "The One Time Purchase" Value Prop
 [ ] Teach Your Feeds a new song and dance
 [ ] Bring Your OPML 'into the City'
 

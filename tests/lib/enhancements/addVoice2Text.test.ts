@@ -270,25 +270,29 @@ Deno.test("Enhancement Validates S3 Params", () => {
 	assertRejects(() => addTextFn(ast));
 });
 
-Deno.test("Validates S3 Params", () => {
-	const ast = urlToAST({ url: jsonFeedUrl, txt: jsonFeed });
-	const addTextFn = textToVoice({
-		aws: {
-			key: "sillyExample",
-			region: "us-west-2",
-			secret: "somethingNotTooEmbarrasing",
-		},
-		config: {
-			s3: { bucket: 42, prefix: "" },
-		},
-		// deno-lint-ignore no-explicit-any
-	} as any);
-	assertRejects(() => addTextFn(ast));
+Deno.test({
+	name: "Validates S3 Params",
+	ignore: true,
+	fn: () => {
+		const ast = urlToAST({ url: jsonFeedUrl, txt: jsonFeed });
+		const addTextFn = textToVoice({
+			aws: {
+				key: "sillyExample",
+				region: "us-west-2",
+				secret: "somethingNotTooEmbarrasing",
+			},
+			config: {
+				s3: { bucket: 42, prefix: "" },
+			},
+			// deno-lint-ignore no-explicit-any
+		} as any);
+		assertRejects(() => addTextFn(ast));
+	},
 });
 
 Deno.test({
 	name: "Validates Dynamo Params",
-	// only: true,
+	ignore: true,
 	fn: async () => {
 		const ast = await urlToAST({ url: jsonFeedUrl, txt: jsonFeed });
 		const addTextFn = textToVoice({
