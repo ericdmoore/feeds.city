@@ -1,4 +1,4 @@
-interface S3UriParts {
+export interface S3UriParts {
 	Bucket: string;
 	Key: string;
 	hash: string;
@@ -17,8 +17,6 @@ export const s3UriParse = (str: string) => {
 	const [proto, region_] = s3URL.href.includes("@")
 		? preamble.split("@")[1].slice(0, -1).split(".")
 		: s3URL.protocol.slice(0, -1).split(".");
-
-	// console.log({proto, region_ })
 
 	const {
 		username,
@@ -86,7 +84,9 @@ export const s3stringer = (_config?: unknown) => {
 	};
 
 	const s3String = (input: S3UriParts) => {
-		const protocolAndMaybeRegion = input.creds?.region ? `s3.${input.creds?.region}://` : `s3://`;
+		const protocolAndMaybeRegion = input.creds?.region
+			? `${input.protocol}.${input.creds?.region}://`
+			: `${input.protocol}://`;
 
 		const usingCreds = input.creds?.key && input.creds?.secret && input.creds?.region
 			? `${input.creds.key}:${input.creds.secret}@`

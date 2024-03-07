@@ -2,37 +2,38 @@
 /**
  * Eviction Types:
  *
- * Least Recently Used (LRU)
+ * **LRU** - Least Recently Used
  * LRU strategy, the least recently used items are removed first.
  * This strategy assumes that items that have been used recently will continue to be used in the near future.
  * For example, in a memory cache, you might use a doubly-linked list to keep track of the usage order of items.
  * When you need to evict an item, you remove the item at the tail of the list.
  *
- * First In, First Out (FIFO)
+ * **FIFO** - First In, First Out
  * In FIFO, the oldest items in the cache are removed first.
  * This is simpler to implement than LRU but may not be as effective in terms of cache hit rate.
  *
- * Time to Live (TTL)
+ * **TTL** - Time to Live
  * Items are given a time-to-live when they're inserted into the cache, and they're removed once their TTL expires.
  * This is useful for items that become stale after a certain period.
  *
- * Least Frequently Used (LFU)
+ * **LFU** - Least Frequently Used (LFU)
  * In LFU, the items that are used the least often are the first to be removed.
  * This strategy can be effective for workloads where some items are accessed more frequently than others over the long term.
  *
- * Balanced Cost-Benefit (Balanced)
- * Determine Costs:
+ * **Balanced** - Cost-Benefit Balance
+ * Estimated Costs:
  * 	- Storage Cost $/mo
  *  - Resource constraint
  * 		- Wallet / Disk Space
  *
- * Determine Benefits:
- * - latency saved benefits $/ GB
- * - determie layer speed delta over layer below
+ * Estimated Benefits:
+ * - (incremental) latency saved benefits (ms)
+ *    - vs source
+ *    - vs "next layer" down
  *
  * Maximize Benefit (Saved Latecny) / Minimize Costs (Stroage Costs)
- *
  * ^ Presupposes a Predictive Model of the future
+ * ^ also presupposes a non-trivial relationship between $ and incremental latency
  *
  * THUS we need a promotion strategy
  *

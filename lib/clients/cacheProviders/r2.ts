@@ -1,7 +1,7 @@
 // R2 has an s3 compat latyer
 // @see: https://developers.cloudflare.com/r2/api/s3/api/
 //
-// region: auto (or when necessart use:  "us-east-1")
+// region: 'auto' (or when necessary use:  "us-east-1")
 //
 // https://<ACCOUNT_ID>.r2.cloudflarestorage.com
 //
@@ -19,11 +19,11 @@ import {
 } from "../cache.ts";
 import { cache as S3Cache, type S3CacheConfig } from "./s3.ts";
 
-interface ICloudflareCacheConfig extends Omit<S3CacheConfig, "endpoint" | "region"> {
+export interface ICloudflareCacheConfig extends Omit<S3CacheConfig, "endpoint" | "region"> {
 	accountId: string;
 }
 
-interface CloudflareR2Cache<NativeDataType = Uint8Array> extends ICacheProvider<NativeDataType> {
+export interface CloudflareR2Cache<NativeDataType = Uint8Array> extends ICacheProvider<NativeDataType> {
 	meta: {
 		cloud: string;
 		service: string;
@@ -45,27 +45,19 @@ export const cache = async (s3c: ICloudflareCacheConfig): Promise<CloudflareR2Ca
 		endpoint: `https://${s3c.accountId}.r2.cloudflarestorage.com/${s3c.defaultBucket}`,
 	});
 
-	let handledItems = 0;
-
 	const meta = await {
 		cloud: "Cloudflare",
 		service: "R2",
 		region: "auto",
-		size: () => handledItems,
+		size: cache.meta.size,
 	};
 
 	return {
 		meta,
 		provider: "Cloudflare:R2",
 		get: cache.get,
-		set: (name: string, data: Uint8Array | string) =>
-			cache.set(name, data).finally(() => {
-				handledItems++;
-			}),
-		del: (name: string) =>
-			cache.del(name).finally(() => {
-				handledItems--;
-			}),
+		set: cache.set,
+		del: cache.del,
 		has: cache.has,
 		peek: cache.peek,
 		transforms: {

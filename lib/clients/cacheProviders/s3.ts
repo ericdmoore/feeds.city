@@ -55,10 +55,13 @@ export const cache = async (
 	// const enc = new TextEncoder();
 
 	const provider = "AWS:S3";
+	let handledItems = 0;
+
 	const meta = {
 		cloud: "AWS",
 		service: "S3",
 		region: s3c.region,
+		size: () => handledItems,
 	};
 
 	const s3 = new S3Client({
@@ -69,8 +72,6 @@ export const cache = async (
 			secretAccessKey: s3c.secret,
 		},
 	});
-
-	let handledItems = 0;
 
 	const renamer = overrides.transforms?.renamer ?? defaultRenamer;
 	const toBytes = overrides.transforms?.toBytes ?? defaultToBytesWithTypeNote;

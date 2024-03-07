@@ -2,7 +2,7 @@
  * Need a heuristic/policy of when to swap item/data between tiers
  * It is assumed that the swapping happens during the fallbacks/spillovers
  *
- * "Cost Minimization & Popularity Maximizing" seem to be two sides of the same coin
+ * "Cost Minimization & Popularity Maximizing" seem to be two sides/names of the same coin/idea
  * Non-Relative / Comparable figures could be used to determine which and how many to swap.
  *
  * times = [ts, ts, ts, ts, ts]
@@ -30,7 +30,6 @@ import {
 	defaultRenamer,
 	type ICacheableDataForCache,
 	type ICacheDataFromProvider,
-	// type ICacheProvider,
 	type TransformFunctionGroup,
 } from "../cache.ts";
 
