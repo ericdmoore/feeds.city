@@ -30,7 +30,7 @@ import {
 	type TransformToBytes,
 } from "../cache.ts";
 
-import { encodingWith } from "./encoders/mod.ts";
+import { encodingWith } from "./recoders/mod.ts";
 export interface IDynamoCacheConfig {
 	key: string;
 	secret: string;
