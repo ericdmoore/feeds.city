@@ -1,3 +1,10 @@
+/**
+ * @ref: https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/command/PutBucketIntelligentTieringConfigurationCommand/
+ * This client assumes a created bucket.
+ * This bucket that might have a lifecycle policy to optimize storage classes - https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html
+ * IntelligentTiering Config - https://docs.aws.amazon.com/AmazonS3/latest/API/API_IntelligentTieringConfiguration.html
+ */
+
 import {
 	DeleteObjectCommand,
 	GetObjectCommand,
@@ -20,7 +27,7 @@ import {
 	type ICacheProvider,
 } from "../cache.ts";
 
-import { encodingWith } from "./encoders/mod.ts";
+import { encodingWith } from "./recoders/mod.ts";
 //#region interfaces
 
 export interface S3CacheConfig {
@@ -38,7 +45,7 @@ export const s3parse = s3UriParse;
 
 export const cache = async (
 	s3c: S3CacheConfig,
-	overrides: Partial<ICacheProvider> = {
+	overrides: Partial<ICacheProvider<string | Uint8Array>> = {
 		transforms: {
 			renamer: (s) => Promise.resolve(s),
 			toBytes: defaultToBytesWithTypeNote,
@@ -46,15 +53,13 @@ export const cache = async (
 		},
 	},
 	s3Parse: S3UriParserFn = s3UriParse,
-): Promise<ICacheProvider> => {
+): Promise<ICacheProvider<string | Uint8Array>> => {
 	s3c.defaultBucket = s3c.defaultBucket ?? "";
 	s3c.defualtPrefix = s3c.defualtPrefix ?? "";
 
-	const coder = await encodingWith();
-	const dec = new TextDecoder();
-	// const enc = new TextEncoder();
-
 	const provider = "AWS:S3";
+	const coder = await encodingWith();
+
 	let handledItems = 0;
 
 	const meta = {
@@ -91,38 +96,36 @@ export const cache = async (
 		}
 	};
 
-	const set = async (name: string, inputData: Uint8Array | string) => {
-		const { Bucket, Key } = defaultedParse(name, {
+	const set = async (locationName: string, inputData: Uint8Array | string) => {
+		const { Bucket, Key } = defaultedParse(locationName, {
 			Bucket: s3c.defaultBucket,
 			Key: s3c.defualtPrefix,
 		});
 		const renamed = await renamer(Key);
-		const sendKey = `${s3c.defualtPrefix}/${renamed}`;
-
-		const value = await coder.encode(["id", "br", "base64url"], inputData);
+		const sendKey = `${Bucket}/${renamed}`;
+		const value = await toBytes(inputData);
 
 		const dataToS3 = {
 			meta,
 			provider,
-			key: { name, renamed },
-			value: {
-				...value,
-				data: dec.decode(value.data), // base64url string
-			},
+			key: { name: locationName, renamed },
+			value,
 		};
 
 		const s3r = await s3.send(
 			new PutObjectCommand({ Bucket, Key: sendKey, Body: JSON.stringify(dataToS3) }),
 		);
+		handledItems++;
 
 		const ret = {
 			provider,
 			meta: { cloud: "AWS", s3resp: s3r },
-			key: { name, renamed: await renamer(Key) },
+			key: {
+				name: locationName,
+				renamed: await renamer(Key),
+			},
 			value,
 		};
-
-		handledItems++;
 
 		return {
 			...ret,

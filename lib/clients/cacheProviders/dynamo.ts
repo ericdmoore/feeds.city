@@ -41,6 +41,7 @@ export interface IDynamoCacheConfig {
 export interface DynamoCache extends ICacheProvider<Uint8Array> {
 	provider: string;
 	meta: {
+		size: () => number;
 		cloud: "AWS:Dynamo";
 		service: "Dynamo";
 		region: string;
@@ -77,11 +78,13 @@ export const cache = async (
 			secretAccessKey: dyn.secret,
 		},
 	});
+	let size = 0;
 	const provider = "AWS:Dynamo";
 	const meta = {
 		cloud: "AWS:Dynamo" as const,
 		service: "Dynamo" as const,
 		region: dyn.region,
+		size: () => Object.freeze(size),
 		deleteItem: async (name: string) =>
 			dync.send(
 				new DeleteItemCommand({
@@ -122,7 +125,7 @@ export const cache = async (
 				console.error("cache.ts:412", e);
 				return payload;
 			});
-
+		size++;
 		return {
 			...payload,
 			value: {
@@ -164,16 +167,18 @@ export const cache = async (
 				TableName: dyn.table,
 				Key: marshall({ pk: renamed, sk: renamed }),
 			}),
-		).then(() => ({
-			meta,
-			provider,
-			key: { name, renamed },
-			value: {
-				data: new Uint8Array(),
-				transformed: new Uint8Array(),
-			},
-		} as ICacheDataFromProvider))
-			.catch(() => null);
+		).then(() => {
+			size--;
+			return {
+				meta,
+				provider,
+				key: { name, renamed },
+				value: {
+					data: new Uint8Array(),
+					transformed: new Uint8Array(),
+				},
+			} as ICacheDataFromProvider;
+		}).catch(() => null);
 	};
 
 	return {

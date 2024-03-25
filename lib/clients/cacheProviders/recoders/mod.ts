@@ -4,9 +4,10 @@ import { type ValueForCacheInternals } from "../../cache.ts";
 import { br } from "./br.ts";
 import { zstd } from "./zstd.ts";
 import { gzip } from "./gzip.ts";
+import { snappy } from "./snappy.ts";
 import { base64url } from "./b64url.ts";
 
-export type AvailableEncodings = "id" | "base64url" | "hex" | "utf8" | "br" | "gzip" | "zstd";
+export type AvailableEncodings = "id" | "base64url" | "hex" | "utf8" | "br" | "gzip" | "snappy" | "zstd";
 
 export type EncModule = (...i: unknown[]) => Promise<EncModuleRet>;
 
@@ -69,6 +70,7 @@ export const id: EncModule = () => {
 export const encoderMap = async (compressThreshold = 512) => ({
 	id: await id(),
 	br: await br(compressThreshold),
+	snappy: await snappy(compressThreshold),
 	gzip: await gzip(compressThreshold),
 	zstd: await zstd(compressThreshold),
 	base64url: await base64url(),
@@ -101,4 +103,4 @@ export const encodingWith = async (encodingmap?: PromiseOr<Record<string, EncMod
 	return { encode, decode };
 };
 
-export default { id, br, zstd, gzip, base64url, encoderMap, encodingWith };
+export default { id, br, zstd, gzip, snappy, base64url, encoderMap, encodingWith };

@@ -1,17 +1,18 @@
 import { PromiseOr } from "$lib/types.ts";
+// import type {Buffer} from 'snappy'
 import { type EncModule, type EncModuleRet, makeBytes } from "./mod.ts";
 import { type ValueForCacheInternals } from "../../cache.ts";
 
-export const gzip: EncModule = async (compressThreshold = 512) => {
-	const { gzipEncode, gzipDecode } = await import("gzip_wasm");
+export const snappy: EncModule = async (compressThreshold = 512) => {
+	const { compress, uncompress } = await import("snappy");
 
 	const to = async (input: Uint8Array | string, contentEncoding = "id" as string) => {
 		const bytes = makeBytes(input);
 		``;
 		if (bytes.length > (compressThreshold as number)) {
 			return {
-				data: await gzipEncode(bytes),
-				"content-encoding": ["gzip", ...contentEncoding.split(";")].join(";"),
+				data: await compress(bytes as Buffer),
+				"content-encoding": ["snappy", ...contentEncoding.split(";")].join(";"),
 				"content-type": typeof input === "string" ? "string" : "Uint8Array",
 			} as ValueForCacheInternals;
 		} else {
@@ -29,8 +30,8 @@ export const gzip: EncModule = async (compressThreshold = 512) => {
 
 		if (v.data.length > (compressThreshold as number)) {
 			return Promise.resolve({
-				data: gzipEncode(makeBytes(v.data)),
-				"content-encoding": ["gzip", ...contentEncoding].join(";"),
+				data: await compress(makeBytes(v.data) as Buffer),
+				"content-encoding": ["snappy", ...contentEncoding].join(";"),
 				"content-type": "Uint8Array",
 			} as ValueForCacheInternals);
 		} else {
@@ -38,16 +39,17 @@ export const gzip: EncModule = async (compressThreshold = 512) => {
 		}
 	};
 
-	const from = (value: ValueForCacheInternals): Promise<ValueForCacheInternals> => {
+	const from = async (value: ValueForCacheInternals): Promise<ValueForCacheInternals> => {
 		const contentEncoding = value["content-encoding"].split(";");
 		const encoding = contentEncoding.shift();
 
-		if (encoding !== "base64url") {
-			return Promise.reject(new Error("base64url encoding not found"));
+		if (encoding !== "snappy") {
+			// assert(encoding === "snappy");
+			return Promise.reject(new Error("snappy encoding not found"));
 		}
 
 		return Promise.resolve({
-			data: gzipDecode(makeBytes(value.data)),
+			data: await uncompress(makeBytes(value.data) as Buffer),
 			"content-encoding": contentEncoding.join(";"),
 			"content-type": typeof value.data === "string" ? "string" : "Uint8Array",
 		} as ValueForCacheInternals);

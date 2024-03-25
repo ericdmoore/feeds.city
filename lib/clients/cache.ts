@@ -43,13 +43,21 @@
  * 		- Scheduled
  * 		- ML based
  * 1. Ensemble Approach
+ *
+ * __Consider Adding a AWS-Glacier Layer.__
+ * As logic is built out for promotion and eviction - it should be noted that
+ * most cloud systems are set up to charge for promotions from cold-storage.
+ * So that would be a reasonable thing to surface in the client.
+ * Basically the higher the cloud-cost for re-promotion, the more we
+ * should be sure that we want to evict something.
+ * Especially if the re-promotion cost is higher than the do-nothing case.
  */
 
 //#region imports
 import { type PromiseOr } from "$lib/types.ts";
 import { LRUCache } from "lru-cache";
-import changeEncOf from "$lib/utils/enocdings.ts";
-import { makeBytes } from "./cacheProviders/encoders/mod.ts";
+import changeEncOf from "../utils/encodings.ts";
+import { makeBytes } from "./cacheProviders/recoders/mod.ts";
 
 //#endregion imports
 
@@ -104,7 +112,10 @@ export interface TransformFunctionGroup<NativeDataType = Uint8Array> {
 }
 export interface ICacheProvider<NativeDataType = Uint8Array> {
 	provider: string;
-	meta: Record<string, unknown>;
+	meta: {
+		size: () => number;
+		[name: string]: unknown;
+	};
 	transforms: TransformFunctionGroup<NativeDataType>;
 	set: (name: string, data: NativeDataType | string) => Promise<ICacheDataFromProvider<NativeDataType>>;
 	get: (name: string) => Promise<NullableProviderData<NativeDataType>>;
@@ -240,19 +251,32 @@ export const bytestoJsonWithTypeNote: TransformToBytes = (input: unknown | Uint8
 		});
 };
 
-export const defaultToBytesWithTypeNote: TransformToBytes = (input: unknown | Uint8Array) => {
+export const defaultToBytesWithTypeNote = (input: Uint8Array | string | unknown) => {
 	const enc = new TextEncoder();
 	return input instanceof Uint8Array
 		? Promise.resolve({
 			data: changeEncOf(input).from("utf8").to("base64url").array(),
 			"content-type": "Uint8Array",
 			"content-encoding": "base64url;id",
-		})
+		} as ValueForCacheInternals)
 		: Promise.resolve({
 			data: enc.encode(JSON.stringify(input)),
 			"content-type": "string",
 			"content-encoding": "id",
-		});
+		} as ValueForCacheInternals);
+};
+
+export const defaultFromBytesWithNote: TransformFromBytes = (retrieved?: ICacheableDataForCache) => {
+	if (!retrieved?.value.data) {
+		return null;
+	} else if (retrieved.value["content-type"] !== "Uint8Array") {
+		const dec = new TextDecoder();
+		return typeof retrieved.value.data === "string"
+			? JSON.parse(retrieved.value.data)
+			: JSON.parse(dec.decode(retrieved.value.data));
+	} else {
+		return retrieved.value.data;
+	}
 };
 
 export const makeKey = async (name: string, renamer: RenamerFn) => ({ name, renamed: await renamer(name) }) as CacheKey;

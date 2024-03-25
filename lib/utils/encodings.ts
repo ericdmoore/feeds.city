@@ -1,8 +1,6 @@
 import { decode as hexDecode, encode as hexEncode } from "$std/encoding/hex.ts";
-
 import { decode as b64Decode, encode as b64Encode } from "$std/encoding/base64.ts";
 import { decode as b58Decode, encode as b58Encode } from "$std/encoding/base58.ts";
-
 import { decode as b64urlDecode, encode as b64urlEncode } from "$std/encoding/base64url.ts";
 
 export type EncodingFormatOptions = "hex" | "base64" | "base58" | "base64url" | "utf8";
@@ -65,8 +63,44 @@ export const changeEnc = (input: string | Uint8Array) => {
 		}
 	};
 
+	/**
+	 *
+	 * @param fromEncArr
+	 * @see: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Encoding
+	 * ```text
+	 *    // Multiple, in the order in which they were applied
+		  Content-Encoding: deflate, gzip
+	 * ```
+	 * @see: https://www.rfc-editor.org/rfc/rfc7231#section-3.1.2.2 (2nd FULL paragraph)
+	 * Notice the order of the encodings is important. And they are marked left to right order they were applied by the sender
+	 */
+	const fromCompoundEnc = (...fromEncArr: string[]) => {
+		const inputArr = typeof input === "string" ? enc.encode(input) : input;
+
+		const data = fromEncArr
+			.reduce((dataArrTransformed, fromEnc) => {
+				switch (fromEnc) {
+					case "hex":
+						return hexDecode(dataArrTransformed);
+					case "base64":
+						return b64Decode(dec.decode(dataArrTransformed));
+					case "base58":
+						return b58Decode(dec.decode(dataArrTransformed));
+					case "base64url":
+						return b64urlDecode(dec.decode(dataArrTransformed));
+					case "utf8":
+						return dataArrTransformed;
+					default:
+						return new Uint8Array() as never;
+				}
+			}, inputArr);
+
+		return { to: to(data) };
+	};
+
 	return {
 		from,
+		fromCompoundEnc,
 	};
 };
 

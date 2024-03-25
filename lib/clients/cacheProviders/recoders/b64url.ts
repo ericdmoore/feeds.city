@@ -1,5 +1,5 @@
 // import {assert} from '$std/testing/asserts.ts'
-import { PromiseOr } from "$lib/types.ts";
+import { type PromiseOr } from "$lib/types.ts";
 import { type EncModule, type EncModuleRet, makeBytes, makeString } from "./mod.ts";
 import { type ValueForCacheInternals } from "../../cache.ts";
 

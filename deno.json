@@ -48,6 +48,7 @@
 		"@aws-sdk/client-polly": "https://esm.sh/@aws-sdk/client-polly@3.370.0?deno-std=0.181.0&dts",
 		"@aws-sdk/client-s3/": "https://esm.sh/@aws-sdk/client-s3@3.374.0/",
 		"@aws-sdk/client-s3": "https://esm.sh/@aws-sdk/client-s3@3.374.0?deno-std=0.181.0&dts",
+		"@aws-sdk/client-glacier": "https://esm.sh/@aws-sdk/client-glacier@3.535.0?deno-std=0.181.0&dts",
 		"@aws-sdk/util-dynamodb": "https://esm.sh/@aws-sdk/util-dynamodb@3.329.0?deno-std=0.172.0&dts",
 		"@aws-sdk/signature-v4": "https://esm.sh/@aws-sdk/signature-v4@3.370.0?deno-std=0.181.0&dts",
 		"@aws-sdk/protocol-http": "https://esm.sh/@aws-sdk/protocol-http@3.370.0?deno-std=0.181.0&dts",
@@ -69,6 +70,7 @@
 		"deno_dom": "https://deno.land/x/deno_dom@v0.1.21-alpha/deno-dom-wasm.ts",
 		"fluentSchema": "https://esm.sh/fluent-json-schema@3.1.0",
 		"fromXml": "https://deno.land/x/xml2js@1.0.0/mod.ts",
+		"snappy": "https://esm.sh/snappyjs@0.7.0?deno-std=0.181.0&dts",
 		"gzip_wasm": "https://deno.land/x/wasm_gzip@v1.0.0/mod.ts",
 		"gfm": "https://deno.land/x/gfm@0.2.3/mod.ts",
 		"imurmurhash": "https://esm.sh/imurmurhash@0.1.4?deno-std=0.181.0&dts",
@@ -90,6 +92,10 @@
 		"mu-forms/": "https://esm.sh/mu-forms@1.0.7/",
 		"multiformats": "https://esm.sh/multiformats@9.6.4?deno-std=0.181.0&dts",
 		"mustache": "https://deno.land/x/mustache@v0.3.0/mod.ts",
+		
+		"apache-arrow":"https://esm.sh/apache-arrow@15.0.2",
+		"parquet-wasm/":"https://esm.sh/parquet-wasm@0.6.0-beta.2/",
+		
 		"superstruct": "https://deno.land/x/deno_superstruct@0.0.0/mod.ts",
 		"stripe": "https://esm.sh/stripe@13.5.0?deno-std=0.181.0&dts",
 		"toXml": "https://deno.land/x/js2xml@1.0.2/mod.ts",

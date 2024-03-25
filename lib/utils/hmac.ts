@@ -1,4 +1,4 @@
-import encodings from "./enocdings.ts";
+import encodings from "./encodings.ts";
 
 export type SupportedHashNames = "SHA-1" | "SHA-256" | "SHA-512" | "SHA-384";
 export type IoFmtOptions = "hex" | "base64" | "base64url" | "utf8";
