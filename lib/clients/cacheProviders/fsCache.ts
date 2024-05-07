@@ -36,7 +36,7 @@ import {
 import { join } from "$std/path/mod.ts";
 import { JSONC } from "JSONC";
 // import changeEnc from "$lib/utils/enocdings.ts";
-import { encodingWith } from "./encoders/mod.ts";
+import { encodingWith } from "./recoders/mod.ts";
 
 export type NamedNumber = [string, number];
 export type FsCacheConfig = {

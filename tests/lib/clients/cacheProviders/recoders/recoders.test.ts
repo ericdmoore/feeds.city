@@ -10,6 +10,9 @@ Shaman grailed mollit DSA jianbing. Wolf eu four dollar toast, non readymade do 
 Activated charcoal gochujang readymade, food truck shoreditch VHS narwhal portland aesthetic do irure bushwick. Locavore copper mug 90's glossier laboris edison bulb pabst esse. Brunch slow-carb officia selfies literally. Occaecat trust fund 8-bit ea eu kombucha hashtag tilde. Eu etsy wayfarers, laboris tbh cliche ennui 3 wolf moon qui gastropub ut id. Chillwave pabst williamsburg actually banh mi glossier pariatur, sriracha mustache laborum voluptate tumblr.
 Esse irony praxis deep v mlkshk meh culpa, four loko fanny pack fashion axe you probably haven't heard of them sartorial. Magna labore locavore roof party eiusmod cred ad vegan four loko cardigan. Typewriter edison bulb craft beer shabby chic austin, mukbang jean shorts woke hammock marxism fingerstache fit yuccie. Ut proident echo park, chambray next level Brooklyn kombucha unicorn yes plz kinfolk neutra health goth food truck. Vape ut four dollar toast pitchfork mumblecore blue bottle PBR&B artisan cardigan irony occaecat ennui dolor anim excepteur. Tacos ex fingerstache tonx butcher, ut bicycle rights dreamcatcher trust fund labore iPhone flexitarian ugh.
 Blog af shaman commodo. Wayfarers nulla succulents crucifix williamsburg fanny pack neutra pok pok. Bicycle rights taiyaki poke, celiac snackwave hella put a bird on it swag organic quinoa. Neutral milk hotel paleo jawn health goth occaecat ut.`;
+const randUserData100txt = await fetch("https://random-data-api.com/api/v2/users?size=100")
+								 .then((res) => res.text())
+
 
 const randLabel = "4e5"; // 4.4e7 is fine - 4.5e7 causes OOM
 const randomString = (inputLength: number) => {
@@ -26,21 +29,40 @@ const randomString = (inputLength: number) => {
 const randStr = randomString(Number.parseFloat(randLabel));
 
 Deno.test("br data array is smaller than original", async () => {
-	const bytes = txtEnc.encode(sampleString2);
+
 	const br = await enc.br();
 
 	br.to(sampleString2).then((coded) => {
-		assert(bytes.length >= coded.data.length);
+		const bytes1 = txtEnc.encode(sampleString2);
+		assert(bytes1.length >= coded.data.length);
 		assertEquals(coded["content-encoding"], "br;id");
 		assertEquals(coded["content-type"], "string");
 
 		console.log(
+			"sampleString2::\n",
 			"coded.length: ",
 			coded.data.length,
 			"\noriginal.length:",
-			bytes.length,
+			bytes1.length,
 			"\n % of orig:",
-			coded.data.length / bytes.length, // 51%
+			coded.data.length / bytes1.length, // 51.7%
+		);
+	});
+
+	br.to(randUserData100txt).then((coded) => {
+		const bytes2 = txtEnc.encode(randUserData100txt);
+		assert(bytes2.length >= coded.data.length);
+		assertEquals(coded["content-encoding"], "br;id");
+		assertEquals(coded["content-type"], "string");
+
+		console.log(
+			"\n\n100 random user JSON payload::\n",
+			"coded.length: ",
+			coded.data.length,
+			"\noriginal.length:",
+			bytes2.length,
+			"\n % of orig:",
+			coded.data.length / bytes2.length, // 23.8%
 		);
 	});
 });
@@ -81,6 +103,46 @@ Deno.test("Coder/decoder based on Brotli", async () => {
 			bytes.length,
 			"\n % of orig:",
 			coded.data.length / bytes.length, // 51%
+		);
+	});
+});
+
+Deno.test("Coder/decoder based on GZIP", async () => {
+	const bytes = txtEnc.encode(sampleString2);
+	const [recoder, gzip] = await Promise.all([encodingWith(), enc.gzip()]);
+
+	recoder.encode(["gzip"], bytes).then(async (coded) => {
+		assertEquals(coded["content-encoding"], "gzip;id");
+		assertEquals(coded["content-type"], "Uint8Array");
+		assert(bytes.length >= coded.data.length);
+		assertEquals(coded.data, (await gzip.to(sampleString2)).data);
+		console.log(
+			"coded.length: ",
+			coded.data.length,
+			"\noriginal.length:",
+			bytes.length,
+			"\n % of orig:",
+			coded.data.length / bytes.length, // 53%
+		);
+	});
+});
+
+Deno.test("Coder/decoder based on ZSTD", async () => {
+	const bytes = txtEnc.encode(sampleString2);
+	const [recoder, zstd] = await Promise.all([encodingWith(), enc.zstd()]);
+
+	recoder.encode(["zstd"], bytes).then(async (coded) => {
+		assertEquals(coded["content-encoding"], "zstd;id");
+		assertEquals(coded["content-type"], "Uint8Array");
+		assert(bytes.length >= coded.data.length);
+		assertEquals(coded.data, (await zstd.to(sampleString2)).data);
+		console.log(
+			"coded.length: ",
+			coded.data.length,
+			"\noriginal.length:",
+			bytes.length,
+			"\n % of orig:",
+			coded.data.length / bytes.length, // 52%
 		);
 	});
 });

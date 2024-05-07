@@ -10,7 +10,7 @@ import { type ICacheProvider } from "$lib/clients/cache.ts";
 
 export const cache = (
 	s3c: Omit<S3CacheConfig, "endpoint">,
-	overrides: Partial<ICacheProvider>,
+	overrides: Partial<ICacheProvider<string | Uint8Array>>,
 	parserFn: S3UriParserFn,
 ) =>
 	s3cache({ ...s3c, endpoint: "backblazeb2.com" }, overrides, parserFn)

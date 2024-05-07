@@ -12,7 +12,7 @@ import {
 	type TransformFromBytes,
 	type TransformToBytes,
 } from "../cache.ts";
-import { encodingWith } from "./encoders/mod.ts";
+import { encodingWith } from "./recoders/mod.ts";
 
 //#endregion imports
 
@@ -25,20 +25,21 @@ export const denoKVcache = async (
 	}>,
 ): Promise<ICacheProvider> => {
 	const provider = "Deno:KV";
-	const meta = {
-		cloud: "Deno Deploy",
-		...config,
-	};
+	
 	const coder = await encodingWith();
 	const history = new Map<string, number>();
 	const renamer = transforms?.renamer ?? defaultRenamer;
 	const fromBytes = transforms?.fromBytes ?? defaultFromBytes;
 	const toBytes = transforms?.toBytes ?? defaultToBytesWithTypeNote;
-
+	const meta = {
+		cloud: "Deno Deploy",
+		size: () => history.size,
+		...config,
+	};
 	const set = async (name: string, data: Uint8Array | string) => {
 		const kvP = Deno.openKv();
 		const renamed = await renamer(name);
-
+		
 		// objectHistory.push({name: renamed, ts: Date.now()})
 		history.set(renamed, Date.now());
 

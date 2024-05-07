@@ -1,7 +1,7 @@
 // import { skip } from "../helpers.ts";
 import { assert, assertEquals, assertNotEquals } from "$std/testing/asserts.ts";
 import { cacheStack, inMem as inMemCache, renamerWithSha1 } from "$lib/clients/cache.ts";
-import { encoderMap, encodingWith } from "$lib/clients/cacheProviders/encoders/mod.ts";
+import { encoderMap, encodingWith } from "$lib/clients/cacheProviders/recoders/mod.ts";
 import { dynamo, fsCache, memFrontS3, s3 } from "$lib/clients/cacheProviders/mod.ts";
 import s3uri from "$lib/parsers/s3uri.ts";
 import { sleep } from "$lib/index.ts";

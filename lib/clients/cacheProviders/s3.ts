@@ -23,11 +23,12 @@ import {
 	// type TransformToBytes,
 	// type ValueForCacheInternals,
 	type ICacheableDataForCache,
-	type ICacheDataFromProvider,
+	// type ICacheDataFromProvider,
 	type ICacheProvider,
 } from "../cache.ts";
 
 import { encodingWith } from "./recoders/mod.ts";
+import { NullableProviderData } from "$lib/clients/cache.ts";
 //#region interfaces
 
 export interface S3CacheConfig {
@@ -53,7 +54,7 @@ export const cache = async (
 		},
 	},
 	s3Parse: S3UriParserFn = s3UriParse,
-): Promise<ICacheProvider<string | Uint8Array>> => {
+): Promise<ICacheProvider<Uint8Array | string>> => {
 	s3c.defaultBucket = s3c.defaultBucket ?? "";
 	s3c.defualtPrefix = s3c.defualtPrefix ?? "";
 
@@ -172,7 +173,7 @@ export const cache = async (
 			provider,
 			meta: { ...s3r, cloud: "AWS" } as Record<string, unknown>,
 			key: { name, renamed },
-			value,
+			value
 		} as ICacheableDataForCache;
 
 		const transformed = await fromBytes(synthValueFromCache);
@@ -183,7 +184,7 @@ export const cache = async (
 				...synthValueFromCache.value,
 				transformed,
 			},
-		} as ICacheDataFromProvider;
+		} as NullableProviderData<string | Uint8Array>
 	};
 
 	const has = async (name: string) => {
@@ -195,7 +196,7 @@ export const cache = async (
 		const sendKey = `${s3c.defualtPrefix}/${renamed}`;
 
 		return s3.send(new HeadObjectCommand({ Bucket, Key: sendKey }))
-			.then(() => true)
+			.then((resp) => resp.$metadata.httpStatusCode === 200)
 			.catch(() => false);
 	};
 
