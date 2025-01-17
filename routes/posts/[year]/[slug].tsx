@@ -111,7 +111,7 @@ const captionTag = (defaultStr: string) => (that: CompileContext, d: DirectiveIn
  * @param d
  * @returns
  */
-const figure: Handle = function (this: CompileContext, d: DirectiveInput) {
+const figure = function (this: CompileContext, d: DirectiveInput) {
 	if (d.type !== "leafDirective") return false;
 
 	/**
@@ -139,7 +139,7 @@ const figure: Handle = function (this: CompileContext, d: DirectiveInput) {
 	this.raw(d.label || "");
 	this.tag("</figure>");
 	return true;
-};
+}; // Handle
 
 export default function MarkdownPage({ data }: PageProps<Page | null>) {
 	if (!data) {

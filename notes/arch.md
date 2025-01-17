@@ -50,13 +50,13 @@ const JSONFEED = loadFeed
 .using(enhancemenFnArr :(enhancementFn | string)[], options:unknown[])
 ```
 
-## Final
+## Configs
 
 ```
 .exportConfig()
 ```
 
-_#Messages_ & _#Warnings_
+## _Messages_ & _Warnings_
 
 > both use the SCIPAB interface
 

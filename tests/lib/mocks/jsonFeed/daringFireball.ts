@@ -1,5 +1,5 @@
 // curl https://daringfireball.net/feeds/json >> tests/mocks/jsonFeed/daringFireball.json
-import dfb from "./jsons/daringFireball.json" assert { type: "json" };
+import dfb from "./jsons/daringFireball.json" with { type: "json" };
 
 export const jsonFeed = JSON.stringify(dfb);
 export const rss = `

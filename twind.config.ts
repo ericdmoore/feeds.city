@@ -7,9 +7,9 @@ import { aspectRatio } from "https://esm.sh/@twind/aspect-ratio@0.1.4";
 export default {
 	selfURL: import.meta.url,
 	plugins: {
-		// lineClamp
+		// lineClamp,
+		// aspectRatio,
 		forms,
 		HeadlessUI,
-		aspectRatio,
 	},
 } as Options;

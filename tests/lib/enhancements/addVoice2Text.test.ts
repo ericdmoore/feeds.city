@@ -83,7 +83,7 @@ const runAssertions =
 		ASTassertionFns.forEach(async (fASTAssert) => await fASTAssert(ast));
 
 		itemAssertionFns.forEach((fnItemAssert) => {
-			_ast.items.forEach(async (item, _i) => {
+			_ast.items.forEach(async (item: any, _i: any) => {
 				// console.log({ i, 'Len(attachedList)': item.attachments.length, item })
 				await fnItemAssert(item);
 			});
@@ -213,7 +213,7 @@ Deno.test({
 			214,
 			"enhanced.ast.items.length:",
 			enhanced.ast.items.length,
-			enhanced.ast.items.filter((i) => i.attachments.length > 0).length,
+			enhanced.ast.items.filter((i: any) => i.attachments.length > 0).length,
 		);
 
 		// enhanced.ast.items.forEach((i,n)=>{

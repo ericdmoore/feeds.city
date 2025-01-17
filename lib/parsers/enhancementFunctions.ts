@@ -394,8 +394,8 @@ export const sortValidFuncs = (
 const tryJSONparse = (s: string): EITHER<unknown> => {
 	try {
 		return Right(JSON.parse(s));
-	} catch (_er) {
-		return Left(Error(_er));
+	} catch (er :unknown) {
+		return Left(Error(`${er}`));
 	}
 };
 

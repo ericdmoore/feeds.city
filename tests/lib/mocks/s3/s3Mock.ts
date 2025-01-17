@@ -1,6 +1,5 @@
 // mod.ts audit: OK
-//
-import { hmac } from "https://deno.land/x/hmac@v2.0.1/mod.ts";
+import { hmac } from "$lib/utils/hmac.ts";
 import { GetObjectCommand, HeadObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { streamToString } from "$lib/utils/pumpReader.ts";
 
@@ -18,15 +17,15 @@ export class Body {
 	}
 }
 
-export const s3Mock = (
+export const s3Mock =  (
 	state: Map<string, Uint8Array> = new Map<string, Uint8Array>(),
 ) => {
-	const headObject = (key: string) => {
+	const headObject = async (key: string) => {
 		const res = state.get(key) ?? new Uint8Array();
 		return {
 			contentLength: res.length,
 			deleteMarker: false,
-			etag: hmac("sha256", res, res, undefined, "hex") as string,
+			etag: await hmac('SHA-256', res, res, 'hex'),
 			lastModified: new Date(), // res.headers.get("Last-Modified")!),
 			missingMeta: 0,
 			storageClass: "STANDARD",

@@ -118,7 +118,7 @@ export const v1: v1AbstractTokenFactory = (
 			return coreValidations && erroredUserVals.length === 0;
 		} catch (e) {
 			console.error({ coreValidations, erroredUserVals });
-			return Promise.reject(new Error(e));
+			return Promise.reject(new Error(`${e}`));
 		}
 	};
 
@@ -126,7 +126,7 @@ export const v1: v1AbstractTokenFactory = (
 		try {
 			return !!djwtVerify(jwtStr, pair.publicKey);
 		} catch (e) {
-			return Promise.reject(new Error(e));
+			return Promise.reject(new Error(`${e}`));
 		}
 	};
 

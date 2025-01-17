@@ -1,5 +1,4 @@
 import { PromiseOr } from "$lib/types.ts";
-// import type {Buffer} from 'snappy'
 import { type EncModule, type EncModuleRet, makeBytes } from "./mod.ts";
 import { type ValueForCacheInternals } from "../../cache.ts";
 
@@ -11,7 +10,7 @@ export const snappy: EncModule = async (compressThreshold = 512) => {
 
 		if (bytes.length > (compressThreshold as number)) {
 			return {
-				data: await compress(bytes as Buffer),
+				data: await compress(bytes),
 				"content-encoding": ["snappy", ...contentEncoding.split(";")].join(";"),
 				"content-type": typeof input === "string" ? "string" : "Uint8Array",
 			} as ValueForCacheInternals;
@@ -30,7 +29,7 @@ export const snappy: EncModule = async (compressThreshold = 512) => {
 
 		if (v.data.length > (compressThreshold as number)) {
 			return Promise.resolve({
-				data: await compress(makeBytes(v.data) as Buffer),
+				data: await compress(makeBytes(v.data)),
 				"content-encoding": ["snappy", ...contentEncoding].join(";"),
 				"content-type": "Uint8Array",
 			} as ValueForCacheInternals);
@@ -49,7 +48,7 @@ export const snappy: EncModule = async (compressThreshold = 512) => {
 		}
 
 		return Promise.resolve({
-			data: await uncompress(makeBytes(value.data) as Buffer),
+			data: await uncompress(makeBytes(value.data)),
 			"content-encoding": contentEncoding.join(";"),
 			"content-type": typeof value.data === "string" ? "string" : "Uint8Array",
 		} as ValueForCacheInternals);

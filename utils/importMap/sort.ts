@@ -1,4 +1,4 @@
-// import existing from "../../import_map.json" assert { type: "json" };
+// import existing from "../../import_map.json" with { type: "json" };
 
 // const sortedImportData = Object.fromEntries(
 // 	[
