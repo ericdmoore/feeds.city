@@ -8,7 +8,7 @@ export const snappy: EncModule = async (compressThreshold = 512) => {
 
 	const to = async (input: Uint8Array | string, contentEncoding = "id" as string) => {
 		const bytes = makeBytes(input);
-		``;
+
 		if (bytes.length > (compressThreshold as number)) {
 			return {
 				data: await compress(bytes as Buffer),

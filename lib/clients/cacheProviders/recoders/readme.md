@@ -22,11 +22,11 @@ New, middle balanced, very fast, very good compression ratio lib, binary format 
 
 # External Considerations
 
-- For AWS S3 Select - you can [compress a parquet columns][aws-s3-select] within the object using `Snappy` or `GZIP` or you can read data subsets stored in CSV or JSON record files.
+- For AWS S3 Select - you can [compress a parquet columns][aws-s3-select] within the object using `Snappy` or `GZIP` or
+  you can read data subsets stored in CSV or JSON record files.
 - Also for AWS S3 Select - you can [compress a CSV or JSON file][aws-s3-select-doc] usiung `GZIP` or `BZIP2`
-
 
 <!-- Ref Links -->
 
-- [aws-s3-select-parquet]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/selecting-content-from-objects.html#selecting-content-from-objects-requirements-and-limits
-- [aws-s3-select-doc]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_SelectObjectContent.html#API_SelectObjectContent
+-
+-

@@ -11,8 +11,7 @@ Activated charcoal gochujang readymade, food truck shoreditch VHS narwhal portla
 Esse irony praxis deep v mlkshk meh culpa, four loko fanny pack fashion axe you probably haven't heard of them sartorial. Magna labore locavore roof party eiusmod cred ad vegan four loko cardigan. Typewriter edison bulb craft beer shabby chic austin, mukbang jean shorts woke hammock marxism fingerstache fit yuccie. Ut proident echo park, chambray next level Brooklyn kombucha unicorn yes plz kinfolk neutra health goth food truck. Vape ut four dollar toast pitchfork mumblecore blue bottle PBR&B artisan cardigan irony occaecat ennui dolor anim excepteur. Tacos ex fingerstache tonx butcher, ut bicycle rights dreamcatcher trust fund labore iPhone flexitarian ugh.
 Blog af shaman commodo. Wayfarers nulla succulents crucifix williamsburg fanny pack neutra pok pok. Bicycle rights taiyaki poke, celiac snackwave hella put a bird on it swag organic quinoa. Neutral milk hotel paleo jawn health goth occaecat ut.`;
 const randUserData100txt = await fetch("https://random-data-api.com/api/v2/users?size=100")
-								 .then((res) => res.text())
-
+	.then((res) => res.text());
 
 const randLabel = "4e5"; // 4.4e7 is fine - 4.5e7 causes OOM
 const randomString = (inputLength: number) => {
@@ -29,7 +28,6 @@ const randomString = (inputLength: number) => {
 const randStr = randomString(Number.parseFloat(randLabel));
 
 Deno.test("br data array is smaller than original", async () => {
-
 	const br = await enc.br();
 
 	br.to(sampleString2).then((coded) => {

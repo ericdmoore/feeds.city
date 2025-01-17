@@ -19,15 +19,16 @@ import {
 	defaultFromBytes,
 	defaultRenamer,
 	defaultToBytesWithTypeNote,
-	// type TransformFromBytes,
-	// type TransformToBytes,
-	// type ValueForCacheInternals,
 	type ICacheableDataForCache,
 	// type ICacheDataFromProvider,
 	type ICacheProvider,
+	// type TransformFromBytes,
+	// type TransformToBytes,
+	type ValueForCacheInternals,
 } from "../cache.ts";
 
-import { encodingWith } from "./recoders/mod.ts";
+import { encoderMap, encodingWith } from "./recoders/mod.ts";
+import { snappy } from "./recoders/snappy.ts";
 import { NullableProviderData } from "$lib/clients/cache.ts";
 //#region interfaces
 
@@ -58,6 +59,7 @@ export const cache = async (
 	s3c.defaultBucket = s3c.defaultBucket ?? "";
 	s3c.defualtPrefix = s3c.defualtPrefix ?? "";
 
+	const snapper = await snappy();
 	const provider = "AWS:S3";
 	const coder = await encodingWith();
 
@@ -97,46 +99,6 @@ export const cache = async (
 		}
 	};
 
-	const set = async (locationName: string, inputData: Uint8Array | string) => {
-		const { Bucket, Key } = defaultedParse(locationName, {
-			Bucket: s3c.defaultBucket,
-			Key: s3c.defualtPrefix,
-		});
-		const renamed = await renamer(Key);
-		const sendKey = `${Bucket}/${renamed}`;
-		const value = await toBytes(inputData);
-
-		const dataToS3 = {
-			meta,
-			provider,
-			key: { name: locationName, renamed },
-			value,
-		};
-
-		const s3r = await s3.send(
-			new PutObjectCommand({ Bucket, Key: sendKey, Body: JSON.stringify(dataToS3) }),
-		);
-		handledItems++;
-
-		const ret = {
-			provider,
-			meta: { cloud: "AWS", s3resp: s3r },
-			key: {
-				name: locationName,
-				renamed: await renamer(Key),
-			},
-			value,
-		};
-
-		return {
-			...ret,
-			value: {
-				...ret.value,
-				transformed: await fromBytes<Uint8Array>(ret),
-			},
-		};
-	};
-
 	const del = async (name: string) => {
 		const { Bucket, Key } = defaultedParse(name, {
 			Bucket: s3c.defaultBucket,
@@ -157,14 +119,72 @@ export const cache = async (
 		};
 	};
 
-	const get = async (name: string) => {
-		const { Bucket, Key } = defaultedParse(name, {
+	const set = async (locationHandle: string, inputData: Uint8Array | string) => {
+		const { Bucket, Key } = defaultedParse(locationHandle, {
 			Bucket: s3c.defaultBucket,
 			Key: s3c.defualtPrefix,
 		});
 		const renamed = await renamer(Key);
-		const sendKey = `${s3c.defualtPrefix}/${renamed}`;
+		const sendKey = `${s3c.defualtPrefix}/${renamed}.json`;
+		const value = await toBytes(inputData);
+
+		// console.log('s3-Set-value:', value.data.toString())
+
+		const encdval = await snapper.from(value);
+
+		const dataToS3 = {
+			meta,
+			provider,
+			key: { name: locationHandle, renamed },
+			value: {
+				...encdval,
+				data: value.data.toString(),
+			},
+		};
+
+		console.log("value, encdval, dataToS3 ::", value, encdval, dataToS3);
+
+		console.log("s3-cache-Set-preNetwork:", { Bucket, Key, renamed, sendKey });
+		const s3r = await s3.send(
+			new PutObjectCommand({
+				Bucket,
+				Key: sendKey,
+				Body: JSON.stringify(dataToS3),
+			}),
+		);
+		console.log("s3-cache-Set-postNet:", { s3r });
+		handledItems++;
+
+		const ret = {
+			provider,
+			value,
+			meta: { cloud: "AWS", s3resp: s3r },
+			key: {
+				name: locationHandle,
+				renamed: await renamer(Key),
+			},
+		};
+
+		return {
+			...ret,
+			value: {
+				...ret.value,
+				transformed: await fromBytes<Uint8Array>(ret),
+			},
+		};
+	};
+
+	const get = async (handleLocation: string) => {
+		const { Bucket, Key } = defaultedParse(handleLocation, {
+			Bucket: s3c.defaultBucket,
+			Key: s3c.defualtPrefix,
+		});
+		const renamed = await renamer(Key);
+		const sendKey = `${s3c.defualtPrefix}/${renamed}.json`;
+
+		console.log("s3-cache-get-preNetwork:", { sendKey, Bucket, Key, renamed });
 		const s3r = await s3.send(new GetObjectCommand({ Bucket, Key: sendKey }));
+		console.log("s3-cache-get-postNet:", { s3r });
 
 		const s3CacheInternals = JSON.parse(await s3r.Body?.transformToString() ?? "") as ICacheableDataForCache;
 		const value = await coder.decode(s3CacheInternals.value);
@@ -172,8 +192,8 @@ export const cache = async (
 		const synthValueFromCache = {
 			provider,
 			meta: { ...s3r, cloud: "AWS" } as Record<string, unknown>,
-			key: { name, renamed },
-			value
+			key: { name: handleLocation, renamed },
+			value,
 		} as ICacheableDataForCache;
 
 		const transformed = await fromBytes(synthValueFromCache);
@@ -184,7 +204,7 @@ export const cache = async (
 				...synthValueFromCache.value,
 				transformed,
 			},
-		} as NullableProviderData<string | Uint8Array>
+		} as NullableProviderData<string | Uint8Array>;
 	};
 
 	const has = async (name: string) => {

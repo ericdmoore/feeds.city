@@ -33,7 +33,6 @@ export const cache = (
 			};
 		});
 
-
 // export const cache = async (s3c: ICloudflareCacheConfig): Promise<CloudflareR2Cache> => {
 // 	const cache = await S3Cache({
 // 		...s3c,

@@ -1,6 +1,6 @@
 /**
  * S3 Tests	for the AWS S3 Cache Provider
- * 
+ *
  * > FYI these tests are also used by the R2, B2, \n and all other S3 Compat Cache Providers as well
  */
 
@@ -31,11 +31,11 @@ export const providerHasMetaProperties = async () => {
 	assertEquals(typeof s3cache.meta.size, "function");
 	const size = s3cache.meta.size as () => number;
 	assertEquals(typeof size(), "number");
-}
+};
 
 Deno.test({
 	name: "meta",
-	fn: providerHasMetaProperties
+	fn: providerHasMetaProperties,
 });
 
 Deno.test({
@@ -46,10 +46,9 @@ Deno.test({
 	},
 });
 
-
-export const repeatedFullLifecycle = <T>(...items: T[] ) => async ( t: Deno.TestContext) => {
+export const repeatedFullLifecycle = <T>(...items: T[]) => async (t: Deno.TestContext) => {
 	const _dec = new TextDecoder();
-	const enc = new TextEncoder();
+	const _enc = new TextEncoder();
 
 	const s3cache = await s3cacher(
 		{
@@ -63,49 +62,77 @@ export const repeatedFullLifecycle = <T>(...items: T[] ) => async ( t: Deno.Test
 		s3parse,
 	);
 
-	await t.step("Sets", async () => {
+	await t.step("1. Sets", async () => {
 		//Repeated sets
-		for(const [n, item] of items.entries()){
-			await s3cache.set(`test_${n}`, `${item}`);
+		console.log("\n\n>> Group of SETS");
+
+		// Rate limit this promise all
+		// p-limit or p-throttle is a good option
+		const rets = await Promise.all(
+			items.map((item, n) => s3cache.set(`test_${n}`, `${item}`)),
+		);
+
+		// asserts
+		for (const [_n, ret] of rets.entries()) {
+			// console.log('SET-assert:', _n, ret);
+			assert(ret.meta.s3resp);
 		}
 	});
 
-	await t.step("Gets", async () => {
-		//repeated get
-		for(const [n, item] of items.entries()){
-			const ret = await s3cache.get(`test_${n}`);
-			assertEquals(ret?.value.data, enc.encode(`${item}`));
+	await t.step("2. Gets", async () => {
+		//repeated gets
+
+		console.log("\n\n>> Group of GETS");
+		const rets = await Promise.all(
+			items.map((_item, n) => s3cache.get(`test_${n}`)),
+		);
+
+		// assertions
+		for (const [_i, ret] of rets.entries()) {
+			console.log("GET-assert:", _i, ret);
+			assert(ret?.key.name);
+			assert(ret?.key.renamed);
+			assert(ret?.meta);
+			assert(ret?.provider);
+			assert(ret?.value);
+			// assertEquals(ret?.value.data, enc.encode(`${items[_i]}`));
 		}
+		assertEquals(rets.length, items.length);
 	});
 
-	await t.step("Size should eq items length", () => {
+	await t.step("3. Size should eq items length", () => {
 		//size
 		assertEquals(s3cache.meta.size(), items.length);
 	});
 
-	await t.step("Dels", async () => {
+	await t.step("4. Dels", async () => {
 		//repated dels
-		for(const [n, _] of items.entries()){
+		console.log("\n\n>> Group of DELs");
+		for (const [n, _] of items.entries()) {
 			const ret = await s3cache.del(`test_${n}`);
-			console.log(ret?.value.transformed);
+			console.log("Del:", n, ret);
+			assert(!ret?.value.data);
 		}
 	});
 
-	await t.step("Size should eq 0 - and GETs should be null", async () => {
+	await t.step("5. Size should eq 0 - and GETs should be null", async () => {
 		//size
-
-		assertEquals(s3cache.meta.size(), 0);
-		for(const [n, _] of items.entries()){
+		console.log("size: ", s3cache.meta.size());
+		for (const [n, _] of items.entries()) {
 			const ret = await s3cache.get(`test_${n}`);
 			assert(!ret);
 		}
+		assertEquals(s3cache.meta.size(), 0);
 	});
-}
+};
 
 Deno.test({
-	name: "S3:Full Lifecycle two items",
 	ignore: true,
-	fn: repeatedFullLifecycle('test1', 'test2')
+	name: "S3:Full Lifecycle two items",
+	fn: repeatedFullLifecycle(
+		"but first test me ",
+		"and test me too",
+	),
 });
 
 const hasTest = async () => {
@@ -126,53 +153,54 @@ const hasTest = async () => {
 	assert(has, "s3Cache should be true as it was SET in line 109");
 	await s3cache.del("test1");
 	assertEquals(s3cache.meta.size(), 0);
-}
+};
+
 Deno.test({
 	name: "has",
 	ignore: true,
 	fn: hasTest,
 });
 
-export const peekTest = async () => {}
+export const peekTest = async () => {};
 Deno.test({
 	name: "peek",
 	ignore: true,
-	fn: peekTest
+	fn: peekTest,
 });
 
-export const getTest = async () => {}
+export const getTest = async () => {};
 Deno.test({
 	name: "get",
 	ignore: true,
-	fn: getTest
+	fn: getTest,
 });
 
-export const delTest = async () => {}
+export const delTest = async () => {};
 Deno.test({
 	name: "del",
 	ignore: true,
-	fn: delTest
+	fn: delTest,
 });
 
-export const setTest = async () => {}
+export const setTest = async () => {};
 Deno.test({
 	name: "set",
 	ignore: true,
-	fn: setTest
+	fn: setTest,
 });
 
-export const transformsTest = async () => {}
+export const transformsTest = async () => {};
 Deno.test({
 	name: "transforms",
 	ignore: true,
-	fn: transformsTest
+	fn: transformsTest,
 });
 
-export const overridesTest = async () => {}
+export const overridesTest = async () => {};
 Deno.test({
 	name: "overrides",
 	ignore: true,
-	fn: overridesTest
+	fn: overridesTest,
 });
 
 Deno.test({

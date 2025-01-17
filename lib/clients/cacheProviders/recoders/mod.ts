@@ -88,6 +88,18 @@ export const encodingWith = async (encodingmap?: PromiseOr<Record<string, EncMod
 		);
 	};
 
+	const recode = (encodingRequests: AvailableEncodings[], valInCache: ValueForCacheInternals) => {
+		const encodings = valInCache["content-encoding"]
+			.split(";")
+			.concat(encodingRequests) as AvailableEncodings[];
+		const en = encodings.shift()!;
+
+		return encodings.reduce(
+			async (cacheVal, enNext) => encMap[enNext].recode(await cacheVal),
+			encMap[en].from(valInCache),
+		);
+	};
+
 	const decode = (valInCache: ValueForCacheInternals) => {
 		// console.log('valInCache["content-encoding"]', valInCache["content-encoding"])
 
@@ -100,7 +112,7 @@ export const encodingWith = async (encodingmap?: PromiseOr<Record<string, EncMod
 		);
 	};
 
-	return { encode, decode };
+	return { encode, decode, recode };
 };
 
 export default { id, br, zstd, gzip, snappy, base64url, encoderMap, encodingWith };

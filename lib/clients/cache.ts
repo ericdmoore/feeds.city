@@ -118,11 +118,21 @@ export interface ICacheProvider<NativeDataType = Uint8Array> {
 		[name: string]: unknown;
 	};
 	transforms: TransformFunctionGroup<NativeDataType>;
-	set: (name: string, data: NativeDataType) => Promise<ICacheDataFromProvider<NativeDataType>>;
+	set: (
+		name: string,
+		data: NativeDataType,
+		opts?: { structure: "array" | "map" },
+	) => Promise<ICacheDataFromProvider<NativeDataType>>;
 	get: (name: string) => Promise<NullableProviderData<NativeDataType>>;
 	peek: (name: string) => Promise<NullableProviderData<NativeDataType>>;
 	del: (name: string) => Promise<NullableProviderData<NativeDataType>>;
 	has: (name: string) => Promise<boolean>;
+	// ideas for future enhancements - not yet to be implemented 2024-05-07
+	//
+	// mapAdd: (name: string, data: NativeDataType) => Promise<ICacheDataFromProvider<NativeDataType>>;
+	// arrayPush: (name: string, data: NativeDataType) => Promise<ICacheDataFromProvider<NativeDataType>>;
+	// arrayPop: (name: string, data: NativeDataType) => Promise<ICacheDataFromProvider<NativeDataType>>;
+	// arrayConcat: (name: string, data: NativeDataType) => Promise<ICacheDataFromProvider<NativeDataType>>;
 }
 
 interface IntraCacheNotifications {
@@ -224,16 +234,24 @@ export const renamerWithSha1: RenamerFn = async (s: string) => {
 export const defaultRenamer: RenamerFn = (s: string) =>
 	Promise.resolve(changeEncOf(s).from("utf8").to("base64url").string());
 
-export const defaultFromBytes = ((retrieved?: ICacheableDataForCache): Promise< null | Uint8Array | string >=> {
+export const defaultFromBytes = ((retrieved?: ICacheableDataForCache): Promise<null | Uint8Array | string> => {
+	console.log("-- defaultFromBytes");
+	console.log(retrieved);
+	console.log("typeof value.data", typeof retrieved?.value.data);
+	const valData = new Uint8Array(Object.values(retrieved?.value.data as any) as number[]);
+
+	console.log("typeof value.data", typeof valData);
+	console.log("value.data.decode", (new TextDecoder()).decode(valData));
+	// console.log('instanceof value.data', retrieved?.value.data instanceof Uint8Array);
+
 	if (!retrieved?.value.data) {
 		return Promise.resolve(null);
 	} else if (retrieved.value["content-type"] !== "Uint8Array") {
-		const dec = new TextDecoder();
 		return typeof retrieved.value.data === "string"
 			? Promise.resolve(JSON.parse(retrieved.value.data))
-			: Promise.resolve(JSON.parse(dec.decode(retrieved.value.data)));
+			: Promise.resolve(JSON.parse((new TextDecoder()).decode(retrieved.value.data)));
 	} else {
-		return Promise.resolve(retrieved.value.data)
+		return Promise.resolve(retrieved.value.data);
 	}
 }) as TransformFromBytes;
 
@@ -285,7 +303,7 @@ export const makeKey = async (name: string, renamer: RenamerFn) => ({ name, rena
 export const inMem = (
 	max = 1000,
 	transform?: { renamer?: RenamerFn; fromBytes?: TransformFromBytes; toBytes?: TransformToBytes },
-): ICacheProvider<string| Uint8Array> => {
+): ICacheProvider<string | Uint8Array> => {
 	const provider = "RAM";
 
 	const cache = new LRUCache<string, ICacheableDataForCache, unknown>({ updateAgeOnGet: true, max });

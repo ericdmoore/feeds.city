@@ -14,7 +14,7 @@
 	"fmt": {
 		"useTabs": true,
 		"lineWidth": 120,
-		"exclude": ["vendor/", "/.cov", "/.fsCache", "_fresh"]
+		"exclude": ["vendor/", ".cov/", ".fsCache/", "_fresh/", "_scratch/"]
 	},
 	"lint": {
 		"rules": {
@@ -92,10 +92,10 @@
 		"mu-forms/": "https://esm.sh/mu-forms@1.0.7/",
 		"multiformats": "https://esm.sh/multiformats@9.6.4?deno-std=0.181.0&dts",
 		"mustache": "https://deno.land/x/mustache@v0.3.0/mod.ts",
-		
-		"apache-arrow":"https://esm.sh/apache-arrow@15.0.2",
-		"parquet-wasm/":"https://esm.sh/parquet-wasm@0.6.0-beta.2/",
-		
+
+		"apache-arrow": "https://esm.sh/apache-arrow@15.0.2",
+		"parquet-wasm/": "https://esm.sh/parquet-wasm@0.6.0-beta.2/",
+
 		"superstruct": "https://deno.land/x/deno_superstruct@0.0.0/mod.ts",
 		"stripe": "https://esm.sh/stripe@13.5.0?deno-std=0.181.0&dts",
 		"toXml": "https://deno.land/x/js2xml@1.0.2/mod.ts",

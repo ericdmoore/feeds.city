@@ -1,6 +1,7 @@
 /// <reference lib="deno.unstable" />
 //#region imports
 
+import { assert } from "$std/testing/asserts.ts";
 import {
 	defaultFromBytes,
 	defaultRenamer,
@@ -25,7 +26,7 @@ export const denoKVcache = async (
 	}>,
 ): Promise<ICacheProvider> => {
 	const provider = "Deno:KV";
-	
+
 	const coder = await encodingWith();
 	const history = new Map<string, number>();
 	const renamer = transforms?.renamer ?? defaultRenamer;
@@ -37,9 +38,9 @@ export const denoKVcache = async (
 		...config,
 	};
 	const set = async (name: string, data: Uint8Array | string) => {
-		const kvP = Deno.openKv();
+		const kv = await Deno.openKv();
 		const renamed = await renamer(name);
-		
+
 		// objectHistory.push({name: renamed, ts: Date.now()})
 		history.set(renamed, Date.now());
 
@@ -52,7 +53,7 @@ export const denoKVcache = async (
 			},
 		} as ICacheableDataForCache;
 
-		const kv = await kvP;
+		// const kv = await kvP;
 		await kv.set([config.prefix, renamed], payload);
 
 		if (history.size > config.maxItems) {
